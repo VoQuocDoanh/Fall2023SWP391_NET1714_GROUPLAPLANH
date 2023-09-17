@@ -10,8 +10,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Getter
 @Setter
+@Getter
 @Table(name = "Beat")
 public class Beat {
     @jakarta.persistence.Id

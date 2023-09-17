@@ -2,9 +2,13 @@ package com.example.demo.Entity;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Entity
+@Setter
+@Getter
 @Table(name = "orders") // Use a different name for the table
 public class OrderEntity {
 
