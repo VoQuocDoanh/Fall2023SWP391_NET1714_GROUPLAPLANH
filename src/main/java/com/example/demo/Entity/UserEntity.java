@@ -1,16 +1,18 @@
 package com.example.demo.Entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Setter
-@Getter
 @Table(name = "User")
 public class UserEntity {
 
@@ -30,15 +32,19 @@ public class UserEntity {
     @Column
     private String mail;
 
-    @OneToMany(mappedBy="add")
-    private Set<Beat> beats;
 
-    public Set<Beat> getBeats () {
-        return beats ;
-    }
+    @OneToMany(
+            mappedBy="user_id"
+    )
+
+    private List<Beat> beats =new ArrayList<>();
+
+
+
 
     @OneToMany(mappedBy ="user_role")
     private  Set<UserRole> user_roles;
+
 
     public  Set<UserRole> getUser_roles(){
         return user_roles;
