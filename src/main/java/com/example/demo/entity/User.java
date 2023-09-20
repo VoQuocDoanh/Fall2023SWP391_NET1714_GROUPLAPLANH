@@ -1,4 +1,4 @@
-package com.example.demo.Entity;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,14 +7,13 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "User")
-public class UserEntity {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,21 +31,17 @@ public class UserEntity {
     @Column
     private String mail;
 
+    @Column
+    private String roleID;
 
-    @OneToMany(
-            mappedBy="user_id"
-    )
-
+    @OneToMany(mappedBy="user_id")
     private List<Beat> beats =new ArrayList<>();
 
-
-
-
-    @OneToMany(mappedBy ="user_role")
-    private  Set<UserRole> user_roles;
-
-
-    public  Set<UserRole> getUser_roles(){
-        return user_roles;
+    public User(String username, String pass, String fullName, String mail, String roleID) {
+        this.username = username;
+        this.pass = pass;
+        this.fullName = fullName;
+        this.mail = mail;
+        this.roleID = roleID;
     }
 }

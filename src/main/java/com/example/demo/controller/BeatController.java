@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.Entity.Beat;
+import com.example.demo.entity.Beat;
 import com.example.demo.repository.BeatRepository;
-import com.example.model.ResponseObject;
+import com.example.demo.response.ResponseObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path="/api/Beat")
+@RequestMapping(path="/api/beat")
 public class BeatController {
     @Autowired
     BeatRepository repository;
@@ -43,7 +43,7 @@ public class BeatController {
     @PostMapping("/insertBeat")
     ResponseEntity<ResponseObject> insertBeat(@RequestBody Beat newBeat){
         List<Beat> foundBeat=repository.findByBeatName(newBeat.getBeatName().trim());
-        if (foundBeat.size()>0){
+        if (!foundBeat.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
                     new ResponseObject("failed", "Beat name already taken","")
             );

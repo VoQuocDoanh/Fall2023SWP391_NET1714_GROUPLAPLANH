@@ -1,14 +1,12 @@
-package com.example.demo.Entity;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Set;
 
 @Data
@@ -47,7 +45,7 @@ public class Beat {
 
     @ManyToOne
     @JoinColumn(name="userId")
-    private UserEntity user_id;
+    private User user_id;
 
 
     @OneToMany(mappedBy ="PromotionAsc")
@@ -59,7 +57,7 @@ public class Beat {
 
 
 
-    public Beat(String beatName, String beatSound,  Double price, int status /*,UserEntity user_id*/) {
+    public Beat(String beatName, String beatSound,  Double price, int status /*,User user_id*/) {
         this.beatName = beatName;
         this.price = price;
         this.status = status;
@@ -145,11 +143,11 @@ public class Beat {
         this.beatSound = beatSound;
     }
 
-    public UserEntity getUser_id() {
+    public User getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(UserEntity user_id) {
+    public void setUser_id(User user_id) {
         this.user_id = user_id;
     }
 
