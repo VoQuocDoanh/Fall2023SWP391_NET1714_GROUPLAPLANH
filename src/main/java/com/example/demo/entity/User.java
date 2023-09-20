@@ -34,10 +34,13 @@ public class User {
     @Column
     private String roleID;
 
+    @Column
+    private int status;
+
     @OneToMany(mappedBy="user_id")
     private List<Beat> beats =new ArrayList<>();
 
-    public User(String username, String pass, String fullName, String mail, String roleID) {
+    public User(String username, String pass, String fullName, String mail, String roleID, int status) {
         this.username = username;
         this.pass = pass;
         this.fullName = fullName;

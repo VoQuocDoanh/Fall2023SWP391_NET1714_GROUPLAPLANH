@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String addUser(User user) {
-        User us = new User(user.getUsername(),this.passwordEncoder.encode(user.getPass()),user.getFullName(),user.getMail(),user.getRoleID());
+        User us = new User(user.getUsername(),this.passwordEncoder.encode(user.getPass()),user.getFullName(),user.getMail(),user.getRoleID(), user.getStatus());
         userRepository.save(us);
         return us.getUsername();
     }
