@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.LoginDTO;
 import com.example.demo.entity.User;
-import com.example.demo.repository.UserRepository;
 import com.example.demo.response.ResponseObject;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
@@ -12,16 +11,16 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping(path = "/api/login")
-public class LoginController {
+@RequestMapping(path = "/api/user")
+public class Login_Register_Controller {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping(path = "/save")
-    public String saveUser(@Valid @RequestBody User user){
-        String id = userService.addUser(user);
-        return id;
+    @PostMapping(path = "/register")
+    public ResponseEntity<?> saveUser(@Valid @RequestBody User user){
+        ResponseObject responseObject = userService.registerUser(user);
+        return ResponseEntity.ok(responseObject);
     }
 
     @PostMapping(path = "/login")
