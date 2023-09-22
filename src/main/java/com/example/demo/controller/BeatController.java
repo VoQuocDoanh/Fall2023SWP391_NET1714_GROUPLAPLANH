@@ -1,7 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.BeatDTO;
 import com.example.demo.entity.Beat;
+import com.example.demo.entity.User;
 import com.example.demo.repository.BeatRepository;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.response.ResponseObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,17 +18,23 @@ import java.util.Optional;
 @RequestMapping(path="/api/beat")
 public class BeatController {
     @Autowired
-    BeatRepository repository;
+    BeatRepository beatRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    User user=new User();
+
+    //get all beat
     @GetMapping("")
     List<Beat> getAllBeats(){
-        return repository.findAll();
-
+        return beatRepository.findAll();
     }
 
     //get detail beat
     @GetMapping("/{id}")
     ResponseEntity<ResponseObject> findById(@PathVariable Long id){
-        Optional<Beat> foundBeat= repository.findById(id);
+        Optional<Beat> foundBeat= beatRepository.findById(id);
         if (foundBeat.isPresent()){
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("OK","Query product successfully",foundBeat)
@@ -39,34 +48,64 @@ public class BeatController {
         }
 
     }
-    //Insert new product
-    @PostMapping("/insertBeat")
-    ResponseEntity<ResponseObject> insertBeat(@RequestBody Beat newBeat){
-        List<Beat> foundBeat=repository.findByBeatName(newBeat.getBeatName().trim());
-        if (!foundBeat.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-                    new ResponseObject("failed", "Beat name already taken","")
-            );
 
+    @PostMapping("/insertBeat")
+
+    //Add new product
+    ResponseEntity<ResponseObject> insertBeat(@RequestBody BeatDTO newBeat){
+        Optional<User> userName= userRepository.findByUsername(newBeat.getUsername());
+        User user = userRepository.findUserByUsername(newBeat.getUsername());
+        List<Beat> foundBeat= beatRepository.findByBeatName(newBeat.getBeatName().trim());
+        if (!foundBeat.isEmpty() ){
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
+                    new ResponseObject
+                            ("failed", "Beat name already taken","")
+            );
+        } else if(!userName.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
+                    new ResponseObject
+                            ("failed", "User Name is invalid","")
+            );
         }
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok","Insert beat successfully",repository.save(newBeat))
-        );
+        else{
+            String beatName= newBeat.getBeatName();
+            String beatSound= newBeat.getBeatSound();
+            Double price=newBeat.getPrice();
+            int status= newBeat.getStatus();
+            User username= userName.get();
+            Beat beat=new Beat();
+            beat=new Beat
+                    (beatName, beatSound, price, status, username);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject
+                        ("ok","Add beat successfully", beatRepository.save(beat))
+        ); }
     }
 
+  /*  public Beat createNewBeat(BeatDTO beatDTO){
+        Optional<Beat> beatEntity=beatRepository.findNameByBeatName(beatDTO.getBeatName());
+        Optional<User> userEntity=userRepository.findByUsername(beatDTO.getUsername());
+        if(beatEntity.isPresent() && userEntity.isPresent()){
+            String beatName= beatDTO.getBeatName();
+            String beatSound= beatDTO.getBeatSound();
+            Double price=beatDTO.getPrice();
+            int status= beatDTO.getStatus();
+            User username= userEntity.get();
+            Beat newBeat=new Beat(beatName,beatSound,price,status,username);
+            return beatRepository.save(newBeat);
+        } return null;
+    }*/
 
     //Update
-
-
     @PutMapping("/{id}")
     ResponseEntity<ResponseObject> updateBeat(@RequestBody Beat newBeat, @PathVariable Long id) {
-        Optional<Beat> updateBeat = repository.findById(id)
+        Optional<Beat> updateBeat = beatRepository.findById(id)
                 .map(beat -> {
                     beat.setBeatName(newBeat.getBeatName());
                     beat.setBeatSound(newBeat.getBeatSound());
                     beat.setPrice(newBeat.getPrice());
                     beat.setStatus(newBeat.getStatus());
-                    return repository.save(newBeat);
+                    return beatRepository.save(newBeat);
                 });
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("OK","Update successfully","")
@@ -76,9 +115,9 @@ public class BeatController {
     //Delete beat
     @DeleteMapping("/{id}")
     ResponseEntity<ResponseObject> deleteBeat(@PathVariable Long id){
-        boolean exists = repository.existsById(id);
+        boolean exists = beatRepository.existsById(id);
         if(exists){
-            repository.deleteById(id);
+            beatRepository.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("ok","Delete beat successfully","")
             );

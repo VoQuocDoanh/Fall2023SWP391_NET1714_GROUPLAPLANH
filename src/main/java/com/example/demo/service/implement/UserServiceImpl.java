@@ -19,6 +19,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    //register
+
     @Override
     public ResponseObject registerUser(User user) {
         User foundUser = userRepository.findUserByUsername(user.getUsername().trim());
@@ -35,6 +37,7 @@ public class UserServiceImpl implements UserService {
         return new ResponseObject("FAILED", "Register Failed", "");
     }
 
+    //login
     @Override
     public ResponseObject loginUser(LoginDTO loginDTO) {
         User user = userRepository.findUserByUsername(loginDTO.getUsername());
