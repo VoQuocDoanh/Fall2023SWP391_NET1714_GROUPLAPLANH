@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping(path = "/api/user")
+@RequestMapping(path = "/user")
 public class Login_Register_Controller {
 
     @Autowired

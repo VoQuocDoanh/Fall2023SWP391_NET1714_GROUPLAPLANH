@@ -1,6 +1,7 @@
 package com.example.demo.database;
 
 import ch.qos.logback.classic.encoder.JsonEncoder;
+import com.example.demo.entity.Beat;
 import com.example.demo.entity.User;
 import com.example.demo.repository.BeatRepository;
 import com.example.demo.repository.UserRepository;
@@ -25,11 +26,11 @@ public class Database {
 //                Beat beatB = new Beat("Dieing for you", "def", "none", 10.0, 1);
 //                System.out.println("insert date: " + beatRepository.save(beatA));
 //                System.out.println("insert date: " + beatRepository.save(beatB));
-
-//                User admin = new User("admin", "1", "toi la admin", "", "AD");
-                User customer = new User("user", this.passwordEncoder.encode("1"), "toi la user", "", "US",1);
-//                System.out.println("insert date: " + userRepository.save(admin));
-                System.out.println("insert date: " + userRepository.save(customer));
+//
+////                User admin = new User("admin", "1", "toi la admin", "", "AD");
+//                User customer = new User("1", this.passwordEncoder.encode("1"), "toi la user", "", "US",1);
+//////                System.out.println("insert date: " + userRepository.save(admin));
+//                System.out.println("insert date: " + userRepository.save(customer));
             }
         };
     }

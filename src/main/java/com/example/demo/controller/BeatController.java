@@ -3,7 +3,9 @@ package com.example.demo.controller;
 import com.example.demo.dto.BeatDTO;
 import com.example.demo.entity.Beat;
 import com.example.demo.entity.User;
+import com.example.demo.entity.User;
 import com.example.demo.repository.BeatRepository;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.response.ResponseObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path="/api/beat")
+@CrossOrigin
+@RequestMapping(path="/beat")
 public class BeatController {
     @Autowired
     BeatRepository beatRepository;
@@ -26,9 +29,10 @@ public class BeatController {
     User user=new User();
 
     //get all beat
-    @GetMapping("")
+    @GetMapping("/getAll")
     List<Beat> getAllBeats(){
         return beatRepository.findAll();
+
     }
 
     //get detail beat
