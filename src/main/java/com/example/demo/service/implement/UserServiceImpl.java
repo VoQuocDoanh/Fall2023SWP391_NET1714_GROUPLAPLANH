@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
             userRepository.save(us);
             return new ResponseObject("OK", "Register Success", us);
         }
-        return new ResponseObject("FAILED", "Register Failed", "");
+        return new ResponseObject("FAILED", "Register Failed (username duplicated)", "");
     }
 
     @Override

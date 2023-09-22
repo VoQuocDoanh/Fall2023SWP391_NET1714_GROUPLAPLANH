@@ -46,5 +46,6 @@ public class User {
         this.fullName = fullName;
         this.mail = mail;
         this.roleID = roleID;
+        this.status = status;
     }
 }

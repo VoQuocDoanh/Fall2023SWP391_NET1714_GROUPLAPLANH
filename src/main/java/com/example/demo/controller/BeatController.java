@@ -12,11 +12,12 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path="/api/beat")
+@CrossOrigin
+@RequestMapping(path="/beat")
 public class BeatController {
     @Autowired
     BeatRepository repository;
-    @GetMapping("")
+    @GetMapping("/getAll")
     List<Beat> getAllBeats(){
         return repository.findAll();
 
