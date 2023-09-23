@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,10 +27,12 @@ public class PromotionBeatAssociation {
 
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="beatId", nullable=false)
     private Beat PromotionAsc;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="promotionId", nullable=false)
     private Promotion promotion;
 }

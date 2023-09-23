@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,6 +35,7 @@ public class Promotion {
     private int discount;
 
     @OneToMany(mappedBy ="promotion")
+    @JsonIgnore
     private Set<PromotionBeatAssociation> promotion;
 
     public  Set<PromotionBeatAssociation> getPromotion(){

@@ -1,17 +1,18 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "Beat")
 public class Beat {
@@ -25,14 +26,6 @@ public class Beat {
     @Column
     private String orderID;
 
- /*   @CreatedDate
-    @Column(name = "created_date")
-    private Date createdTime;
-
-    @LastModifiedDate
-    @Column(name = "last_modified_date")
-    private Date lastModifiedTime;*/
-
     @Column
     private Double price;
 
@@ -42,27 +35,30 @@ public class Beat {
     @Column
     private String beatSound;
 
-
     @ManyToOne
-    @JoinColumn(name="userId")
-    private User user_id;
+    @JsonIgnore
+    @JoinColumn(name="userName")
+    private User userName;
 
 
     @OneToMany(mappedBy ="PromotionAsc")
+    @JsonIgnore
     private Set<PromotionBeatAssociation> promotionAsc;
+
 
     public  Set<PromotionBeatAssociation> getPromotionAsc(){
         return promotionAsc;
     }
 
-
-
-    public Beat(String beatName, String beatSound,  Double price, int status /*,User user_id*/) {
+    public Beat(String beatName, String beatSound,  Double price, int status ,User userName) {
         this.beatName = beatName;
         this.price = price;
         this.status = status;
         this.beatSound = beatSound;
-        //  this.user_id = user_id;
+        this.userName=userName;
+    }
+
+    public Beat() {
     }
 
     public Long getId() {
@@ -90,32 +86,12 @@ public class Beat {
     }
 
 
-    /*public Date getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
-    }
-
-    public Date getLastModifiedTime() {
-        return lastModifiedTime;
-    }
-
-    public void setLastModifiedTime(Date lastModifiedTime) {
-        this.lastModifiedTime = lastModifiedTime;
-    }*/
-
-    @CreatedDate
     @Column(name = "created_at")
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
     }
 
     public Double getPrice() {
@@ -143,17 +119,18 @@ public class Beat {
         this.beatSound = beatSound;
     }
 
-    public User getUser_id() {
-        return user_id;
+    public User getUserName() {
+        return userName;
     }
 
-    public void setUser_id(User user_id) {
-        this.user_id = user_id;
+    public void setUserName(User userName) {
+        this.userName = userName;
     }
 
     public void setPromotionAsc(Set<PromotionBeatAssociation> promotionAsc) {
         this.promotionAsc = promotionAsc;
     }
+
 
     @Override
     public String toString() {
@@ -164,9 +141,8 @@ public class Beat {
                 ", price=" + price +
                 ", status=" + status +
                 ", beatSound='" + beatSound + '\'' +
-                ", user_id=" + user_id +
+                ", userName=" + userName +
                 ", promotionAsc=" + promotionAsc +
-                ", createdAt=" + createdAt +
                 '}';
     }
 }

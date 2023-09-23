@@ -1,10 +1,10 @@
-package com.example.demo.service.implement;
+package com.example.demo.implement;
 
 import com.example.demo.dto.LoginDTO;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.response.ResponseObject;
-import com.example.demo.service.UserService;
+import com.example.demo.service.LoginRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements LoginRegisterService {
     @Autowired
     private UserRepository userRepository;
 
