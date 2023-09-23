@@ -4,6 +4,7 @@ import com.example.demo.dto.LoginDTO;
 import com.example.demo.entity.User;
 import com.example.demo.response.ResponseObject;
 import com.example.demo.service.LoginRegisterService;
+import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

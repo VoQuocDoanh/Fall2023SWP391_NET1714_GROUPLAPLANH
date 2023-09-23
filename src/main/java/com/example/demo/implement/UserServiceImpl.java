@@ -19,6 +19,8 @@ public class UserServiceImpl implements LoginRegisterService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    //register
+
     @Override
     public ResponseObject registerUser(User user) {
         User foundUser = userRepository.findUserByUsername(user.getUsername().trim());
@@ -32,9 +34,10 @@ public class UserServiceImpl implements LoginRegisterService {
             userRepository.save(us);
             return new ResponseObject("OK", "Register Success", us);
         }
-        return new ResponseObject("FAILED", "Register Failed", "");
+        return new ResponseObject("FAILED", "Register Failed (username duplicated)", "");
     }
 
+    //login
     @Override
     public ResponseObject loginUser(LoginDTO loginDTO) {
         User user = userRepository.findUserByUsername(loginDTO.getUsername());

@@ -10,9 +10,12 @@ import org.springframework.data.annotation.CreatedDate;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "Beat")
 public class Beat {
@@ -25,6 +28,14 @@ public class Beat {
 
     @Column
     private String orderID;
+
+ /*   @CreatedDate
+    @Column(name = "created_date")
+    private Date createdTime;
+
+    @LastModifiedDate
+    @Column(name = "last_modified_date")
+    private Date lastModifiedTime;*/
 
     @Column
     private Double price;
@@ -143,6 +154,7 @@ public class Beat {
                 ", beatSound='" + beatSound + '\'' +
                 ", userName=" + userName +
                 ", promotionAsc=" + promotionAsc +
+                ", createdAt=" + createdAt +
                 '}';
     }
 }

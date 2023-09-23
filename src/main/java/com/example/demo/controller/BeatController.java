@@ -31,7 +31,7 @@ public class BeatController {
     User user = new User();
 
     //get all beat
-    @GetMapping("")
+    @GetMapping("/getAll")
     public List<Beat> getAllBeats() {
         return beatRepository.findAll();
     }
@@ -42,13 +42,13 @@ public class BeatController {
         Optional<Beat> foundBeat = beatRepository.findById(id);
         if (foundBeat.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("OK", "Query product successfully", foundBeat)
+                    new ResponseObject("OK","Query product successfully",foundBeat)
 
             );
 
-        } else {
+        }else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("false", "Cannot find beat with id= " + id, "")
+                    new ResponseObject("false","Cannot find beat with id= "+id,"")
             );
         }
 
@@ -59,6 +59,7 @@ public class BeatController {
     public ResponseEntity<ResponseObject> insertBeat(@RequestBody BeatDTO beatDTO) {
         return beatService.insertBeat(beatDTO);
     }
+
 
     //Update
     @PutMapping("/{id}")
