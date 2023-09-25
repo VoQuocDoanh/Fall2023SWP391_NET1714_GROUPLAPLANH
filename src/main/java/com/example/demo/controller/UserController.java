@@ -1,49 +1,66 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.example.demo.controller;
 
-
-import com.example.demo.entity.Beat;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.response.ResponseObject;
 import com.example.demo.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.nio.file.Path;
 import java.util.List;
-import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/api/user")
+@RequestMapping(
+        path = {"user"}
+)
 public class UserController {
     @Autowired
     UserRepository userRepository;
-
     @Autowired
     private UserService userService;
 
+    public UserController() {
+    }
 
-    //get all users
-    @GetMapping(path = "")
+    @GetMapping(
+            path = {""}
+    )
+
+    //List all user in AD
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return this.userRepository.findByOrderByStatusDesc();
     }
 
-    //get detail user
-
-    @GetMapping(path = "/{id}")
+    //List detail user in AD
+    @GetMapping(
+            path = {"/{id}"}
+    )
     public ResponseEntity<ResponseObject> findById(@PathVariable Long id) {
-        return userService.findById(id);
+        return this.userService.findById(id);
     }
 
 
-    //Update
-    @PutMapping("/{id}")
+    //Update status for US in AD
+    @PutMapping({"/{id}"})
     public ResponseEntity<ResponseObject> updateBeat(@RequestBody User newUser, @PathVariable Long id) {
-        return userService.updateBeat(newUser, id);
+        return this.userService.updateBeat(newUser, id);
     }
 
 
+    //search US in AD
+    @GetMapping("/search")
+    public ResponseEntity<ResponseObject> searchByUserName(@RequestBody UserDTO userDTO) {
+        return this.userService.searchByUserName(userDTO);
+    }
 }

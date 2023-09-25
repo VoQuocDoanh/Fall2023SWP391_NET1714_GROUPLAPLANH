@@ -1,21 +1,18 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.example.demo.dto;
 
-
-//import lombok.Data;
-
 public class BeatDTO {
-
     private String beatName;
-
     private String beatSound;
-
     private String username;
-
     private Double price;
-
     private String orderID;
 
-    public BeatDTO( String beatName, String beatSound,  Double price, String username, String orderID) {
+    public BeatDTO(String beatName, String beatSound, Double price, String username, String orderID) {
         this.beatName = beatName;
         this.price = price;
         this.beatSound = beatSound;
@@ -27,7 +24,7 @@ public class BeatDTO {
     }
 
     public String getBeatName() {
-        return beatName;
+        return this.beatName;
     }
 
     public void setBeatName(String beatName) {
@@ -35,7 +32,7 @@ public class BeatDTO {
     }
 
     public String getOrderID() {
-        return orderID;
+        return this.orderID;
     }
 
     public void setOrderID(String orderID) {
@@ -43,7 +40,7 @@ public class BeatDTO {
     }
 
     public Double getPrice() {
-        return price;
+        return this.price;
     }
 
     public void setPrice(Double price) {
@@ -51,7 +48,7 @@ public class BeatDTO {
     }
 
     public String getBeatSound() {
-        return beatSound;
+        return this.beatSound;
     }
 
     public void setBeatSound(String beatSound) {
@@ -59,10 +56,21 @@ public class BeatDTO {
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        return "BeatDTO{" +
+                "beatName='" + beatName + '\'' +
+                ", beatSound='" + beatSound + '\'' +
+                ", username='" + username + '\'' +
+                ", price=" + price +
+                ", orderID='" + orderID + '\'' +
+                '}';
     }
 }
