@@ -1,40 +1,41 @@
 import { Box, Button, Container, TextField } from '@mui/material';
 import * as React from 'react';
-export default function Login() {
-    const [username,setUserName] = React.useState('')
-    const [password,setPassword] = React.useState('')
-    const [loginMessage,setLoginMessage] = React.useState('')
-    const handleClick=(e)=>{
-        if(!username || !password){
-          alert("Please fill in all fields!");
-          return;
-        }
-          e.preventDefault()
-          const user ={username,password}
-          console.log(user)
-          fetch("http://localhost:8080/user/login",{
-              method:"POST",
-              headers:{"Content-Type":"application/json"},
-              body:JSON.stringify(user)
-          }).then((res)=>{
-              if(res.ok){
-                return res.json()
-              }
-              else{
-                setLoginMessage("Failed to Login!")
-              }
-          }).then((res)=>{
-                if(res.message.includes('Not Match')){
-                    setLoginMessage('Wrong username or password!')
-                }else{
-                    setLoginMessage('Login Successfully')      
-                    window.location.href = "ViewBeat";            
-                }
-          })
+
+function Login() {
+  const [username, setUserName] = React.useState('')
+  const [password, setPassword] = React.useState('')
+  const [loginMessage, setLoginMessage] = React.useState('')
+  const handleClick = (e) => {
+    if (!username || !password) {
+      alert("Please fill in all fields!");
+      return;
+    }
+    e.preventDefault()
+    const user = { username, password }
+    console.log(user)
+    fetch("http://localhost:8080/user/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user)
+    }).then((res) => {
+      if (res.ok) {
+        return res.json()
       }
-    return (
-        <Container>
-            <h1>Login Form</h1>
+      else {
+        setLoginMessage("Failed to Login!")
+      }
+    }).then((res) => {
+      if (res.message.includes('Not Match')) {
+        setLoginMessage('Wrong username or password!')
+      } else {
+        setLoginMessage('Login Successfully')
+        window.location.href = "ViewBeat";
+      }
+    })
+  }
+  return (
+    <Container>
+            <h3>Login Form</h3>
             <Box
                 component="form"
                 sx={{
@@ -52,5 +53,7 @@ export default function Login() {
 
 
         </Container>
-    )
+  )
 }
+
+export default Login

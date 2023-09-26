@@ -4,18 +4,19 @@ import React, { useState } from 'react'
 function CreateBeat() {
     const[beatName,setBeatName] = useState('')
     const[price,setPrice] = useState('')
-    const[orderID,setOrderID] = useState('')
     const[beatSound,setBeatSound] = useState('')
+    const[username,setUserName] = useState('')
     const[insertBeatMessage,setInsertBeatMessage] = useState('')
     const status = 1
+    const orderID = ""
 
     const handleClick = (e) => {
-        if (!beatName || !price || !orderID || !beatSound || !status) {
+        if (!beatName || !price || !beatSound || !status || !username) {
             alert("Please fill in all fields!");
             return;
         }
         e.preventDefault()
-        const beat = {beatName, price, orderID, beatSound, status}
+        const beat = {beatName, price, orderID, beatSound, username}
         fetch("http://localhost:8080/beat/insertBeat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -25,7 +26,7 @@ function CreateBeat() {
                 if (res.status !== 501) {
                     window.location.href = "viewBeat"                              
                 } else {
-                    setInsertBeatMessage('Please input again! (Duplicated Beat Name)')
+                    setInsertBeatMessage('User Name is not exist!')
                     
                 }
             })
@@ -49,8 +50,8 @@ function CreateBeat() {
 
                 <TextField id="beatname" label="Beat Name" variant="outlined" fullWidth value={beatName} onChange={(e) => setBeatName(e.target.value)} />
                 <TextField id="price" label="price" variant="outlined" fullWidth value={price} onChange={(e) => setPrice(e.target.value)} />
-                <TextField id="orderID" label="Order ID" variant="outlined" fullWidth value={orderID} onChange={(e) => setOrderID(e.target.value)} />
-                <TextField id="beatsound" label="Beat Sound" variant="outlined" fullWidth value={beatSound} onChange={(e) => setBeatSound(e.target.value)} /> <br></br>
+                <TextField id="beatsound" label="Beat Sound" variant="outlined" fullWidth value={beatSound} onChange={(e) => setBeatSound(e.target.value)} /> 
+                <TextField id="username" label="User Name" variant="outlined" fullWidth value={username} onChange={(e) => setUserName(e.target.value)} /><br></br>
                 <br></br>
                 <Button variant="contained" onClick={handleClick}>Submit</Button>
             </Box>

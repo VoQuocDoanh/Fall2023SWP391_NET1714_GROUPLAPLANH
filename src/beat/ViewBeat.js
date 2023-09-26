@@ -1,16 +1,15 @@
 import { Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button } from '@mui/material'
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 
 function ViewBeat() {
-  const {id} = useParams()
   const [beats, setBeats] = useState([])
   const [deleteMessage, setDeleteMessage] = useState()
   
   React.useEffect(() => {
     loadBeats()
-  })
+  }, [])
 
   const loadBeats = async() => {
     fetch("http://localhost:8080/beat/getAll")
@@ -23,8 +22,8 @@ function ViewBeat() {
     })
   }
 
-  const deleteClick = async (id) => {
-    fetch(`http://localhost:8080/beat/2`,{
+  const deleteBeat = (id) => {
+    fetch(`http://localhost:8080/beat/${id}`,{
       method: "DELETE",
     })
     .then((res) => {
@@ -33,10 +32,12 @@ function ViewBeat() {
       }
       else{
         setDeleteMessage()
+        window.location.href = "ViewBeat"
       }
-    }, [id])
+    })
 
   }
+
   return (
     <Container>
       <h1>List of Beats</h1>
@@ -47,28 +48,23 @@ function ViewBeat() {
               <TableCell>ID</TableCell>
               <TableCell align="center">Beat Name</TableCell>
               <TableCell align="center">Price</TableCell>
-              <TableCell align="center">OrderID</TableCell>
               <TableCell align="center">Beat Sound</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {beats.map(beat => (
+            {beats.map((beat,index) => (
 
-              <TableRow
-                key={beat.id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {beat.id}
+              <TableRow>
+                <TableCell key={index} component="th" scope="row">                  
+                {index + 1 }
                 </TableCell>
                 <TableCell align="center">{beat.beatName}</TableCell>
                 <TableCell align="center">{beat.price}</TableCell>
-                <TableCell align="center">{beat.orderID}</TableCell>
                 <TableCell align="center">{beat.beatSound}</TableCell>
                 <TableCell align="center">
-                  <Button variant="outlined">Update</Button>
-                  <Button variant="outlined" color='error' onClick={deleteClick}>Delete</Button>
+                  <Button variant="outlined" href='UpdateBeat/${beat.id}' >Update</Button>
+                  <Button variant="outlined" color='error' onClick={() => deleteBeat(beat.id)}>Delete</Button>
                 
                 </TableCell>
               </TableRow>

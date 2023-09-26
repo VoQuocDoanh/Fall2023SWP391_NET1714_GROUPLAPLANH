@@ -1,12 +1,13 @@
 
 import { BrowserRouter as Router,  Routes,  Route } from 'react-router-dom';
-import './App.css';
 import HomePage from './components/HomePage';
 import Login from './components/Login';
 import RegisterUser from './components/RegisterUser';
 import ViewBeat from './beat/ViewBeat';
 import CreateBeat from './beat/CreateBeat';
 import ListUsers from './user/ListUsers';
+import UpdateBeat from './beat/UpdateBeat';
+import './App.css'
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route exact path='/ViewBeat' element={<ViewBeat/>}/>
           <Route exact path='/CreateBeat' element={<CreateBeat/>}/>
           <Route exact path='/ListUsers' element={<ListUsers/>}/>
+          <Route exact path='/UpdateBeat/:id' element={<UpdateBeat/>}/>
         </Routes>
       </Router>          
     </div>
