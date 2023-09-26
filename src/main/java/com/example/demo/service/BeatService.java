@@ -45,11 +45,11 @@ public class BeatService {
                 User t=beat.get(i).getUserName();
                 if (t.getId().equals(userEntity.getId())){
                     Beat ownBeat=new Beat( beat.get(i).getId(),
-                                        beat.get(i).getBeatName(),
-                                        beat.get(i).getBeatSound(),
-                                        beat.get(i).getPrice(),
-                                        beat.get(i).getOrderBeat(),
-                                        beat.get(i).getCreatedAt());
+                            beat.get(i).getBeatName(),
+                            beat.get(i).getBeatSound(),
+                            beat.get(i).getPrice(),
+                            beat.get(i).getOrderID(),
+                            beat.get(i).getCreatedAt());
                     beatEntity.add(ownBeat);
                 }
             }
@@ -102,8 +102,7 @@ public class BeatService {
     }
 
     public ResponseEntity<ResponseObject> searchByBeatName(BeatDTO beatDTO) {
-        new Beat();
-        List<Beat> beatEntity = this.beatRepository.findByBeatName(beatDTO.getBeatName());
+        List<Beat> beatEntity = this.beatRepository.findByBeatName(beatDTO.getBeatName().trim());
         return beatEntity.isEmpty() ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseObject("false", "Cannot find beat name", ""))
                 : ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Query product successfully", beatEntity));
     }

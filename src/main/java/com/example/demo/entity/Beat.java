@@ -11,6 +11,8 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -29,14 +31,6 @@ public class Beat {
     @Column
     private String orderID;
 
- /*   @CreatedDate
-    @Column(name = "created_date")
-    private Date createdTime;
-
-    @LastModifiedDate
-    @Column(name = "last_modified_date")
-    private Date lastModifiedTime;*/
-
     @Column
     private Double price;
 
@@ -51,15 +45,24 @@ public class Beat {
     @JoinColumn(name="userName")
     private User userName;
 
-
-    @OneToMany(mappedBy ="PromotionAsc")
+    @ManyToOne
     @JsonIgnore
-    private Set<PromotionBeatAssociation> promotionAsc;
-
-
-    public  Set<PromotionBeatAssociation> getPromotionAsc(){
-        return promotionAsc;
-    }
+    @JoinColumn(
+            name = "orderBeat"
+    )
+    private Order orderBeat;
+    @ManyToMany
+    @JsonIgnore
+    @JoinTable(
+            name = "GenreBeat",
+            joinColumns = {@JoinColumn(
+                    name = "beatId"
+            )},
+            inverseJoinColumns = {@JoinColumn(
+                    name = "genreId"
+            )}
+    )
+    private List<Genre> genres = new ArrayList();
 
     public Beat(String beatName, String beatSound,  Double price, int status ,User userName) {
         this.beatName = beatName;
@@ -69,7 +72,23 @@ public class Beat {
         this.userName=userName;
     }
 
-    public Beat() {
+    public Beat(Long id, String beatName,String beatSound,Double price, String orderID, LocalDateTime createdAt) {
+        Id = id;
+        this.beatName = beatName;
+        this.orderID = orderID;
+        this.price = price;
+        this.status = status;
+        this.beatSound = beatSound;
+        this.userName = userName;
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Long getId() {
@@ -138,9 +157,6 @@ public class Beat {
         this.userName = userName;
     }
 
-    public void setPromotionAsc(Set<PromotionBeatAssociation> promotionAsc) {
-        this.promotionAsc = promotionAsc;
-    }
 
 
     @Override
@@ -153,7 +169,6 @@ public class Beat {
                 ", status=" + status +
                 ", beatSound='" + beatSound + '\'' +
                 ", userName=" + userName +
-                ", promotionAsc=" + promotionAsc +
                 ", createdAt=" + createdAt +
                 '}';
     }
