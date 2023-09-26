@@ -6,6 +6,7 @@ import Login from './components/Login';
 import RegisterUser from './components/RegisterUser';
 import ViewBeat from './beat/ViewBeat';
 import CreateBeat from './beat/CreateBeat';
+import ListUsers from './user/ListUsers';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route exact path='/Register' element={<RegisterUser/>}/>
           <Route exact path='/ViewBeat' element={<ViewBeat/>}/>
           <Route exact path='/CreateBeat' element={<CreateBeat/>}/>
+          <Route exact path='/ListUsers' element={<ListUsers/>}/>
         </Routes>
       </Router>          
     </div>
