@@ -1,3 +1,8 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.example.demo.repository;
 
 import com.example.demo.entity.Beat;
@@ -10,9 +15,11 @@ import java.util.Optional;
 
 @Repository
 public interface BeatRepository extends JpaRepository<Beat, Long> {
+    @Query("SELECT b FROM Beat b WHERE b.beatName like %:name% and status=1")
+    List<Beat> findByBeatName(String name);
 
     Optional<Beat> findNameByBeatName(String beatName);
 
-    @Query("SELECT b FROM Beat b WHERE b.beatName like %:name% and status=1")
-    List<Beat> findByBeatName(String name);
+    @Query("SELECT b FROM Beat b WHERE b.userName=:username")
+    List<Beat> findBeatByUserName(Long username);
 }

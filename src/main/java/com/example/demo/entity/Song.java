@@ -8,18 +8,8 @@ package com.example.demo.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +63,7 @@ public class Song {
     )
     @JsonIgnore
     @JsonInclude(Include.NON_NULL)
-    private List<FeedbackSong> feedbackSongs = new ArrayList();
+    private List<com.example.demo.entity.FeedbackSong> feedbackSongs = new ArrayList();
     @ManyToMany
     @JsonIgnore
     @JoinTable(
@@ -89,7 +79,7 @@ public class Song {
     @ManyToMany(
             mappedBy = "songs"
     )
-    private List<Chord> chords = new ArrayList();
+    private List<ChordBasic> chords = new ArrayList();
 
     public Song() {
     }
@@ -135,7 +125,7 @@ public class Song {
         return this.userUploadSong;
     }
 
-    public List<FeedbackSong> getFeedbackSongs() {
+    public List<com.example.demo.entity.FeedbackSong> getFeedbackSongs() {
         return this.feedbackSongs;
     }
 
@@ -143,7 +133,7 @@ public class Song {
         return this.genres;
     }
 
-    public List<Chord> getChords() {
+    public List<ChordBasic> getChords() {
         return this.chords;
     }
 
@@ -194,7 +184,7 @@ public class Song {
         this.genres = genres;
     }
 
-    public void setChords(final List<Chord> chords) {
+    public void setChords(final List<ChordBasic> chords) {
         this.chords = chords;
     }
 }
