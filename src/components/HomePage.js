@@ -2,17 +2,23 @@ import React, { useEffect } from 'react';
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
-import '../css/bootstrap.min.css';
-import '../css/bootstrap-icons.css';
-import '../css/owl.carousel.min.css';
-import '../css/owl.theme.default.min.css';
-import '../css/templatemo-pod-talk.css';
+import './css/bootstrap.min.css';
+import './css/bootstrap-icons.css';
+import './css/owl.carousel.min.css';
+import './css/owl.theme.default.min.css';
+import './css/templatemo-pod-talk.css';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import 'owl.carousel';
-import $ from 'jquery';
-function ListUsers() {
-  
+function Homepage() {
+  const options = {
+    items: 1, // Number of items to display at a time
+    loop: true, // Infinite loop
+    autoplay: true, // Autoplay the carousel
+    autoplayTimeout: 3000, // Autoplay interval in milliseconds (3 seconds in this example)
+    nav: true, // Display navigation arrows
+    dots: true, // Display pagination dots
+  };
   return (
     <div>
       <main>
@@ -57,7 +63,6 @@ function ListUsers() {
             </div>
           </div>
         </nav>
-        <div className="nav">12345</div>
         <section className="hero-section">
           <div className="container">
             <div className="row">
@@ -67,13 +72,13 @@ function ListUsers() {
                   <p className="text-white">Take your chord practice to the next level with our structured chord exercises.</p>
                   <a href="#section_2" className="btn custom-btn smoothscroll mt-3">Start listening</a>
                 </div>
-                <div className="owl-carousel owl-theme">
-                  <div className="owl-carousel-info-wrap item">
-                    <img src={require("../images/profile/febdba6d-ed85-422b-b437-01b25015360c.jpg")} className="owl-carousel-image img-fluid" alt="" />
+                <OwlCarousel className="owl-theme" {...options}>
+                  <div className="item">
+                    <img src={require("../images/profile/pexels-photo-164936-684x1024.jpeg")} className="owl-carousel-image img-fluid" alt="" />
                     <div className="owl-carousel-info">
                       <h4 className="mb-2">
                         Drums
-                        <img src="images/verified.png" className="owl-carousel-verified-image img-fluid" alt="" />
+                        <img src={require("../images/verified.png")} className="owl-carousel-verified-image img-fluid" alt="" />
                       </h4>
                       <span className="badge">Storytelling</span>
                       <span className="badge">Business</span>
@@ -89,15 +94,16 @@ function ListUsers() {
                       </ul>
                     </div>
                   </div>
-                  <div className="owl-carousel-info-wrap item">
-                    <img src="images/profile/hinh-guitar-am-cung.jpg" className="owl-carousel-image img-fluid" alt="" />
+                  {/* Repeat the above structure for other carousel items */}
+                  <div className="item">
+                    <img src={require("../images/profile/febdba6d-ed85-422b-b437-01b25015360c.jpg")} className="owl-carousel-image img-fluid" alt="" />
                     <div className="owl-carousel-info">
                       <h4 className="mb-2">
-                        Guitar
-                        <img src="images/verified.png" className="owl-carousel-verified-image img-fluid" alt="" />
+                        Drums
+                        <img src={require("../images/verified.png")} className="owl-carousel-verified-image img-fluid" alt="" />
                       </h4>
-                      <span className="badge">Creative</span>
-                      <span className="badge">Design</span>
+                      <span className="badge">Storytelling</span>
+                      <span className="badge">Business</span>
                     </div>
                     <div className="social-share">
                       <ul className="social-icon">
@@ -107,88 +113,94 @@ function ListUsers() {
                         <li className="social-icon-item">
                           <a href="#" className="social-icon-link bi-facebook" />
                         </li>
-                        <li className="social-icon-item">
-                          <a href="#" className="social-icon-link bi-pinterest" />
-                        </li>
                       </ul>
                     </div>
-                  </div>
-                  <div className="owl-carousel-info-wrap item">
-                    <img src="images/profile/Violin.webp" className="owl-carousel-image img-fluid" alt="" />
-                    <div className="owl-carousel-info">
-                      <h4 className="mb-2">Violin</h4>
-                      <span className="badge">Modeling</span>
-                      <span className="badge">Fashion</span>
                     </div>
-                    <div className="social-share">
-                      <ul className="social-icon">
-                        <li className="social-icon-item">
-                          <a href="#" className="social-icon-link bi-twitter" />
-                        </li>
-                        <li className="social-icon-item">
-                          <a href="#" className="social-icon-link bi-facebook" />
-                        </li>
-                        <li className="social-icon-item">
-                          <a href="#" className="social-icon-link bi-pinterest" />
-                        </li>
-                      </ul>
+                    <div className="item">
+                      <img src={require("../images/profile/hinh-guitar-am-cung.jpg")} className="owl-carousel-image img-fluid" alt="" />
+                      <div className="owl-carousel-info">
+                        <h4 className="mb-2">
+                          Drums
+                          <img src={require("../images/verified.png")} className="owl-carousel-verified-image img-fluid" alt="" />
+                        </h4>
+                        <span className="badge">Storytelling</span>
+                        <span className="badge">Business</span>
+                      </div>
+                      <div className="social-share">
+                        <ul className="social-icon">
+                          <li className="social-icon-item">
+                            <a href="#" className="social-icon-link bi-twitter" />
+                          </li>
+                          <li className="social-icon-item">
+                            <a href="#" className="social-icon-link bi-facebook" />
+                          </li>
+                        </ul>
+                      </div>
                     </div>
-                  </div>
-                  <div className="owl-carousel-info-wrap item">
-                    <img src="images/profile/test-8482.jpg" className="owl-carousel-image img-fluid" alt="" />
-                    <div className="owl-carousel-info">
-                      <h4 className="mb-2">Piano</h4>
-                      <span className="badge">Acting</span>
+                    <div className="item">
+                      <img src={require("../images/profile/Violin.webp")} className="owl-carousel-image img-fluid" alt="" />
+                      <div className="owl-carousel-info">
+                        <h4 className="mb-2">
+                          Drums
+                          <img src={require("../images/verified.png")} className="owl-carousel-verified-image img-fluid" alt="" />
+                        </h4>
+                        <span className="badge">Storytelling</span>
+                        <span className="badge">Business</span>
+                      </div>
+                      <div className="social-share">
+                        <ul className="social-icon">
+                          <li className="social-icon-item">
+                            <a href="#" className="social-icon-link bi-twitter" />
+                          </li>
+                          <li className="social-icon-item">
+                            <a href="#" className="social-icon-link bi-facebook" />
+                          </li>
+                        </ul>
+                      </div>
                     </div>
-                    <div className="social-share">
-                      <ul className="social-icon">
-                        <li className="social-icon-item">
-                          <a href="#" className="social-icon-link bi-instagram" />
-                        </li>
-                        <li className="social-icon-item">
-                          <a href="#" className="social-icon-link bi-youtube" />
-                        </li>
-                      </ul>
+                    <div className="item">
+                      <img src={require("../images/profile/test-8482.jpg")} className="owl-carousel-image img-fluid" alt="" />
+                      <div className="owl-carousel-info">
+                        <h4 className="mb-2">
+                          Drums
+                          <img src={require("../images/verified.png")} className="owl-carousel-verified-image img-fluid" alt="" />
+                        </h4>
+                        <span className="badge">Storytelling</span>
+                        <span className="badge">Business</span>
+                      </div>
+                      <div className="social-share">
+                        <ul className="social-icon">
+                          <li className="social-icon-item">
+                            <a href="#" className="social-icon-link bi-twitter" />
+                          </li>
+                          <li className="social-icon-item">
+                            <a href="#" className="social-icon-link bi-facebook" />
+                          </li>
+                        </ul>
+                      </div>
                     </div>
-                  </div>
-                  <div className="owl-carousel-info-wrap item">
-                    <img src={("../images/profile/Bach-Trompete_06.08.2008_12-46-40_2304x3072.jpg")} className="owl-carousel-image img-fluid" alt="" />
-                    <div className="owl-carousel-info">
-                      <h4 className="mb-2">
-                        Trumpet
-                        <img src="images/verified.png" className="owl-carousel-verified-image img-fluid" alt="" />
-                      </h4>
-                      <span className="badge">Influencer</span>
+                    <div className="item">
+                      <img src={require("../images/profile/Bach-Trompete_06.08.2008_12-46-40_2304x3072.jpg")} className="owl-carousel-image img-fluid" alt="" />
+                      <div className="owl-carousel-info">
+                        <h4 className="mb-2">
+                          Drums
+                          <img src={require("../images/verified.png")} className="owl-carousel-verified-image img-fluid" alt="" />
+                        </h4>
+                        <span className="badge">Storytelling</span>
+                        <span className="badge">Business</span>
+                      </div>
+                      <div className="social-share">
+                        <ul className="social-icon">
+                          <li className="social-icon-item">
+                            <a href="#" className="social-icon-link bi-twitter" />
+                          </li>
+                          <li className="social-icon-item">
+                            <a href="#" className="social-icon-link bi-facebook" />
+                          </li>
+                        </ul>
+                      </div>
                     </div>
-                    <div className="social-share">
-                      <ul className="social-icon">
-                        <li className="social-icon-item">
-                          <a href="#" className="social-icon-link bi-instagram" />
-                        </li>
-                        <li className="social-icon-item">
-                          <a href="#" className="social-icon-link bi-youtube" />
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div className="owl-carousel-info-wrap item">
-                    <img src="images/profile/pexels-photo-164936-684x1024.jpeg" className="owl-carousel-image img-fluid" alt="" />
-                    <div className="owl-carousel-info">
-                      <h4 className="mb-2">Saxophone</h4>
-                      <span className="badge">Education</span>
-                    </div>
-                    <div className="social-share">
-                      <ul className="social-icon">
-                        <li className="social-icon-item">
-                          <a href="#" className="social-icon-link bi-linkedin" />
-                        </li>
-                        <li className="social-icon-item">
-                          <a href="#" className="social-icon-link bi-whatsapp" />
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+                </OwlCarousel>
               </div>
             </div>
           </div>
@@ -633,4 +645,4 @@ function ListUsers() {
 }
 
 
-export default ListUsers;
+export default Homepage;

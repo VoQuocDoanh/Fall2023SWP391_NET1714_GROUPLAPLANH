@@ -31,7 +31,6 @@ export default function Test2() {
     // Example usage in your OwlCarousel component
     return (
         <OwlCarousel className="owl-theme" {...options}>
-            <div className='nav'>Hien</div>
             <div className="item">
                 <img src={require("../images/profile/pexels-photo-164936-684x1024.jpeg")} className="owl-carousel-image img-fluid" alt="" />
                 <div className="owl-carousel-info">
@@ -157,6 +156,34 @@ export default function Test2() {
                             </li>
                         </ul>
                     </div>
+                </div>
+                <div className="owl-nav disabled">
+                    <button type="button" role="presentation" className="owl-prev">
+                        <span aria-label="Previous"></span>
+                    </button>
+                    <button type="button" role="presentation" className="owl-next">
+                        <span aria-label="Next"></span>
+                    </button>
+                </div>
+                <div className="owl-dots">
+                    <button role="button" className="owl-dot active">
+                        <span></span>
+                    </button>
+                    <button role="button" className="owl-dot active">
+                        <span></span>
+                    </button>
+                    <button role="button" className="owl-dot active">
+                        <span></span>
+                    </button>
+                    <button role="button" className="owl-dot active">
+                        <span></span>
+                    </button>
+                    <button role="button" className="owl-dot active">
+                        <span></span>
+                    </button>
+                    <button role="button" className="owl-dot active">
+                        <span></span>
+                    </button>
                 </div>
             </div>
         </OwlCarousel>
