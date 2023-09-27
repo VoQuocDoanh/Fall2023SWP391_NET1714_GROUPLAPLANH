@@ -1,67 +1,50 @@
 package com.example.demo.implement;
 
-import com.example.demo.dto.LoginDTO;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.response.ResponseObject;
-import com.example.demo.service.LoginRegisterService;
+import com.example.demo.service.UserService;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Transactional
+@RequiredArgsConstructor
+@Slf4j
 @Service
-public class UserServiceImpl implements LoginRegisterService {
+public class UserServiceImpl implements UserService {
+
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    //register
-
     @Override
-    public ResponseObject registerUser(User user) {
-        User foundUser = userRepository.findUserByUsername(user.getUsername().trim());
-        if(foundUser == null){
-            User us = new User(user.getUsername(),
-                    this.passwordEncoder.encode(user.getPass()),
+    public ResponseEntity<ResponseObject> addUser(User user) {
+        Optional<User> foundUser = userRepository.findUserByUsername(user.getUsername().trim());
+        if (foundUser.isEmpty()) {
+            User us = new User(null, user.getUsername(),
+                    this.passwordEncoder.encode(user.getPassword()),
                     user.getFullName(),
                     user.getMail(),
-                    user.getRoleID(),
-                    user.getStatus());
+                    user.getRole(),
+                    user.getStatus(),
+                    user.getBeats());
             userRepository.save(us);
-            return new ResponseObject("OK", "Register Success", us);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("SUCCESS", "Signup Success", us));
         }
-        return new ResponseObject("FAILED", "Register Failed (username duplicated)", "");
-    }
-
-    //login
-    @Override
-    public ResponseObject loginUser(LoginDTO loginDTO) {
-        User user = userRepository.findUserByUsername(loginDTO.getUsername());
-        if (user != null) {
-            String password = loginDTO.getPassword();
-            String encodedPassword = user.getPass();
-            boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
-            if (isPwdRight) {
-                Optional<User> us = userRepository.findUserByUsernameAndPass(loginDTO.getUsername(), encodedPassword);
-                if (us.isPresent()) {
-                    return new ResponseObject("OK", "Login Success", us);
-                } else {
-                    return new ResponseObject("BAD_REQUEST", "Login Failed", "");
-                }
-            } else {
-                return new ResponseObject("FAILED", "Password Not Match", "");
-            }
-        } else {
-            return new ResponseObject("FAILED", "Username Not Match", "");
-        }
-    }
-
-    @Override
-    public boolean CheckUsername(User user) {
-        return false;
+        return ResponseEntity.status(HttpStatus.FOUND).body(
+                new ResponseObject("FAILED", "Signup Failed", ""));
     }
 }
