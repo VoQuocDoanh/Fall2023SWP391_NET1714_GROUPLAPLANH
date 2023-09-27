@@ -1,18 +1,23 @@
 package com.example.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Data
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "User")
-public class User {
+public class User implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +27,7 @@ public class User {
     private String username;
 
     @Column
-    private String pass;
+    private String password;
 
     @Column
     private String fullName;
@@ -31,81 +36,39 @@ public class User {
     private String mail;
 
     @Column
-    private String roleID;
+    private String role;
+
 
     @Column
     private int status;
 
-//    @OneToMany(mappedBy="userName")
-////    @JsonIgnore
-//    @JsonInclude(JsonInclude.Include.NON_NULL)
-//    private List<Beat> beats =new ArrayList<>();
+    @OneToMany(mappedBy="user_id")
+    private List<Beat> beats =new ArrayList<>();
 
-    public User(String username, String pass, String fullName, String mail, String roleID, int status) {
-        this.username = username;
-        this.pass = pass;
-        this.fullName = fullName;
-        this.mail = mail;
-        this.roleID = roleID;
-        this.status=status;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities =  new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(getRole()));
+        return List.of(new SimpleGrantedAuthority(authorities.toString()));
     }
 
-    public Long getId() {
-        return Id;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public void setId(Long id) {
-        Id = id;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    public String getUsername() {
-        return username;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public String getRoleID() {
-        return roleID;
-    }
-
-    public void setRoleID(String roleID) {
-        this.roleID = roleID;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public User() {
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

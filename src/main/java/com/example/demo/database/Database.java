@@ -1,11 +1,8 @@
 package com.example.demo.database;
 
-import ch.qos.logback.classic.encoder.JsonEncoder;
-import com.example.demo.entity.Beat;
 import com.example.demo.entity.User;
 import com.example.demo.repository.BeatRepository;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.securityconfig.SecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -26,11 +23,22 @@ public class Database {
 //                Beat beatB = new Beat("Dieing for you", "def", "none", 10.0, 1);
 //                System.out.println("insert date: " + beatRepository.save(beatA));
 //                System.out.println("insert date: " + beatRepository.save(beatB));
-//
-////                User admin = new User("admin", "1", "toi la admin", "", "AD");
-//                User customer = new User("1", this.passwordEncoder.encode("1"), "toi la user", "", "US",1);
-//////                System.out.println("insert date: " + userRepository.save(admin));
-//                System.out.println("insert date: " + userRepository.save(customer));
+
+//                User admin = new User("admin", "1", "toi la admin", "", "AD");
+                User admin = new User(null,"admin", this.passwordEncoder.encode("1"), "toi la admin", "12323123", null,1, null);
+                admin.setRole("AD");
+
+                User musician = new User(null,"music", this.passwordEncoder.encode("1"), "toi la musician", "12323123", null,1,null);
+                musician.setRole("MS");
+
+                User customer = new User(null,"user", this.passwordEncoder.encode("1"), "toi la user", "12323123", null,1,null);
+                customer.setRole("US");
+
+//                System.out.println("insert date: " + userRepository.save(admin));
+                System.out.println("insert date: " + userRepository.save(admin));
+                System.out.println("insert date: " + userRepository.save(musician));
+                System.out.println("insert date: " + userRepository.save(customer));
+
             }
         };
     }
