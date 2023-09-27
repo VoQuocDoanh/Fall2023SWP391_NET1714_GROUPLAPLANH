@@ -6,23 +6,16 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(
-        name = "Chord"
+        name = "ChordBasic"
 )
-public class Chord {
+public class ChordBasic {
     @Id
     @GeneratedValue(
             strategy = GenerationType.IDENTITY
@@ -151,10 +144,10 @@ public class Chord {
         this.collections = collections;
     }
 
-    public Chord() {
+    public ChordBasic() {
     }
 
-    public Chord(final Long chordId, final String chordName, final String image, final String key, final String suffix, final String description, final String type, final List<Song> songs, final List<ChordCollection> collections) {
+    public ChordBasic(final Long chordId, final String chordName, final String image, final String key, final String suffix, final String description, final String type, final List<Song> songs, final List<ChordCollection> collections) {
         this.chordId = chordId;
         this.chordName = chordName;
         this.image = image;

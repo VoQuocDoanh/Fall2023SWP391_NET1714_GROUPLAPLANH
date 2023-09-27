@@ -6,15 +6,8 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +42,7 @@ public class ChordCollection {
     @ManyToMany(
             mappedBy = "collections"
     )
-    private List<Chord> chords = new ArrayList();
+    private List<ChordBasic> chords = new ArrayList();
 
     public Long getId() {
         return this.id;
@@ -71,7 +64,7 @@ public class ChordCollection {
         return this.userCollection;
     }
 
-    public List<Chord> getChords() {
+    public List<ChordBasic> getChords() {
         return this.chords;
     }
 
@@ -96,14 +89,14 @@ public class ChordCollection {
         this.userCollection = userCollection;
     }
 
-    public void setChords(final List<Chord> chords) {
+    public void setChords(final List<ChordBasic> chords) {
         this.chords = chords;
     }
 
     public ChordCollection() {
     }
 
-    public ChordCollection(final Long id, final String name, final String description, final int status, final User userCollection, final List<Chord> chords) {
+    public ChordCollection(final Long id, final String name, final String description, final int status, final User userCollection, final List<ChordBasic> chords) {
         this.id = id;
         this.name = name;
         this.description = description;

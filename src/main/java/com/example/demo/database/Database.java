@@ -1,6 +1,5 @@
 package com.example.demo.database;
 
-import com.example.demo.entity.User;
 import com.example.demo.repository.BeatRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,20 +24,9 @@ public class Database {
 //                System.out.println("insert date: " + beatRepository.save(beatB));
 
 //                User admin = new User("admin", "1", "toi la admin", "", "AD");
-                User admin = new User(null,"admin", this.passwordEncoder.encode("1"), "toi la admin", "12323123", null,1, null);
-                admin.setRole("AD");
-
-                User musician = new User(null,"music", this.passwordEncoder.encode("1"), "toi la musician", "12323123", null,1,null);
-                musician.setRole("MS");
-
-                User customer = new User(null,"user", this.passwordEncoder.encode("1"), "toi la user", "12323123", null,1,null);
-                customer.setRole("US");
-
+             //   User customer = new User("user", this.passwordEncoder.encode("1"), "toi la user", "", "US",1);
 //                System.out.println("insert date: " + userRepository.save(admin));
-                System.out.println("insert date: " + userRepository.save(admin));
-                System.out.println("insert date: " + userRepository.save(musician));
-                System.out.println("insert date: " + userRepository.save(customer));
-
+               // System.out.println("insert date: " + userRepository.save(customer));
             }
         };
     }
