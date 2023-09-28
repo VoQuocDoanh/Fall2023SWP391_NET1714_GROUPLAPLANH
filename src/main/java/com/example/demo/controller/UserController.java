@@ -34,11 +34,6 @@ public class UserController {
     @Autowired
     AuthenticationManager authenticationManager;
 
-    @GetMapping(path = {""})
-    public String abc (){
-        return "abc";
-    }
-
     @PostMapping(path = "/signup")
     public ResponseEntity<ResponseObject> saveUser(@Valid @RequestBody User user){
         return userService.addUser(user);
@@ -56,6 +51,7 @@ public class UserController {
     }
 
     //List all user in AD
+    @GetMapping(path = {""})
     public List<User> getAllUsers() {
         return this.userRepository.findByOrderByStatusDesc();
     }

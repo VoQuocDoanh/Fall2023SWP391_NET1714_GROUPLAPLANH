@@ -7,90 +7,47 @@ package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(
-        name = "FeedbackSong"
-)
+@Table(name = "FeedbackSong")
 public class FeedbackSong {
-    @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
-    private Long Id;
-    @Column(
-            name = "Description"
-    )
-    private String description;
-    @Column(
-            name = "Status"
-    )
-    private int status;
-    @Column(
-            name = "Date"
-    )
-    private LocalDateTime createdAt;
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(
-            name = "userFeedback"
-    )
-    private User userFeedback;
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(
-            name = "feedbackSong"
-    )
-    private Song feedbackSong;
 
-    public FeedbackSong() {
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
+
+    @Column(name = "Description")
+    private String description;
+
+    @Column(name = "Status")
+    private int status;
+
+    @Column(name = "Date")
+    private LocalDateTime createdAt;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "userFeedback")
+    private User userFeedback;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "feedbackSong")
+    private Song feedbackSong;
 
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
-    }
-
-    public Long getId() {
-        return this.Id;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public int getStatus() {
-        return this.status;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return this.createdAt;
-    }
-
-    public User getUserFeedback() {
-        return this.userFeedback;
-    }
-
-    public Song getFeedbackSong() {
-        return this.feedbackSong;
-    }
-
-    public void setId(final Long Id) {
-        this.Id = Id;
-    }
-
-    public void setDescription(final String description) {
-        this.description = description;
-    }
-
-    public void setStatus(final int status) {
-        this.status = status;
-    }
-
-    public void setCreatedAt(final LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 
     @JsonIgnore

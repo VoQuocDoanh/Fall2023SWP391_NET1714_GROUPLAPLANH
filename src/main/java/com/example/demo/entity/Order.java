@@ -25,17 +25,22 @@ import java.util.List;
 @Entity
 @Table(name = "Orders")
 public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
+
     @Column(name = "Price")
     private Double price;
+
     @Column(name = "Date")
     private LocalDateTime createdAt;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "userOrder")
     private User userOrder;
+
     @OneToMany(mappedBy = "orderBeat")
     @JsonIgnore
     @JsonInclude(Include.NON_NULL)
@@ -46,18 +51,6 @@ public class Order {
         this.createdAt = LocalDateTime.now();
     }
 
-    public void setOrderId(final Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public void setPrice(final Double price) {
-        this.price = price;
-    }
-
-    public void setCreatedAt(final LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     @JsonIgnore
     public void setUserOrder(final User userOrder) {
         this.userOrder = userOrder;
@@ -66,25 +59,5 @@ public class Order {
     @JsonIgnore
     public void setBeats(final List<Beat> beats) {
         this.beats = beats;
-    }
-
-    public Long getOrderId() {
-        return this.orderId;
-    }
-
-    public Double getPrice() {
-        return this.price;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return this.createdAt;
-    }
-
-    public User getUserOrder() {
-        return this.userOrder;
-    }
-
-    public List<Beat> getBeats() {
-        return this.beats;
     }
 }

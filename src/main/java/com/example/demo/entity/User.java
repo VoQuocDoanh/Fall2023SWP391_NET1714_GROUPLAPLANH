@@ -31,20 +31,28 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
+
     @Column
     private String username;
+
     @Column
     private String password;
+
     @Column
     private String fullName;
+
     @Column
     private String mail;
+
     @Column
     private String role;
+
     @Column
     private int status;
+
     @Column
     private String address;
+
     @Column
     private String phoneNumber;
 

@@ -23,19 +23,23 @@ import java.util.List;
 @Entity
 @Table(name = "Beat")
 public class Beat {
+
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
+
     @Column
     private String beatName;
+
     @Column
     private Double price;
+
     @Column
     private int status;
+
     @Column
     private String beatSound;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "userName")
@@ -84,7 +88,4 @@ public class Beat {
     public String toString() {
         return "Beat{Id=" + this.Id + ", beatName='" + this.beatName + "', price=" + this.price + ", status=" + this.status + ", beatSound='" + this.beatSound + "', userName=" + this.userName + "}";
     }
-
-
-
 }
