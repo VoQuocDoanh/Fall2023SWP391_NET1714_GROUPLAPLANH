@@ -14,13 +14,7 @@ import com.example.demo.response.ResponseObject;
 import com.example.demo.service.BeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = ("beat"))
@@ -37,6 +31,12 @@ public class BeatController {
     @GetMapping("")
     public ResponseEntity<ResponseObject> findAllBeat(@RequestBody BeatDTO beatDTO) {
         return this.beatService.findAllBeat(beatDTO);
+    }
+
+    //Get detail beat
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseObject> findById(@PathVariable Long id){
+        return beatService.findById(id);
     }
 
     //Search beat in User
@@ -59,7 +59,7 @@ public class BeatController {
     }
 
     //delete beat by update status in MS
-    @PutMapping({"delete/{id}"})
+    @DeleteMapping({"delete/{id}"})
     public ResponseEntity<ResponseObject> deleteBeat(@RequestBody Beat newBeat, @PathVariable Long id) {
         return this.beatService.deleteBeat(newBeat, id);
     }

@@ -33,7 +33,7 @@ public class ChordBasic {
     @Column(name = "Image")
     private String image;
 
-    @Column(name = "'Key'")
+    @Column(name = "ChordKey")
     private String key;
 
     @Column(name = "Suffix")

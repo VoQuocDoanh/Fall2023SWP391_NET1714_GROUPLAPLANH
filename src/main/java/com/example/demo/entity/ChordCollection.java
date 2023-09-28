@@ -20,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Song Collection")
+@Table(name = "Chord Collection")
 public class ChordCollection {
 
     @Id

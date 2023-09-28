@@ -63,6 +63,11 @@ public class Beat {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
+
     public Beat(String beatName, String beatSound, Double price, int status, User userName) {
         this.beatName = beatName;
         this.price = price;
@@ -80,10 +85,6 @@ public class Beat {
         this.createdAt = createdAt;
     }
 
-    @PrePersist
-    public void prePersist() {
-        this.createdAt = LocalDateTime.now();
-    }
 
     public String toString() {
         return "Beat{Id=" + this.Id + ", beatName='" + this.beatName + "', price=" + this.price + ", status=" + this.status + ", beatSound='" + this.beatSound + "', userName=" + this.userName + "}";
