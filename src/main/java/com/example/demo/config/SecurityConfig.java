@@ -27,9 +27,9 @@ public class SecurityConfig {
         http.sessionManagement().sessionCreationPolicy(STATELESS);
         http.authorizeRequests()
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .requestMatchers("/user/auth/login").anonymous()
-                .requestMatchers("/user/auth/signup").permitAll()
-                .requestMatchers("/user/auth/auth").hasAnyAuthority("US")
+                .requestMatchers("/user/login").anonymous()
+                .requestMatchers("/user/signup").permitAll()
+                .requestMatchers("/user/auth").hasAnyAuthority("US")
                 .requestMatchers("/beat/**").hasAnyAuthority("MS")
                 .and()
                 .csrf().disable()

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = {"user"})
+@RequestMapping(path = {"/user"})
 public class UserController {
 
     @Autowired
@@ -35,6 +35,9 @@ public class UserController {
     AuthenticationManager authenticationManager;
 
     @GetMapping(path = {""})
+    public String abc (){
+        return "abc";
+    }
 
     @PostMapping(path = "/signup")
     public ResponseEntity<ResponseObject> saveUser(@Valid @RequestBody User user){
@@ -58,9 +61,7 @@ public class UserController {
     }
 
     //List detail user in AD
-    @GetMapping(
-            path = {"/{id}"}
-    )
+    @GetMapping(path = {"/{id}"})
     public ResponseEntity<ResponseObject> findById(@PathVariable Long id) {
         return this.userService.findById(id);
     }

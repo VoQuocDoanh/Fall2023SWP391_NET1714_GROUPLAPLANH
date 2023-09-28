@@ -19,23 +19,19 @@ public class Database {
 
             @Override
             public void run(String... args) throws Exception {
-//                Beat beatA = new Beat("Die for you", "def", "none", 10.0, 1);
-//                Beat beatB = new Beat("Dieing for you", "def", "none", 10.0, 1);
-//                System.out.println("insert date: " + beatRepository.save(beatA));
-//                System.out.println("insert date: " + beatRepository.save(beatB));
 
-                User admin = new User("admin", this.passwordEncoder.encode("1"), "toi la admin", "12323123", null,1);
-                admin.setRole("AD");
+//                User admin = new User("admin", this.passwordEncoder.encode("1"), "toi la admin", "12323123", null,1);
+//                admin.setRole("AD");
+//
+//                User musician = new User("music", this.passwordEncoder.encode("1"), "toi la musician", "12323123", null,1);
+//                musician.setRole("MS");
+//
+//                User customer = new User("user", this.passwordEncoder.encode("1"), "toi la user", "12323123", null,1);
+//                customer.setRole("US");
 
-                User musician = new User("music", this.passwordEncoder.encode("1"), "toi la musician", "12323123", null,1);
-                musician.setRole("MS");
-
-                User customer = new User("user", this.passwordEncoder.encode("1"), "toi la user", "12323123", null,1);
-                customer.setRole("US");
-
-                System.out.println("insert date: " + userRepository.save(admin));
-                System.out.println("insert date: " + userRepository.save(musician));
-                System.out.println("insert date: " + userRepository.save(customer));
+//                System.out.println("insert date: " + userRepository.save(admin));
+//                System.out.println("insert date: " + userRepository.save(musician));
+//                System.out.println("insert date: " + userRepository.save(customer));
 
             }
         };
