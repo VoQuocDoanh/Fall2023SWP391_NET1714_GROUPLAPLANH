@@ -41,9 +41,7 @@ public class ChordBasic {
             name = "Description"
     )
     private String description;
-    @Column(
-            name = "Type"
-    )
+    @Column(name = "Type")
     private String type;
     @ManyToMany
     @JsonIgnore

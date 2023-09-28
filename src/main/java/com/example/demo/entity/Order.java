@@ -9,38 +9,34 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(
-        name = "Orders"
-)
+@Table(name = "Orders")
 public class Order {
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
-    @Column(
-            name = "Price"
-    )
+    @Column(name = "Price")
     private Double price;
-    @Column(
-            name = "Date"
-    )
+    @Column(name = "Date")
     private LocalDateTime createdAt;
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(
-            name = "userOrder"
-    )
+    @JoinColumn(name = "userOrder")
     private User userOrder;
-    @OneToMany(
-            mappedBy = "orderBeat"
-    )
+    @OneToMany(mappedBy = "orderBeat")
     @JsonIgnore
     @JsonInclude(Include.NON_NULL)
     private List<Beat> beats = new ArrayList();
@@ -48,9 +44,6 @@ public class Order {
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
-    }
-
-    public Order() {
     }
 
     public void setOrderId(final Long orderId) {

@@ -7,15 +7,21 @@ package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(
-        name = "Beat"
-)
+@Table(name = "Beat")
 public class Beat {
     @Id
     @GeneratedValue(
@@ -32,31 +38,25 @@ public class Beat {
     private String beatSound;
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(
-            name = "userName"
-    )
+    @JoinColumn(name = "userName")
     private User userName;
+
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(
-            name = "orderBeat"
-    )
-    private com.example.demo.entity.Order orderBeat;
+    @JoinColumn(name = "orderBeat")
+    private Order orderBeat;
+
     @ManyToMany
     @JsonIgnore
-    @JoinTable(
-            name = "GenreBeat",
+    @JoinTable(name = "GenreBeat",
             joinColumns = {@JoinColumn(
-                    name = "beatId"
-            )},
+                    name = "beatId")},
             inverseJoinColumns = {@JoinColumn(
-                    name = "genreId"
-            )}
+                    name = "genreId")}
     )
     private List<Genre> genres = new ArrayList();
-    @Column(
-            name = "created_at"
-    )
+
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     public Beat(String beatName, String beatSound, Double price, int status, User userName) {
@@ -67,35 +67,13 @@ public class Beat {
         this.userName = userName;
     }
 
-
-    public Beat(Long id, String beatName, String beatSound, Double price, com.example.demo.entity.Order orderBeat, LocalDateTime createdAt) {
+    public Beat(Long id, String beatName, String beatSound, Double price, Order orderBeat, LocalDateTime createdAt) {
         this.Id=id;
         this.beatName = beatName;
         this.price = price;
-        this.status = status;
         this.beatSound = beatSound;
-        this.userName = userName;
         this.orderBeat = orderBeat;
         this.createdAt = createdAt;
-    }
-
-    public Beat() {
-    }
-
-    public Long getId() {
-        return this.Id;
-    }
-
-    public void setId(Long id) {
-        this.Id = id;
-    }
-
-    public String getBeatName() {
-        return this.beatName;
-    }
-
-    public void setBeatName(String beatName) {
-        this.beatName = beatName;
     }
 
     @PrePersist
@@ -103,67 +81,10 @@ public class Beat {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Double getPrice() {
-        return this.price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public int getStatus() {
-        return this.status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public String getBeatSound() {
-        return this.beatSound;
-    }
-
-    public void setBeatSound(String beatSound) {
-        this.beatSound = beatSound;
-    }
-
-    public User getUserName() {
-        return this.userName;
-    }
-
-    public void setUserName(User userName) {
-        this.userName = userName;
-    }
-
     public String toString() {
         return "Beat{Id=" + this.Id + ", beatName='" + this.beatName + "', price=" + this.price + ", status=" + this.status + ", beatSound='" + this.beatSound + "', userName=" + this.userName + "}";
     }
 
-    public com.example.demo.entity.Order getOrderBeat() {
-        return this.orderBeat;
-    }
-
-    public List<Genre> getGenres() {
-        return this.genres;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return this.createdAt;
-    }
-
-    @JsonIgnore
-    public void setOrderBeat(final Order orderBeat) {
-        this.orderBeat = orderBeat;
-    }
-
-    @JsonIgnore
-    public void setGenres(final List<Genre> genres) {
-        this.genres = genres;
-    }
-
-    public void setCreatedAt(final LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
 
 
 }

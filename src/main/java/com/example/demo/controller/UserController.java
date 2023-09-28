@@ -5,33 +5,52 @@
 
 package com.example.demo.controller;
 
+import com.example.demo.dto.AuthenRequest;
+import com.example.demo.dto.AuthenRespone;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.User;
+import com.example.demo.jwt.JwtTokenProvider;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.response.ResponseObject;
 import com.example.demo.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(
-        path = {"user"}
-)
+@RequestMapping(path = {"user"})
 public class UserController {
+
     @Autowired
     UserRepository userRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    AuthenticationManager authenticationManager;
 
-    public UserController() {
+    @GetMapping(path = {""})
+
+    @PostMapping(path = "/signup")
+    public ResponseEntity<ResponseObject> saveUser(@Valid @RequestBody User user){
+        return userService.addUser(user);
     }
 
-    @GetMapping(
-            path = {""}
-    )
+    @PostMapping(path = "/login")
+    public ResponseEntity<AuthenRespone> login(@Valid @RequestBody AuthenRequest authenRequest){
+        return ResponseEntity.ok(jwtTokenProvider.authenticate(authenRequest));
+    }
+
+    // test authentication
+    @GetMapping(path = "/auth")
+    public String login123(){
+        return "authen ok rồi đó bro";
+    }
 
     //List all user in AD
     public List<User> getAllUsers() {

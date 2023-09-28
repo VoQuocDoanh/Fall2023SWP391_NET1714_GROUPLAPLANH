@@ -23,20 +23,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(
-        path = ("beat")
-)
+@RequestMapping(path = ("beat"))
 public class BeatController {
+
     @Autowired
     private BeatRepository beatRepository;
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private BeatService beatService;
-    User user = new User();
-
-    public BeatController() {
-    }
 
     //List own beat
     @GetMapping("")
