@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,15 @@ public class ChordCollection {
     @Column(name = "Status")
     private int status;
 
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "userCollection")
@@ -49,4 +59,21 @@ public class ChordCollection {
         this.userCollection = userCollection;
     }
 
+    public ChordCollection(String name, int status) {
+        this.name = name;
+        this.status = status;
+    }
+
+    public ChordCollection(Long id,String name, int status, LocalDateTime createdAt) {
+        this.id=id;
+        this.name = name;
+        this.status = status;
+        this.createdAt = createdAt;
+    }
+
+    public ChordCollection(String name, int status, User userCollection) {
+        this.name = name;
+        this.status = status;
+        this.userCollection = userCollection;
+    }
 }

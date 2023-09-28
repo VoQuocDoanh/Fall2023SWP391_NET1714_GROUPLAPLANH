@@ -1,13 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.ChordCollection;
+import com.example.demo.dto.ChordCollectionDTO;
 import com.example.demo.repository.ChordCollectionRepository;
+import com.example.demo.response.ResponseObject;
+import com.example.demo.service.ChordCollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/chordCollection")
@@ -15,11 +14,26 @@ public class ChordCollectionController {
     @Autowired
     ChordCollectionRepository chordCollectionRepository;
 
+    @Autowired
+    ChordCollectionService chordCollectionService;
+
+    //List own collection
     @GetMapping("")
-    public List<ChordCollection> getAllCollection(){
-        return chordCollectionRepository.findAll();
+    public ResponseEntity<ResponseObject> getAllCollection(@RequestBody ChordCollectionDTO chordCollectionDTO)
+    {
+        return chordCollectionService.findAllColletion(chordCollectionDTO);
     }
-  /*
+
     @GetMapping("/{id}")
-    public */
+    public ResponseEntity<ResponseObject> findById(@PathVariable Long id){
+        return chordCollectionService.findById(id);
+    }
+
+    @PostMapping("/AddChordCollection")
+    public ResponseEntity<ResponseObject> createChordCollection(@RequestBody ChordCollectionDTO chordCollectionDTO){
+        return chordCollectionService.createChordCollection(chordCollectionDTO);
+    }
+
+
+
 }
