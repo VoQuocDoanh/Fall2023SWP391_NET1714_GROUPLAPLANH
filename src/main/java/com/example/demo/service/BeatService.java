@@ -34,7 +34,7 @@ public class BeatService {
         List<Beat> beat =beatRepository.findAll();
         if (userEntity == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("false", "Connot find your beat", "")
+                    new ResponseObject("false", "Cannot find your beat", "")
             );
         }else{
             List<Beat> beatEntity= new ArrayList<>();
@@ -60,7 +60,7 @@ public class BeatService {
     public ResponseEntity<ResponseObject> insertBeat(BeatDTO beatDTO) {
         User user = this.userRepository.findByUsername(beatDTO.getUsername());
         if (user == null) {
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "Not found userName", ""));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseObject("ERROR", "Not found userName", ""));
         } else {
             Optional<User> userEntity = Optional.ofNullable(this.userRepository.findByUsername(user.getUsername()));
             if (userEntity.isPresent()) {

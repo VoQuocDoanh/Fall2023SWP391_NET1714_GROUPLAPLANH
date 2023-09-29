@@ -34,21 +34,23 @@ public class UserController {
     @Autowired
     AuthenticationManager authenticationManager;
 
+    // Register a new account
     @PostMapping(path = "/signup")
     public ResponseEntity<ResponseObject> saveUser(@Valid @RequestBody User user){
         return userService.addUser(user);
     }
 
+    // Login to authentication
     @PostMapping(path = "/login")
     public ResponseEntity<AuthenRespone> login(@Valid @RequestBody AuthenRequest authenRequest){
         return ResponseEntity.ok(jwtTokenProvider.authenticate(authenRequest));
     }
 
-    // test authentication
-    @GetMapping(path = "/auth")
-    public String login123(){
-        return "authen ok rồi đó bro";
-    }
+//    // test authentication
+//    @GetMapping(path = "/auth")
+//    public String login123(){
+//        return "authen ok rồi đó bro";
+//    }
 
     //List all user in AD
     @GetMapping(path = {""})

@@ -34,7 +34,7 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public ResponseEntity<ResponseObject> addUser(User user) {
-        Optional<User> foundUser = userRepository.findUserByUsername(user.getUsername().trim());
+        Optional<User> foundUser = userRepository.findUserByUsername(user.getUsername());
         if (foundUser.isEmpty()) {
             User us = new User(user.getUsername(),
                     this.passwordEncoder.encode(user.getPassword()),
@@ -43,10 +43,9 @@ public class UserService {
                     user.getAddress(),
                     user.getPhoneNumber(),
                     user.getRole(),
-                    user.getStatus());
-            userRepository.save(us);
+                    1);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("SUCCESS", "Signup Success", us));
+                    new ResponseObject("SUCCESS", "Signup Success", userRepository.save(us)));
         }
         return ResponseEntity.status(HttpStatus.FOUND).body(
                 new ResponseObject("FAILED", "Signup Failed", ""));

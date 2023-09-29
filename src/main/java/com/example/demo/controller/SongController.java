@@ -6,6 +6,5 @@
 package com.example.demo.controller;
 
 public class SongController {
-    public SongController() {
-    }
+
 }

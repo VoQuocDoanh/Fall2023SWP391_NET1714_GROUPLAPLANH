@@ -45,7 +45,6 @@ public class BeatController {
         return this.beatService.searchByBeatName(beatDTO);
     }
 
-
     //Add beat in musician
     @PostMapping({"/insertBeat"})
     public ResponseEntity<ResponseObject> insertBeat(@RequestBody BeatDTO beatDTO) {

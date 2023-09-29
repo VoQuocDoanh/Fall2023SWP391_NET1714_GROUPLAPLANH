@@ -30,7 +30,7 @@ public class Song {
     private Long Id;
 
     @Column(name = "SongName")
-    private String songName;
+    private String songname;
 
     @Column(name = "Date")
     private LocalDateTime createdAt;
@@ -50,6 +50,9 @@ public class Song {
     @Column(name = "SongUrl")
     private String songUrl;
 
+    @Column(name = "Status")
+    private int status;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "userUploadSong")
@@ -58,7 +61,7 @@ public class Song {
     @OneToMany(mappedBy = "feedbackSong")
     @JsonIgnore
     @JsonInclude(Include.NON_NULL)
-    private List<com.example.demo.entity.FeedbackSong> feedbackSongs = new ArrayList();
+    private List<FeedbackSong> feedbackSongs = new ArrayList();
 
     @ManyToMany
     @JsonIgnore
@@ -92,5 +95,16 @@ public class Song {
     @JsonIgnore
     public void setGenres(final List<Genre> genres) {
         this.genres = genres;
+    }
+
+    public Song(String songname, String author, String tone, String description, String vocalRange, String songUrl, User userUploadSong, int status) {
+        this.songname = songname;
+        this.author = author;
+        this.tone = tone;
+        this.description = description;
+        this.vocalRange = vocalRange;
+        this.songUrl = songUrl;
+        this.userUploadSong = userUploadSong;
+        this.status = status;
     }
 }
