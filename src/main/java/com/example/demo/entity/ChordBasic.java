@@ -34,7 +34,7 @@ public class ChordBasic {
     private String image;
 
     @Column(name = "ChordKey")
-    private String key;
+    private String chordKey;
 
     @Column(name = "Suffix")
     private String suffix;

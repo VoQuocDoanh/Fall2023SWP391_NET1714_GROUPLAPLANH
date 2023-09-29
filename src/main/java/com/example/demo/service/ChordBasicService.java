@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,7 +21,7 @@ public class ChordBasicService {
         Optional<ChordBasic> foundChord=chordBasicRepository.findById(id);
         if (foundChord.isEmpty()){
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("TRUE","Querry product successfully","")
+                    new ResponseObject("FALSE","Not found","")
             );
         }else {
             return ResponseEntity.status(HttpStatus.OK).body(
@@ -31,6 +32,15 @@ public class ChordBasicService {
 
 
     public ResponseEntity<ResponseObject> searchChord(ChordBasicDTO chordDTO){
-
+        List<ChordBasic> chordEntity=chordBasicRepository.findChord(chordDTO.getKey(),chordDTO.getSuffix(), chordDTO.getType());
+        if (chordEntity.isEmpty()){
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("FALSE","Not found","")
+            );
+        } else{
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("TRUE","Querry product successfully",chordEntity)
+            );
+        }
     }
 }
