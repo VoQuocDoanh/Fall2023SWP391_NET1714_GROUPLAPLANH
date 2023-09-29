@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Song Collection")
+@Table(name = "Chord Collection")
 public class ChordCollection {
 
     @Id
@@ -36,12 +37,21 @@ public class ChordCollection {
     @Column(name = "Status")
     private int status;
 
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "userCollection")
     private User userCollection;
 
-    @ManyToMany(mappedBy = "collections")
+    @ManyToMany(mappedBy = "collections",cascade = {CascadeType.ALL})
     private List<ChordBasic> chords = new ArrayList();
 
     @JsonIgnore
@@ -49,4 +59,21 @@ public class ChordCollection {
         this.userCollection = userCollection;
     }
 
+    public ChordCollection(String name, int status) {
+        this.name = name;
+        this.status = status;
+    }
+
+    public ChordCollection(Long id,String name, int status, LocalDateTime createdAt) {
+        this.id=id;
+        this.name = name;
+        this.status = status;
+        this.createdAt = createdAt;
+    }
+
+    public ChordCollection(String name, int status, User userCollection) {
+        this.name = name;
+        this.status = status;
+        this.userCollection = userCollection;
+    }
 }

@@ -16,6 +16,8 @@ public class BeatDTO {
     private Double price;
     private String orderID;
 
+    private String fullName;
+
     @Override
     public String toString() {
         return "BeatDTO{" +
@@ -24,6 +26,7 @@ public class BeatDTO {
                 ", username='" + username + '\'' +
                 ", price=" + price +
                 ", orderID='" + orderID + '\'' +
+                ", fullName='" + fullName + '\'' +
                 '}';
     }
 }

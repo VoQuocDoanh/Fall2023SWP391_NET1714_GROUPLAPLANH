@@ -27,14 +27,14 @@ public class SecurityConfig {
         http.sessionManagement().sessionCreationPolicy(STATELESS);
         http.authorizeRequests()
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .requestMatchers("/user/login").anonymous()
+               /* .requestMatchers("/user/login").anonymous()
                 .requestMatchers("/user/signup").permitAll()
                 .requestMatchers("/user/auth").hasAnyAuthority("US")
                 .requestMatchers("/beat/**").hasAnyAuthority("MS")
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .anyRequest().authenticated()
+                .anyRequest().authenticated()*/
                 .and()
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

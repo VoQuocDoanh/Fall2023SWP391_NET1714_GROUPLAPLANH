@@ -33,8 +33,8 @@ public class ChordBasic {
     @Column(name = "Image")
     private String image;
 
-    @Column(name = "'Key'")
-    private String key;
+    @Column(name = "ChordKey")
+    private String chordKey;
 
     @Column(name = "Suffix")
     private String suffix;
@@ -45,7 +45,7 @@ public class ChordBasic {
     @Column(name = "Type")
     private String type;
 
-    @ManyToMany
+    @ManyToMany (cascade = {CascadeType.ALL})
     @JsonIgnore
     @JoinTable(name = "ChordOfSong",
             joinColumns = {@JoinColumn(
@@ -55,7 +55,7 @@ public class ChordBasic {
     )
     private List<Song> songs = new ArrayList();
 
-    @ManyToMany
+    @ManyToMany (cascade = {CascadeType.ALL})
     @JsonIgnore
     @JoinTable(name = "ChordInCollection",
             joinColumns = {@JoinColumn(

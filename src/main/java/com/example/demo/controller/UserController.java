@@ -71,6 +71,12 @@ public class UserController {
         return this.userService.updateBeat(newUser, id);
     }
 
+    //Edit information (full name, password, address...)
+    @PutMapping("/updateInformation/{id}")
+    public ResponseEntity<ResponseObject> updateInformation(@RequestBody User user, @PathVariable Long id){
+        return  userService.updateInfomation(user, id);
+    }
+
 
     //search US in AD
     @GetMapping("/search")

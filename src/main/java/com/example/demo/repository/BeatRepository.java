@@ -21,5 +21,5 @@ public interface BeatRepository extends JpaRepository<Beat, Long> {
     Optional<Beat> findNameByBeatName(String beatName);
 
     @Query("SELECT b FROM Beat b WHERE b.userName=:username")
-    List<Beat> findBeatByUserName(Long username);
+    Optional<Beat> findBeatByUserName(Long username);
 }

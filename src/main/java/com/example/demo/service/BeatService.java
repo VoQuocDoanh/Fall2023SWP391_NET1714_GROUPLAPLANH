@@ -104,4 +104,37 @@ public class BeatService {
         return beatEntity.isEmpty() ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseObject("false", "Cannot find beat name", ""))
                 : ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Query product successfully", beatEntity));
     }
+
+
+    public ResponseEntity<ResponseObject> searchByMusician(BeatDTO beatDTO) {
+        List<User> userEntity=userRepository.findByfullName(beatDTO.getFullName());
+        List<Beat> beatList=new ArrayList<>();
+        System.out.println(userEntity);
+
+        List<Beat> beat=beatRepository.findAll();
+        if (userEntity.isEmpty()){
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("FALSE", "Not found user", ""));
+        }else{
+
+            for (int i=0;i<userEntity.size();i++){
+                for (int j=0;j<beat.size();j++){
+                    User t=beat.get(j).getUserName();
+                    if (t.getId().equals(userEntity.get(i).getId())){
+                        Beat fBeat=new Beat(
+                                beat.get(j).getId(),
+                                beat.get(j).getBeatName(),
+                                beat.get(j).getBeatSound(),
+                                beat.get(j).getPrice(),
+                                beat.get(j).getOrderBeat(),
+                                beat.get(j).getCreatedAt()
+                        );
+                        beatList.add(fBeat);
+                    }
+                }
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "List beat", beatList));
+        }
+
+
+    }
 }

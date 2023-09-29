@@ -64,11 +64,23 @@ public class UserService {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Update successfully", ""));
     }
 
+    public ResponseEntity<ResponseObject> updateInfomation(User newUser, Long id){
+        Optional<User> updateInfor = this.userRepository.findById(id).map((user) -> {
+            user.setFullName(newUser.getFullName());
+            user.setMail(newUser.getMail());
+            user.setPhoneNumber(newUser.getPhoneNumber());
+            return (User)this.userRepository.save(user);
+        });
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Update successfully", ""));
+
+    }
+
     public ResponseEntity<ResponseObject> searchByUserName(UserDTO userDTO) {
         new User();
         String tmp = userDTO.getUsername();
         List<User> userEntity = this.userRepository.searchByUserName(userDTO.getUsername());
         return userEntity.isEmpty() ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseObject("false", "Cannot find user name", "")) : ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Query product successfully", userEntity));
     }
+
 
 }
