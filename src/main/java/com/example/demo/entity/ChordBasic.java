@@ -45,7 +45,7 @@ public class ChordBasic {
     @Column(name = "Type")
     private String type;
 
-    @ManyToMany
+    @ManyToMany (cascade = {CascadeType.ALL})
     @JsonIgnore
     @JoinTable(name = "ChordOfSong",
             joinColumns = {@JoinColumn(
@@ -55,7 +55,7 @@ public class ChordBasic {
     )
     private List<Song> songs = new ArrayList();
 
-    @ManyToMany
+    @ManyToMany (cascade = {CascadeType.ALL})
     @JsonIgnore
     @JoinTable(name = "ChordInCollection",
             joinColumns = {@JoinColumn(

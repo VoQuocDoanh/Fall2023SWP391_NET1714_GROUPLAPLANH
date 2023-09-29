@@ -14,6 +14,9 @@ public class ChordCollectionDTO {
     private int status;
     private String username;
 
+    private long chordId;
+    private long chordCollectionId;
+
     @Override
     public String toString() {
         return "ChordCollectionDTO{" +

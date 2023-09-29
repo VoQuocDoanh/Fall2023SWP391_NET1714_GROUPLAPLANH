@@ -4,6 +4,7 @@ import com.example.demo.dto.ChordCollectionDTO;
 import com.example.demo.entity.ChordBasic;
 import com.example.demo.entity.ChordCollection;
 import com.example.demo.entity.User;
+import com.example.demo.repository.ChordBasicRepository;
 import com.example.demo.repository.ChordCollectionRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.response.ResponseObject;
@@ -24,6 +25,9 @@ public class ChordCollectionService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ChordBasicRepository chordRepository;
 
     public ResponseEntity<ResponseObject> findAllColletion(ChordCollectionDTO chordCollectionDTO){
         User userEntity=userRepository.findByUsername(chordCollectionDTO.getUsername());
@@ -87,6 +91,26 @@ public class ChordCollectionService {
 
                 );
             }
+        }
+    }
+
+    public ResponseEntity<ResponseObject> addToChordCollection(ChordCollectionDTO chordCollectionDTO) {
+        Optional<ChordCollection> foundCollection=chordCollectionRepository.findById(chordCollectionDTO.getChordId());
+        if (foundCollection.isPresent()){
+            Optional<ChordBasic> chordEntity=chordRepository.findById(chordCollectionDTO.getChordId());
+            List<ChordBasic> chordList=new ArrayList<>();
+            chordList.add(chordEntity.get());
+            Optional<ChordCollection> addChord=chordCollectionRepository.findById(chordCollectionDTO.getChordCollectionId())
+                    .map((collection)->{
+                        collection.setChords(chordList);
+                        return (ChordCollection)chordCollectionRepository.save(collection);
+                    });
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("TRUE","Add to collection successfully","")
+            );
+        }else {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("TRUE","Add to collection successfully",""));
         }
     }
 }

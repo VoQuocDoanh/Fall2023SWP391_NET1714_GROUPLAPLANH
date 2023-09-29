@@ -31,9 +31,9 @@ public class Genre {
     @Column(name = "Description")
     private String description;
 
-    @ManyToMany(mappedBy = "genres")
+    @ManyToMany(mappedBy = "genres", cascade = {CascadeType.ALL})
     private List<com.example.demo.entity.Beat> beats = new ArrayList();
 
-    @ManyToMany(mappedBy = "genres")
+    @ManyToMany(mappedBy = "genres",cascade = {CascadeType.ALL})
     private List<com.example.demo.entity.Song> songs = new ArrayList();
 }

@@ -60,7 +60,7 @@ public class Song {
     @JsonInclude(Include.NON_NULL)
     private List<com.example.demo.entity.FeedbackSong> feedbackSongs = new ArrayList();
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JsonIgnore
     @JoinTable(
             name = "GenreSong",
@@ -71,7 +71,7 @@ public class Song {
     )
     private List<Genre> genres = new ArrayList();
 
-    @ManyToMany(mappedBy = "songs")
+    @ManyToMany(mappedBy = "songs", cascade = {CascadeType.ALL})
     private List<ChordBasic> chords = new ArrayList();
 
     @PrePersist

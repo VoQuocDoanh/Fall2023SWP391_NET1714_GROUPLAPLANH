@@ -51,7 +51,7 @@ public class ChordCollection {
     @JoinColumn(name = "userCollection")
     private User userCollection;
 
-    @ManyToMany(mappedBy = "collections")
+    @ManyToMany(mappedBy = "collections",cascade = {CascadeType.ALL})
     private List<ChordBasic> chords = new ArrayList();
 
     @JsonIgnore

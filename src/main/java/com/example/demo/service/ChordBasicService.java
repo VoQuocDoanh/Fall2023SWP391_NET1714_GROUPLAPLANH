@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.ChordBasicDTO;
 import com.example.demo.entity.ChordBasic;
 import com.example.demo.repository.ChordBasicRepository;
 import com.example.demo.response.ResponseObject;
@@ -26,5 +27,10 @@ public class ChordBasicService {
                     new ResponseObject("TRUE","Querry product successfully",foundChord)
             );
         }
+    }
+
+
+    public ResponseEntity<ResponseObject> searchChord(ChordBasicDTO chordDTO){
+
     }
 }

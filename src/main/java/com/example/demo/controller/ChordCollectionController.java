@@ -34,6 +34,9 @@ public class ChordCollectionController {
         return chordCollectionService.createChordCollection(chordCollectionDTO);
     }
 
-
+    @PostMapping("/AddtoChordCollection")
+    public ResponseEntity<ResponseObject> addToChordCollection(@RequestBody ChordCollectionDTO chordCollectionDTO){
+        return chordCollectionService.addToChordCollection(chordCollectionDTO);
+    }
 
 }
