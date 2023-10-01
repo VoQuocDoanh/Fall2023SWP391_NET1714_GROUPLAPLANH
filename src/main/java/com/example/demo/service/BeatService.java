@@ -10,7 +10,6 @@ import com.example.demo.entity.Beat;
 import com.example.demo.entity.User;
 import com.example.demo.repository.BeatRepository;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.response.ResponseObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 @Service
 public class BeatService {
@@ -29,112 +29,109 @@ public class BeatService {
     private BeatRepository beatRepository;
 
     //get all own beat
-    public ResponseEntity<ResponseObject> findAllBeat(BeatDTO beatDTO){
+    public List<Beat> findAllBeat(BeatDTO beatDTO) {
         User userEntity = userRepository.findByUsername(beatDTO.getUsername());
-        List<Beat> beat =beatRepository.findAll();
+        List<Beat> beat = beatRepository.findAll();
         if (userEntity == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("false", "Cannot find your beat", "")
-            );
-        }else{
-            List<Beat> beatEntity= new ArrayList<>();
-            for (int i=0;i<beat.size();i++){
-                User t=beat.get(i).getUserName();
-                if (t.getId().equals(userEntity.getId())){
-                    Beat ownBeat=new Beat( beat.get(i).getId(),
-                            beat.get(i).getBeatName(),
-                            beat.get(i).getBeatSound(),
-                            beat.get(i).getPrice(),
-                            beat.get(i).getOrderBeat(),
-                            beat.get(i).getCreatedAt());
+            return null;
+        } else {
+            List<Beat> beatEntity = new ArrayList<>();
+            for (Beat value : beat) {
+                User user = value.getUserName();
+                if (user.getId().equals(userEntity.getId())) {
+                    Beat ownBeat = new Beat(value.getId(),
+                            value.getBeatName(),
+                            value.getBeatSound(),
+                            value.getPrice(),
+                            value.getOrderBeat(),
+                            value.getCreatedAt());
                     beatEntity.add(ownBeat);
                 }
             }
-            int tmp=beatEntity.size();
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("true", "Querry successfully", beatEntity));
+            int tmp = beatEntity.size();
+            return beatEntity;
         }
     }
 
-
-    public ResponseEntity<ResponseObject> insertBeat(BeatDTO beatDTO) {
+    public ResponseEntity<String> insertBeat(BeatDTO beatDTO) {
         User user = this.userRepository.findByUsername(beatDTO.getUsername());
         if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseObject("ERROR", "Not found userName", ""));
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         } else {
             Optional<User> userEntity = Optional.ofNullable(this.userRepository.findByUsername(user.getUsername()));
             if (userEntity.isPresent()) {
                 String beatName = beatDTO.getBeatName();
                 Double price = beatDTO.getPrice();
                 String beatSound = beatDTO.getBeatSound();
-                Beat newBeat = new Beat(beatName, beatSound, price, 1, (User)userEntity.get());
-                return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "Added beat successfully", this.beatRepository.save(newBeat)));
+                Beat newBeat = new Beat(beatName, beatSound, price, 1, (User) userEntity.get());
+                this.beatRepository.save(newBeat);
+                return new ResponseEntity<>("Insert Successfully", HttpStatus.OK);
             } else {
-                return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new ResponseObject("failed", "Add beat failed", ""));
+                return new ResponseEntity<>("Insert Failed", HttpStatus.NOT_IMPLEMENTED);
             }
         }
     }
 
-    public ResponseEntity<ResponseObject> updateBeat(Beat newBeat, Long id) {
-        Optional<Beat> updateBeat = this.beatRepository.findById(id).map((beat) -> {
+    public ResponseEntity<String> updateBeat(Beat newBeat, Long id) {
+        Optional<Beat> foundBeat = this.beatRepository.findById(id);
+        if (foundBeat.isPresent()) {
+            Beat beat = foundBeat.get();
             beat.setBeatName(newBeat.getBeatName());
             beat.setBeatSound(newBeat.getBeatSound());
             beat.setPrice(newBeat.getPrice());
-            return (Beat)this.beatRepository.save(beat);
-        });
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Update successfully", ""));
+            this.beatRepository.save(beat);
+            return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Update Failed", HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<ResponseObject> deleteBeat(Beat newBeat, Long id) {
-        Optional<Beat> deleteBeat = this.beatRepository.findById(id).map((beat) -> {
-            beat.setStatus(newBeat.getStatus());
-            return (Beat)this.beatRepository.save(beat);
-        });
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Update successfully", ""));
-    }
-
-    public ResponseEntity<ResponseObject> findById(Long id) {
+    public ResponseEntity<String> deleteBeat(Beat deleteBeat, Long id) {
         Optional<Beat> foundBeat = this.beatRepository.findById(id);
-        return !foundBeat.isEmpty() ? ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Query product successfully", foundBeat)) : ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseObject("false", "Cannot find beat with id= " + id, ""));
+        if (foundBeat.isPresent()) {
+            Beat beat = foundBeat.get();
+            beat.setStatus(deleteBeat.getStatus());
+            this.beatRepository.save(beat);
+            return new ResponseEntity<>("Delete Successfully", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Delete Failed", HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<ResponseObject> searchByBeatName(BeatDTO beatDTO) {
-        new Beat();
-        List<Beat> beatEntity = this.beatRepository.findByBeatName(beatDTO.getBeatName());
-        return beatEntity.isEmpty() ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseObject("false", "Cannot find beat name", ""))
-                : ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Query product successfully", beatEntity));
+    public Beat findById(Long id) {
+        Optional<Beat> foundBeat = this.beatRepository.findById(id);
+        return foundBeat.isEmpty() ? null : this.beatRepository.findById(id).orElseThrow();
     }
 
+    public List<Beat> searchByBeatName(String name) {
+        List<Beat> beatEntity = this.beatRepository.findByBeatName(name);
+        return beatEntity.isEmpty() ? null : beatEntity;
+    }
 
-    public ResponseEntity<ResponseObject> searchByMusician(BeatDTO beatDTO) {
-        List<User> userEntity=userRepository.findByfullName(beatDTO.getFullName());
-        List<Beat> beatList=new ArrayList<>();
-        System.out.println(userEntity);
-
-        List<Beat> beat=beatRepository.findAll();
-        if (userEntity.isEmpty()){
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("FALSE", "Not found user", ""));
-        }else{
-
-            for (int i=0;i<userEntity.size();i++){
-                for (int j=0;j<beat.size();j++){
-                    User t=beat.get(j).getUserName();
-                    if (t.getId().equals(userEntity.get(i).getId())){
-                        Beat fBeat=new Beat(
-                                beat.get(j).getId(),
-                                beat.get(j).getBeatName(),
-                                beat.get(j).getBeatSound(),
-                                beat.get(j).getPrice(),
-                                beat.get(j).getOrderBeat(),
-                                beat.get(j).getCreatedAt()
+    public List<Beat> searchByMusician(String musician) {
+        List<User> musicianList = userRepository.findByfullName(musician);
+        List<Beat> beatList = new ArrayList<>();
+        List<Beat> beat = beatRepository.findAll();
+        if (musicianList.isEmpty()) {
+            return null;
+        } else {
+            for (User value : musicianList) {
+                IntStream.range(0, beat.size()).forEach(i -> {
+                    User user = beat.get(i).getUserName();
+                    if (user.getId().equals(value.getId())) {
+                        Beat fBeat = new Beat(
+                                beat.get(i).getId(),
+                                beat.get(i).getBeatName(),
+                                beat.get(i).getBeatSound(),
+                                beat.get(i).getPrice(),
+                                beat.get(i).getOrderBeat(),
+                                beat.get(i).getCreatedAt()
                         );
                         beatList.add(fBeat);
                     }
-                }
+                });
             }
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "List beat", beatList));
+            return beatList;
         }
-
-
     }
+
+
 }

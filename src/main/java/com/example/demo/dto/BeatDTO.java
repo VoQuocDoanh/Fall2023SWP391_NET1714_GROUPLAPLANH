@@ -14,8 +14,6 @@ public class BeatDTO {
     private String beatSound;
     private String username;
     private Double price;
-    private String orderID;
-
     private String fullName;
 
     @Override
@@ -25,7 +23,6 @@ public class BeatDTO {
                 ", beatSound='" + beatSound + '\'' +
                 ", username='" + username + '\'' +
                 ", price=" + price +
-                ", orderID='" + orderID + '\'' +
                 ", fullName='" + fullName + '\'' +
                 '}';
     }

@@ -5,16 +5,15 @@
 
 package com.example.demo.service;
 
-import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.response.ResponseObject;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,54 +32,67 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public ResponseEntity<ResponseObject> addUser(User user) {
+    public ResponseEntity<String> addUser(User user) {
         Optional<User> foundUser = userRepository.findUserByUsername(user.getUsername());
         if (foundUser.isEmpty()) {
             User us = new User(user.getUsername(),
                     this.passwordEncoder.encode(user.getPassword()),
                     user.getFullName(),
+                    user.getGender(),
                     user.getMail(),
                     user.getAddress(),
                     user.getPhoneNumber(),
                     user.getRole(),
                     1);
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("SUCCESS", "Signup Success", userRepository.save(us)));
+            this.userRepository.save(us);
+            return new ResponseEntity<>("Signup Successfully", HttpStatus.OK);
         }
-        return ResponseEntity.status(HttpStatus.FOUND).body(
-                new ResponseObject("FAILED", "Signup Failed", ""));
+        return new ResponseEntity<>("Signup Failed", HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<ResponseObject> findById(Long id) {
+    public User findById(Long id) {
         Optional<User> foundUser = this.userRepository.findById(id);
-        return foundUser.isPresent() ? ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Query product successfully", foundUser)) : ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseObject("false", "Cannot find beat with id= " + id, ""));
+        if (foundUser.isPresent()) {
+            return this.userRepository.findById(id).orElseThrow();
+        }
+        return null;
     }
 
-    public ResponseEntity<ResponseObject> updateBeat(User newUser, Long id) {
-        Optional<User> updateUser = this.userRepository.findById(id).map((user) -> {
+    public ResponseEntity<String> banUser(User newUser, Long id) {
+        Optional<User> foundUser = this.userRepository.findById(id);
+        if(foundUser.isPresent()){
+            User user = foundUser.get();
             user.setStatus(newUser.getStatus());
-            return (User)this.userRepository.save(user);
-        });
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Update successfully", ""));
+            this.userRepository.save(user);
+            return new ResponseEntity<>("Ban Successfully", HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>("Ban Failed", HttpStatus.NOT_IMPLEMENTED);
+        }
     }
 
-    public ResponseEntity<ResponseObject> updateInfomation(User newUser, Long id){
-        Optional<User> updateInfor = this.userRepository.findById(id).map((user) -> {
+    public ResponseEntity<String> updateInfomation(User newUser, Long id){
+        Optional<User> foundUser = this.userRepository.findById(id);
+        if(foundUser.isPresent()) {
+            User user = foundUser.get();
             user.setFullName(newUser.getFullName());
+            user.setGender(newUser.getGender());
             user.setMail(newUser.getMail());
             user.setPhoneNumber(newUser.getPhoneNumber());
-            return (User)this.userRepository.save(user);
-        });
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Update successfully", ""));
-
+            user.setAddress(newUser.getAddress());
+            this.userRepository.save(user);
+            return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>("Update Failed", HttpStatus.NOT_IMPLEMENTED);
+        }
     }
 
-    public ResponseEntity<ResponseObject> searchByUserName(UserDTO userDTO) {
-        new User();
-        String tmp = userDTO.getUsername();
-        List<User> userEntity = this.userRepository.searchByUserName(userDTO.getUsername());
-        return userEntity.isEmpty() ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseObject("false", "Cannot find user name", "")) : ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "Query product successfully", userEntity));
+    public List<User> searchByUserName(String username) {
+        List<User> userEntity = this.userRepository.searchByUserName(username);
+        return userEntity.isEmpty() ? null : userEntity;
     }
 
+    public List<User> getAllUsers(){
+        return this.userRepository.findByOrderByStatusDesc();
+    }
 
 }
