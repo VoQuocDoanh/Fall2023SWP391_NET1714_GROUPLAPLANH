@@ -5,6 +5,7 @@
 
 package com.example.demo.service;
 
+import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -86,8 +87,8 @@ public class UserService {
         }
     }
 
-    public List<User> searchByUserName(String username) {
-        List<User> userEntity = this.userRepository.searchByUserName(username);
+    public List<User> searchByUserName(UserDTO userDTO) {
+        List<User> userEntity = this.userRepository.searchByUserName(userDTO.getUsername());
         return userEntity.isEmpty() ? null : userEntity;
     }
 

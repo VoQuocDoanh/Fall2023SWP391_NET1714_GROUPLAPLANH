@@ -43,6 +43,7 @@ public class BeatService {
                             value.getBeatName(),
                             value.getBeatSound(),
                             value.getPrice(),
+                            value.getStatus(),
                             value.getOrderBeat(),
                             value.getCreatedAt());
                     beatEntity.add(ownBeat);
@@ -101,13 +102,13 @@ public class BeatService {
         return foundBeat.isEmpty() ? null : this.beatRepository.findById(id).orElseThrow();
     }
 
-    public List<Beat> searchByBeatName(String name) {
-        List<Beat> beatEntity = this.beatRepository.findByBeatName(name);
+    public List<Beat> searchByBeatName(BeatDTO beatDTO) {
+        List<Beat> beatEntity = this.beatRepository.findByBeatName(beatDTO.getBeatName());
         return beatEntity.isEmpty() ? null : beatEntity;
     }
 
-    public List<Beat> searchByMusician(String musician) {
-        List<User> musicianList = userRepository.findByfullName(musician);
+    public List<Beat> searchByMusician(BeatDTO beatDTO) {
+        List<User> musicianList = userRepository.findByfullName(beatDTO.getFullName());
         List<Beat> beatList = new ArrayList<>();
         List<Beat> beat = beatRepository.findAll();
         if (musicianList.isEmpty()) {
@@ -122,6 +123,7 @@ public class BeatService {
                                 beat.get(i).getBeatName(),
                                 beat.get(i).getBeatSound(),
                                 beat.get(i).getPrice(),
+                                beat.get(i).getStatus(),
                                 beat.get(i).getOrderBeat(),
                                 beat.get(i).getCreatedAt()
                         );

@@ -35,15 +35,15 @@ public class BeatController {
     }
 
     // Search beat being sold by Name in User
-    @GetMapping("/{name}")
-    public ResponseEntity<List<Beat>> searchByBeatName(@PathVariable String name) {
-        return ResponseEntity.ok(this.beatService.searchByBeatName(name));
+    @GetMapping("/search/beatName")
+    public ResponseEntity<List<Beat>> searchByBeatName(@RequestBody BeatDTO beatDTO) {
+        return ResponseEntity.ok(this.beatService.searchByBeatName(beatDTO));
     }
 
     // Search beat being sold by Musician in User
-    @GetMapping("/{musician}")
-    public ResponseEntity<List<Beat>> searchByMusician(@PathVariable String musician) {
-        return ResponseEntity.ok(this.beatService.searchByMusician(musician));
+    @GetMapping("/search/musician")
+    public ResponseEntity<List<Beat>> searchByMusician(@RequestBody BeatDTO beatDTO) {
+        return ResponseEntity.ok(this.beatService.searchByMusician(beatDTO));
     }
 
     //Add beat in musician

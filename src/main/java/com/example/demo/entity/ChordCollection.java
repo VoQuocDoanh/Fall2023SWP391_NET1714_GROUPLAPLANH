@@ -6,6 +6,7 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -51,8 +52,10 @@ public class ChordCollection {
     @JoinColumn(name = "userCollection")
     private User userCollection;
 
-    @ManyToMany(mappedBy = "collections",cascade = {CascadeType.ALL})
-    private List<ChordBasic> chords = new ArrayList();
+    @OneToMany(mappedBy = "collectionId")
+    @JsonIgnore
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<ChordInCollection> collections = new ArrayList();
 
     @JsonIgnore
     public void setUserCollection(final User userCollection) {

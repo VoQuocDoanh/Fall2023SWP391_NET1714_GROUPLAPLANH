@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
@@ -34,8 +35,8 @@ public class AdminController {
     }
 
     //search user in Admin
-    @GetMapping("/{username}")
-    public ResponseEntity<List<User>> searchByUserName(@PathVariable String username) {
-        return ResponseEntity.ok(this.userService.searchByUserName(username));
+    @GetMapping("/search")
+    public ResponseEntity<List<User>> searchByUserName(@RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(this.userService.searchByUserName(userDTO));
     }
 }

@@ -40,6 +40,12 @@ public class Beat {
     @Column
     private String beatSound;
 
+    @Column
+    private String type;
+
+    @Column
+    private String Description;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "userName")
@@ -76,14 +82,16 @@ public class Beat {
         this.userName = userName;
     }
 
-    public Beat(Long id, String beatName, String beatSound, Double price, Order orderBeat, LocalDateTime createdAt) {
+    public Beat(Long id, String beatName, String beatSound, Double price,int status,  Order orderBeat, LocalDateTime createdAt) {
         this.Id=id;
         this.beatName = beatName;
         this.price = price;
+        this.status=status;
         this.beatSound = beatSound;
         this.orderBeat = orderBeat;
         this.createdAt = createdAt;
     }
+
 
 
     public String toString() {

@@ -5,7 +5,6 @@ import com.example.demo.entity.Song;
 import com.example.demo.entity.User;
 import com.example.demo.repository.SongRepository;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.response.ResponseObject;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +27,7 @@ public class SongService {
     private UserRepository userRepository;
 
     // User upload song with chords
-    public ResponseEntity<ResponseObject> insertSong(SongDTO songDTO) {
+    /*public ResponseEntity<ResponseObject> insertSong(SongDTO songDTO) {
         User user = this.userRepository.findByUsername(songDTO.getUsername());
         if (user == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseObject("BAD", "User doesn't exist", ""));
@@ -48,7 +47,7 @@ public class SongService {
                 return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new ResponseObject("ERROR", "Uploading Failed", ""));
             }
         }
-    }
+    }*/
 
     //
 
