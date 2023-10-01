@@ -37,7 +37,8 @@
             align-items: center;
             .start {
                 border-radius: 30px;
-                background: #06c;
+                background-color: transparent;  
+                outline: 3px solid #fff;
 
                 box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25),
                     0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -186,10 +187,18 @@
         font-family: Newsreader;
     }
     .icon-chords{
-        margin-left: 300px;
+        // margin-left: 300px;
+        display: flex;
 
     }
     
+}
+.trending-ellipse-songs{
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-left: 20px;
 }
 .content-4{
     text-align: center;
@@ -232,11 +241,12 @@
     margin-top: 60px;
     .trending-details{
         background-color: white;
-        height: 221px;
-        width: 100%;
+        height: 235px;
+        width:600px ;
         border-radius: 30px;
         padding-left: 20px;
         outline: 2px solid #00C896;
+       
         
     }
     .trending-details-img{
@@ -261,13 +271,88 @@
     }
  
     .icon-trending{
-        margin-left: 250px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 7px;
+        padding-top: 38px;
+        padding-right: 31px;
+        
     }
 }
 .icon-trending-4{
     text-align: center;
     justify-content: space-between;
     .icon-trending2{
-        padding-bottom:20px;
+        
     }
+}
+
+
+.trending-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.icon-trending2{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+.trending-ellipse{
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.text-role{
+    // margin-top: 70px;
+    margin-right: 40px;
+    .text-ellipse1{
+        font-size: 20px;
+        font-family: Newsreader;
+    }
+    .text-ellipse2{
+        font-size: 15px;
+        font-family: Italianno;
+    }
+}
+.text-ellipse3{
+    font-size: 20px;
+    font-size: 25px;
+    color: green;
+}
+.trending-top-left{
+    display: flex;
+    align-items: center;
+    
+}
+.trending-text{
+    display: flex;
+    gap: 20px;
+}
+.image-trending-ellipse{
+    margin-top: 25px;
+}
+
+.heart-list-icon{
+    margin-left: 220px;
+    display: flex;
+    gap:10px;
+    flex-direction: column;
+}
+.header-trending{
+    display: flex;
+    gap: 10px;
+    font-size: 10px;
+}
+.text-trending{
+    display: flex;
+    flex-direction: column;
+
+}
+.chord-img-trending{
+    display: flex;
 }

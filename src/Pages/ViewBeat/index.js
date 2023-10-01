@@ -6,6 +6,7 @@ import styles from "./ViewBeat.module.scss";
 
 const cx = classNames.bind(styles);
 
+
 // Fake API
 
 const DATA = [
@@ -56,6 +57,7 @@ function ViewBeat() {
     };
 
     return (
+        
 
         <div className={cx("wrapper-viewBeat")}>
             <h1 className={cx("login-wrapper")}>View Beat</h1>
