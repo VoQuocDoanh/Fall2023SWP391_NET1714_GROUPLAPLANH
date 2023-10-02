@@ -14,7 +14,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -56,10 +58,17 @@ public class ChordBasic {
     )
     private List<Song> songs = new ArrayList();
 
-    @OneToMany(mappedBy = "chordId")
-    @JsonIgnore
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private List<ChordInCollection> chordList = new ArrayList();
+//    @ManyToMany(cascade = {CascadeType.ALL})
+//    @JsonIgnore
+//    @JoinTable(
+//            name = "ChordInCollection",
+//            joinColumns = {@JoinColumn(
+//                    name = "chordId")},
+//            inverseJoinColumns = {@JoinColumn(
+//                    name = "collectonId")}
+//    )
+    @ManyToMany(mappedBy = "chords",cascade = {CascadeType.ALL})
+    private Set<ChordCollection> collections = new HashSet<>();
 
 
     @JsonIgnore
@@ -67,4 +76,18 @@ public class ChordBasic {
         this.songs = songs;
     }
 
-   }
+    @Override
+    public String toString() {
+        return "ChordBasic{" +
+                "chordId=" + chordId +
+                ", chordName='" + chordName + '\'' +
+                ", image='" + image + '\'' +
+                ", chordKey='" + chordKey + '\'' +
+                ", suffix='" + suffix + '\'' +
+                ", description='" + description + '\'' +
+                ", type='" + type + '\'' +
+                ", songs=" + songs +
+                ", collections=" + collections +
+                '}';
+    }
+}

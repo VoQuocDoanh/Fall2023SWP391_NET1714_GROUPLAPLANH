@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,9 +16,10 @@ public class ChordCollectionDTO {
     private String name;
     private int status;
     private String username;
-
-    private long chordId;
+    private String description;
+    private List<Long> chordId;
     private long chordCollectionId;
+    private String flag;
 
     @Override
     public String toString() {
