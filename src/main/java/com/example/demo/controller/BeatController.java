@@ -6,7 +6,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.BeatDTO;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.Beat;
+import com.example.demo.entity.User;
 import com.example.demo.service.BeatService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,16 +36,16 @@ public class BeatController {
         return ResponseEntity.ok(this.beatService.findById(id));
     }
 
-    // Search beat being sold by Name in User
-    @GetMapping("/{name}")
-    public ResponseEntity<List<Beat>> searchByBeatName(@PathVariable String name) {
-        return ResponseEntity.ok(this.beatService.searchByBeatName(name));
+    // Search beat by Name
+    @GetMapping("/name")
+    public ResponseEntity<List<Beat>> searchByBeatName(@Valid @RequestBody BeatDTO beatDTO) {
+        return ResponseEntity.ok(this.beatService.searchByBeatName(beatDTO));
     }
 
-    // Search beat being sold by Musician in User
-    @GetMapping("/{musician}")
-    public ResponseEntity<List<Beat>> searchByMusician(@PathVariable String musician) {
-        return ResponseEntity.ok(this.beatService.searchByMusician(musician));
+    // Search beat by Musician
+    @GetMapping("/musician")
+    public ResponseEntity<List<Beat>> searchByMusician(@Valid @RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(this.beatService.searchByMusician(userDTO));
     }
 
     //Add beat in musician

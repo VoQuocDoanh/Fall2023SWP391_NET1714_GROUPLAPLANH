@@ -6,6 +6,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.BeatDTO;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.Beat;
 import com.example.demo.entity.User;
 import com.example.demo.repository.BeatRepository;
@@ -101,13 +102,13 @@ public class BeatService {
         return foundBeat.isEmpty() ? null : this.beatRepository.findById(id).orElseThrow();
     }
 
-    public List<Beat> searchByBeatName(String name) {
-        List<Beat> beatEntity = this.beatRepository.findByBeatName(name);
+    public List<Beat> searchByBeatName(BeatDTO beatDTO) {
+        List<Beat> beatEntity = this.beatRepository.findByBeatName(beatDTO.getBeatName());
         return beatEntity.isEmpty() ? null : beatEntity;
     }
 
-    public List<Beat> searchByMusician(String musician) {
-        List<User> musicianList = userRepository.findByfullName(musician);
+    public List<Beat> searchByMusician(UserDTO musician) {
+        List<User> musicianList = userRepository.findByfullName(musician.getUsername());
         List<Beat> beatList = new ArrayList<>();
         List<Beat> beat = beatRepository.findAll();
         if (musicianList.isEmpty()) {

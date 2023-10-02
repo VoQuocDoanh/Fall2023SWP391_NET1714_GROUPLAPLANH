@@ -124,7 +124,7 @@ public class User implements UserDetails {
         this.createdAt = LocalDateTime.now();
     }
 
-    public User(String username, String password, String fullName,Gender gender, String mail, String address, String phoneNumber, String role, int status) {
+    public User(String username, String password, String fullName, Gender gender, String mail, String address, String phoneNumber, String role, int status) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;

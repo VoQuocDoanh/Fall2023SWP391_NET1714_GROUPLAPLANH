@@ -16,7 +16,10 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -72,7 +75,7 @@ public class Song {
             inverseJoinColumns = {@JoinColumn(
                     name = "genreId")}
     )
-    private List<Genre> genres = new ArrayList();
+    private Set<Genre> genres = new HashSet<>();
 
     @ManyToMany(mappedBy = "songs", cascade = {CascadeType.ALL})
     private List<ChordBasic> chords = new ArrayList();
@@ -92,10 +95,10 @@ public class Song {
         this.feedbackSongs = feedbackSongs;
     }
 
-    @JsonIgnore
-    public void setGenres(final List<Genre> genres) {
-        this.genres = genres;
-    }
+//    @JsonIgnore
+//    public void setGenres(final List<Genre> genres) {
+//        this.genres = genres;
+//    }
 
     public Song(String songname, String author, String tone, String description, String vocalRange, String songUrl, User userUploadSong, int status) {
         this.songname = songname;
@@ -106,5 +109,17 @@ public class Song {
         this.songUrl = songUrl;
         this.userUploadSong = userUploadSong;
         this.status = status;
+    }
+
+    public Song(String songname, String author, String tone, String description, String vocalRange, String songUrl, User userUploadSong, Set<Genre> genres, int status) {
+        this.songname = songname;
+        this.author = author;
+        this.tone = tone;
+        this.description = description;
+        this.vocalRange = vocalRange;
+        this.songUrl = songUrl;
+        this.status = status;
+        this.userUploadSong = userUploadSong;
+        this.genres = genres;
     }
 }

@@ -12,7 +12,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -35,5 +38,10 @@ public class Genre {
     private List<com.example.demo.entity.Beat> beats = new ArrayList();
 
     @ManyToMany(mappedBy = "genres",cascade = {CascadeType.ALL})
-    private List<com.example.demo.entity.Song> songs = new ArrayList();
+    private Set<Song> songs = new HashSet<>();
+
+    public Genre(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }

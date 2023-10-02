@@ -5,6 +5,8 @@
 
 package com.example.demo.service;
 
+import com.example.demo.dto.UserDTO;
+import com.example.demo.dto.UserResponeDTO;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -17,8 +19,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Transactional
 @RequiredArgsConstructor
@@ -86,13 +90,26 @@ public class UserService {
         }
     }
 
-    public List<User> searchByUserName(String username) {
-        List<User> userEntity = this.userRepository.searchByUserName(username);
+    public List<User> searchByUserName(UserDTO userDTO) {
+        List<User> userEntity = this.userRepository.searchByUserName(userDTO.getUsername());
         return userEntity.isEmpty() ? null : userEntity;
     }
 
-    public List<User> getAllUsers(){
-        return this.userRepository.findByOrderByStatusDesc();
+    public List<UserResponeDTO> getAllUsers(){
+        List<User> userList = this.userRepository.findByOrderByStatusDesc();
+        List<UserResponeDTO> userResponeDTOList;
+        if (userList.isEmpty()){
+            return null;
+        } else {
+            userResponeDTOList = userList.stream().map(user -> new UserResponeDTO(
+                    user.getId(),
+                    user.getUsername(),
+                    user.getFullName(),
+                    user.getGender().toString(),
+                    user.getRole(),
+                    user.getStatus())).collect(Collectors.toList());
+            return userResponeDTOList;
+        }
     }
 
 }

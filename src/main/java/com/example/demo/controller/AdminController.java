@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.UserDTO;
+import com.example.demo.dto.UserResponeDTO;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
@@ -17,7 +19,7 @@ public class AdminController {
 
     //List all user in Admin
     @GetMapping(path = {""})
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<UserResponeDTO>> getAllUsers() {
         return ResponseEntity.ok(this.userService.getAllUsers());
     }
 
@@ -34,8 +36,8 @@ public class AdminController {
     }
 
     //search user in Admin
-    @GetMapping("/{username}")
-    public ResponseEntity<List<User>> searchByUserName(@PathVariable String username) {
-        return ResponseEntity.ok(this.userService.searchByUserName(username));
+    @GetMapping("/username")
+    public ResponseEntity<List<User>> searchByUserName(@Valid @RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(this.userService.searchByUserName(userDTO));
     }
 }

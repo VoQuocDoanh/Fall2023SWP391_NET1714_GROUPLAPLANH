@@ -1,6 +1,7 @@
 package com.example.demo.dto;
 
 import com.example.demo.entity.ChordBasic;
+import com.example.demo.entity.Genre;
 import com.example.demo.entity.User;
 import jdk.jfr.Name;
 import lombok.AllArgsConstructor;
@@ -23,4 +24,5 @@ public class SongDTO {
     private String tone;
     private String vocalRange;
     private String songUrl;
+    private List<String> genres;
 }
