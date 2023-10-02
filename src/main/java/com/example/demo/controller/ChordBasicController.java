@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.dto.ChordBasicDTO;
 import com.example.demo.entity.ChordBasic;
 import com.example.demo.repository.ChordBasicRepository;
-import com.example.demo.response.ResponseObject;
 import com.example.demo.service.ChordBasicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,13 +25,13 @@ public class ChordBasicController {
     }
 
     @GetMapping(path="/{id}")
-    public ResponseEntity<ResponseObject> findById(@PathVariable Long id){
-        return chordBasicService.findById(id);
+    public ResponseEntity<ChordBasic> findById(@PathVariable Long id){
+        return ResponseEntity.ok(chordBasicService.findById(id));
     }
 
     @GetMapping(path="/searchChord")
-    public ResponseEntity<ResponseObject> searchChord(@RequestBody ChordBasicDTO chordBasicDTO){
-        return chordBasicService.searchChord(chordBasicDTO);
+    public ResponseEntity<List<ChordBasic>> searchChord(@RequestBody ChordBasicDTO chordBasicDTO){
+        return ResponseEntity.ok(chordBasicService.searchChord(chordBasicDTO));
     }
 
 }

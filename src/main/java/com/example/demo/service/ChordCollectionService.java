@@ -7,7 +7,6 @@ import com.example.demo.entity.User;
 import com.example.demo.repository.ChordBasicRepository;
 import com.example.demo.repository.ChordCollectionRepository;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.response.ResponseObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,14 +27,12 @@ public class ChordCollectionService {
 
     @Autowired
     private ChordBasicRepository chordRepository;
-
-    public ResponseEntity<ResponseObject> findAllColletion(ChordCollectionDTO chordCollectionDTO){
+/*
+    public List<ChordCollection> findAllColletion(ChordCollectionDTO chordCollectionDTO){
         User userEntity=userRepository.findByUsername(chordCollectionDTO.getUsername());
         List<ChordCollection> collection=chordCollectionRepository.findAll();
         if (userEntity==null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("FAILE","Not found User","")
-            );
+            return null;
         }else {
             List <ChordCollection> collectionEntity=new ArrayList<>();
 
@@ -52,49 +49,36 @@ public class ChordCollectionService {
                 }
 
             }
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("TRUE","List succesfully",collectionEntity)
-            );
+            return collectionEntity;
         }
-    }
+    }*/
 
-    public ResponseEntity<ResponseObject> findById(Long id) {
+    public ChordCollection findById(Long id) {
         Optional<ChordCollection> foundChordCollection=chordCollectionRepository.findById(id);
         if (foundChordCollection.isEmpty()){
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("TRUE","Querry product successfully","")
-            );
+            return null;
         }else {
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("TRUE","Querry product successfully",foundChordCollection)
-            );
+            return chordCollectionRepository.findById(id).orElseThrow();
         }
     }
 
-    public ResponseEntity<ResponseObject> createChordCollection(ChordCollectionDTO chordCollectionDTO) {
+   /* public ResponseEntity<String> createChordCollection(ChordCollectionDTO chordCollectionDTO) {
         User user=userRepository.findByUsername(chordCollectionDTO.getUsername());
         if (user==null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("FALSE","Not found User","")
-            );
+            return new ResponseEntity<>("User not found",HttpStatus.NOT_FOUND);
         }else{
             Optional<User> userEntity=userRepository.findUserByUsername(user.getUsername());
             if (userEntity.isPresent()){
                 String name=chordCollectionDTO.getName();
                 ChordCollection collection=new ChordCollection(name,0,userEntity.get());
-                return ResponseEntity.status(HttpStatus.OK).body(
-                        new ResponseObject("TRUE","Add collection successfully",chordCollectionRepository.save(collection))
-                );
+                return new ResponseEntity<>("Create succesfully",HttpStatus.OK);
             } else{
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                        new ResponseObject("FALSE","Fail to add","")
-
-                );
+                return new ResponseEntity<>("Create failed", HttpStatus.NOT_IMPLEMENTED);
             }
         }
-    }
+    }*/
 
-    public ResponseEntity<ResponseObject> addToChordCollection(ChordCollectionDTO chordCollectionDTO) {
+    /*public ResponseEntity<ResponseObject> addToChordCollection(ChordCollectionDTO chordCollectionDTO) {
         Optional<ChordCollection> foundCollection=chordCollectionRepository.findById(chordCollectionDTO.getChordId());
         if (foundCollection.isPresent()){
             Optional<ChordBasic> chordEntity=chordRepository.findById(chordCollectionDTO.getChordId());
@@ -112,5 +96,5 @@ public class ChordCollectionService {
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("TRUE","Add to collection successfully",""));
         }
-    }
+    }*/
 }

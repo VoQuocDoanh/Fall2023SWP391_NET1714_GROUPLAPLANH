@@ -44,8 +44,8 @@ public class BeatController {
 
     // Search beat by Musician
     @GetMapping("/musician")
-    public ResponseEntity<List<Beat>> searchByMusician(@Valid @RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(this.beatService.searchByMusician(userDTO));
+    public ResponseEntity<List<Beat>> searchByMusician(@Valid @RequestBody BeatDTO beatDTO) {
+        return ResponseEntity.ok(this.beatService.searchByMusician(beatDTO));
     }
 
     //Add beat in musician
