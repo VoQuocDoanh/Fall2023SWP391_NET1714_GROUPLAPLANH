@@ -130,15 +130,29 @@ public class ChordCollectionService {
     }
 
 
+/*
     public ResponseEntity<String> deleteCollection(ChordCollectionDTO chordCollectionDTO) {
         User user = userRepository.findByUsername(chordCollectionDTO.getUsername());
         if (user == null) {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         } else {
             Optional<ChordCollection> findCollection=chordCollectionRepository.findByName(chordCollectionDTO.getName());
-            chordCollectionRepository.deleteById(findCollection.get().getId());
         }
         return new ResponseEntity<>("Delete successfully",HttpStatus.OK);
+    }
+*/
+
+    public ResponseEntity<String> deleteCollection(ChordCollectionDTO chordCollectionDTO) {
+        User user = userRepository.findByUsername(chordCollectionDTO.getUsername());
+        if (user == null) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        } else {
+            Optional<ChordCollection> findCollection=chordCollectionRepository.findByName(chordCollectionDTO.getName());
+            Set<ChordBasic> chords=findCollection.get().getChords();
+            chords.removeAll(chords);
+            chordCollectionRepository.deleteById(findCollection.get().getId());
+        }
+        return new ResponseEntity<>("Delete successfully", HttpStatus.OK);
     }
 
 }
