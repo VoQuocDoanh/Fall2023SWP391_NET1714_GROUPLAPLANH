@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./Login.module.scss";
 import { useState } from "react";
@@ -6,25 +6,40 @@ import { Button } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faUser } from '@fortawesome/free-solid-svg-icons';
 
-import Validation from "../../Validation/Validation"
+import axios from "axios";
+import ValidationLogin from "../../Validation/ValidationLogin";
 const cx = classNames.bind(styles);
 
 function Login() {
   const [username, setUserName] = useState("");
   const [password, setPassWord] = useState("");
   const [isChecked, setIsChecked] = useState(false);
-
+  const navigate = useNavigate();
   const [error, setError] = useState({});
-
-  const handleSubmit = () => {
+  const [loginMessage, setLoginMessage] = useState("");
+  const user = { username, password }
+  const handleSubmit = async () => {
     console.log(username, password, isChecked);
 
     // Validation form
-
     const form = { username: username, password: password };
-    let err = Validation(form);
-    console.log(err);
-    setError(err);
+    let err = ValidationLogin(form);
+
+    if (username === "" || password === "") {
+      console.log(err);
+      setError(err);
+      setLoginMessage("");
+      return;
+    }
+    try {
+      const result = await axios.post("http://localhost:8080/api/auth/login", user);
+      setLoginMessage();
+      navigate("/viewbeat")
+    } catch (error) {
+      console.log(error)
+      setError(err)
+      setLoginMessage("Wrong username or password!");
+    }
   };
 
   return (
@@ -104,6 +119,11 @@ function Login() {
           />
         </Button>
       </div>
+      {loginMessage && (
+        <p style={{ color: "red", marginTop: 10, paddingLeft: 5 }}>
+          {loginMessage}
+        </p>
+      )}
       {/* Footer */}
       <div className={cx("footer")}>
         <div className={cx("footer-left")}>
