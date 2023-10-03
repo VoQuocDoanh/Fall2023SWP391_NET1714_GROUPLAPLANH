@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
-import React, { useMemo } from "react";
-import { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styles from "./ViewBeat.module.scss";
 
 const cx = classNames.bind(styles);
@@ -10,52 +9,52 @@ const cx = classNames.bind(styles);
 // Fake API
 
 
- 
+
 const DATA = [
     {
         id: 1,
-        beatname: "Beat Name",
+        beatname: "Beat 1",
         beatsound: "Beat Sound",
         price: "Price",
         genre: "Genre",
-        descriptions:"Nice",
-        status:"online",
+        descriptions: "Nice",
+        status: "online",
     },
     {
         id: 2,
-        beatname: "Beat Name",
+        beatname: "Beat 2",
         beatsound: "Beat Sound",
         price: "Price",
         genre: "Genre",
-        descriptions:"Nice",
-        status:"online",
+        descriptions: "Nice",
+        status: "online",
     },
     {
         id: 3,
-        beatname: "Beat Name",
+        beatname: "Beat 3",
         beatsound: "Beat Sound",
         price: "Price",
         genre: "Genre",
-        descriptions:"Nice",
-        status:"online",
+        descriptions: "Nice",
+        status: "online",
     },
     {
         id: 4,
-        beatname: "Beat Name",
+        beatname: "Beat 4",
         beatsound: "Beat Sound",
         price: "Price",
         genre: "Genre",
-        descriptions:"Nice",
-        status:"online",
+        descriptions: "Nice",
+        status: "online",
     },
     {
         id: 5,
-        beatname: "Beat Name",
+        beatname: "Beat 5",
         beatsound: "Beat Sound",
         price: "Price",
         genre: "Genre",
-        descriptions:"Nice",
-        status:"online",
+        descriptions: "Nice",
+        status: "online",
     },
 ];
 
@@ -67,13 +66,25 @@ function ViewBeat() {
     const handleUpdate = (id) => {
         console.log(id);
     };
+    const [searchBeat, setSearchBeat] = useState("");
+    const [listBeat, setListBeat] = useState(DATA);
+
+    const handleSearchBeat = (event) => {
+        setSearchBeat(event.target.value);
+        
+    }
+
+    useEffect(() => {
+        const list = DATA.filter((item) => item.beatname.toLowerCase().includes(searchBeat.toLowerCase()));
+        setListBeat(list);
+    }, [searchBeat])
 
     return (
-        
 
         <div className={cx("wrapper-viewBeat")}>
             <h1 className={cx("login-wrapper")}>View Beat</h1>
-            <table>
+            <input type="text" name='search-beat' className={cx("search-beat")} placeholder="Search beat..." value={searchBeat} onChange={handleSearchBeat} />
+            <table className={cx("list-beat")}>
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -87,7 +98,7 @@ function ViewBeat() {
                     </tr>
                 </thead>
                 <tbody>
-                    {DATA.map((item, index) => (
+                    {listBeat.map((item, index) => (
                         <tr key={index}>
                             <td>{item.id}</td>
                             <td>{item.beatname}</td>
@@ -96,18 +107,17 @@ function ViewBeat() {
                             <td>{item.genre}</td>
                             <td>{item.descriptions}</td>
                             <td>{item.status}</td>
-                            
+
                             <td className={cx("button-options")}>
                                 <button onClick={() => handleUpdate(item.id)}>UPDATE</button>
                                 <button onClick={() => handleDelete(item.id)}>DELETE</button>
-
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
         </div>
-        
+
     );
 }
 

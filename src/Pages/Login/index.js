@@ -3,7 +3,10 @@ import classNames from "classnames/bind";
 import styles from "./Login.module.scss";
 import { useState } from "react";
 import { Button } from "@mui/material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckCircle, faUser } from '@fortawesome/free-solid-svg-icons';
 
+import Validation from "../../Validation/Validation"
 const cx = classNames.bind(styles);
 
 function Login() {
@@ -11,8 +14,17 @@ function Login() {
   const [password, setPassWord] = useState("");
   const [isChecked, setIsChecked] = useState(false);
 
+  const [error, setError] = useState({});
+
   const handleSubmit = () => {
     console.log(username, password, isChecked);
+
+    // Validation form
+
+    const form = { username: username, password: password };
+    let err = Validation(form);
+    console.log(err);
+    setError(err);
   };
 
   return (
@@ -38,9 +50,9 @@ function Login() {
             <path
               d="M33.75 35.625V33.2812C33.75 29.3981 30.1519 26.25 25.7137 26.25H19.2863C14.8481 26.25 11.25 29.3981 11.25 33.2812V35.625M28.125 15C28.125 16.4918 27.5324 17.9226 26.4775 18.9775C25.4226 20.0324 23.9918 20.625 22.5 20.625C21.0082 20.625 19.5774 20.0324 18.5225 18.9775C17.4676 17.9226 16.875 16.4918 16.875 15C16.875 13.5082 17.4676 12.0774 18.5225 11.0225C19.5774 9.96763 21.0082 9.375 22.5 9.375C23.9918 9.375 25.4226 9.96763 26.4775 11.0225C27.5324 12.0774 28.125 13.5082 28.125 15Z"
               stroke="white"
-              // stroke-width="2"
-              // stroke-linecap="round"
-              // stroke-linejoin="round"
+            // stroke-width="2"
+            // stroke-linecap="round"
+            // stroke-linejoin="round"
             />
           </svg>
           <input
@@ -51,6 +63,11 @@ function Login() {
             onChange={(e) => setUserName(e.target.value)}
           />
         </div>
+        {error.username && (
+          <p style={{ color: "red", marginTop: 10, paddingLeft: 5 }}>
+            {error.username}
+          </p>
+        )}
 
         {/* Password */}
         <div className={cx("input")}>
@@ -73,12 +90,17 @@ function Login() {
             value={password}
             onChange={(e) => setPassWord(e.target.value)}
           />
-        </div>       
-        <Button variant="contained" className={cx("input", "submit")} onClick={handleSubmit}>
+        </div>
+        {error.password && (
+          <p style={{ color: "red", marginTop: 10, paddingLeft: 5 }}>
+            {error.password}
+          </p>
+        )}
+        <Button variant="contained" className={cx("submit-wrapper")} onClick={handleSubmit}>
           <input
             type="submit"
             value="Sign up"
-            className={cx("input-text", "input-submit")}
+            className={cx("input-submit")}
           />
         </Button>
       </div>

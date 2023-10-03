@@ -12,6 +12,31 @@
   
 }
 
+// Search beat ==========
+.search-beat {
+  outline: none;
+  border: 1px solid #ccc; 
+  border-radius: 4px;
+  padding: 12px 10px 12px 10px;
+
+  &:focus-within {
+    border-color:#000;
+  }
+}
+
+
+
+// List beat ================
+
+.list-beat {
+  margin-top: 10px;
+  height: 400px;
+  width: 100%;
+  padding-left: 50px;
+  border-collapse: collapse;
+  background-color: rgb(179, 235, 245);
+}
+
 .wrapper-viewBeat td,
 .wrapper-viewBeat th {
   border: 3px solid #ddd;
@@ -33,15 +58,7 @@
   background-color:#06c;
   color: white;
 }
-.wrapper-viewBeat table{
-    margin: 0 auto;
-    height: 400px;
-    width: 100%;
-    padding-left: 50px;
-    border-collapse: collapse;
-    background-color: rgb(179, 235, 245);
-    
-   }
+
 .login-wrapper{
     padding: 0px 150px;
     text-align: center;
@@ -61,6 +78,4 @@
     background-color: #06c;
     outline: 3px solid #fff;
     color: white;
-    
-    
 }
