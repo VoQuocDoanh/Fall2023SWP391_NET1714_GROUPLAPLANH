@@ -70,7 +70,6 @@ function ViewBeat() {
     }, []);
 
     const loadBeats = async () => {
-        console.log(123)
         const result = await axios.get("http://localhost:8080/api/v1/beat");
         setBeats(result.data);
     }
