@@ -148,7 +148,7 @@ function UpdateBeat() {
           </select>
         </div>
 
-        <div className={cx("input", "submit")}  onClick={handleSubmit}   >
+        <div className={cx("input", "submit")}  onClick={handleSubmit}>
           <input
             type="submit"
             value="Update"

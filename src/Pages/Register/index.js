@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./Register.module.scss";
 import { useState } from "react";
+import { Button } from "@mui/material";
 
 const cx = classNames.bind(styles);
 
@@ -191,13 +192,13 @@ function Register() {
           />
         </div>
 
-        <div className={cx("input", "submit")} onClick={handleSubmit}>
+        <Button variant="contained" className={cx("input", "submit")} onClick={handleSubmit}>
           <input
             type="submit"
             value="Register"
             className={cx("input-text", "input-submit")}
           />
-        </div>
+        </Button>
       </div>
       {/* Footer */}
       <div className={cx("footer")}>

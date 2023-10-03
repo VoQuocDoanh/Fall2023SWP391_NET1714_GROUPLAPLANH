@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./Login.module.scss";
 import { useState } from "react";
+import { Button } from "@mui/material";
 
 const cx = classNames.bind(styles);
 
@@ -72,15 +73,14 @@ function Login() {
             value={password}
             onChange={(e) => setPassWord(e.target.value)}
           />
-        </div>
-
-        <div className={cx("input", "submit")} onClick={handleSubmit}>
+        </div>       
+        <Button variant="contained" className={cx("input", "submit")} onClick={handleSubmit}>
           <input
             type="submit"
             value="Sign up"
             className={cx("input-text", "input-submit")}
           />
-        </div>
+        </Button>
       </div>
       {/* Footer */}
       <div className={cx("footer")}>

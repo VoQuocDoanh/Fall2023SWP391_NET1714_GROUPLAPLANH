@@ -9,41 +9,53 @@ const cx = classNames.bind(styles);
 
 // Fake API
 
+
+ 
 const DATA = [
     {
         id: 1,
         beatname: "Beat Name",
         beatsound: "Beat Sound",
         price: "Price",
-        username: "Username",
+        genre: "Genre",
+        descriptions:"Nice",
+        status:"online",
     },
     {
         id: 2,
         beatname: "Beat Name",
         beatsound: "Beat Sound",
         price: "Price",
-        username: "Username",
+        genre: "Genre",
+        descriptions:"Nice",
+        status:"online",
     },
     {
         id: 3,
         beatname: "Beat Name",
         beatsound: "Beat Sound",
         price: "Price",
-        username: "Username",
+        genre: "Genre",
+        descriptions:"Nice",
+        status:"online",
     },
     {
         id: 4,
         beatname: "Beat Name",
         beatsound: "Beat Sound",
         price: "Price",
-        username: "Username",
+        genre: "Genre",
+        descriptions:"Nice",
+        status:"online",
     },
     {
         id: 5,
         beatname: "Beat Name",
         beatsound: "Beat Sound",
         price: "Price",
-        username: "Username",
+        genre: "Genre",
+        descriptions:"Nice",
+        status:"online",
     },
 ];
 
@@ -68,7 +80,9 @@ function ViewBeat() {
                         <th>Beat Name</th>
                         <th>Beat Sound</th>
                         <th>Price</th>
-                        <th>Username</th>
+                        <th>Genre</th>
+                        <th>Descriptions</th>
+                        <th>Status</th>
                         <th>Options</th>
                     </tr>
                 </thead>
@@ -79,7 +93,10 @@ function ViewBeat() {
                             <td>{item.beatname}</td>
                             <td>{item.beatsound}</td>
                             <td>{item.price}</td>
-                            <td>{item.username}</td>
+                            <td>{item.genre}</td>
+                            <td>{item.descriptions}</td>
+                            <td>{item.status}</td>
+                            
                             <td className={cx("button-options")}>
                                 <button onClick={() => handleUpdate(item.id)}>UPDATE</button>
                                 <button onClick={() => handleDelete(item.id)}>DELETE</button>
@@ -90,6 +107,7 @@ function ViewBeat() {
                 </tbody>
             </table>
         </div>
+        
     );
 }
 

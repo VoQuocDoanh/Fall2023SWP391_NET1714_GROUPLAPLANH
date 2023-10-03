@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./UploadBeat.module.scss";
 import { useState } from "react";
+import { Button } from "@mui/material";
 
 const cx = classNames.bind(styles);
 
@@ -13,12 +14,12 @@ function UploadBeat() {
   const [orderID, setOrderID] = useState("");
   const [beatSound, setBeatSound] = useState("");
   const [username, setUserName] = useState("");
-
+  const [genre, setGenre] = useState("");
 
 
   return (
     <div className={cx("login-wrapper")}>
-      
+
       <h1 className={cx("form-heading")}>Upload Beat</h1>
       {/* Form */}
       <div className={cx("form")}>
@@ -71,7 +72,7 @@ function UploadBeat() {
         </div>
 
         {/* OrderID*/}
-        <div className={cx("input")}>
+        {/* <div className={cx("input")}>
           <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
             <path d="M24.0991 5.10425H27.7085C28.0953 5.10425 28.4662 5.25789 28.7397 5.53138C29.0132 5.80487 29.1668 6.17581 29.1668 6.56258V30.6251C29.1668 31.0119 29.0132 31.3828 28.7397 31.6563C28.4662 31.9298 28.0953 32.0834 27.7085 32.0834H7.29183C6.90506 32.0834 6.53412 31.9298 6.26063 31.6563C5.98714 31.3828 5.8335 31.0119 5.8335 30.6251V6.56258C5.8335 6.17581 5.98714 5.80487 6.26063 5.53138C6.53412 5.25789 6.90506 5.10425 7.29183 5.10425H12.396V7.29175H22.6043V5.10425H24.0991Z" stroke="white" stroke-width="4" stroke-linejoin="round" />
             <path d="M19.6877 13.8542L13.8543 19.6883H21.1489L15.3127 25.5216M12.396 2.91675H22.6043V7.29175H12.396V2.91675Z" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
@@ -83,7 +84,7 @@ function UploadBeat() {
             value={orderID}
             onChange={(e) => setOrderID(e.target.value)}
           />
-        </div>
+        </div> */}
         {/* BeatSound*/}
         <div className={cx("input")}>
           <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
@@ -98,7 +99,7 @@ function UploadBeat() {
           />
         </div>
         {/* Username*/}
-        <div className={cx("input")}>
+        {/* <div className={cx("input")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="45"
@@ -121,18 +122,42 @@ function UploadBeat() {
             value={username}
             onChange={(e) => setUserName(e.target.value)}
           />
-        </div>
+        </div> */}
+        {/* {Genre} */}
+        <div className={cx("input")}>
 
-        <div className={cx("input", "submit")} >
-          <input
-            type="submit"
-            value="Upload"
-            className={cx("input-text", "input-submit")}
-          />
-        </div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="35"
+            height="35"
+            viewBox="0 0 35 35"
+            fill="none"
+          >
+            <path d="M14.5834 26.25C15.7986 26.25 16.8316 25.8246 17.6823 24.9739C18.533 24.1232 18.9584 23.0902 18.9584 21.875V11.6666H23.3334V8.74996H16.7709V18.0833C16.4306 17.8888 16.0781 17.743 15.7136 17.6458C15.349 17.5486 14.9722 17.5 14.5834 17.5C13.3681 17.5 12.3351 17.9253 11.4844 18.776C10.6337 19.6267 10.2084 20.6597 10.2084 21.875C10.2084 23.0902 10.6337 24.1232 11.4844 24.9739C12.3351 25.8246 13.3681 26.25 14.5834 26.25ZM17.5 32.0833C15.4827 32.0833 13.5868 31.7002 11.8125 30.9341C10.0382 30.168 8.49481 29.1292 7.18231 27.8177C5.86981 26.5052 4.83099 24.9618 4.06585 23.1875C3.30071 21.4132 2.91766 19.5173 2.91669 17.5C2.91669 15.4826 3.29974 13.5868 4.06585 11.8125C4.83197 10.0382 5.87078 8.49475 7.18231 7.18225C8.49481 5.86975 10.0382 4.83093 11.8125 4.06579C13.5868 3.30065 15.4827 2.9176 17.5 2.91663C19.5174 2.91663 21.4132 3.29968 23.1875 4.06579C24.9618 4.8319 26.5052 5.87072 27.8177 7.18225C29.1302 8.49475 30.1695 10.0382 30.9356 11.8125C31.7018 13.5868 32.0843 15.4826 32.0834 17.5C32.0834 19.5173 31.7003 21.4132 30.9342 23.1875C30.1681 24.9618 29.1293 26.5052 27.8177 27.8177C26.5052 29.1302 24.9618 30.1695 23.1875 30.9356C21.4132 31.7017 19.5174 32.0843 17.5 32.0833ZM17.5 29.1666C20.757 29.1666 23.5156 28.0364 25.7761 25.776C28.0365 23.5156 29.1667 20.7569 29.1667 17.5C29.1667 14.243 28.0365 11.4843 25.7761 9.22392C23.5156 6.9635 20.757 5.83329 17.5 5.83329C14.2431 5.83329 11.4844 6.9635 9.22398 9.22392C6.96356 11.4843 5.83335 14.243 5.83335 17.5C5.83335 20.7569 6.96356 23.5156 9.22398 25.776C11.4844 28.0364 14.2431 29.1666 17.5 29.1666Z" fill="white" />
+          </svg>
+       
+        {/*Status*/}
+        <select
+          className={cx("input-text")}
+          onChange={e => setGenre(e.target.value)}
+          defaultValue={genre}
+        >
+          <option value="status">Genre</option>
+          <option value="0"></option>
+          <option value="1"></option>
+        </select>
       </div>
-      {/* Footer */}
-      {/* <div className={cx("footer")}>
+
+      <Button variant="contained"className={cx("input", "submit")} >
+        <input
+          type="submit"
+          value="Upload"
+          className={cx("input-text", "input-submit")}
+        />
+      </Button>
+    </div>
+      {/* Footer */ }
+  {/* <div className={cx("footer")}>
         <div className={cx("footer-left")}>
           <input
             type="checkbox"
@@ -149,7 +174,7 @@ function UploadBeat() {
         </div>
         <div className={cx("footer-right", "text")}>Forgot password ?</div>
       </div> */}
-    </div>
+    </div >
   );
 }
 

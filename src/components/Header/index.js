@@ -25,7 +25,7 @@ function Header() {
         <div className={cx("navigation")}>
           <div className={cx("nav-item")}>Home</div>
           <div className={cx("nav-item")}>User</div>
-          <div className={cx("nav-item")}>Page</div>
+          <div className={cx("nav-item")}>  Page</div>
           <div className={cx("nav-item")}>Contact</div>
         </div>
         <Link to="/login">

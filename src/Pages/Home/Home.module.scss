@@ -264,6 +264,7 @@
         border-radius: 30px;
         padding-top:5px;
         color: white;
+        cursor: pointer;
         
 
 
@@ -276,6 +277,7 @@
         row-gap: 7px;
         padding-top: 38px;
         padding-right: 31px;
+        cursor: pointer;
         
     }
 }
@@ -285,6 +287,12 @@
     .icon-trending2{
         
     }
+}
+.icon-views-trending{
+    display: flex;
+    justify-content: space-around;
+    padding-left: 48px;
+    padding-right: 48px;
 }
 
 
@@ -342,6 +350,7 @@
     display: flex;
     gap:10px;
     flex-direction: column;
+    cursor: pointer;
 }
 .header-trending{
     display: flex;
