@@ -20,7 +20,7 @@ const publicRoutes = [
     component: Register,
   },
   {
-    path: "/updatebeat",
+    path: "/updatebeat/:id",
     component: UpdateBeat,
   },
   {
