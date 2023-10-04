@@ -4,6 +4,7 @@ import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import UpdateBeat from "../Pages/UpdateBeat";
 import UploadBeat from "../Pages/UploadBeat";
+import UploadFile from "../Pages/UploadFile";
 import ViewBeat from "../Pages/ViewBeat";
 
 const publicRoutes = [
@@ -35,6 +36,10 @@ const publicRoutes = [
     path: "/listuser",
     component: ListUser,
   },
+  {
+    path: "uploadfile",
+    component: UploadFile,
+  }
 ];
 
 const privateRoute = [];
