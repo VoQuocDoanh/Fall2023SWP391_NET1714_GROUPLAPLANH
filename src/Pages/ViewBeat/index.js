@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import styles from "./ViewBeat.module.scss";
 import { async } from "q";
 import axios from "axios";
+import { Button } from "@mui/material";
 
 const cx = classNames.bind(styles);
 
@@ -77,10 +78,10 @@ function ViewBeat() {
         setSearchBeat(event.target.value);
     }
 
-    const handleDelete = async(id) => {
+    const handleDelete = async (id) => {
         console.log(id);
         try {
-            await axios.delete(`http://localhost:8080/beat/delete/${id}`)
+            await axios.delete(`http://localhost:8080/api/v1/beat/${id}`)
             loadBeats();
 
         } catch (error) {
@@ -97,7 +98,14 @@ function ViewBeat() {
 
         <div className={cx("wrapper-viewBeat")}>
             <h1 className={cx("login-wrapper")}>View Beat</h1>
-            <input type="text" name='search-beat' className={cx("search-beat")} placeholder="Search beat..." value={searchBeat} onChange={handleSearchBeat} />
+            <div className={cx("action")}>
+                <input type="text" name='search-beat' className={cx("search-beat")} placeholder="Search beat..." value={searchBeat} onChange={handleSearchBeat} />
+                <Link to="/uploadbeat">
+                    <Button variant="contained" className={cx("action")}>
+                        <div className={cx("login")}>Create</div>
+                    </Button>
+                </Link>
+            </div>
             <table className={cx("list-beat")}>
                 <thead>
                     <tr>
@@ -123,7 +131,7 @@ function ViewBeat() {
                             <td>{beat.status}</td>
 
                             <td className={cx("button-options")}>
-                            <Link to={`/updatebeat/${beat.id}`}>
+                                <Link to={`/updatebeat/${beat.id}`}>
                                     <button> UPDATE</button></Link>
                                 <button onClick={() => handleDelete(beat.id)}>DELETE</button>
                             </td>
