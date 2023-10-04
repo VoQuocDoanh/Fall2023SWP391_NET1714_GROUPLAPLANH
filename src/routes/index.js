@@ -21,7 +21,7 @@ const publicRoutes = [
     component: Register,
   },
   {
-    path: "/updatebeat",
+    path: "/updatebeat/:id",
     component: UpdateBeat,
   },
   {
@@ -37,9 +37,9 @@ const publicRoutes = [
     component: ListUser,
   },
   {
-    path: "/uploadfile",
+    path: "uploadfile",
     component: UploadFile,
-  },
+  }
 ];
 
 const privateRoute = [];

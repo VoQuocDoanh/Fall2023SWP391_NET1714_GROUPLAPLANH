@@ -7,6 +7,7 @@ import Search from "../Search";
 
 // Import css
 import styles from "./Header.module.scss";
+import Button from '@mui/material/Button';
 
 const cx = classNames.bind(styles);
 
@@ -29,9 +30,12 @@ function Header() {
           <div className={cx("nav-item")}>Contact</div>
         </div>
         <Link to="/login">
-          <button className={cx("action")}>
+          {/* <button className={cx("action")}>
             <div className={cx("login")}>Login</div>
-          </button>
+          </button> */}
+          <Button variant="contained" className={cx("action")}>
+              <div className={cx("login")}>Login</div>
+            </Button>
         </Link>
       </div>
     </div>

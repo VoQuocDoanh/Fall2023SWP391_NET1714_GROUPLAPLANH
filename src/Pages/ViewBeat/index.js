@@ -1,7 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import React, { useEffect, useMemo, useState } from "react";
 import styles from "./ViewBeat.module.scss";
+import { async } from "q";
+import axios from "axios";
+import { Button } from "@mui/material";
 
 const cx = classNames.bind(styles);
 
@@ -10,84 +13,103 @@ const cx = classNames.bind(styles);
 
 
 
-const DATA = [
-    {
-        id: 1,
-        beatname: "Beat 1",
-        beatsound: "Beat Sound",
-        price: "Price",
-        genre: "Genre",
-        descriptions: "Nice",
-        status: "online",
-    },
-    {
-        id: 2,
-        beatname: "Beat 2",
-        beatsound: "Beat Sound",
-        price: "Price",
-        genre: "Genre",
-        descriptions: "Nice",
-        status: "online",
-    },
-    {
-        id: 3,
-        beatname: "Beat 3",
-        beatsound: "Beat Sound",
-        price: "Price",
-        genre: "Genre",
-        descriptions: "Nice",
-        status: "online",
-    },
-    {
-        id: 4,
-        beatname: "Beat 4",
-        beatsound: "Beat Sound",
-        price: "Price",
-        genre: "Genre",
-        descriptions: "Nice",
-        status: "online",
-    },
-    {
-        id: 5,
-        beatname: "Beat 5",
-        beatsound: "Beat Sound",
-        price: "Price",
-        genre: "Genre",
-        descriptions: "Nice",
-        status: "online",
-    },
-];
+// const DATA = [
+//     {
+//         id: 1,
+//         beatname: "Beat 1",
+//         beatsound: "Beat Sound",
+//         price: "Price",
+//         genre: "Genre",
+//         descriptions: "Nice",
+//         status: "online",
+//     },
+//     {
+//         id: 2,
+//         beatname: "Beat 2",
+//         beatsound: "Beat Sound",
+//         price: "Price",
+//         genre: "Genre",
+//         descriptions: "Nice",
+//         status: "online",
+//     },
+//     {
+//         id: 3,
+//         beatname: "Beat 3",
+//         beatsound: "Beat Sound",
+//         price: "Price",
+//         genre: "Genre",
+//         descriptions: "Nice",
+//         status: "online",
+//     },
+//     {
+//         id: 4,
+//         beatname: "Beat 4",
+//         beatsound: "Beat Sound",
+//         price: "Price",
+//         genre: "Genre",
+//         descriptions: "Nice",
+//         status: "online",
+//     },
+//     {
+//         id: 5,
+//         beatname: "Beat 5",
+//         beatsound: "Beat Sound",
+//         price: "Price",
+//         genre: "Genre",
+//         descriptions: "Nice",
+//         status: "online",
+//     },
+// ];
 
 function ViewBeat() {
-    const handleDelete = (id) => {
-        console.log(id);
-    };
-
-    const handleUpdate = (id) => {
-        console.log(id);
-    };
+    const navigate = useNavigate();
+    const [beats, setBeats] = useState([]);
     const [searchBeat, setSearchBeat] = useState("");
-    const [listBeat, setListBeat] = useState(DATA);
+    // const [listBeat, setListBeat] = useState(DATA);
+    useEffect(() => {
+        loadBeats();
+    }, []);
 
+    const loadBeats = async () => {
+        const result = await axios.get("http://localhost:8080/api/v1/beat");
+        setBeats(result.data);
+    }
     const handleSearchBeat = (event) => {
         setSearchBeat(event.target.value);
-        
     }
 
-    useEffect(() => {
-        const list = DATA.filter((item) => item.beatname.toLowerCase().includes(searchBeat.toLowerCase()));
-        setListBeat(list);
-    }, [searchBeat])
+    const handleDelete = async (id) => {
+        console.log(id);
+        try {
+            await axios.delete(`http://localhost:8080/api/v1/beat/${id}`)
+            loadBeats();
+
+        } catch (error) {
+            console.log(error)
+        }
+    };
+
+    // useEffect(() => {
+    //     const list = DATA.filter((item) => item.beatname.toLowerCase().includes(searchBeat.toLowerCase()));
+    //     setListBeat(list);
+    // }, [searchBeat])
 
     return (
 
         <div className={cx("wrapper-viewBeat")}>
             <h1 className={cx("login-wrapper")}>View Beat</h1>
-            <input type="text" name='search-beat' className={cx("search-beat")} placeholder="Search beat..." value={searchBeat} onChange={handleSearchBeat} />
+            <div className={cx("action")}>
+                <input type="text" name='search-beat' className={cx("search-beat")} placeholder="Search beat..." value={searchBeat} onChange={handleSearchBeat} />
+                <Link to="/uploadbeat">
+                    <Button variant="contained" className={cx("action")}>
+                        <div className={cx("login")}>Create</div>
+                    </Button>
+                </Link>
+            </div>
             <table className={cx("list-beat")}>
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>#</th>
                         <th>Beat Name</th>
                         <th>Beat Sound</th>
                         <th>Price</th>
@@ -98,19 +120,20 @@ function ViewBeat() {
                     </tr>
                 </thead>
                 <tbody>
-                    {listBeat.map((item, index) => (
+                    {beats.map((beat, index) => (
                         <tr key={index}>
-                            <td>{item.id}</td>
-                            <td>{item.beatname}</td>
-                            <td>{item.beatsound}</td>
-                            <td>{item.price}</td>
-                            <td>{item.genre}</td>
-                            <td>{item.descriptions}</td>
-                            <td>{item.status}</td>
+                            <td>{index + 1}</td>
+                            <td>{beat.beatName}</td>
+                            <td>{beat.beatSound}</td>
+                            <td>{beat.price}</td>
+                            <td>{beat.genre}</td>
+                            <td>{beat.description}</td>
+                            <td>{beat.status}</td>
 
                             <td className={cx("button-options")}>
-                                <button onClick={() => handleUpdate(item.id)}>UPDATE</button>
-                                <button onClick={() => handleDelete(item.id)}>DELETE</button>
+                                <Link to={`/updatebeat/${beat.id}`}>
+                                    <button> UPDATE</button></Link>
+                                <button onClick={() => handleDelete(beat.id)}>DELETE</button>
                             </td>
                         </tr>
                     ))}
