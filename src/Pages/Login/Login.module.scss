@@ -2,11 +2,12 @@
   padding: 150px 254px;
   text-align: center;
   color: var(--white);
+  
   // background-color: #69818D;
   // height: 700px;
   // outline: 3px solid #fff;
   // margin-top: 50px;
-  // border-radius: 30px;
+  // border-style: solid;
 }
 
 :root {
@@ -18,7 +19,7 @@
   align-items: center;
   justify-content: center;
   gap: 15px;
-
+  
   .title {
     font-size: 2.5rem;
     font-weight: 200;
@@ -84,6 +85,7 @@
   width: 100%;
   border-radius: 40px !important;
   outline: 3px solid white;
+  
   .input-submit {
     padding: 14px 0;
     border: none;
@@ -94,7 +96,10 @@
   font-weight: 400;
   line-height: 1.6;
   background-color: inherit;
-  color: black;
+  color: white;
+  
+  
+
   }
 }
 
