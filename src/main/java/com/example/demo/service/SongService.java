@@ -15,10 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Transactional
 @RequiredArgsConstructor
@@ -35,14 +32,14 @@ public class SongService {
     @Autowired
     private GenreRepository genreRepository;
 
-    // User upload song with chords
+
     public ResponseEntity<String> insertSong(SongDTO songDTO) {
         User user = this.userRepository.findByUsername(songDTO.getUsername());
-        if (user == null){
+        if (user == null) {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         } else {
             Optional<User> foundUser = Optional.ofNullable(this.userRepository.findByUsername(user.getUsername()));
-            if (foundUser.isPresent()){
+            if (foundUser.isPresent()) {
                 Song song = new Song();
                 Set<Genre> genres = song.getGenres();
                 for (String genreName : songDTO.getGenres()) {
@@ -67,6 +64,32 @@ public class SongService {
             }
         }
     }
-    //
 
+    public List<SongDTO> getAllSongs() {
+        List<Song> songs = this.songRepository.findAll();
+        List<SongDTO> songDTOS = new ArrayList<>();
+        if (songs.isEmpty()) {
+            return null;
+        } else {
+            SongDTO songDTO = new SongDTO();
+            List<String> gerneName = new ArrayList<>();
+            for (Song s : songs) {
+                List<String> genres = this.genreRepository.findBySongs(s.getId());
+                gerneName.addAll(genres);
+                songDTO.setId(s.getId());
+                songDTO.setSongName(s.getSongname());
+                songDTO.setAuthor(s.getAuthor());
+                songDTO.setTone(s.getTone());
+                songDTO.setDescription(s.getDescription());
+                songDTO.setVocalRange(s.getVocalRange());
+                songDTO.setSongUrl(s.getSongUrl());
+                songDTO.setUsername(s.getUserUploadSong().getUsername());
+                songDTO.setCreateAt(s.getCreatedAt().toString());
+                songDTO.setGenres(gerneName);
+            songDTOS.add(songDTO);
+            }
+        }
+            return songDTOS;
+    }
 }
+

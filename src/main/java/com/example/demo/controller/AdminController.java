@@ -35,7 +35,7 @@ public class AdminController {
         return this.userService.banUser(newUser, id);
     }
 
-    //search user in Admin
+    //Search user by name in Admin
     @GetMapping("/username")
     public ResponseEntity<List<User>> searchByUserName(@Valid @RequestBody UserDTO userDTO) {
         return ResponseEntity.ok(this.userService.searchByUserName(userDTO));

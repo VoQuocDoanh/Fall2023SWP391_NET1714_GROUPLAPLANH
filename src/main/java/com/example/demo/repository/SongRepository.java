@@ -20,6 +20,4 @@ public interface SongRepository extends JpaRepository<Song, Long> {
     List<Song> findBySongName(String songName);
 
 
-
-
 }
