@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 import styles from "./Home.module.scss";
 import { Button } from "@mui/material";
+import OwlCarousel from "../../components/OwlCarousel";
 
 const cx = classNames.bind(styles);
 function Home() {
@@ -24,7 +25,7 @@ function Home() {
             </Button>
           </div>
           <div className={cx("images")}>
-            <img src={require('../../assets/Rectangle 18.png')} alt="Guitar" />
+            <OwlCarousel/>
           </div>
 
         </div>
@@ -44,7 +45,7 @@ function Home() {
               <div className={cx("trending-top")}>
                 <div className={cx("trending-top-left")}>
                   <div>
-                    <img className={cx("trending-details-img")} src={require("../../assets/images/profile/Rectangle 35.png")}>
+                    <img className={cx("trending-details-img")} src={require("../../assets/images/Trending/Rectangle 33.png")}>
                     </img>
                     <div className={cx("trending-subcribe")}>
                       Subcribe
@@ -69,7 +70,7 @@ function Home() {
                         </span>
 
                         <div className={cx("trending-text")}>
-                          <img className={cx("trending-ellipse")} src={require("../../assets/images/profile/Rectangle 35.png")}>
+                          <img className={cx("trending-ellipse")} src={require("../../assets/images/Trending/beautiful-girl-sitting-down-playing-the-piano.webp")}>
                           </img>
                           <div className={cx("text-role")}>
                             <div className={cx("text-ellipse1")}>
@@ -140,7 +141,7 @@ function Home() {
               <div className={cx("trending-top")}>
                 <div className={cx("trending-top-left")}>
                   <div>
-                    <img className={cx("trending-details-img")} src={require("../../assets/images/profile/Rectangle 35.png")}>
+                    <img className={cx("trending-details-img")} src={require("../../assets/images/Trending/hinh-guitar-am-cung.jpg")}>
                     </img>
                     <div className={cx("trending-subcribe")}>
                       Subcribe
@@ -165,7 +166,7 @@ function Home() {
                         </span>
 
                         <div className={cx("trending-text")}>
-                          <img className={cx("trending-ellipse")} src={require("../../assets/images/profile/Rectangle 35.png")}>
+                          <img className={cx("trending-ellipse")} src={require("../../assets/images/Trending/ly-do-cac-chang-trai-nen-biet-choi-dan-guitar-1.jpeg")}>
                           </img>
                           <div className={cx("text-role")}>
                             <div className={cx("text-ellipse1")}>
@@ -250,7 +251,7 @@ function Home() {
           <div className={cx("title-categories")}>
             <div className={cx("categories-items")}>
 
-              <img className={cx("img")} src={require("../../assets/Rectangle 23.png")} alt="Guitar">
+              <img className={cx("img")} src={require("../../assets/images/Chords/Rectangle 23.png")} alt="Guitar">
               </img>
 
               <div className={cx("content-1")}>
@@ -263,7 +264,7 @@ function Home() {
             </div>
 
             <div className={cx("categories-items")}>
-              <img className={cx("img")} src={require("../../assets/Rectangle 18.png")} alt="Piano">
+              <img className={cx("img")} src={require("../../assets/images/Chords/Rectangle 18.png")} alt="Piano">
               </img>
               <div className={cx("content-1")}>
                 Piano
@@ -274,7 +275,7 @@ function Home() {
             </div>
 
             <div className={cx("categories-items")}>
-              <img className={cx("img")} src={require("../../assets/Rectangle 19.png")} alt="Ukulele">
+              <img className={cx("img")} src={require("../../assets/images/Chords/Rectangle 19.png")} alt="Ukulele">
               </img>
               <div className={cx("content-1")}>
                 ukulele
@@ -294,17 +295,17 @@ function Home() {
             <div className={cx("line")}>
             </div>
           </div>
-          {/* Chords detail */}
+          {/* Chords of Songs detail */}
           <div className={cx("chords-part")}>
             <div className={cx("chords-details")}>
-              <img className={cx("chords-details-img")} src={require("../../assets/images/profile/Rectangle 35.png")}>
+              <img className={cx("chords-details-img")} src={require("../../assets/images/ChordsOfSongs/bao-lau-len-day-dan-piano-5.jpg")}>
               </img>
               <div className={cx("content-3")}>
                 Piano Sound
               </div>
 
               <div className={cx("icon-chords")}>
-                <img className={cx("trending-ellipse-songs")} src={require("../../assets/images/profile/Rectangle 35.png")}>
+                <img className={cx("trending-ellipse-songs")} src={require("../../assets/images/ChordsOfSongs/nganh-piano.webp")}>
                 </img>
                 <div className={cx("heart-list-icon")}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
@@ -346,13 +347,13 @@ function Home() {
             </div>
 
             <div className={cx("chords-details")}>
-              <img className={cx("chords-details-img")} src={require("../../assets/images/profile/Rectangle 36.png")}>
+              <img className={cx("chords-details-img")} src={require("../../assets/images/ChordsOfSongs/gia-dan-ukulele-size-24.jpg")}>
               </img>
               <div className={cx("content-3")}>
                 Drum Sound
               </div>
               <div className={cx("icon-chords")}>
-                <img className={cx("trending-ellipse-songs")} src={require("../../assets/images/profile/Rectangle 35.png")}>
+                <img className={cx("trending-ellipse-songs")} src={require("../../assets/images//ChordsOfSongs/top-8-thuong-hieu-ukulele-tot-nhat-nam-2019-cho-nguoi-moi-bat-dau.jpg")}>
                 </img>
                 <div className={cx("heart-list-icon")}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
@@ -394,13 +395,13 @@ function Home() {
             </div>
 
             <div className={cx("chords-details")}>
-              <img className={cx("chords-details-img")} src={require("../../assets/images/profile/Rectangle 33.png")}>
+              <img className={cx("chords-details-img")} src={require("../../assets/images/ChordsOfSongs/Rectangle 36.png")}>
               </img>
               <div className={cx("content-3")}>
                 Guitar Sound
               </div>
               <div className={cx("icon-chords")}>
-                <img className={cx("trending-ellipse-songs")} src={require("../../assets/images/profile/Rectangle 35.png")}>
+                <img className={cx("trending-ellipse-songs")} src={require("../../assets/images/ChordsOfSongs/hq720.jpg")}>
                 </img>
                 <div className={cx("heart-list-icon")}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">

@@ -6,6 +6,7 @@ import UpdateBeat from "../Pages/UpdateBeat";
 import UploadBeat from "../Pages/UploadBeat";
 import UploadFile from "../Pages/UploadFile";
 import ViewBeat from "../Pages/ViewBeat";
+import OwlCarousel from "../components/OwlCarousel";
 
 const publicRoutes = [
   {
@@ -39,6 +40,11 @@ const publicRoutes = [
   {
     path: "uploadfile",
     component: UploadFile,
+  },
+
+  {
+    path: "OwlCarousel",
+    component: OwlCarousel,
   }
 ];
 
