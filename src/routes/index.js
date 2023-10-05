@@ -1,4 +1,5 @@
 import Home from "../Pages/Home";
+import listBeat from "../Pages/ListBeat";
 import ListUser from "../Pages/ListUser/ListUser";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
@@ -45,6 +46,10 @@ const publicRoutes = [
   {
     path: "OwlCarousel",
     component: OwlCarousel,
+  },
+  {
+    path: "/listbeat",
+    component: listBeat,
   }
 ];
 

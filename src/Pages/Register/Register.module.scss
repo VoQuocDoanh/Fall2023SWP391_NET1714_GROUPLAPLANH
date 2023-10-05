@@ -3,7 +3,7 @@
     text-align: center;
     color: var(--white);
   }
-  
+
   .heading {
     display: flex;
     align-items: center;
@@ -26,7 +26,10 @@
       border-bottom: 1px solid #fff;
     }
   }
-  
+  .form-heading{
+    margin-top: 15px;
+    font-weight: 500;
+  }
   .form {
     margin-top: 56px;
     display: flex;
@@ -61,11 +64,12 @@
   
   .submit {
     border: 2px solid #e5e5e5;
-    background: #c3eef6;
+    background: #1976d2;
     padding-left: 0 !important;
   
     .input-submit {
       margin: 0 auto;
+      color: white;
     }
   }
   
@@ -97,6 +101,6 @@
     outline: 3px solid #fff;
   }
   .input-text{
-    color: white;
     justify-content: space-between;
+    color: white;
   }

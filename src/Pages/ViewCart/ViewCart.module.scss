@@ -1,0 +1,154 @@
+@import url("https://www.w3schools.com/w3css/4/w3.css");
+.header-text{
+    display: flex;
+    justify-content: space-between;    
+}
+.continue-shopping{
+    font-size: 25px;
+    text-decoration-line:underline ;
+    color: white;
+    font-family: Raleway;
+    cursor: pointer;
+    padding-top: 20px;
+}
+.wrapper-viewBeat {
+    margin-top: 213px;
+    padding: 0 66px;
+}
+
+.wrapper-viewBeat {
+    font-family: Arial, Helvetica, sans-serif;
+    //   border-collapse: collapse;
+    width: 100%;
+
+}
+
+.header-table-text {
+    font-size: 30px;
+    font-weight: 500px;
+    color: black;
+}
+
+
+// List beat ================
+
+.list-beat {
+    margin-top: 10px;
+    height: 900px;
+    width: 100%;
+    padding-left: 50px;
+    border-collapse:collapse;
+
+    // background-color: rgb(179, 235, 245);
+}
+
+.wrapper-viewBeat td,
+.wrapper-viewBeat th {
+    border: 3px solid #ddd;
+    padding: 8px;
+    background-color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.wrapper-viewBeat tr:nth-child(even) {
+    background-color: #FAFAFA;
+}
+
+.wrapper-viewBeat th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #69818D;
+    color: white;
+}
+
+.login-wrapper {
+    padding: 0px 150px;
+    text-align: center;
+    color: var(--white);
+    margin-bottom: 50px;
+    font-size: 50px;
+    font-family: raleway;
+
+}
+
+.button-options {
+    text-align: center;
+
+}
+
+//Quantity
+.input-group-text-1 {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: #FF6347;
+    border-color: #FF6347;
+}
+.input-group-text-2 {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: #8FC700;
+    border-color: #8FC700;
+}
+
+
+.input-form {
+    width: 40px;
+}
+
+.input-group {
+    display: flex;
+    justify-content: center;
+    gap:7px;
+    .form-text-center{
+        outline: 1px solid black;
+    }
+}
+
+.chord-img-trending {
+    display: flex;
+}
+
+.text-trending {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.trending-text {
+    display: flex;
+    gap: 20px;
+}
+
+.text-role {
+    // margin-top: 70px;
+  
+
+    .text-ellipse1 {
+        font-size: 20px;
+        font-family: Dosis;
+    }
+
+    .text-ellipse2 {
+        font-size: 15px;
+        font-family: Dosis;
+    }
+}
+
+.text-ellipse3 {
+    font-size: 20px;
+    font-size: 25px;
+    font-weight: 600;
+    color: rgb(0, 0, 0);
+}
+
+.trending-ellipse {
+    height: 96px;
+    width: 92px;
+    object-fit: cover;
+    border-radius: 10px;
+    background-color: #f1f1f1;
+}
