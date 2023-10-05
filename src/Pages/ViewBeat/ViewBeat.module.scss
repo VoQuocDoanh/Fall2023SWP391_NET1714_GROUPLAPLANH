@@ -18,6 +18,8 @@
   border: 1px solid #ccc; 
   border-radius: 4px;
   padding: 12px 10px 12px 10px;
+  width: 300px;
+  border-radius: 10px;
 
   &:focus-within {
     border-color:#000;
@@ -34,17 +36,18 @@
   width: 100%;
   padding-left: 50px;
   border-collapse: collapse;
-  background-color: rgb(179, 235, 245);
+  // background-color: rgb(179, 235, 245);
 }
 
 .wrapper-viewBeat td,
 .wrapper-viewBeat th {
   border: 3px solid #ddd;
   padding: 8px;
+  background-color: white;
 }
 
 .wrapper-viewBeat tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: #FAFAFA;
 }
 
 .wrapper-viewBeat tr:hover {
@@ -55,7 +58,7 @@
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: center;
-  background-color:#06c;
+  background-color:#69818D;
   color: white;
 }
 
@@ -75,7 +78,8 @@
 .button-options button{
     margin-left: 10px;
     border-radius: 10px;
-    background-color: #06c;
+    background-color: #3a4449;
     outline: 3px solid #fff;
-    color: white;
+    color: white; 
+    cursor: pointer;
 }

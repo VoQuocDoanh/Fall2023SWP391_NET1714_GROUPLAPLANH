@@ -42,8 +42,8 @@ function Login() {
         <div className={cx("input")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="45"
-            height="45"
+            width="35"
+            height="35"
             viewBox="0 0 45 45"
             fill="none"
           >
@@ -73,8 +73,8 @@ function Login() {
         <div className={cx("input")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="45"
-            height="45"
+            width="35"
+            height="35"
             viewBox="0 0 45 45"
             fill="none"
           >

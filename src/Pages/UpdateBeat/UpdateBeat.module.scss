@@ -26,6 +26,9 @@
       border-bottom: 1px solid #fff;
     }
   }
+  .form-heading{
+    font-weight: 500
+  }
   
   .form {
     margin-top: 56px;
@@ -61,7 +64,7 @@
   
   .submit {
     border: 2px solid #e5e5e5;
-    background: #c3eef6;
+    background: #1976d2;
     padding-left: 0 !important;
   
     .input-submit {
@@ -95,4 +98,8 @@
   }
   .input-text{
     color: white;
+  }
+  .status-option{
+    color: black;
+    font-weight: 400;
   }

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./UpdateBeat.module.scss";
 import { useState } from "react";
+import _ValidationUpload from "../../Validation/ValidationUpload"
 
 const cx = classNames.bind(styles);
 
@@ -143,8 +144,8 @@ function UpdateBeat() {
             defaultValue={status}
           >
             <option value="status">Status</option>
-            <option value="0">0</option>
-            <option value="1">1</option>
+            <option className={cx("status-option")} value="0">0</option>
+            <option className={cx("status-option")} value="1">1</option>
           </select>
         </div>
 
