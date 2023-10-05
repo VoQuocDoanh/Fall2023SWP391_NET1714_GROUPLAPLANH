@@ -15,7 +15,9 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -52,10 +54,17 @@ public class ChordCollection {
     @JoinColumn(name = "userCollection")
     private User userCollection;
 
-    @OneToMany(mappedBy = "collectionId")
+    //    @ManyToMany(mappedBy = "collections",cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JsonIgnore
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private List<ChordInCollection> collections = new ArrayList();
+    @JoinTable(
+            name = "ChordInCollection",
+            joinColumns = {@JoinColumn(
+                    name = "collectonId")},
+            inverseJoinColumns = {@JoinColumn(
+                    name = "chordId")}
+    )
+    private Set<ChordBasic> chords = new HashSet<>();
 
     @JsonIgnore
     public void setUserCollection(final User userCollection) {
@@ -67,16 +76,39 @@ public class ChordCollection {
         this.status = status;
     }
 
-    public ChordCollection(Long id,String name, int status, LocalDateTime createdAt) {
+    public ChordCollection(Long id,String name,String description,  int status, LocalDateTime createdAt) {
         this.id=id;
         this.name = name;
+        this.description=description;
         this.status = status;
         this.createdAt = createdAt;
+    }
+
+    public ChordCollection(String name, String description, int status, LocalDateTime createdAt, User userCollection, Set<ChordBasic> chords) {
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.userCollection = userCollection;
+        this.chords = chords;
     }
 
     public ChordCollection(String name, int status, User userCollection) {
         this.name = name;
         this.status = status;
         this.userCollection = userCollection;
+    }
+
+    @Override
+    public String toString() {
+        return "ChordCollection{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", createdAt=" + createdAt +
+                ", userCollection=" + userCollection +
+                ", chords=" + chords +
+                '}';
     }
 }

@@ -49,7 +49,6 @@ public class BeatService {
                     beatEntity.add(ownBeat);
                 }
             }
-            int tmp = beatEntity.size();
             return beatEntity;
         }
     }

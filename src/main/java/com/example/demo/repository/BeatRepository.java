@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Repository
 public interface BeatRepository extends JpaRepository<Beat, Long> {
-    @Query("SELECT b FROM Beat b WHERE b.beatName like %:name% and status=1")
+    @Query("SELECT b FROM Beat b WHERE b.beatName like %:name% and b.status=1")
     List<Beat> findByBeatName(String name);
 
     Optional<Beat> findNameByBeatName(String beatName);

@@ -12,4 +12,9 @@ import java.util.Optional;
 public interface ChordBasicRepository extends JpaRepository<ChordBasic,Long> {
    @Query("SELECT c FROM ChordBasic c where c.chordKey=:chordKey and c.suffix=:chordSuffix and c.type=:chordType")
     List<ChordBasic> findChord(String chordKey, String chordSuffix,String chordType);
+
+//   @Query("SELECT c FROM ChordBasic c where c.chordId = :id")
+   ChordBasic findByChordId(Long id);
+
+
 }
