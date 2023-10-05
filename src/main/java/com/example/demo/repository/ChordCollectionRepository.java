@@ -15,5 +15,6 @@ public interface ChordCollectionRepository extends JpaRepository<ChordCollection
     /*@Query("SELECT c FROM ChordInCollection c WHERE c.collectonId=:collectionId")
     ChordCollection findCollectionId(Long id);*/
 
-
+    @Query("SELECT c FROM ChordCollection  c WHERE c.id=:id")
+    ChordCollection findByCollectionId(Long id);
 }

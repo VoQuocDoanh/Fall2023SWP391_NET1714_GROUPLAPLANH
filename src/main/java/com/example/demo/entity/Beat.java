@@ -6,6 +6,7 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -55,6 +56,7 @@ public class Beat {
     @JsonIgnore
     @JoinColumn(name = "orderBeat")
     private Order orderBeat;
+
 
     @ManyToMany
     @JsonIgnore

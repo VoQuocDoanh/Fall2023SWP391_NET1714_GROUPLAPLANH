@@ -39,7 +39,7 @@ public class ChordCollectionService {
             for (int i = 0; i < collection.size(); i++) {
                 //userCollection is username in User Entity
                 User t = collection.get(i).getUserCollection();
-                if (t!=null && t.getId().equals(userEntity.getId())) {
+                if (t != null && t.getId().equals(userEntity.getId())) {
                     ChordCollection ownCollection = new ChordCollection(
                             collection.get(i).getId(),
                             collection.get(i).getName(),
@@ -53,13 +53,26 @@ public class ChordCollectionService {
         }
     }
 
-    public ChordCollection findById(Long id) {
-        Optional<ChordCollection> foundChordCollection = chordCollectionRepository.findById(id);
-        if (foundChordCollection.isEmpty()) {
-            return null;
-        } else {
-            return chordCollectionRepository.findById(id).orElseThrow();
-        }
+    public List<ChordCollectionDTO> getDetail(Long id) {
+        ChordCollection collections = chordCollectionRepository.findByCollectionId(id);
+        ChordCollectionDTO chordCollectionDTO = new ChordCollectionDTO();
+        List<ChordCollectionDTO> collectionDTOS = new ArrayList<>();
+        List<String> chordName = new ArrayList<>();
+        List<String> chordImage = new ArrayList<>();
+        List<String> chords = chordRepository.findByCollection(collections.getId());
+        chordName.addAll(chords);
+        List<String> images=chordRepository.findImageByCollection(collections.getId());
+        chordImage.addAll(images);
+        chordCollectionDTO.setChordCollectionId(collections.getId());
+        chordCollectionDTO.setName(collections.getName());
+        chordCollectionDTO.setDescription(collections.getDescription());
+        chordCollectionDTO.setChordName(chordName);
+        //chordCollectionDTO.setChordId(collections.getChords());
+        chordCollectionDTO.setImage(chordImage);
+        chordCollectionDTO.setUsername(collections.getUserCollection().getUsername());
+        collectionDTOS.add(chordCollectionDTO);
+
+        return collectionDTOS;
     }
 
     public ResponseEntity<String> addToCollection(ChordCollectionDTO chordCollectionDTO) {
@@ -89,9 +102,9 @@ public class ChordCollectionService {
                     chordCollectionRepository.save(collection);
 
                 } else {
-                    Optional<ChordCollection> findCollection=chordCollectionRepository.findByName(chordCollectionDTO.getName());
-                    ChordCollection collection=findCollection.get();
-                    Set<ChordBasic> chords=findCollection.get().getChords();
+                    Optional<ChordCollection> findCollection = chordCollectionRepository.findByName(chordCollectionDTO.getName());
+                    ChordCollection collection = findCollection.get();
+                    Set<ChordBasic> chords = findCollection.get().getChords();
                     for (Long chordId : chordCollectionDTO.getChordId()) {
                         ChordBasic chord = chordRepository.findByChordId(chordId);
                         if (chord != null) {
@@ -112,9 +125,9 @@ public class ChordCollectionService {
         if (user == null) {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         } else {
-            Optional<ChordCollection> findCollection=chordCollectionRepository.findByName(chordCollectionDTO.getName());
-            ChordCollection collection=findCollection.get();
-            Set<ChordBasic> chords=findCollection.get().getChords();
+            Optional<ChordCollection> findCollection = chordCollectionRepository.findByName(chordCollectionDTO.getName());
+            ChordCollection collection = findCollection.get();
+            Set<ChordBasic> chords = findCollection.get().getChords();
             for (Long chordId : chordCollectionDTO.getChordId()) {
                 ChordBasic chord = chordRepository.findByChordId(chordId);
                 if (chord != null) {
@@ -129,26 +142,13 @@ public class ChordCollectionService {
 
     }
 
-
-/*
     public ResponseEntity<String> deleteCollection(ChordCollectionDTO chordCollectionDTO) {
         User user = userRepository.findByUsername(chordCollectionDTO.getUsername());
         if (user == null) {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         } else {
-            Optional<ChordCollection> findCollection=chordCollectionRepository.findByName(chordCollectionDTO.getName());
-        }
-        return new ResponseEntity<>("Delete successfully",HttpStatus.OK);
-    }
-*/
-
-    public ResponseEntity<String> deleteCollection(ChordCollectionDTO chordCollectionDTO) {
-        User user = userRepository.findByUsername(chordCollectionDTO.getUsername());
-        if (user == null) {
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-        } else {
-            Optional<ChordCollection> findCollection=chordCollectionRepository.findByName(chordCollectionDTO.getName());
-            Set<ChordBasic> chords=findCollection.get().getChords();
+            Optional<ChordCollection> findCollection = chordCollectionRepository.findByName(chordCollectionDTO.getName());
+            Set<ChordBasic> chords = findCollection.get().getChords();
             chords.removeAll(chords);
             chordCollectionRepository.deleteById(findCollection.get().getId());
         }

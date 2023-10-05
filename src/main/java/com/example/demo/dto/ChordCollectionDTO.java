@@ -20,6 +20,8 @@ public class ChordCollectionDTO {
     private List<Long> chordId;
     private long chordCollectionId;
     private String flag;
+    private List<String> image;
+    private List<String> chordName;
 
     @Override
     public String toString() {
