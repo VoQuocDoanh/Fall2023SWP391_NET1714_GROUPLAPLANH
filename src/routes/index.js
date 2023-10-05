@@ -5,9 +5,9 @@ import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import UpdateBeat from "../Pages/UpdateBeat";
 import UploadBeat from "../Pages/UploadBeat";
+import UploadFile from "../Pages/UploadFile";
 import ViewBeat from "../Pages/ViewBeat";
-import ViewCart from "../Pages/ViewCart";
-
+import OwlCarousel from "../components/OwlCarousel";
 
 const publicRoutes = [
   {
@@ -23,7 +23,7 @@ const publicRoutes = [
     component: Register,
   },
   {
-    path: "/updatebeat",
+    path: "/updatebeat/:id",
     component: UpdateBeat,
   },
   {
@@ -39,13 +39,18 @@ const publicRoutes = [
     component: ListUser,
   },
   {
-    path: "/viewcart",
-    component: ViewCart,
+    path: "uploadfile",
+    component: UploadFile,
+  },
+
+  {
+    path: "OwlCarousel",
+    component: OwlCarousel,
   },
   {
     path: "/listbeat",
     component: listBeat,
-  },
+  }
 ];
 
 const privateRoute = [];

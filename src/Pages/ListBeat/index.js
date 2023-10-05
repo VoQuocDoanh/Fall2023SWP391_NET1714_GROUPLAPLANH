@@ -19,7 +19,7 @@ function listBeat() {
                 </div>
                 <div className={cx("chords-part")}>
                     <div className={cx("chords-details")}>
-                        <img className={cx("chords-details-img")} src={require("../../assets/images/profile/Bach-Trompete_06.08.2008_12-46-40_2304x3072.jpg")}>
+                        <img className={cx("chords-details-img")} src={require("../../assets/images/Chords/Rectangle 23.png")}>
                         </img>
                         <div className={cx("content-3")}>
                             BeatName
@@ -60,7 +60,7 @@ function listBeat() {
                         </div>
                     </div>
                     <div className={cx("chords-details")}>
-                        <img className={cx("chords-details-img")} src={require("../../assets/images/profile/Rectangle 36.png")}>
+                        <img className={cx("chords-details-img")} src={require("../../assets/images/Chords/Rectangle 19.png")}>
                         </img>
                         <div className={cx("content-3")}>
                             BeatName
@@ -103,7 +103,7 @@ function listBeat() {
                     </div>
 
                     <div className={cx("chords-details")}>
-                        <img className={cx("chords-details-img")} src={require("../../assets/images/profile/Rectangle 36.png")}>
+                        <img className={cx("chords-details-img")} src={require("../../assets/images/Chords/Rectangle 18.png")}>
                         </img>
                         <div className={cx("content-3")}>
                             BeatName
@@ -146,7 +146,7 @@ function listBeat() {
                     </div>
 
                     <div className={cx("chords-details")}>
-                        <img className={cx("chords-details-img")} src={require("../../assets/images/profile/GUEST_4d099759-06ed-4475-8c9e-430d46042c52.jpg")}>
+                        <img className={cx("chords-details-img")} src={require("../../assets/images/ChordsOfSongs/hq720.jpg")}>
                         </img>
                         <div className={cx("content-3")}>
                             BeatName
@@ -197,7 +197,7 @@ function listBeat() {
                 <div className={cx("listbeat-header")}>
                     <div className={cx("chords-part")}>
                         <div className={cx("chords-details")}>
-                            <img className={cx("chords-details-img")} src={require("../../assets/images/profile/febdba6d-ed85-422b-b437-01b25015360c.jpg")}>
+                            <img className={cx("chords-details-img")} src={require("../../assets/images/ChordsOfSongs/top-8-thuong-hieu-ukulele-tot-nhat-nam-2019-cho-nguoi-moi-bat-dau.jpg")}>
                             </img>
                             <div className={cx("content-3")}>
                                 BeatName
@@ -238,7 +238,7 @@ function listBeat() {
                         </div>
                         </div>
                         <div className={cx("chords-details")}>
-                        <img className={cx("chords-details-img")} src={require("../../assets/images/profile/Rectangle 36.png")}>
+                        <img className={cx("chords-details-img")} src={require("../../assets/images/ChordsOfSongs/nganh-piano.webp")}>
                         </img>
                         <div className={cx("content-3")}>
                             BeatName
@@ -281,7 +281,7 @@ function listBeat() {
                     </div>
 
                         <div className={cx("chords-details")}>
-                            <img className={cx("chords-details-img")} src={require("../../assets/images/profile/pexels-photo-164936-684x1024.jpeg")}>
+                            <img className={cx("chords-details-img")} src={require("../../assets/images/ChordsOfSongs/Rectangle 36.png")}>
                             </img>
                             <div className={cx("content-3")}>
                                 BeatName
@@ -323,7 +323,7 @@ function listBeat() {
                         </div>
 
                         <div className={cx("chords-details")}>
-                            <img className={cx("chords-details-img")} src={require("../../assets/images/profile/Rectangle 33.png")}>
+                            <img className={cx("chords-details-img")} src={require("../../assets/images/Trending/ly-do-cac-chang-trai-nen-biet-choi-dan-guitar-1.jpeg")}>
                             </img>
                             <div className={cx("content-3")}>
                                 BeatName
@@ -376,7 +376,7 @@ function listBeat() {
                 <div className={cx("listbeat-header")}>
                     <div className={cx("chords-part")}>
                         <div className={cx("chords-details")}>
-                            <img className={cx("chords-details-img")} src={require("../../assets/images/profile/violin-kapok-mv005-4-4.jpg")}>
+                            <img className={cx("chords-details-img")} src={require("../../assets/images/Trending/beautiful-girl-sitting-down-playing-the-piano.webp")}>
                             </img>
                             <div className={cx("content-3")}>
                                 BeatName
@@ -417,7 +417,7 @@ function listBeat() {
                         </div>
                         </div>
                         <div className={cx("chords-details")}>
-                        <img className={cx("chords-details-img")} src={require("../../assets/images/profile/Rectangle 36.png")}>
+                        <img className={cx("chords-details-img")} src={require("../../assets/images/Trending/hinh-guitar-am-cung.jpg")}>
                         </img>
                         <div className={cx("content-3")}>
                             BeatName
@@ -460,7 +460,7 @@ function listBeat() {
                     </div>
 
                         <div className={cx("chords-details")}>
-                            <img className={cx("chords-details-img")} src={require("../../assets/images/profile/Rectangle 36.png")}>
+                            <img className={cx("chords-details-img")} src={require("../../assets/images/Trending/Rectangle 33.png")}>
                             </img>
                             <div className={cx("content-3")}>
                                 BeatName
@@ -502,7 +502,7 @@ function listBeat() {
                         </div>
 
                         <div className={cx("chords-details")}>
-                            <img className={cx("chords-details-img")} src={require("../../assets/images/profile/the-best-violins-under-rs-20000-for-professionals-quality-and-affordability.webp")}>
+                            <img className={cx("chords-details-img")} src={require("../../assets/images/Other/play-store.png")}>
                             </img>
                             <div className={cx("content-3")}>
                                 BeatName

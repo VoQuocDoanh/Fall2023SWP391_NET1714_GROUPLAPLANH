@@ -1,24 +1,47 @@
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./Register.module.scss";
 import { useState } from "react";
 import { Button } from "@mui/material";
+import { async } from "q";
+import axios from "axios";
 
 const cx = classNames.bind(styles);
 
 function Register() {
   const [username, setUserName] = useState("");
   const [password, setPassWord] = useState("");
+  const [fullName, setFullName] = useState("");
   const [isChecked, setIsChecked] = useState(false);
-  const [checkPassWorld, setCheckPassWorld] = useState("");
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState("");
+  const [checkPassword, setCheckPassword] = useState("");
+  const [mail, setMail] = useState("");
+  const [role, setRole] = useState("Customer");
   const [address, setAddress] = useState("");
-  const [phonenumber, setPhonenumber] = useState("");
+  const [phoneNumber, setPhonenumber] = useState("");
+  const [gender, setGender] = useState("MALE");
+  const [registrationMessage, setRegistrationMessage] = useState('')
+  const user = { username, password, fullName, mail, role, address, phoneNumber, gender }
+  const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    console.log(username, password, isChecked);
+  const handleSubmit = async(e) => {
+    setRegistrationMessage()
+    console.log(username, password, fullName, mail, role, address, phoneNumber, gender);
+    if (!username || !password || !fullName || !mail || !role || !address || !phoneNumber || !gender) {
+      alert("Please fill in all fields!");
+      return;
+    }
+    if(password != checkPassword){
+      alert("Confirm Password not match Password")
+      return;
+    }
+    e.preventDefault()
+    try{
+      await axios.post("http://localhost:8080/api/auth/register", user);
+      navigate("/login")
+    }catch(error){
+      setRegistrationMessage("Username has been used!")
+    }
   };
 
   return (
@@ -32,7 +55,7 @@ function Register() {
       <h1 className={cx("form-heading")}>Register</h1>
       {/* Form */}
       <div className={cx("form")}>
-        {/* Username or email */}
+        {/* Username*/}
         <div className={cx("input")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -51,10 +74,35 @@ function Register() {
           </svg>
           <input
             type="text"
-            placeholder="Username or email"
+            placeholder="Username"
             className={cx("input-text")}
             value={username}
             onChange={(e) => setUserName(e.target.value)}
+          />
+        </div>
+        {/* Fullname*/}
+        <div className={cx("input")}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="45"
+            height="45"
+            viewBox="0 0 45 45"
+            fill="none"
+          >
+            <path
+              d="M33.75 35.625V33.2812C33.75 29.3981 30.1519 26.25 25.7137 26.25H19.2863C14.8481 26.25 11.25 29.3981 11.25 33.2812V35.625M28.125 15C28.125 16.4918 27.5324 17.9226 26.4775 18.9775C25.4226 20.0324 23.9918 20.625 22.5 20.625C21.0082 20.625 19.5774 20.0324 18.5225 18.9775C17.4676 17.9226 16.875 16.4918 16.875 15C16.875 13.5082 17.4676 12.0774 18.5225 11.0225C19.5774 9.96763 21.0082 9.375 22.5 9.375C23.9918 9.375 25.4226 9.96763 26.4775 11.0225C27.5324 12.0774 28.125 13.5082 28.125 15Z"
+              stroke="white"
+            // stroke-width="2"
+            // stroke-linecap="round"
+            // stroke-linejoin="round"
+            />
+          </svg>
+          <input
+            type="text"
+            placeholder="Full Name"
+            className={cx("input-text")}
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
           />
         </div>
         {/*Email */}
@@ -75,11 +123,11 @@ function Register() {
             type="Email"
             placeholder="Email"
             className={cx("input-text")}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={mail}
+            onChange={(e) => setMail(e.target.value)}
           />
         </div>
-        {/* RoleID */}
+        {/* Gender */}
         <div className={cx("input")}>
 
           <svg
@@ -94,15 +142,48 @@ function Register() {
               stroke="white"
             />
           </svg>
-          {/*Status*/}
           <select
             className={cx("input-text")}
-            onChange={e => setStatus(e.target.value)}
-            defaultValue={status}
+            onChange={(e) => setGender(e.target.value)}
+            defaultValue={gender}
+          >
+            <option value="MALE">MALE</option>
+            <option value="FEMALE">FEMALE</option>
+            <option value="OTHER">OTHER</option>
+          </select>
+        </div>
+
+        {/* Role */}
+        <div className={cx("input")}>
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="45"
+            height="45"
+            viewBox="0 0 45 45"
+            fill="none"
+          >
+            <path
+              d="M33.75 35.625V33.2812C33.75 29.3981 30.1519 26.25 25.7137 26.25H19.2863C14.8481 26.25 11.25 29.3981 11.25 33.2812V35.625M28.125 15C28.125 16.4918 27.5324 17.9226 26.4775 18.9775C25.4226 20.0324 23.9918 20.625 22.5 20.625C21.0082 20.625 19.5774 20.0324 18.5225 18.9775C17.4676 17.9226 16.875 16.4918 16.875 15C16.875 13.5082 17.4676 12.0774 18.5225 11.0225C19.5774 9.96763 21.0082 9.375 22.5 9.375C23.9918 9.375 25.4226 9.96763 26.4775 11.0225C27.5324 12.0774 28.125 13.5082 28.125 15Z"
+              stroke="white"
+            />
+          </svg>
+          {/* <select
+            className={cx("input-text")}
+            onChange={e => setRole(e.target.value)}
+            defaultValue={role}
           >
             <option className={cx("role-item")} value="status">Role</option>
             <option value="0">Customer</option>
             <option value="1">Musician</option>
+          </select> */}
+          <select
+            className={cx("input-text")}
+            onChange={(e) => setRole(e.target.value)}
+            defaultValue={role}
+          >
+            <option value="Customer">Customer</option>
+            <option value="Musician">Musician</option>
           </select>
         </div>
         {/* Address */}
@@ -121,7 +202,7 @@ function Register() {
           </svg>
           <input
             type="address"
-            placeholder="Adress"
+            placeholder="Address"
             className={cx("input-text")}
             value={address}
             onChange={(e) => setAddress(e.target.value)}
@@ -143,7 +224,7 @@ function Register() {
             type="phonenumber"
             placeholder="Phone Number"
             className={cx("input-text")}
-            value={phonenumber}
+            value={phoneNumber}
             onChange={(e) => setPhonenumber(e.target.value)}
           />
         </div>
@@ -169,7 +250,7 @@ function Register() {
             onChange={(e) => setPassWord(e.target.value)}
           />
         </div>
-        {/* Password*/}
+        {/* Confirm Password*/}
         <div className={cx("input")}>
           <svg className={cx("icon-input")}
             xmlns="http://www.w3.org/2000/svg"
@@ -187,8 +268,8 @@ function Register() {
             type="password"
             placeholder="Confirm password"
             className={cx("input-text")}
-            value={checkPassWorld}
-            onChange={(e) => setCheckPassWorld(e.target.value)}
+            value={checkPassword}
+            onChange={(e) => setCheckPassword(e.target.value)}
           />
         </div>
 
@@ -200,6 +281,11 @@ function Register() {
           />
         </Button>
       </div>
+      {registrationMessage && (
+          <p style={{ color: "red", marginTop: 10, paddingLeft: 5 }}>
+            {registrationMessage}
+          </p>
+        )}
       {/* Footer */}
       <div className={cx("footer")}>
         <div className={cx("footer-left")}>
