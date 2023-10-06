@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ChordBasicRepository extends JpaRepository<ChordBasic,Long> {
@@ -15,10 +16,16 @@ public interface ChordBasicRepository extends JpaRepository<ChordBasic,Long> {
 //   @Query("SELECT c FROM ChordBasic c where c.chordId = :id")
    ChordBasic findByChordId(Long id);
 
+    @Query("SELECT c.chordName FROM ChordBasic c JOIN c.collections cl WHERE cl.id=:id")
+    List<String> findByCollection(Long id);
+
    ChordBasic findByChordKey(String name);
 
     @Query("SELECT cb.chordKey FROM ChordBasic cb JOIN cb.songs s WHERE s.Id = :id")
     List<String> findBySongs(Long id);
 
 
+
+    @Query("SELECT c.image FROM ChordBasic c JOIN c.collections cl WHERE cl.id=:id")
+    List<String> findImageByCollection(Long id);
 }

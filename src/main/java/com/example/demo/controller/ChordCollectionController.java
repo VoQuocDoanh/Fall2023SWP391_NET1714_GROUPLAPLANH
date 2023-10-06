@@ -30,8 +30,8 @@ public class ChordCollectionController {
 
     //Get detail
     @GetMapping("/{id}")
-    public ResponseEntity<ChordCollection> findById(@PathVariable Long id){
-        return ResponseEntity.ok(chordCollectionService.findById(id));
+    public ResponseEntity<List<ChordCollectionDTO>> findById(@PathVariable Long id){
+        return ResponseEntity.ok(chordCollectionService.getDetail(id));
     }
 
     @PostMapping("/AddChord")

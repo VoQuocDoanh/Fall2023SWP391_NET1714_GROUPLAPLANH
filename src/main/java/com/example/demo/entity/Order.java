@@ -43,7 +43,7 @@ public class Order {
 
     @OneToMany(mappedBy = "orderBeat")
     @JsonIgnore
-    @JsonInclude(Include.NON_NULL)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<Beat> beats = new ArrayList();
 
     @PrePersist
@@ -58,6 +58,12 @@ public class Order {
 
     @JsonIgnore
     public void setBeats(final List<Beat> beats) {
+        this.beats = beats;
+    }
+
+    public Order( List<Beat> beats, User userOrder,Double price ) {
+        this.price = price;
+        this.userOrder = userOrder;
         this.beats = beats;
     }
 }
