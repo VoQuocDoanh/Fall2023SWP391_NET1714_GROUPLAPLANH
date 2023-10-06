@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./UpdateBeat.module.scss";
 import { useState } from "react";
-import _ValidationUpload from "../../Validation/ValidationUpload"
+
 
 const cx = classNames.bind(styles);
 
