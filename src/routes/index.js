@@ -1,4 +1,5 @@
 import Home from "../Pages/Home";
+import listBeat from "../Pages/ListBeat";
 import ListUser from "../Pages/ListUser/ListUser";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
@@ -6,6 +7,7 @@ import UpdateBeat from "../Pages/UpdateBeat";
 import UploadBeat from "../Pages/UploadBeat";
 import UploadFile from "../Pages/UploadFile";
 import ViewBeat from "../Pages/ViewBeat";
+import OwlCarousel from "../components/OwlCarousel";
 
 const publicRoutes = [
   {
@@ -39,6 +41,15 @@ const publicRoutes = [
   {
     path: "uploadfile",
     component: UploadFile,
+  },
+
+  {
+    path: "OwlCarousel",
+    component: OwlCarousel,
+  },
+  {
+    path: "/listbeat",
+    component: listBeat,
   }
 ];
 

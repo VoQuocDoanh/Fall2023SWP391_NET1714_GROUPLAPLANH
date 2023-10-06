@@ -6,14 +6,13 @@ import { useState } from "react";
 import { Button } from "@mui/material";
 import axios from "axios";
 
+import ValidationUpload from "../../Validation/ValidationUpload";
 const cx = classNames.bind(styles);
-
 function UploadBeat() {
 
   const [beatName, setBeatName] = useState("");
   const [price, setPrice] = useState("");
   // const [orderID, setOrderID] = useState("");
-  const [beatSound, setBeatSound] = useState("");
   // const [username, setUserName] = useState("");
   const username = localStorage.getItem('loginUser')
   const [genre, setGenre] = useState("");
@@ -21,6 +20,7 @@ function UploadBeat() {
   const [uploadMessage, setUploadMessage] = useState('')
   const beat = { beatName, price, beatSound, username, genre, description }
   const navigate = useNavigate();
+  const [beatSound, setBeatSound] =useState("")
 
   const handleUpload = async (e) => {
 
@@ -49,8 +49,8 @@ function UploadBeat() {
         <div className={cx("input")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="45"
-            height="45"
+            width="35"
+            height="35"
             viewBox="0 0 45 45"
             fill="none"
           >
@@ -70,6 +70,11 @@ function UploadBeat() {
             onChange={(e) => setBeatName(e.target.value)}
           />
         </div>
+        {/* {error.beatname && (
+          <p style={{ color: "red", marginTop: 10, paddingLeft: 5 }}>
+            {error.beatname}
+          </p>
+        )} */}
         {/*Price */}
         <div className={cx("input")}>
           <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
@@ -92,6 +97,11 @@ function UploadBeat() {
             onChange={(e) => setPrice(e.target.value)}
           />
         </div>
+        {/* {error.price && (
+          <p style={{ color: "red", marginTop: 10, paddingLeft: 5 }}>
+            {error.price}
+          </p>
+        )} */}
 
         {/* OrderID*/}
         {/* <div className={cx("input")}>
@@ -120,6 +130,11 @@ function UploadBeat() {
             onChange={(e) => setBeatSound(e.target.value)}
           />
         </div>
+        {/* {error.beatsound && (
+          <p style={{ color: "red", marginTop: 10, paddingLeft: 5 }}>
+            {error.beatsound}
+          </p>
+        )} */}
         {/* Username*/}
         {/* <div className={cx("input")}>
           <svg

@@ -36,9 +36,16 @@
 .nav-item+.nav-item {
     margin-top: 30px;
 }
+.nav-item{
+    font-size: 20px;
+    cursor: pointer;
+}
 .icon-item {
     font-size: 30px;
     font-weight: 700;
+}
+.box-contact{
+    cursor: pointer;
 }
 .title-item{
     font-size: 30px;
@@ -48,4 +55,6 @@
 .footer-contact{
     margin-left: 50px;
 }
-
+.contact-item1{
+    text-decoration-line:underline;
+}
