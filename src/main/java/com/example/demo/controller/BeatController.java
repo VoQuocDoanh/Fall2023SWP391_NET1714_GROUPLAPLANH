@@ -6,9 +6,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.BeatDTO;
-import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.Beat;
-import com.example.demo.entity.User;
 import com.example.demo.service.BeatService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,31 +22,37 @@ public class BeatController {
     @Autowired
     private BeatService beatService;
 
-    // List own beats in Musician
-    @GetMapping("")
-    public ResponseEntity<List<Beat>> findAllBeat(@RequestBody BeatDTO beatDTO) {
-        return ResponseEntity.ok(this.beatService.findAllBeat(beatDTO));
+    // List own Beats in MS
+    @GetMapping("/own")
+    public ResponseEntity<List<Beat>> findAllOwnBeat(@Valid @RequestBody BeatDTO beatDTO) {
+        return ResponseEntity.ok(this.beatService.findAllOwnBeat(beatDTO));
     }
 
-    // Get detail beat US and MS
+    // List all Beats in US
+    @GetMapping("")
+    public ResponseEntity<List<Beat>> findAllBeat() {
+        return ResponseEntity.ok(this.beatService.findAllBeat());
+    }
+
+    // Get detail Beat US and MS
     @GetMapping("/{id}")
     public ResponseEntity<Beat> findById(@PathVariable Long id){
         return ResponseEntity.ok(this.beatService.findById(id));
     }
 
-    // Search beat by Name
+    // Search Beat by Name
     @GetMapping("/name")
     public ResponseEntity<List<Beat>> searchByBeatName(@Valid @RequestBody BeatDTO beatDTO) {
         return ResponseEntity.ok(this.beatService.searchByBeatName(beatDTO));
     }
 
-    // Search beat by Musician
+    // Search Beat by Musician
     @GetMapping("/musician")
     public ResponseEntity<List<Beat>> searchByMusician(@Valid @RequestBody BeatDTO beatDTO) {
         return ResponseEntity.ok(this.beatService.searchByMusician(beatDTO));
     }
 
-    //Add beat in musician
+    //Add Beat in MS
     @PostMapping({""})
     public ResponseEntity<String> uploadBeat(@Valid @RequestBody BeatDTO beatDTO) {
         return this.beatService.insertBeat(beatDTO);
@@ -62,8 +66,8 @@ public class BeatController {
 
     //delete beat by update status in MS
     @DeleteMapping({"/{id}"})
-    public ResponseEntity<String> deleteBeat(@Valid @RequestBody Beat deleteBeat, @PathVariable Long id) {
-        return this.beatService.deleteBeat(deleteBeat, id);
+    public ResponseEntity<String> deleteBeat(@PathVariable Long id) {
+        return this.beatService.deleteBeat(id);
     }
 
 }

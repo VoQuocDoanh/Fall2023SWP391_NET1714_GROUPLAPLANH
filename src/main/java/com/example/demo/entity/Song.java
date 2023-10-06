@@ -75,10 +75,17 @@ public class Song {
             inverseJoinColumns = {@JoinColumn(
                     name = "genreId")}
     )
-    private Set<Genre> genres = new HashSet<>();
+    private Set<Genre> genresofsong = new HashSet<>();
 
-    @ManyToMany(mappedBy = "songs", cascade = {CascadeType.ALL})
-    private List<ChordBasic> chords = new ArrayList();
+    @ManyToMany (cascade = {CascadeType.ALL})
+    @JsonIgnore
+    @JoinTable(name = "ChordOfSong",
+            joinColumns = {@JoinColumn(
+                    name = "songId")},
+            inverseJoinColumns = {@JoinColumn(
+                    name = "chordId")}
+    )
+    private Set<ChordBasic> chordsofsong = new HashSet<>();
 
     @PrePersist
     public void prePersist() {
@@ -95,11 +102,6 @@ public class Song {
         this.feedbackSongs = feedbackSongs;
     }
 
-//    @JsonIgnore
-//    public void setGenres(final List<Genre> genres) {
-//        this.genres = genres;
-//    }
-
     public Song(String songname, String author, String tone, String description, String vocalRange, String songUrl, User userUploadSong, int status) {
         this.songname = songname;
         this.author = author;
@@ -111,7 +113,7 @@ public class Song {
         this.status = status;
     }
 
-    public Song(String songname, String author, String tone, String description, String vocalRange, String songUrl, User userUploadSong, Set<Genre> genres, int status) {
+    public Song(String songname, String author, String tone, String description, String vocalRange, String songUrl, User userUploadSong, Set<Genre> genresofsong, int status) {
         this.songname = songname;
         this.author = author;
         this.tone = tone;
@@ -120,6 +122,25 @@ public class Song {
         this.songUrl = songUrl;
         this.status = status;
         this.userUploadSong = userUploadSong;
-        this.genres = genres;
+        this.genresofsong = genresofsong;
+    }
+
+    @Override
+    public String toString() {
+        return "Song{" +
+                "Id=" + Id +
+                ", songname='" + songname + '\'' +
+                ", createdAt=" + createdAt +
+                ", author='" + author + '\'' +
+                ", tone='" + tone + '\'' +
+                ", description='" + description + '\'' +
+                ", vocalRange='" + vocalRange + '\'' +
+                ", songUrl='" + songUrl + '\'' +
+                ", status=" + status +
+                ", userUploadSong=" + userUploadSong +
+                ", feedbackSongs=" + feedbackSongs +
+                ", genres=" + genresofsong +
+                ", chordsofsong=" + chordsofsong +
+                '}';
     }
 }

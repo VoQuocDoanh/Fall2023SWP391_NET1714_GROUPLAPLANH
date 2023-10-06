@@ -54,7 +54,6 @@ public class ChordCollection {
     @JoinColumn(name = "userCollection")
     private User userCollection;
 
-    //    @ManyToMany(mappedBy = "collections",cascade = {CascadeType.ALL})
     @ManyToMany(cascade = {CascadeType.ALL})
     @JsonIgnore
     @JoinTable(
@@ -64,7 +63,7 @@ public class ChordCollection {
             inverseJoinColumns = {@JoinColumn(
                     name = "chordId")}
     )
-    private Set<ChordBasic> chords = new HashSet<>();
+    private Set<ChordBasic> chordsofcollections = new HashSet<>();
 
     @JsonIgnore
     public void setUserCollection(final User userCollection) {
@@ -84,13 +83,13 @@ public class ChordCollection {
         this.createdAt = createdAt;
     }
 
-    public ChordCollection(String name, String description, int status, LocalDateTime createdAt, User userCollection, Set<ChordBasic> chords) {
+    public ChordCollection(String name, String description, int status, LocalDateTime createdAt, User userCollection, Set<ChordBasic> chordsofcollections) {
         this.name = name;
         this.description = description;
         this.status = status;
         this.createdAt = createdAt;
         this.userCollection = userCollection;
-        this.chords = chords;
+        this.chordsofcollections = chordsofcollections;
     }
 
     public ChordCollection(String name, int status, User userCollection) {
@@ -108,7 +107,7 @@ public class ChordCollection {
                 ", status=" + status +
                 ", createdAt=" + createdAt +
                 ", userCollection=" + userCollection +
-                ", chords=" + chords +
+                ", chords=" + chordsofcollections +
                 '}';
     }
 }

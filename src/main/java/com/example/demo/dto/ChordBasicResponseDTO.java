@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ChordBasicDTO {
+public class ChordBasicResponseDTO {
     private Long Id;
     private String chordName;
     private String image;
@@ -20,7 +20,7 @@ public class ChordBasicDTO {
 
     @Override
     public String toString() {
-        return "ChordBasicDTO{" +
+        return "ChordBasicResponseDTO{" +
                 "Id=" + Id +
                 ", chordName='" + chordName + '\'' +
                 ", image='" + image + '\'' +

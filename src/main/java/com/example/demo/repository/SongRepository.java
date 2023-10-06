@@ -18,6 +18,8 @@ public interface SongRepository extends JpaRepository<Song, Long> {
 
     @Query("SELECT s FROM Song s WHERE s.songname like %:songName%")
     List<Song> findBySongName(String songName);
+    @Query("SELECT s FROM Song s WHERE s.userUploadSong.Id = :id")
+    List<Song> findByUserUploadSong(Long id);
 
 
 }

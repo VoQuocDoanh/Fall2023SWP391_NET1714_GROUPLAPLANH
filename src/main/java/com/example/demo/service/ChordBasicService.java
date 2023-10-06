@@ -1,11 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.ChordBasicDTO;
+import com.example.demo.dto.ChordBasicResponseDTO;
 import com.example.demo.entity.ChordBasic;
 import com.example.demo.repository.ChordBasicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,7 +24,7 @@ public class ChordBasicService {
     }
 
 
-    public List<ChordBasic> searchChord(ChordBasicDTO chordDTO){
+    public List<ChordBasic> searchChord(ChordBasicResponseDTO chordDTO){
         List<ChordBasic> chordEntity=chordBasicRepository.findChord(chordDTO.getKey(),chordDTO.getSuffix(), chordDTO.getType());
         if (chordEntity.isEmpty()){
             return null;

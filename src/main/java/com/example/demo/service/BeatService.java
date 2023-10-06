@@ -7,6 +7,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.BeatDTO;
 import com.example.demo.entity.Beat;
+import com.example.demo.entity.Genre;
 import com.example.demo.entity.User;
 import com.example.demo.repository.BeatRepository;
 import com.example.demo.repository.UserRepository;
@@ -28,10 +29,18 @@ public class BeatService {
     @Autowired
     private BeatRepository beatRepository;
 
-    //get all own beat
-    public List<Beat> findAllBeat(BeatDTO beatDTO) {
-        User userEntity = userRepository.findByUsername(beatDTO.getUsername());
-        List<Beat> beat = beatRepository.findAll();
+    public List<Beat> findAllBeat(){
+        List<Beat> beats = this.beatRepository.findAll();
+        if (beats.isEmpty()) {
+            return null;
+        } else {
+            return new ArrayList<>(beats);
+        }
+    }
+
+    public List<Beat> findAllOwnBeat(BeatDTO beatDTO) {
+        User userEntity = this.userRepository.findByUsername(beatDTO.getUsername());
+        List<Beat> beat = this.beatRepository.findAll();
         if (userEntity == null) {
             return null;
         } else {
@@ -85,11 +94,11 @@ public class BeatService {
         return new ResponseEntity<>("Update Failed", HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<String> deleteBeat(Beat deleteBeat, Long id) {
+    public ResponseEntity<String> deleteBeat(Long id) {
         Optional<Beat> foundBeat = this.beatRepository.findById(id);
         if (foundBeat.isPresent()) {
             Beat beat = foundBeat.get();
-            beat.setStatus(deleteBeat.getStatus());
+            beat.setStatus(0);
             this.beatRepository.save(beat);
             return new ResponseEntity<>("Delete Successfully", HttpStatus.OK);
         }

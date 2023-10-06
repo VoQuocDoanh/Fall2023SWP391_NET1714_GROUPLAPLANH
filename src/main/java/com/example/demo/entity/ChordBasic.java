@@ -48,33 +48,12 @@ public class ChordBasic {
     @Column(name = "Type")
     private String type;
 
-    @ManyToMany (cascade = {CascadeType.ALL})
-    @JsonIgnore
-    @JoinTable(name = "ChordOfSong",
-            joinColumns = {@JoinColumn(
-                    name = "chordId")},
-            inverseJoinColumns = {@JoinColumn(
-                    name = "songId")}
-    )
-    private List<Song> songs = new ArrayList();
 
-//    @ManyToMany(cascade = {CascadeType.ALL})
-//    @JsonIgnore
-//    @JoinTable(
-//            name = "ChordInCollection",
-//            joinColumns = {@JoinColumn(
-//                    name = "chordId")},
-//            inverseJoinColumns = {@JoinColumn(
-//                    name = "collectonId")}
-//    )
-    @ManyToMany(mappedBy = "chords",cascade = {CascadeType.ALL})
+    @ManyToMany(mappedBy = "chordsofsong", cascade = {CascadeType.ALL})
+    private Set<Song> songs = new HashSet<>();
+
+    @ManyToMany(mappedBy = "chordsofcollections",cascade = {CascadeType.ALL})
     private Set<ChordCollection> collections = new HashSet<>();
-
-
-    @JsonIgnore
-    public void setSongs(final List<Song> songs) {
-        this.songs = songs;
-    }
 
     @Override
     public String toString() {

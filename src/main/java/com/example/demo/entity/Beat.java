@@ -14,7 +14,9 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -64,7 +66,7 @@ public class Beat {
             inverseJoinColumns = {@JoinColumn(
                     name = "genreId")}
     )
-    private List<Genre> genres = new ArrayList();
+    private Set<Genre> genresofbeat = new HashSet<>();
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

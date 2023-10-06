@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.ChordBasicDTO;
+import com.example.demo.dto.ChordBasicResponseDTO;
 import com.example.demo.entity.ChordBasic;
 import com.example.demo.repository.ChordBasicRepository;
 import com.example.demo.service.ChordBasicService;
@@ -30,8 +30,8 @@ public class ChordBasicController {
     }
 
     @GetMapping(path="/searchChord")
-    public ResponseEntity<List<ChordBasic>> searchChord(@RequestBody ChordBasicDTO chordBasicDTO){
-        return ResponseEntity.ok(chordBasicService.searchChord(chordBasicDTO));
+    public ResponseEntity<List<ChordBasic>> searchChord(@RequestBody ChordBasicResponseDTO chordBasicResponseDTO){
+        return ResponseEntity.ok(chordBasicService.searchChord(chordBasicResponseDTO));
     }
 
 }
