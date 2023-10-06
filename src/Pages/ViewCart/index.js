@@ -116,7 +116,7 @@ function ViewCart() {
 
 
                                         <div className={cx("trending-text")}>
-                                            <img className={cx("trending-ellipse")} src={require("../../assets/images/pod-talk-logo.png")}>
+                                            <img className={cx("trending-ellipse")} src={require("../../assets/images/Other/pod-talk-logo.png")}>
                                             </img>
                                             <div className={cx("text-role")}>
                                                 <span className={cx("text-ellipse3")}>

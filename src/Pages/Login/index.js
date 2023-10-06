@@ -34,7 +34,9 @@ function Login() {
     try {
       const result = await axios.post("http://localhost:8080/api/auth/login", user);
       setLoginMessage();
-      navigate("/viewbeat")
+      console.log(result.data.token)
+      localStorage.setItem("token", result.data.token);
+      navigate("/")
     } catch (error) {
       console.log(error)
       setError(err)

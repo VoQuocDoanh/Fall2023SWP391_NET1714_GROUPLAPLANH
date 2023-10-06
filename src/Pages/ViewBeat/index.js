@@ -5,6 +5,7 @@ import styles from "./ViewBeat.module.scss";
 import { async } from "q";
 import axios from "axios";
 import { Button } from "@mui/material";
+import axiosInstance from "../../authorization/axiosInstance";
 
 const cx = classNames.bind(styles);
 
@@ -71,8 +72,14 @@ function ViewBeat() {
     }, []);
 
     const loadBeats = async () => {
-        const result = await axios.get("http://localhost:8080/api/v1/beat");
-        setBeats(result.data);
+
+        await axiosInstance.get("http://localhost:8080/api/v1/beat")
+            .catch((error) => {
+                if (error.message.includes("Network")) {
+                    navigate("/login")
+                }
+            })
+
     }
     const handleSearchBeat = (event) => {
         setSearchBeat(event.target.value);
@@ -81,11 +88,12 @@ function ViewBeat() {
     const handleDelete = async (id) => {
         console.log(id);
         try {
-            await axios.delete(`http://localhost:8080/api/v1/beat/${id}`)
+            await axiosInstance.delete(`http://localhost:8080/api/v1/beat/${id}`)
             loadBeats();
 
         } catch (error) {
             console.log(error)
+            navigate("/login")
         }
     };
 

@@ -7,6 +7,7 @@ import UpdateBeat from "../Pages/UpdateBeat";
 import UploadBeat from "../Pages/UploadBeat";
 import UploadFile from "../Pages/UploadFile";
 import ViewBeat from "../Pages/ViewBeat";
+import ViewCart from "../Pages/ViewCart";
 import OwlCarousel from "../components/OwlCarousel";
 
 const publicRoutes = [
@@ -50,6 +51,10 @@ const publicRoutes = [
   {
     path: "/listbeat",
     component: listBeat,
+  },
+  {
+    path: "/viewcart",
+    component: ViewCart,
   }
 ];
 
