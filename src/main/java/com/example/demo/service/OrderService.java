@@ -7,7 +7,6 @@ import com.example.demo.entity.User;
 import com.example.demo.repository.BeatRepository;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.UserRepository;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class OrderService {
@@ -32,22 +30,34 @@ public class OrderService {
     public ResponseEntity<String> orderBeat(OrderDTO orderDTO, Long Id) {
         List<Long> listBeat = orderDTO.getBeatId();
         List<Beat> beats=new ArrayList<>();
-        double totalPrice=0;
+        double totalPrice = 0;
         Optional<User> user=userRepository.findById(Id);
-        for (int i = 0; i < listBeat.size(); i++) {
-            Beat foundBeat = beatRepository.findBeatById(listBeat.get(i));
+        for (Long aLong : listBeat) {
+            Beat foundBeat = beatRepository.findBeatById(aLong);
             if (foundBeat.getStatus() == -1) {
                 return new ResponseEntity<>("Beat bought", HttpStatus.NOT_IMPLEMENTED);
             }
-            totalPrice=totalPrice + foundBeat.getPrice();
+            totalPrice += foundBeat.getPrice();
             beats.add(foundBeat);
             foundBeat.setStatus(-1);
         }
-        Double price=totalPrice;
+        Double price = totalPrice;
         Order newOrder=new Order(beats,user.get(),price);
         orderRepository.save(newOrder);
-
+        setOrderId(newOrder);
         return new ResponseEntity<>("Order successfullly", HttpStatus.OK);
+    }
+
+    private void setOrderId (Order order){
+        List<Beat> beats = order.getBeats();
+        for (Beat value : beats) {
+            Optional<Beat> foundBeat = Optional.ofNullable(this.beatRepository.findBeatById(value.getId()));
+            if (foundBeat.isPresent()){
+                Beat beat = foundBeat.get();
+                beat.setOrderBeat(order);
+                this.beatRepository.save(beat);
+            }
+        }
     }
 
 

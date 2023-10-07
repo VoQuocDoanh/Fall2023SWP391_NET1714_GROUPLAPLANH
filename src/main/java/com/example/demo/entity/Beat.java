@@ -6,7 +6,6 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,9 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -86,7 +83,7 @@ public class Beat {
         this.userName = userName;
     }
 
-    public Beat(Long id, String beatName, String beatSound, Double price,int status,  Order orderBeat, LocalDateTime createdAt) {
+    public Beat(Long id, String beatName, String beatSound, Double price, int status, Order orderBeat, LocalDateTime createdAt) {
         this.Id=id;
         this.beatName = beatName;
         this.price = price;
