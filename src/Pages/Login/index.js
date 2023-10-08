@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Button } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faUser } from '@fortawesome/free-solid-svg-icons';
+import videoBg from '../../assets/video/video (2160p).mp4'
 
 import axios from "axios";
 import ValidationLogin from "../../Validation/ValidationLogin";
@@ -44,6 +45,10 @@ function Login() {
 
   return (
     <div className={cx("login-wrapper")}>
+      <div className={cx("main")}>
+                <div className={cx("overlay")}></div>
+              <video src={videoBg} autoPlay loop muted ></video>
+            </div>
       <div className={cx("heading")}>
         <span className={cx("title")}>Do not have an account ?</span>
         <Link to="/register" className={cx("link")}>
