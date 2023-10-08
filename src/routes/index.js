@@ -9,8 +9,6 @@ import UploadFile from "../Pages/UploadFile";
 import ViewBeat from "../Pages/ViewBeat";
 import OwlCarousel from "../components/OwlCarousel";
 import ViewCart from "../Pages/ViewCart";
-import ViewDetailbeat from "../Pages/ViewDetailBeat";
-
 
 const publicRoutes = [
   {
@@ -57,11 +55,7 @@ const publicRoutes = [
   {
     path: "/viewcart",
     component: ViewCart,
-  },
-  {
-    path: "/viewdetailbeat",
-    component: ViewDetailbeat,
-  },
+  }
 ];
 
 const privateRoute = [];

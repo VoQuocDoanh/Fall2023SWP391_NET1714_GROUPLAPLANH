@@ -1,22 +1,49 @@
+
 import classNames from "classnames/bind";
 import styles from "./ListBeat.module.scss";
 import { Button } from "@mui/material";
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import React, { useEffect, useMemo, useState } from "react";
 
 const cx = classNames.bind(styles);
-function listBeat() {
-       return (
+function ListBeat() {
+
+    // const [searchBeat, setSearchBeat] = useState("");
+    // const [listBeat, setListBeat] = useState(DATA);
+
+    // const handleSearchBeat = (event) => {
+    //     setSearchBeat(event.target.value);      
+    // }
+
+    // useEffect(() => {
+    //     const list = DATA.filter((item) => item.beatname.toLowerCase().includes(searchBeat.toLowerCase()));
+    //     setListBeat(list);
+    // }, [searchBeat])
+
+    return (
         <div className={cx("list-header")}>
             <div className={cx("text-header")}>
-                <h1 className={cx("text-welcome")}>
-                    Welcome To Our Beat
-                </h1>
+                <div className={cx("shopping-cart")}>
+                    <h1 className={cx("text-welcome")}>
+                        Welcome To Our Beat
+                    </h1>
+                    <div className={cx("icon-shoppingcart")}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 45 45" fill="none">
+                            <path d="M31.875 33.75C29.7937 33.75 28.125 35.4187 28.125 37.5C28.125 38.4946 28.5201 39.4484 29.2234 40.1516C29.9266 40.8549 30.8804 41.25 31.875 41.25C32.8696 41.25 33.8234 40.8549 34.5266 40.1516C35.2299 39.4484 35.625 38.4946 35.625 37.5C35.625 36.5054 35.2299 35.5516 34.5266 34.8484C33.8234 34.1451 32.8696 33.75 31.875 33.75ZM1.875 3.75V7.5H5.625L12.375 21.7313L9.825 26.325C9.54375 26.85 9.375 27.4688 9.375 28.125C9.375 29.1196 9.77009 30.0734 10.4733 30.7766C11.1766 31.4799 12.1304 31.875 13.125 31.875H35.625V28.125H13.9125C13.7882 28.125 13.669 28.0756 13.581 27.9877C13.4931 27.8998 13.4438 27.7806 13.4438 27.6562C13.4438 27.5625 13.4625 27.4875 13.5 27.4313L15.1875 24.375H29.1563C30.5625 24.375 31.8 23.5875 32.4375 22.4438L39.15 10.3125C39.2812 10.0125 39.375 9.69375 39.375 9.375C39.375 8.87772 39.1775 8.40081 38.8258 8.04918C38.4742 7.69754 37.9973 7.5 37.5 7.5H9.76875L8.00625 3.75M13.125 33.75C11.0437 33.75 9.375 35.4187 9.375 37.5C9.375 38.4946 9.77009 39.4484 10.4733 40.1516C11.1766 40.8549 12.1304 41.25 13.125 41.25C14.1196 41.25 15.0734 40.8549 15.7766 40.1516C16.4799 39.4484 16.875 38.4946 16.875 37.5C16.875 36.5054 16.4799 35.5516 15.7766 34.8484C15.0734 34.1451 14.1196 33.75 13.125 33.75Z" fill="black" />
+                        </svg>
+                        <div className={cx("content-8")}>
+                            <Link to="/viewcart">Shopping Cart</Link>
+                        </div>
+                    </div>
+                </div>
+                <div className={cx("search-beat")}>
+                    {/* <input type="text" value={searchBeat} onChange={e => setSearchBeat(e.target.value)} className={cx("input-search")} placeholder="Search beat" /> */}
+                </div>
             </div>
             <div className={cx("Column-first")}>
-                <div className={cx("content-5")}>
+                {/* <div className={cx("content-5")}>
                     ----------Top cinematic items----------
-                </div>
+                </div> */}
                 <div className={cx("chords-part")}>
                     <div className={cx("chords-details")}>
                         <img className={cx("chords-details-img")} src={require("../../assets/images/Chords/Rectangle 23.png")}>
@@ -25,17 +52,17 @@ function listBeat() {
                             BeatName
                         </div>
                         <div className={cx("content-3")}>
-                            Composed by QuocDoanh
+                            QuocDoanh
                         </div>
                         <div className={cx("content-4")}>
-                            The charm of the piano sound is hard to resist
+                            The guitar sound is characterized by its versatile and melodic tones
                         </div>
                         <div className={cx("content-cart")}>
                             <div className={cx("content-6")}>
                                 Price: 565$
                             </div>
                             <div className={cx("content-7")}>
-                                64 sales
+                                145 sales
                             </div>
                             <Link to="/viewcart" className={cx("icon-cart")}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 25 25" fill="none">
@@ -58,7 +85,9 @@ function listBeat() {
                                 </svg>
                             </div>
                         </div>
+
                     </div>
+
                     <div className={cx("chords-details")}>
                         <img className={cx("chords-details-img")} src={require("../../assets/images/Chords/Rectangle 19.png")}>
                         </img>
@@ -66,7 +95,7 @@ function listBeat() {
                             BeatName
                         </div>
                         <div className={cx("content-3")}>
-                            Composed by QuocDoanh
+                            QuocDoanh
                         </div>
                         <div className={cx("content-4")}>
                             The drum sound is a rhythmic and percussive resonance
@@ -109,7 +138,7 @@ function listBeat() {
                             BeatName
                         </div>
                         <div className={cx("content-3")}>
-                            Composed by QuocDoanh
+                            QuocDoanh
                         </div>
                         <div className={cx("content-4")}>
                             The drum sound is a rhythmic and percussive resonance
@@ -152,7 +181,7 @@ function listBeat() {
                             BeatName
                         </div>
                         <div className={cx("content-3")}>
-                            Composed by QuocDoanh
+                            QuocDoanh
                         </div>
                         <div className={cx("content-4")}>
                             The guitar sound is characterized by its versatile and melodic tones
@@ -191,9 +220,9 @@ function listBeat() {
                 </div>
             </div>
             <div className={cx("Column-second")}>
-                <div className={cx("content-5")}>
+                {/* <div className={cx("content-5")}>
                     ----------Weekly bestsellers-----------
-                </div>
+                </div> */}
                 <div className={cx("listbeat-header")}>
                     <div className={cx("chords-part")}>
                         <div className={cx("chords-details")}>
@@ -203,7 +232,7 @@ function listBeat() {
                                 BeatName
                             </div>
                             <div className={cx("content-3")}>
-                                Composed by QuocDoanh
+                                QuocDoanh
                             </div>
                             <div className={cx("content-4")}>
                                 The charm of the piano sound is hard to resist
@@ -244,7 +273,7 @@ function listBeat() {
                                 BeatName
                             </div>
                             <div className={cx("content-3")}>
-                                Composed by QuocDoanh
+                                QuocDoanh
                             </div>
                             <div className={cx("content-4")}>
                                 The drum sound is a rhythmic and percussive resonance
@@ -287,7 +316,7 @@ function listBeat() {
                                 BeatName
                             </div>
                             <div className={cx("content-3")}>
-                                Composed by QuocDoanh
+                                QuocDoanh
                             </div>
                             <div className={cx("content-4")}>
                                 The drum sound is a rhythmic and percussive resonance
@@ -329,7 +358,7 @@ function listBeat() {
                                 BeatName
                             </div>
                             <div className={cx("content-3")}>
-                                Composed by QuocDoanh
+                                QuocDoanh
                             </div>
                             <div className={cx("content-4")}>
                                 The guitar sound is characterized by its versatile and melodic tones
@@ -370,9 +399,9 @@ function listBeat() {
 
             </div>
             <div className={cx("Column-third")}>
-                <div className={cx("content-5")}>
-                    ----------Rising Star----------
-                </div>
+                {/* <div className={cx("content-5")}>
+                   ----------Rising Star----------
+                </div> */}
                 <div className={cx("listbeat-header")}>
                     <div className={cx("chords-part")}>
                         <div className={cx("chords-details")}>
@@ -382,7 +411,7 @@ function listBeat() {
                                 BeatName
                             </div>
                             <div className={cx("content-3")}>
-                                Composed by QuocDoanh
+                                QuocDoanh
                             </div>
                             <div className={cx("content-4")}>
                                 The charm of the piano sound is hard to resist
@@ -423,7 +452,7 @@ function listBeat() {
                                 BeatName
                             </div>
                             <div className={cx("content-3")}>
-                                Composed by QuocDoanh
+                                QuocDoanh
                             </div>
                             <div className={cx("content-4")}>
                                 The drum sound is a rhythmic and percussive resonance
@@ -466,7 +495,7 @@ function listBeat() {
                                 BeatName
                             </div>
                             <div className={cx("content-3")}>
-                                Composed by QuocDoanh
+                                QuocDoanh
                             </div>
                             <div className={cx("content-4")}>
                                 The drum sound is a rhythmic and percussive resonance
@@ -502,13 +531,13 @@ function listBeat() {
                         </div>
 
                         <div className={cx("chords-details")}>
-                            <img className={cx("chords-details-img")} src={require("../../assets/images/Other/play-store.png")}>
+                            <img className={cx("chords-details-img")} src={require("../../assets/images/Chords/Rectangle 23.png")}>
                             </img>
                             <div className={cx("content-3")}>
                                 BeatName
                             </div>
                             <div className={cx("content-3")}>
-                                Composed by QuocDoanh
+                                QuocDoanh
                             </div>
                             <div className={cx("content-4")}>
                                 The guitar sound is characterized by its versatile and melodic tones
@@ -557,4 +586,4 @@ function listBeat() {
     );
 }
 
-export default listBeat;
+export default ListBeat;
