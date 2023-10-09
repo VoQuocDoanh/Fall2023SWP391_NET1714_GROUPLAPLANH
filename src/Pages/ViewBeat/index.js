@@ -74,6 +74,9 @@ function ViewBeat() {
     const loadBeats = async () => {
 
         await axiosInstance.get("http://localhost:8080/api/v1/beat")
+        .then(res => {
+            setBeats(res.data)
+        })
             .catch((error) => {
                 if (error.message.includes("Network")) {
                     navigate("/login")

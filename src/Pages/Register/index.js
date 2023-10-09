@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Button } from "@mui/material";
 import { async } from "q";
 import axios from "axios";
+import videoBg from '../../assets/video/video (2160p).mp4'
 
 const cx = classNames.bind(styles);
 
@@ -46,6 +47,10 @@ function Register() {
 
   return (
     <div className={cx("login-wrapper")}>
+      <div className={cx("main")}>
+                <div className={cx("overlay")}></div>
+              <video src={videoBg} autoPlay loop muted ></video>
+            </div>
       <div className={cx("heading")}>
         <span className={cx("title")}>Have an account ?</span>
         <Link to="/login" className={cx("link")}>
@@ -84,8 +89,8 @@ function Register() {
         <div className={cx("input")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="45"
-            height="45"
+            width="35"
+            height="35"
             viewBox="0 0 45 45"
             fill="none"
           >
@@ -158,8 +163,8 @@ function Register() {
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="45"
-            height="45"
+            width="35"
+            height="35"
             viewBox="0 0 45 45"
             fill="none"
           >
