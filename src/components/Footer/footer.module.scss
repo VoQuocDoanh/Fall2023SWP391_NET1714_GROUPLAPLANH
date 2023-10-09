@@ -4,14 +4,15 @@
     align-items: center;
     justify-content: space-between;
     font-size: 25px;
-    border-radius: 10px;
     outline: 2px solid;
+    background-color: #1C1C1C;
+    margin-bottom: -100px;
 }
 
 .navigation-2 {
     display: flex;
     flex-direction: column;
-    color: black;
+    color: white;
     margin-left: 50px;
     font-family: Poppins;
     font-weight: 400;

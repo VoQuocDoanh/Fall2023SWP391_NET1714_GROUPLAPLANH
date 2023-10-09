@@ -341,7 +341,7 @@ function Home() {
 
                     </div>
                     <div className={cx("content-4")}>
-                      The charm of the piano sound is hard to resist
+                    The guitar sound is characterized by its versatile and melodic tones
                     </div>
                     <div className={cx("icon-chords2")}>
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">

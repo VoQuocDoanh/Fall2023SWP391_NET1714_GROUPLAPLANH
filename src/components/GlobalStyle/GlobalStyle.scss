@@ -1,7 +1,7 @@
 @import "normalize.css";
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
-$gradient-colors:#2d4a53, #455c66, #5d6f78, #76838b, #8e979e, #8b949b, #899298, #868f95, #68757c, #4b5c64, #2f444c, #132e35;
-$gradient-direction: to bottom;
+$gradient-colors:#ececec, #ececec, #ececec, #ececec, #ececec, #d8d8da, #c5c5c8, #b1b2b6, #85898f, #5b636a, #334045, #0d1f23;
+$gradient-direction: to right top;
 
 
 
@@ -11,7 +11,8 @@ $gradient-direction: to bottom;
   box-sizing: border-box;
 }
 :root {
-  --global-BG: white  ; //Background của các trang
+  --global-BG: #white
+    ; //Background của các trang
   // background-image: linear-gradient($gradient-direction, $gradient-colors);
   --white: #fff;
   --black: #000;
