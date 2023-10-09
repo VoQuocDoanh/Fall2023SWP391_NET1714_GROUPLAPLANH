@@ -107,22 +107,12 @@ const DATA = [
 
 
 ]
-
 function ListBeat() {
     const navigate = useNavigate()
 
     const [search, setSearch] = useState("");
     const [list, setList] = useState([]);
-
-    const [beatCart, setBeatCart] = useState([]);
-
-    const handleShopping = (name, genre, price) =>{
-        const newBeatCart = {name, genre, price};
-        setBeatCart((beatCart) => [...beatCart, newBeatCart]);
-        console.log(beatCart)
-
-        
-    }
+    sessionStorage.setItem("listBeat", JSON.stringify(list))
 
 
     const handleSearch = (e) => {
@@ -130,15 +120,15 @@ function ListBeat() {
         // setList(data);
     }
 
-    useEffect(() => {
-        loadBeats();
-        const data = list.filter((item) => item.beatName.toLowerCase().includes(search.toLowerCase()));
-        setList(data);
-    }, [search]);
+    // useEffect(() => {
+    //     loadBeats();
+    //     const data = list.filter((item) => item.beatName.toLowerCase().includes(search.toLowerCase()));
+    //     setList(data);
+    // }, [search]);
 
     useEffect(() => {
         loadBeats();
-    }, [search]);
+    }, []);
 
     const loadBeats = async () => {
         await axiosInstance.get("http://localhost:8080/api/v1/beat")
@@ -179,34 +169,34 @@ function ListBeat() {
                 {/* {list.map((item) => {
                     <div>123</div>
                 })} */}
-                {list.map((item) => (
-
-                    <div className={cx("list-box")}>
-                        <img className={cx("box-img")} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} alt="anh" />
-                        <div className={cx("content")}>
-                            {/* Content left */}
-                            <div className={cx("content-left")}>
-                                <h2 className={cx("name-beat")}>{item.beatName}</h2>
-                                <span className={cx("type-beat")}>{item.genre}</span>
-                                <div className={cx("footer")}>
-                                    <span className={cx("price")}>${item.price}</span>
-                                    <div className={cx("number-sell")}>
-                                        <span className={cx("box")}></span>
-                                        <span className={cx("number")}>50</span>
-                                    </div>
-                                    <span className={cx("like")}>
-                                        <FontAwesomeIcon icon={faThumbsUp} />
-                                    </span>
-                                </div>
-                            </div>
-                            {/* Content right  */}
-                            <div className={cx("content-right")}>
-                                <Button className={cx("action")}><FontAwesomeIcon icon={faCartShopping} className={cx("shop")} onClick={handleShopping(item.beatName, item.genre, item.price)} /></Button>
-                                <Button className={cx("action")}><FontAwesomeIcon icon={faHeart} className={cx("follow")} /></Button>
-                            </div>
-                        </div>
-                    </div>
-                ))}
+                {list.map((item, index) => {
+                    return <ListBeatBox id={index + 1} name={item.beatName} genre={item.genre} price={item.price} beatID={item.id} />
+                    // <div className={cx("list-box")}>
+                    //     <img className={cx("box-img")} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} alt="anh" />
+                    //     <div className={cx("content")}>
+                    //         {/* Content left */}
+                    //         <div className={cx("content-left")}>
+                    //             <h2 className={cx("name-beat")}>{item.beatName}</h2>
+                    //             <span className={cx("type-beat")}>{item.genre}</span>
+                    //             <div className={cx("footer")}>
+                    //                 <span className={cx("price")}>${item.price}</span>
+                    //                 <div className={cx("number-sell")}>
+                    //                     <span className={cx("box")}></span>
+                    //                     <span className={cx("number")}>50</span>
+                    //                 </div>
+                    //                 <span className={cx("like")}>
+                    //                     <FontAwesomeIcon icon={faThumbsUp} />
+                    //                 </span> 
+                    //             </div>
+                    //         </div>
+                    //         {/* Content right  */}
+                    //         <div className={cx("content-right")}>
+                    //             <Button className={cx("action")}><FontAwesomeIcon icon={faCartShopping} className={cx("shop")} onClick={() => handleShopping(item.beatName, item.genre, item.price)} /></Button>
+                    //             <Button className={cx("action")}><FontAwesomeIcon icon={faHeart} className={cx("follow")} /></Button>
+                    //         </div>
+                    //     </div>
+                    // </div>
+                })}
             </div>
 
         </div>
