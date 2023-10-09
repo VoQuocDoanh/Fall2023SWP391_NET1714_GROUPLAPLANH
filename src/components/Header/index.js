@@ -27,6 +27,7 @@ function Header() {
           <Search />
         </div>
       </div>
+      <div>123</div>
       <div className={cx("header-right")}>
         <div className={cx("navigation")}>
           <div className={cx("nav-item")}>Home</div>
