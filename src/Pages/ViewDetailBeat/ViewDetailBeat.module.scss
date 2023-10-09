@@ -1,11 +1,8 @@
-
-
-
 .text-header {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
-    color: #fff;
+    color: black;
 }
 
 .image {
@@ -64,6 +61,7 @@
     margin-top: 10px;
     margin-bottom: 10px;
     height: 50px;
+    margin-right: 100px;
 }
 
 .list{
@@ -91,3 +89,12 @@ a:hover, a:active{
     margin: 10px;
 }
 
+.genre{
+    display: flex;
+    flex-direction: column;
+}
+
+.comment{
+    display: flex;
+    justify-content: center;
+}

@@ -13,15 +13,14 @@ function ViewDetailBeat() {
 
         <div className={cx('view-detail')}>
             <div className={cx("text-header")}>
-                <h1 className={cx("text-name")}>
-                    Beat Name
+                <h1>
+                    Beats Name
                 </h1>
                 <div className={cx('header-submit')}>
                     <Button variant="contained">
                         <div>Share Beat</div>
                     </Button>
                 </div>
-
             </div>
 
             <div className={cx('detail')}>
@@ -52,37 +51,40 @@ function ViewDetailBeat() {
                     </div>
                     <div className={cx('list-of-beats')}>
                         <div className={cx('cart')}>
-                            <p>$25.00</p>
-                            <p>Standard License</p>
-                            <p>MP3</p>
+                            <span>$25.00</span>
+                            <span>Standard License</span>
+                            <span>MP3</span>
                         </div>
                         <div className={cx('cart')}>
-                            <p>$25.00</p>
-                            <p>Standard License</p>
-                            <p>MP3</p>
+                            <span>$25.00</span>
+                            <span>Standard License</span>
+                            <span>MP3</span>
                         </div>
                         <div className={cx('cart')}>
-                            <p>$25.00</p>
-                            <p>Standard License</p>
-                            <p>MP3</p>
+                            <span>$25.00</span>
+                            <span>Standard License</span>
+                            <span>MP3</span>
                         </div>
                         <div className={cx('cart')}>
-                            <p>$25.00</p>
-                            <p>Standard License</p>
-                            <p>MP3</p>
+                            <span>$25.00</span>
+                            <span>Standard License</span>
+                            <span>MP3</span>
                         </div>
                         <div className={cx('cart')}>
-                            <p>$25.00</p>
-                            <p>Standard License</p>
-                            <p>MP3</p>
+                            <span>$25.00</span>
+                            <span>Standard License</span>
+                            <span>MP3</span>
                         </div>
                     </div>
                     <div className={cx('list')}>
-                        <p>&#x2022; Genre: Trap</p>
-                        <p>&#x2022; Genre: Trap</p>
-                        <p>&#x2022; Genre: Trap</p>
-                        <p>&#x2022; Genre: Trap</p>
-                        <p>&#x2022; Genre: Trap</p>
+                        <div className={cx('genre')}>
+                            <span>&#x2022; Genre: Trap</span>
+                            <span>&#x2022; Genre: Trap</span>
+                            <span>&#x2022; Genre: Trap</span>
+                            <span>&#x2022; Genre: Trap</span>
+                            <span>&#x2022; Genre: Trap</span>
+                        </div>
+
                         <div className={cx('mid-button')}>
                             <Button variant="contained" className={cx("submit-wrapper")}>
                                 <div>Add to cart</div>
@@ -96,10 +98,10 @@ function ViewDetailBeat() {
                 <Button variant="contained">
                     <div>ABC</div>
                 </Button>
-                
+
             </div>
-            <div>
-                <textarea id="ABC" name="ABC" rows="5" cols="192" placeholder='Comment...'></textarea>
+            <div className={cx('comment')}>
+                <textarea id="ABC" name="ABC" rows="5" cols="150" placeholder='Comment...'></textarea>
             </div>
         </div>
     );
