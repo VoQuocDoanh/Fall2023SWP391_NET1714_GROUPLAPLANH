@@ -1,3 +1,9 @@
+.img-header{
+  width: 300px;
+  height: 200px;
+  margin-right: -80px;
+  margin-left: -25px;
+}
 .header-wrapper {
   // padding-top: 68px;
   display: flex;
@@ -5,8 +11,11 @@
   justify-content: space-between;
   color: var(--white);
   background-color: #1C1C1C;
-  border-radius: 25px;
-  padding: 20px 20px 20px 20px;
+  //  
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: -100px;
+  
 }
 
 .header-left {
@@ -58,8 +67,8 @@
 
     }
     .nav-item:hover{
-      color:rgb(5, 238, 255);
-      transition: .3s;
+     text-decoration: underline;
+     color:#0066CC;
     }
   }
 

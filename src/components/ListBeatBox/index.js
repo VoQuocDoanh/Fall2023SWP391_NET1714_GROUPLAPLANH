@@ -4,14 +4,13 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faHeart, faThumbsUp } from "@fortawesome/free-regular-svg-icons";
-import Button from '@mui/material/Button';
 
 
 const cx = classNames.bind(styles);
 
 function ListBeatBox({name, type, price, member}) {
     return (<div className={cx("list-box")}>
-        <img className={cx("box-img")} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} alt="anh" />
+        <img className={cx("box-img")} src={require("../../assets/images/Trending/beautiful-girl-sitting-down-playing-the-piano.webp")} alt="anh" />
         <div className={cx("content")}>
             {/* Content left */}
             <div className={cx("content-left")}>
@@ -30,8 +29,8 @@ function ListBeatBox({name, type, price, member}) {
             </div>
             {/* Content right  */}
             <div className={cx("content-right")}>
-                <Button className={cx("action")}><FontAwesomeIcon icon={faCartShopping } className={cx("shop")}/></Button>
-                <Button className={cx("action")}><FontAwesomeIcon icon={faHeart} className={cx("follow")}/></Button>
+                <FontAwesomeIcon icon={faCartShopping} className={cx("shop")}/>
+                <FontAwesomeIcon icon={faHeart} className={cx("follow")}/>
             </div>
         </div>
     </div>);

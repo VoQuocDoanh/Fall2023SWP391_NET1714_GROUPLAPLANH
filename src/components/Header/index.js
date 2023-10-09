@@ -37,13 +37,13 @@ function Header() {
     <div className={cx("header-wrapper")}>
       <div className={cx("header-left")}>
         <Link to="/" className={cx("header-link")}>
-          {/* <img src={require("../../assets/images/Other/379657200_1031688777974255_8329385224699419606_n_preview_rev_1.png")}></img> */}
           <span className={cx("logo")}>YourChords</span>
         </Link>{" "}
         <div className={cx("search")}>
           <Search />
         </div>
       </div>
+      <img className={cx("img-header")} src={require("../../assets/images/Other/Logo.png")}/>
       <div className={cx("header-right")}>
         <div className={cx("navigation")}>
           <div className={cx("nav-item")}>Home</div>

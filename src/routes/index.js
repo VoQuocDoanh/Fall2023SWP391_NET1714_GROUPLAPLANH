@@ -9,6 +9,7 @@ import UploadFile from "../Pages/UploadFile";
 import ViewBeat from "../Pages/ViewBeat";
 import ViewCart from "../Pages/ViewCart";
 import OwlCarousel from "../components/OwlCarousel";
+import ViewDetailBeat from "../Pages/ViewDetailBeat";
 
 const publicRoutes = [
   {
@@ -55,6 +56,10 @@ const publicRoutes = [
   {
     path: "/viewcart",
     component: ViewCart,
+  },
+  {
+    path: "/viewdetailbeat",
+    component: ViewDetailBeat,
   }
 ];
 

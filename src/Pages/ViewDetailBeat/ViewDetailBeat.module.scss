@@ -1,0 +1,100 @@
+.text-header {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    color: black;
+}
+
+.image {
+    width: 350px;  
+}
+
+.button-submit{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.mid-detail-left{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+.detail{
+    display: flex;
+    justify-content: start;
+    border: 2px solid #000;
+    border-radius: 10px;
+
+}
+
+.icon-like{
+    display: flex;
+    align-items: center;
+}
+
+.cart{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #000;
+    width: 180px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.mid-detail-right{
+    margin-left: 30px;
+}
+
+.list-of-beats{
+    display: flex;
+    flex-direction: row;
+
+}
+
+.submit-click{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 50px;
+    margin-right: 100px;
+}
+
+.list{
+    margin: 10px;
+}
+
+.header-submit{
+    display: flex;
+    justify-content: center;
+    margin: 15px;
+}
+
+.mid-button{
+    margin-top: 10px;
+}
+
+a:hover, a:active{
+    background-color: red;
+    
+}
+
+.final-submit{
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.genre{
+    display: flex;
+    flex-direction: column;
+}
+
+.comment{
+    display: flex;
+    justify-content: center;
+}
