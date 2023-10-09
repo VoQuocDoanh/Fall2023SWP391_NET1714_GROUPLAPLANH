@@ -1,3 +1,9 @@
+.img-header{
+  width: 300px;
+  height: 200px;
+  margin-right: -80px;
+  margin-left: -25px;
+}
 .header-wrapper {
   // padding-top: 68px;
   display: flex;
@@ -6,8 +12,10 @@
   color: var(--white);
   background-color: #1C1C1C;
   //  
-  padding: 20px 20px 20px 20px;
+  padding-left: 20px;
+  padding-right: 20px;
   margin-top: -100px;
+  
 }
 
 .header-left {

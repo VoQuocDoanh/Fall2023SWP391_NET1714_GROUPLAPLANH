@@ -21,13 +21,13 @@ function Header() {
     <div className={cx("header-wrapper")}>
       <div className={cx("header-left")}>
         <Link to="/" className={cx("header-link")}>
-          <span className={cx("logo")}>My Chords</span>
+          <span className={cx("logo")}>YourChords</span>
         </Link>{" "}
         <div className={cx("search")}>
           <Search />
         </div>
       </div>
-      <div>123</div>
+      <img className={cx("img-header")} src={require("../../assets/images/Other/Logo.png")}/>
       <div className={cx("header-right")}>
         <div className={cx("navigation")}>
           <div className={cx("nav-item")}>Home</div>
