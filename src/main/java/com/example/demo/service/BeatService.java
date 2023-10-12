@@ -104,6 +104,19 @@ public class BeatService {
         return new ResponseEntity<>("Update Failed", HttpStatus.NOT_IMPLEMENTED);
     }
 
+    public ResponseEntity<String> likeBeat(Long id) {
+        Optional<Beat> foundBeat = beatRepository.findById(id);
+        if (foundBeat.isPresent()){
+            Beat beat = foundBeat.get();
+            beat.setBeatLike(true);
+            beat.setTotalLike(beat.getTotalLike() + 1);
+            beatRepository.save(beat);
+            return new ResponseEntity<>("Like Successfully", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Like Failed", HttpStatus.NOT_IMPLEMENTED);
+    }
+
+
     public ResponseEntity<String> deleteBeat(Long id) {
         Optional<Beat> foundBeat = this.beatRepository.findById(id);
         if (foundBeat.isPresent()) {

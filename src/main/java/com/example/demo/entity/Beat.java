@@ -50,6 +50,9 @@ public class Beat {
     @Column
     private int view;
 
+    @Column
+    private boolean beatLike;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "userName")
@@ -99,6 +102,7 @@ public class Beat {
         this.createdAt = createdAt;
         this.totalLike = totalLike;
         this.view = view;
+       // this.beatLike = beatLike;
     }
 
     public String toString() {

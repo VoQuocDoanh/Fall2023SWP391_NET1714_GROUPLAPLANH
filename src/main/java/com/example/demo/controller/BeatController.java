@@ -41,6 +41,8 @@ public class BeatController {
         return ResponseEntity.ok(this.beatService.getDetail(id));
     }
 
+
+
     // Search Beat by Name
     @GetMapping("/name")
     public ResponseEntity<List<Beat>> searchByBeatName(@Valid @RequestBody BeatDTO beatDTO) {
@@ -63,6 +65,12 @@ public class BeatController {
     @PutMapping({"/{id}"})
     public ResponseEntity<String> updateBeat(@Valid @RequestBody Beat newBeat, @PathVariable Long id) {
         return this.beatService.updateBeat(newBeat, id);
+    }
+
+    //like beat
+    @PutMapping("/like/{id}")
+    public  ResponseEntity<String> likeBeat(@PathVariable Long id){
+        return beatService.likeBeat(id);
     }
 
     //delete beat by update status in MS
