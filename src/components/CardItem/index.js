@@ -1,24 +1,23 @@
 import classNames from "classnames/bind";
 import styles from "./CardItem.module.scss";
+import { ShopContext } from "../../context/shop-context";
+import { useContext } from "react";
 const cx = classNames.bind(styles);
 
 function CartItem({
-  index,
   id,
-  img,
   name,
+  author,
+  genre,
   price,
-  quantity,
-  remove,
-  increase,
-  decrease,
 }) {
+  const {removeFromCart} = useContext(ShopContext)
   return (
     <div className={cx("card-wrapper")}>
       {/* Card product */}
       <div className={cx("card-product")}>
-        <svg
-          onClick={() => remove(id)}
+      <svg
+          onClick={() => removeFromCart(id)}
           className={cx("remove")}
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -47,10 +46,13 @@ function CartItem({
             // stroke-linejoin="round"
           />
         </svg>
-        <img src={img} className={cx("card-img")} alt="anh dep" />
+      <img src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} className={cx("card-img")} alt="anh dep" />
         <h2 className={cx("card-name")}>{name}</h2>
+        
       </div>
       {/* Card price */}
+      <div className={cx("card-genre")}>{genre}</div>
+      <div className={cx("card-author")}>{author}</div>
       <div className={cx("card-price")}>${price}</div>
       {/* Card quantity */}
       {/* <div className={cx("card-quantity")}>
@@ -63,7 +65,8 @@ function CartItem({
         </span>
       </div> */}
       {/* Card total */}
-      <div className={cx("card-total")}>${price * quantity}</div>
+      {/* <div className={cx("card-total")}>${price}</div> */}
+     
     </div>
   );
 }

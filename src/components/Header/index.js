@@ -38,7 +38,7 @@ function Header() {
       <div className={cx("header-left")}>
         <Link to="/" className={cx("header-link")}>
           <span className={cx("logo")}>YourChords</span>
-        </Link>{" "}
+        </Link>
         <div className={cx("search")}>
           <Search />
         </div>

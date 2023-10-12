@@ -31,4 +31,9 @@ body {
 
 a {
   text-decoration: none;
+  &:hover{
+    background-color: transparent;
+  }
 }
+
+

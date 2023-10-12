@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import styles from "./ListBeatBox.module.scss";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faCheck, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { faHeart, faThumbsUp } from "@fortawesome/free-regular-svg-icons";
 import { Button } from "@mui/material";
 import { useContext } from "react";
@@ -18,13 +18,14 @@ function ListBeatBox({id, name, genre, price, beatID}) {
         <div className={cx("content")}>
             {/* Content left */}
             <div className={cx("content-left")}>
-                <h2 className={cx("name-beat")}>{id}</h2>
-                <span className={cx("type-beat")}>{genre}</span>
+                <h2 className={cx("name-beat")}>{name}</h2>
+                <span className={cx("type-beat")}>Minh Hien</span>
+                <FontAwesomeIcon className={cx("check")} icon={faCheckCircle}/>
                 <div className={cx("footer")}>
                     <span className={cx("price")}>${price}</span>
                     <div className={cx("number-sell")}>
                         <span className={cx("box")}></span>
-                        <span className={cx("number")}>50</span>
+                        <span className={cx("number")}>{genre}</span>
                     </div>
                     <span className={cx("like")}>
                         <FontAwesomeIcon icon={faThumbsUp} />
