@@ -43,7 +43,7 @@ function Home() {
               <div className={cx("title")}>
                 <div className={(cx("title-header"))}>
                   <div className={cx("text")}>
-                    Trending
+                    TRENDING
                   </div>
                   <div className={cx("line")}></div>
                 </div>
@@ -250,7 +250,7 @@ function Home() {
               <div className={cx("title")}>
                 <div className={(cx("title-header"))}>
                   <div className={cx("text")}>
-                    Chords
+                    CHORDS
                   </div>
                   <div className={cx("line")}>
                   </div>
@@ -298,7 +298,7 @@ function Home() {
               <div className={cx("title")}>
                 <div className={(cx("title-header"))}>
                   <div className={cx("text")}>
-                    Chords of Songs
+                    CHORDS OF SONGS
                   </div>
                   <div className={cx("line")}>
                   </div>

@@ -57,27 +57,27 @@
       user-select: none;
     }
 
-    .card-title {}
-
     .card-product {
       width: 50%;
+      margin-right: 20px;
+    }
+
+    .card-genre{
+      width: 10%;
+      margin-right: 75px;
+    }
+
+    .card-author {
+      width: 10%;
+      margin-right: 50px;
     }
 
     .card-price {
       width: 10%;
+      margin-right: 15px;
     }
 
-    .card-author {
-      margin-right: 20px;
-    }
-
-    .card-quantity {
-      width: 25%;
-    }
-
-    .card-total {
-      width: 10%;
-    }
+    
   }
 
   //   List card
@@ -215,12 +215,29 @@
   padding-top: 10px;
 }
 
+.card-payment{
+  color: var(--gray-900, #191c1f);
+  font-size: 1.8rem;
+  font-weight: 500;
+  user-select: none;
+  padding-top: 25px;
+  width: 100%;
+    margin-top: 20px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  border-top: 1px solid var(--gray-600, #5f6c72);
+}
+
 .card-banking {
   padding: 20px;
 
   .img {
     width: 100px;
   }
+
 }
 
 .card-last-info {

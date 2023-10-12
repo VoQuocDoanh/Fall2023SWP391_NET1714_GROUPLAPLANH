@@ -50,23 +50,9 @@ function CartItem({
         <h2 className={cx("card-name")}>{name}</h2>
         
       </div>
-      {/* Card price */}
       <div className={cx("card-genre")}>{genre}</div>
       <div className={cx("card-author")}>{author}</div>
-      <div className={cx("card-price")}>${price}</div>
-      {/* Card quantity */}
-      {/* <div className={cx("card-quantity")}>
-        <span className={cx("minus")} onClick={() => decrease(index)}>
-          -
-        </span>
-        <span className={cx("number")}>{quantity}</span>
-        <span className={cx("plus")} onClick={() => increase(index)}>
-          +
-        </span>
-      </div> */}
-      {/* Card total */}
-      {/* <div className={cx("card-total")}>${price}</div> */}
-     
+      <div className={cx("card-price")}>${price}</div>    
     </div>
   );
 }

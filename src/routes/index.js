@@ -10,6 +10,11 @@ import ViewBeat from "../Pages/ViewBeat";
 import ViewCart from "../Pages/ViewCart";
 import OwlCarousel from "../components/OwlCarousel";
 import ViewDetailBeat from "../Pages/ViewDetailBeat";
+import ListBeat2 from "../Pages/ListBeat2";
+import ChordsDetails from "../Pages/ChordsDetails";
+import Songs from "../Pages/Songs";
+import ViewBeatsAll from "../Pages/ViewBeatsAll";
+import CustomerBeats from "../Pages/CustomerBeats";
 
 const publicRoutes = [
   {
@@ -60,7 +65,28 @@ const publicRoutes = [
   {
     path: "/viewdetailbeat",
     component: ViewDetailBeat,
+  },
+  {
+    path: "/listbeat2",
+    component: ListBeat2,
   }
+  ,{
+    path: "/chordsdetails",
+    component: ChordsDetails,
+  }
+  ,{
+    path: "/songs",
+    component: Songs,
+  },
+  {
+    path: "/viewbeatsall",
+    component: ViewBeatsAll,
+  },
+  {
+    path: "/customerbeats",
+    component: CustomerBeats,
+  },
+
 ];
 
 const privateRoute = [];

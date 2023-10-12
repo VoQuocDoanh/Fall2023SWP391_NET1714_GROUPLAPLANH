@@ -279,7 +279,7 @@ function ViewCart() {
                 {/* Content */}
                 <div className={cx("card-names")}>
                     <div className={cx("card-product", "card-title")}>PRODUCT</div>
-                    <div className={cx("card-price", "card-title")}>GENRE</div>
+                    <div className={cx("card-genre", "card-title")}>GENRE</div>
                     <div className={cx("card-author", "card-title")}>AUTHOR</div>
                     <div className={cx("card-price", "card-title")}>PRICE</div>
                     {/* <div className={cx("card-quantity", "card-title")}>QUANTITY</div> */}
@@ -349,6 +349,13 @@ function ViewCart() {
 
                     <Button className={cx("card-action")} onClick={() => handleCheckout()}>Proceed to Checkout</Button>
                 </footer>
+                <div className={cx("card-payment")}>
+                    Payment Method
+                </div>
+                <div className={cx("card-banking")}>
+                    <img className={cx("img")} src={require("../../assets/images/Other/1554401.png")}>
+                    </img>
+                </div>
                 <div className={cx("card-banking")}>
                     <img className={cx("img")} src={require("../../assets/images/Other/1200px-PayPal_logo.svg.png")}>
                     </img>

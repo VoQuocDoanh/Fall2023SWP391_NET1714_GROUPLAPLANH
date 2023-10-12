@@ -1,20 +1,22 @@
 @import url('https://fonts.cdnfonts.com/css/newsreader-2');
 @import url('https://fonts.cdnfonts.com/css/inter');
 @import "@fontsource/newsreader"; // Defaults to weight 400
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800&display=swap');
+@import url('https://fonts.cdnfonts.com/css/sono');
+@import url('https://fonts.cdnfonts.com/css/inter');
 
-
-
-.main{
+.main {
     top: 0;
     left: 0;
-    height: 1175px;
+    height: 1189px;
     width: 100%;
     z-index: -1;
     opacity: 2;
     position: absolute;
-    
-    
+
+
 }
+
 // .overlay{
 //     position: absolute;
 //     top: 0;
@@ -24,11 +26,12 @@
 //     background-color: rgba(207, 236, 255, 0.5);
 // }
 
-video{
+video {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
 .home-wrapper {
     padding-top: 100px;
 }
@@ -40,12 +43,12 @@ video{
         .title {
             color: white;
             font-size: 64px;
-            font-family: Montserrat;
+            font-family: Sono;
             font-weight: 400;
             text-transform: uppercase;
             line-height: 76.80px;
             word-wrap: break-word;
-            font-weight:700;
+            font-weight: 700;
         }
 
         .slogan {
@@ -59,19 +62,22 @@ video{
 
     .slide-show {
         padding-top: 33px;
+
         .action {
             display: flex;
             justify-content: center;
             align-items: center;
+
             .start {
                 border-radius: 30px;
-                background-color: #0066CC;  
+                background-color: transparent;
                 outline: 3px solid #fff;
 
                 box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25),
                     0px 4px 4px 0px rgba(0, 0, 0, 0.25);
                 height: 50px;
             }
+
             .title {
                 color: white;
                 font-size: 20px;
@@ -82,6 +88,7 @@ video{
                 padding: 30px;
             }
         }
+
         .images {
             display: flex;
             justify-content: center;
@@ -107,7 +114,7 @@ video{
         outline: 3px solid #fff;
         width: fit-content;
         color: black;
-        font-size: 28px;
+        font-size: 36px;
         font-family: Sono;
         font-weight: bold;
         line-height: 43.20px;
@@ -123,8 +130,8 @@ video{
     }
 }
 
-.title-span{
-    
+.title-span {
+
     padding-bottom: 53px;
 }
 
@@ -143,17 +150,28 @@ video{
         background: linear-gradient(0deg, #D9D9D9 0%, #D9D9D9 100%);
         border-radius: 30px;
         object-fit: cover;
+        transition: all 0.3s;
+        padding: 10px 10px 10px 10px;
+
+        &:hover {
+            transform: scale(1.05);
+            -webkit-transform: scale(0.8);
+            -ms-transform: scale(0.8    );
+            transform: scale(0.9);
+            transition: 1s ease;
+        }
     }
 
     .content-1 {
         color: #00CC99;
-        font-size: 27px;
-        font-family: Sono;
+        font-size: 32px;
+        font-family: Sono, sans-serif;
         font-weight: 400;
         word-wrap: break-word;
-        padding-left: 80px;
+        cursor: pointer;
+        padding-left: 110px;
         font-weight: 600;
-        
+
     }
 
     .content-2 {
@@ -162,73 +180,93 @@ video{
         font-family: Inter;
         font-weight: 400;
         word-wrap: break-word;
-
-        margin-left: 80px;
         padding-left: 10px;
-        margin-right: 160px;
-        height: 100%;
         background: #0066CC;
         border-radius: 30px;
+        display: flex;
+        justify-content: center;
+        margin-left: 110px;
+        margin-right: 125px;
     }
 }
 
+.content-1and2 {
+    margin-left: 10px;
+}
 
-/*Chords Of Songs Part*/ 
-.chords-part{
+/*Chords Of Songs Part*/
+.chords-part {
     display: flex;
     justify-content: left;
-    justify-content: space-between; 
+    justify-content: space-between;
     align-items: center;
     padding-left: 189px;
     padding-right: 189px;
     gap: 42px;
     padding-bottom: 53px;
     margin-top: 60px;
-    .chords-details{
+
+    .chords-details {
         background-color: white;
         height: 530px;
         border-radius: 30px;
         border: 2px solid #00CC99;
         width: 100%;
-        
+        overflow: hidden;
+        transition: all 0.3s ease;
+        box-shadow:
+            0 0 0 2px white,
+            0.3em 0.3em 1em rgba(134, 134, 134, 0.6);
+
+        &:hover {
+            transform: scale(1.05);
+        }
+
+
     }
-    .chords-details-img{
+
+    .chords-details-img {
         width: 320px;
         height: 200px;
         background: linear-gradient(0deg, #D9D9D9 0%, #D9D9D9 100%);
         border-radius: 50px;
         margin-top: 33px;
         background-repeat: no-repeat;
-        margin-left:10px;
+        margin-left: 10px;
         margin-right: 10px;
         flex-shrink: 0;
         margin-left: 80px;
         object-fit: cover;
     }
-    .content-3{
+
+    .content-3 {
         color: rgb(0, 0, 0);
         justify-content: center;
         display: flex;
-        margin-top:10px ;
-        font-size: 23px;    
+        margin-top: 10px;
+        font-size: 23px;
         font-weight: 600;
         font-family: Newsreader;
+        cursor: pointer;
     }
-    .icon-chords{
+
+    .icon-chords {
         // margin-left: 300px;
         display: flex;
 
     }
-    
+
 }
-.trending-ellipse-songs{
+
+.trending-ellipse-songs {
     height: 50px;
     width: 50px;
     object-fit: cover;
     border-radius: 50%;
     margin-left: 20px;
 }
-.content-4{
+
+.content-4 {
     text-align: center;
     font-family: Newsreader;
     font-size: 22px;
@@ -236,29 +274,42 @@ video{
     text-align: left;
     margin-top: 10px;
 }
-.icon-chords2{ 
+
+.icon-chords2 {
     display: flex;
     justify-content: space-around;
-    
-    
+
+
 }
-.title-categories{
+
+.title-categories {
     margin-top: 60px;
-    
+
 }
-.icon-chords2{
+
+.icon-chords2 {
     padding-top: 40px;
     margin-left: 80px;
     margin-right: 80px;
 }
-.icon-views{
+
+.icon-views {
     display: flex;
     justify-content: space-around;
-    padding-left: 72px;
+    padding-left: 82px;
     padding-right: 72px;
 }
+
+.categories-items {
+    box-shadow:
+    0 0 0 2px white,
+    0.3em 0.3em 1em rgba(134, 134, 134, 0.6);
+    height: 370px;
+    border-radius: 20px;
+}
+
 /* Trending Parts*/
-.trending-parts{
+.trending-parts {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -267,61 +318,71 @@ video{
     gap: 42px;
     padding-bottom: 53px;
     margin-top: 60px;
-    .trending-details{
+
+    .trending-details {
         background-color: white;
-        height: 235px;
-        width:600px ;
+        height: 260px;
+        width: 700px;
         border-radius: 30px;
         padding-left: 20px;
         outline: 2px solid #00C896;
-       
-        
+        transition: all 0.3s ease;
+
+        &:hover {
+            transform: scale(1.05);
+        }
+
+
     }
-    .trending-details-img{
+
+    .trending-details-img {
         width: 152px;
         height: 112px;
         padding-top: 10px;
         padding-right: 10px;
         padding-bottom: 10px;
         border-radius: 30px;
+        object-fit: cover;
     }
-    .trending-subcribe{
+
+    .trending-subcribe {
         padding-left: 35px;
         background-color: #06c;
         width: 142px;
         height: 36px;
         border-radius: 30px;
-        padding-top:5px;
+        padding-top: 5px;
         color: white;
         cursor: pointer;
-        
 
 
-        
+
+
     }
- 
-    .icon-trending{
+
+    .icon-trending {
         display: flex;
         flex-direction: column;
         row-gap: 7px;
         padding-top: 38px;
         padding-right: 31px;
         cursor: pointer;
-        
+
     }
 }
-.icon-trending-4{
+
+.icon-trending-4 {
     text-align: center;
     justify-content: space-between;
-    .icon-trending2{
-        
-    }
+
+    .icon-trending2 {}
 }
-.icon-views-trending{
+
+.icon-views-trending {
     display: flex;
     justify-content: space-around;
-    padding-left: 62px;
-    padding-right: 62px;
+    padding-left: 40px;
+    padding-right: 40px;
 }
 
 
@@ -330,75 +391,92 @@ video{
     align-items: flex-start;
     justify-content: space-between;
 }
-.icon-trending2{
+
+.icon-trending2 {
     display: flex;
     justify-content: space-between;
     margin-top: 25px;
     margin-left: 100px;
     margin-right: 100px;
 }
-.trending-ellipse{
+
+.trending-ellipse {
     height: 50px;
     width: 50px;
     object-fit: cover;
     border-radius: 50%;
 }
 
-.text-role{
+.text-role {
     // margin-top: 70px;
     margin-right: 40px;
-    .text-ellipse1{
+
+    .text-ellipse1 {
         font-size: 20px;
-        font-family: Newsreader;
+        font-family: Sono;
         font-weight: 300;
     }
-    .text-ellipse2{
+
+    .text-ellipse2 {
         font-size: 15px;
-        font-family: Italianno;
+        font-family: Sono;
         font-weight: bold;
     }
 }
-.text-ellipse3{
+
+.text-ellipse3 {
     font-size: 20px;
     font-size: 25px;
     color: green;
     font-family: Sono;
+    font-weight: 800;
 }
-.trending-top-left{
+
+.trending-top-left {
     display: flex;
     align-items: center;
-    
+
 }
-.trending-text{
+
+.trending-text {
     display: flex;
     gap: 20px;
 }
-.image-trending-ellipse{
+
+.image-trending-ellipse {
     margin-top: 25px;
 }
 
-.heart-list-icon{
+.heart-list-icon {
     margin-left: 250px;
     display: flex;
-    gap:10px;
+    gap: 10px;
     flex-direction: column;
     cursor: pointer;
 }
-.header-trending{
+
+.header-trending {
     display: flex;
     gap: 10px;
     font-size: 10px;
 }
-.text-trending{
+
+.text-trending {
     display: flex;
     flex-direction: column;
 
 }
-.text-role-2{
+
+.text-role-2 {
     margin-left: 15px;
     margin-top: 5px;
+
+    .text-ellipse1 {
+        font-weight: 800;
+        font-family: Sono;
+    }
 }
 
-.chord-img-trending{
+.chord-img-trending {
     display: flex;
 }
