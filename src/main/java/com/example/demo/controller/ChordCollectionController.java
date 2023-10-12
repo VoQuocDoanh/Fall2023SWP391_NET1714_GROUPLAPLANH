@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.ChordCollectionDTO;
+import com.example.demo.dto.ChordCollectionResponseDTO;
 import com.example.demo.entity.ChordCollection;
 import com.example.demo.repository.ChordCollectionRepository;
 import com.example.demo.repository.SongRepository;
@@ -30,7 +31,7 @@ public class ChordCollectionController {
 
     //Get detail
     @GetMapping("/{id}")
-    public ResponseEntity<List<ChordCollectionDTO>> findById(@PathVariable Long id){
+    public ResponseEntity<ChordCollectionResponseDTO> findById(@PathVariable Long id){
         return ResponseEntity.ok(chordCollectionService.getDetail(id));
     }
 

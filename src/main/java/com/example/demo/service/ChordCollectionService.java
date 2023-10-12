@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.ChordCollectionDTO;
+import com.example.demo.dto.ChordCollectionResponseDTO;
+import com.example.demo.dto.ChordResponseDTO;
 import com.example.demo.entity.ChordBasic;
 import com.example.demo.entity.ChordCollection;
 import com.example.demo.entity.User;
@@ -29,6 +31,7 @@ public class ChordCollectionService {
     @Autowired
     private ChordBasicRepository chordRepository;
 
+
     public List<ChordCollection> findAllColletion(ChordCollectionDTO chordCollectionDTO) {
         User userEntity = userRepository.findByUsername(chordCollectionDTO.getUsername());
         List<ChordCollection> collection = chordCollectionRepository.findAll();
@@ -53,9 +56,9 @@ public class ChordCollectionService {
         }
     }
 
-    public List<ChordCollectionDTO> getDetail(Long id) {
-        ChordCollection collections = chordCollectionRepository.findByCollectionId(id);
-        ChordCollectionDTO chordCollectionDTO = new ChordCollectionDTO();
+    public ChordCollectionResponseDTO getDetail(Long id) {
+        Optional<ChordCollection> foundCollections = chordCollectionRepository.findByCollectionId(id);
+        /*ChordCollectionDTO chordCollectionDTO = new ChordCollectionDTO();
         List<ChordCollectionDTO> collectionDTOS = new ArrayList<>();
         List<String> chordName = new ArrayList<>();
         List<String> chordImage = new ArrayList<>();
@@ -70,9 +73,42 @@ public class ChordCollectionService {
         //chordCollectionDTO.setChordId(collections.getChords());
         chordCollectionDTO.setImage(chordImage);
         chordCollectionDTO.setUsername(collections.getUserCollection().getUsername());
-        collectionDTOS.add(chordCollectionDTO);
+        collectionDTOS.add(chordCollectionDTO);*/
 
-        return collectionDTOS;
+        if (foundCollections.isPresent()){
+            ChordCollection collection = foundCollections.get();
+            ChordCollectionResponseDTO collectionResponse = new ChordCollectionResponseDTO();
+            collectionResponse.setChordCollectionId(collection.getId());
+            collectionResponse.setName(collection.getName());
+            collectionResponse.setDescription(collection.getDescription());
+            collectionResponse.setChords(getChords(collection.getId()));
+            collectionResponse.setUsername(collection.getUserCollection());
+            return collectionResponse;
+        }
+        return  null;
+
+
+    }
+
+    public List<ChordResponseDTO> getChords(Long id){
+        List<Long> chords = this.chordRepository.findByCollection(id);
+        if (chords.isEmpty()) {
+            return null;
+        } else {
+            List<ChordResponseDTO> chordResponseDTOS = new ArrayList<>();
+            for (int i=0;i<chords.size();i++) {
+                ChordBasic basic = this.chordRepository.findByChordId(chords.get(i));
+                chordResponseDTOS.add(new ChordResponseDTO(
+                        basic.getChordId(),
+                        basic.getChordName(),
+                        basic.getImage(),
+                        basic.getChordKey(),
+                        basic.getSuffix(),
+                        basic.getType(),
+                        basic.getDescription()));
+            }
+            return chordResponseDTOS;
+        }
     }
 
     public ResponseEntity<String> addToCollection(ChordCollectionDTO chordCollectionDTO) {

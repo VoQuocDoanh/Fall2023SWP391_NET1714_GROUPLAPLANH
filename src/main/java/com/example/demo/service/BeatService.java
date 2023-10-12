@@ -106,7 +106,10 @@ public class BeatService {
 
     public Beat findById(Long id) {
         Optional<Beat> foundBeat = this.beatRepository.findById(id);
-        return foundBeat.isEmpty() ? null : this.beatRepository.findById(id).orElseThrow();
+        if (foundBeat.isPresent()) {
+
+        }
+        return null;
     }
 
     public List<Beat> searchByBeatName(BeatDTO beatDTO) {

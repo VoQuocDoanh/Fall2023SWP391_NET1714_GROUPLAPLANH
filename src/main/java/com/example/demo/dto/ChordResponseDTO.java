@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Data
 @Builder
 public class ChordResponseDTO {
@@ -18,12 +17,14 @@ public class ChordResponseDTO {
     private String description;
     private String Type;
 
-    public ChordResponseDTO(Long id, String chordName, String image, String key, String suffix, String type) {
+    public ChordResponseDTO(Long id, String chordName, String image, String key, String suffix, String type, String description) {
         Id = id;
         this.chordName = chordName;
         this.image = image;
         this.key = key;
         this.suffix = suffix;
         Type = type;
+        this.description = description;
     }
+
 }

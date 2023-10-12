@@ -102,7 +102,8 @@ public class SongService {
                         basic.getImage(),
                         basic.getChordKey(),
                         basic.getSuffix(),
-                        basic.getType()));
+                        basic.getType(),
+                        basic.getDescription()));
             }
             return chordResponseDTOS;
         }
