@@ -6,6 +6,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.BeatDTO;
+import com.example.demo.dto.BeatResponseDTO;
 import com.example.demo.entity.Beat;
 import com.example.demo.entity.User;
 import com.example.demo.repository.BeatRepository;
@@ -104,10 +105,17 @@ public class BeatService {
         return new ResponseEntity<>("Delete Failed", HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public Beat findById(Long id) {
+    public BeatResponseDTO getDetail(Long id) {
         Optional<Beat> foundBeat = this.beatRepository.findById(id);
         if (foundBeat.isPresent()) {
-
+            Beat beat = foundBeat.get();
+            BeatResponseDTO responseDTO = new BeatResponseDTO();
+            responseDTO.setBeatName(beat.getBeatName());
+            responseDTO.setBeatSound(beat.getBeatSound());
+            responseDTO.setPrice(beat.getPrice());
+            responseDTO.setCreatAt(beat.getCreatedAt());
+            responseDTO.setUsername(beat.getUserName());
+            return responseDTO;
         }
         return null;
     }

@@ -6,6 +6,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.BeatDTO;
+import com.example.demo.dto.BeatResponseDTO;
 import com.example.demo.entity.Beat;
 import com.example.demo.service.BeatService;
 import jakarta.validation.Valid;
@@ -36,8 +37,8 @@ public class BeatController {
 
     // Get detail Beat US and MS
     @GetMapping("/{id}")
-    public ResponseEntity<Beat> findById(@PathVariable Long id){
-        return ResponseEntity.ok(this.beatService.findById(id));
+    public ResponseEntity<BeatResponseDTO> findById(@PathVariable Long id){
+        return ResponseEntity.ok(this.beatService.getDetail(id));
     }
 
     // Search Beat by Name
