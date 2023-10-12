@@ -40,11 +40,15 @@ public class Beat {
     @Column
     private String beatSound;
 
-    @Column
-    private String type;
 
     @Column
     private String Description;
+
+    @Column
+    private int totalLike ;
+
+    @Column
+    private int view;
 
     @ManyToOne
     @JsonIgnore
@@ -75,15 +79,17 @@ public class Beat {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Beat(String beatName, String beatSound, Double price, int status, User userName) {
+    public Beat(String beatName, String beatSound, Double price, int status, User userName, int totalLike, int view) {
         this.beatName = beatName;
         this.price = price;
         this.status = status;
         this.beatSound = beatSound;
         this.userName = userName;
+        this.totalLike = totalLike;
+        this.view = view;
     }
 
-    public Beat(Long id, String beatName, String beatSound, Double price, int status, Order orderBeat, LocalDateTime createdAt) {
+    public Beat(Long id, String beatName, String beatSound, Double price, int status, Order orderBeat, LocalDateTime createdAt,int totalLike, int view) {
         this.Id=id;
         this.beatName = beatName;
         this.price = price;
@@ -91,9 +97,9 @@ public class Beat {
         this.beatSound = beatSound;
         this.orderBeat = orderBeat;
         this.createdAt = createdAt;
+        this.totalLike = totalLike;
+        this.view = view;
     }
-
-
 
     public String toString() {
         return "Beat{Id=" + this.Id + ", beatName='" + this.beatName + "', price=" + this.price + ", status=" + this.status + ", beatSound='" + this.beatSound + "', userName=" + this.userName + "}";

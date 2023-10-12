@@ -20,6 +20,8 @@ public class BeatResponseDTO {
     private Double price;
     private String fullName;
     private LocalDateTime creatAt;
+    private int view;
+    private  int like;
 
 
     @Override

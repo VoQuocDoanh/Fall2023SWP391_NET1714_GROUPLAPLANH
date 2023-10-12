@@ -20,6 +20,11 @@ public interface BeatRepository extends JpaRepository<Beat, Long> {
 
     Optional<Beat> findNameByBeatName(String beatName);
 
+    List<Beat> findByOrderByStatusDesc();
+
+    @Query("SELECT b FROM Beat b WHERE b.status = 1")
+    List<Beat> findAllBeat();
+
     Beat findBeatById(Long Id);
     @Query("SELECT b FROM Beat b WHERE b.userName=:username")
     Optional<Beat> findBeatByUserName(Long username);

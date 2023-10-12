@@ -21,6 +21,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByOrderByStatusDesc();
 
     @Query("SELECT u FROM User u WHERE u.username = :username")
+    User findByUsernameDesc(String username);
+
+    @Query("SELECT u FROM User u WHERE u.username = :username")
     User findByUsername(String username);
 
     @Query("SELECT u FROM User u WHERE u.fullName like %:fullName%")

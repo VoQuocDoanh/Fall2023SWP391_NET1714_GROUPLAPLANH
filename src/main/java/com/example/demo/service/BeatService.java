@@ -30,7 +30,7 @@ public class BeatService {
     private BeatRepository beatRepository;
 
     public List<Beat> findAllBeat(){
-        List<Beat> beats = this.beatRepository.findAll();
+        List<Beat> beats = this.beatRepository.findAllBeat();
         if (beats.isEmpty()) {
             return null;
         } else {
@@ -38,9 +38,15 @@ public class BeatService {
         }
     }
 
+/*
+    public List<Beat> listOwnBeat(BeatDTO beatDTO){
+
+    }
+*/
+
     public List<Beat> findAllOwnBeat(BeatDTO beatDTO) {
         User userEntity = this.userRepository.findByUsername(beatDTO.getUsername());
-        List<Beat> beat = this.beatRepository.findAll();
+        List<Beat> beat = this.beatRepository.findByOrderByStatusDesc();
         if (userEntity == null) {
             return null;
         } else {
@@ -54,10 +60,14 @@ public class BeatService {
                             value.getPrice(),
                             value.getStatus(),
                             value.getOrderBeat(),
-                            value.getCreatedAt());
+                            value.getCreatedAt(),
+                            value.getTotalLike(),
+                            value.getView());
                     beatEntity.add(ownBeat);
                 }
             }
+/*            List<Beat> beatList = beatRepository.findByOrderByStatusDesc();
+            */
             return beatEntity;
         }
     }
@@ -72,7 +82,7 @@ public class BeatService {
                 String beatName = beatDTO.getBeatName();
                 Double price = beatDTO.getPrice();
                 String beatSound = beatDTO.getBeatSound();
-                Beat newBeat = new Beat(beatName, beatSound, price, 1, (User) userEntity.get());
+                Beat newBeat = new Beat(beatName, beatSound, price, 1, (User) userEntity.get(),0 ,0);
                 this.beatRepository.save(newBeat);
                 return new ResponseEntity<>("Insert Successfully", HttpStatus.OK);
             } else {
@@ -115,6 +125,9 @@ public class BeatService {
             responseDTO.setPrice(beat.getPrice());
             responseDTO.setCreatAt(beat.getCreatedAt());
             responseDTO.setUsername(beat.getUserName());
+            beat.setView(beat.getView() + 1 );
+            beatRepository.save(beat);
+            responseDTO.setView(beat.getView());
             return responseDTO;
         }
         return null;
@@ -143,7 +156,9 @@ public class BeatService {
                                 beat.get(i).getPrice(),
                                 beat.get(i).getStatus(),
                                 beat.get(i).getOrderBeat(),
-                                beat.get(i).getCreatedAt()
+                                beat.get(i).getCreatedAt(),
+                                beat.get(i).getTotalLike(),
+                                beat.get(i).getView()
                         );
                         beatList.add(fBeat);
                     }
