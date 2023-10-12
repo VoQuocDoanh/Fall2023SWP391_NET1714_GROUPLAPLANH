@@ -17,6 +17,8 @@ public class BeatDTO {
     private String username;
     private Double price;
     private String fullName;
+    private Long userId;
+    private Long beatId;
 
     @Override
     public String toString() {

@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -21,7 +20,8 @@ public class BeatResponseDTO {
     private String fullName;
     private LocalDateTime creatAt;
     private int view;
-    private  int like;
+    private  int totalLike;
+    private  boolean beatLike;
 
 
     @Override

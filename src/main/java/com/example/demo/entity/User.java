@@ -84,6 +84,11 @@ public class User implements UserDetails {
     @JsonInclude(Include.NON_NULL)
     private List<FeedbackSong> feedbackSongs = new ArrayList();
 
+    @OneToMany(mappedBy = "userAction")
+    @JsonIgnore
+    @JsonInclude(Include.NON_NULL)
+    private List<BeatLike> beatLikes = new ArrayList();
+
     @OneToMany(mappedBy = "userCollection")
     @JsonIgnore
     @JsonInclude(Include.NON_NULL)

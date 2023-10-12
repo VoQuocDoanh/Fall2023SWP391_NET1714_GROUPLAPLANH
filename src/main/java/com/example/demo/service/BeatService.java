@@ -8,7 +8,9 @@ package com.example.demo.service;
 import com.example.demo.dto.BeatDTO;
 import com.example.demo.dto.BeatResponseDTO;
 import com.example.demo.entity.Beat;
+import com.example.demo.entity.BeatLike;
 import com.example.demo.entity.User;
+import com.example.demo.repository.BeatLikeRepository;
 import com.example.demo.repository.BeatRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,8 @@ public class BeatService {
     private UserRepository userRepository;
     @Autowired
     private BeatRepository beatRepository;
-
+    @Autowired
+    private BeatLikeRepository beatLikeRepository;
     public List<Beat> findAllBeat(){
         List<Beat> beats = this.beatRepository.findAllBeat();
         if (beats.isEmpty()) {
@@ -104,15 +107,25 @@ public class BeatService {
         return new ResponseEntity<>("Update Failed", HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<String> likeBeat(Long id) {
-        Optional<Beat> foundBeat = beatRepository.findById(id);
-        if (foundBeat.isPresent()){
-            Beat beat = foundBeat.get();
-            beat.setBeatLike(true);
-            beat.setTotalLike(beat.getTotalLike() + 1);
-            beatRepository.save(beat);
-            return new ResponseEntity<>("Like Successfully", HttpStatus.OK);
+    public ResponseEntity<String> likeBeat(Long id, BeatDTO beatDTO) {
+        Optional<User> user = this.userRepository.findById(beatDTO.getUserId());
+        Optional<Beat> foundBeat = this.beatRepository.findById(id);
+        if (user == null) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        } else if (foundBeat.isPresent()) {
+            BeatLike found1=beatLikeRepository.findByUserAction(user.get());
+            BeatLike found2=beatLikeRepository.findByBeatAction(foundBeat.get());
+            if (found1== null && found2 == null) {
+                BeatLike likeEntity = new BeatLike(user.get(), foundBeat.get());
+                beatLikeRepository.save(likeEntity);
+
+                Beat beat = foundBeat.get();
+                beat.setTotalLike(beat.getTotalLike() + 1);
+                beatRepository.save(beat);
+                return new ResponseEntity<>("Like successfull", HttpStatus.OK);
+            } else return  new ResponseEntity<>("You already like this beat", HttpStatus.NOT_IMPLEMENTED);
         }
+
         return new ResponseEntity<>("Like Failed", HttpStatus.NOT_IMPLEMENTED);
     }
 
@@ -141,6 +154,7 @@ public class BeatService {
             beat.setView(beat.getView() + 1 );
             beatRepository.save(beat);
             responseDTO.setView(beat.getView());
+            responseDTO.setTotalLike(beat.getTotalLike());
             return responseDTO;
         }
         return null;

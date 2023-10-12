@@ -50,9 +50,6 @@ public class Beat {
     @Column
     private int view;
 
-    @Column
-    private boolean beatLike;
-
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "userName")
@@ -62,6 +59,11 @@ public class Beat {
     @JsonIgnore
     @JoinColumn(name = "orderBeat")
     private Order orderBeat;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "beatAction")
+    private BeatLike beatAction;
 
 
     @ManyToMany
