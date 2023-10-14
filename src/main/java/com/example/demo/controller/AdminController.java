@@ -17,25 +17,25 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
-    //List all user in Admin
+    //List all User in Admin
     @GetMapping(path = {""})
     public ResponseEntity<List<UserResponeDTO>> getAllUsers() {
         return ResponseEntity.ok(this.userService.getAllUsers());
     }
 
-    //Get detail user by id in Admin
+    //Get detail User
     @GetMapping(path = {"/{id}"})
-    public ResponseEntity<User> findById(@Valid @PathVariable Long id) {
-        return ResponseEntity.ok(this.userService.findById(id));
+    public ResponseEntity<User> getDetailUser_Admin(@Valid @PathVariable Long id) {
+        return ResponseEntity.ok(this.userService.getDetailUser_Admin(id));
     }
 
-    //Ban user in Admin
+    //Ban user
     @PutMapping({"/{id}"})
     public ResponseEntity<String> banUser(@Valid @RequestBody User newUser, @PathVariable Long id) {
         return this.userService.banUser(newUser, id);
     }
 
-    //Search user by name in Admin
+    //Search user by name
     @GetMapping("/username")
     public ResponseEntity<List<User>> searchByUserName(@Valid @RequestBody UserDTO userDTO) {
         return ResponseEntity.ok(this.userService.searchByUserName(userDTO));

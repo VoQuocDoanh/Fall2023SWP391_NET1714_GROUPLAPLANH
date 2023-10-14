@@ -7,7 +7,6 @@ package com.example.demo.service;
 
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserResponeDTO;
-import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -20,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -55,10 +53,24 @@ public class UserService {
         return new ResponseEntity<>("Signup Failed", HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public User findById(Long id) {
+    public User getDetailUser_Admin(Long id) {
         Optional<User> foundUser = this.userRepository.findById(id);
         if (foundUser.isPresent()) {
             return this.userRepository.findById(id).orElseThrow();
+        }
+        return null;
+    }
+
+    public UserResponeDTO getDetailUser_User(Long id) {
+        Optional<User> foundUser = this.userRepository.findById(id);
+        if(foundUser.isPresent()){
+            User user = foundUser.get();
+            UserResponeDTO dto = new UserResponeDTO();
+            dto.setId(user.getId());
+            dto.setUsername(user.getUsername());
+            dto.setFullName(user.getFullName());
+            dto.setGender(user.getGender().toString());
+            return dto;
         }
         return null;
     }

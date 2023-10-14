@@ -12,7 +12,8 @@ import java.util.Set;
 public interface GenreRepository extends JpaRepository<Genre, Long> {
 
     Genre findByName(String genreName);
-
+    @Query("SELECT g FROM Genre g WHERE g.name = :name")
+    Set<Genre> findByGenre(String name);
     @Query("SELECT g.name FROM Genre g JOIN g.songs s WHERE s.Id = :id")
     List<String> findBySongs(Long id);
 }
