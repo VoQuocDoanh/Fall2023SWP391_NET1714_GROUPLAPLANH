@@ -17,7 +17,7 @@ public class SongResponseDTO {
     private Long id;
     private String songName;
     private String author;
-    private User user;
+    private UserResponeDTO user;
     private String description;
     private String tone;
     private String vocalRange;
@@ -26,9 +26,11 @@ public class SongResponseDTO {
     private List<GenreResponseDTO> genres;
     private List<ChordResponseDTO> chords;
 
-    public SongResponseDTO(Long id, String songName, String author) {
+    public SongResponseDTO(Long id, String songName, String author, String createAt, UserResponeDTO user) {
         this.id = id;
         this.songName = songName;
         this.author = author;
+        this.createAt = createAt;
+        this.user = user;
     }
 }

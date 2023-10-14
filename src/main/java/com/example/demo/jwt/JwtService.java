@@ -22,9 +22,9 @@ public class JwtService {
     public String generateToken(User user){
         Algorithm algorithm = Algorithm.HMAC256(secretKey.getBytes());
         return JWT.create()
-                .withSubject(user.getUsername())
+                .withSubject(user.getId().toString())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 100*60*1000))
-                .withClaim("password", user.getPassword())
+                .withClaim("username", user.getUsername())
                 .withClaim("role", user.getRole())
                 .sign(algorithm);
     }

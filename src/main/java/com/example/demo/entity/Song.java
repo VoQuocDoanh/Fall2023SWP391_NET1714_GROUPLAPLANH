@@ -113,7 +113,7 @@ public class Song {
         this.status = status;
     }
 
-    public Song(String songname, String author, String tone, String description, String vocalRange, String songUrl, User userUploadSong, Set<Genre> genresofsong, int status) {
+    public Song(String songname, String author, String tone, String description, String vocalRange, String songUrl, User userUploadSong, Set<Genre> genresofsong,Set<ChordBasic> chordsofsong, int status) {
         this.songname = songname;
         this.author = author;
         this.tone = tone;
@@ -123,6 +123,7 @@ public class Song {
         this.status = status;
         this.userUploadSong = userUploadSong;
         this.genresofsong = genresofsong;
+        this.chordsofsong = chordsofsong;
     }
 
     @Override
