@@ -68,9 +68,9 @@ public class BeatController {
     }
 
     //like beat
-    @PutMapping("/like/{id}")
-    public  ResponseEntity<String> likeBeat(@PathVariable Long id, @Valid @RequestBody BeatDTO beatDTO){
-        return beatService.likeBeat(id, beatDTO);
+    @PostMapping("/like/{id1}/{id2}")
+    public  ResponseEntity<String> likeBeat(@PathVariable Long id1, @PathVariable Long id2){
+        return beatService.likeBeat(id1, id2);
     }
 
     //delete beat by update status in MS

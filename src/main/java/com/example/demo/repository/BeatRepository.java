@@ -22,6 +22,10 @@ public interface BeatRepository extends JpaRepository<Beat, Long> {
 
     List<Beat> findByOrderByStatusDesc();
 
+    @Query("SELECT b.Id FROM Beat b join b.userSet u where u.Id =:id")
+    List<Long> findUserLiked(Long id);
+
+
     @Query("SELECT b FROM Beat b WHERE b.status = 1")
     List<Beat> findAllBeat();
 

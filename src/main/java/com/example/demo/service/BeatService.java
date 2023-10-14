@@ -8,9 +8,7 @@ package com.example.demo.service;
 import com.example.demo.dto.BeatDTO;
 import com.example.demo.dto.BeatResponseDTO;
 import com.example.demo.entity.Beat;
-import com.example.demo.entity.BeatLike;
 import com.example.demo.entity.User;
-import com.example.demo.repository.BeatLikeRepository;
 import com.example.demo.repository.BeatRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.IntStream;
 
 @Service
@@ -30,8 +29,6 @@ public class BeatService {
     private UserRepository userRepository;
     @Autowired
     private BeatRepository beatRepository;
-    @Autowired
-    private BeatLikeRepository beatLikeRepository;
     public List<Beat> findAllBeat(){
         List<Beat> beats = this.beatRepository.findAllBeat();
         if (beats.isEmpty()) {
@@ -40,12 +37,6 @@ public class BeatService {
             return new ArrayList<>(beats);
         }
     }
-
-/*
-    public List<Beat> listOwnBeat(BeatDTO beatDTO){
-
-    }
-*/
 
     public List<Beat> findAllOwnBeat(BeatDTO beatDTO) {
         User userEntity = this.userRepository.findByUsername(beatDTO.getUsername());
@@ -69,8 +60,6 @@ public class BeatService {
                     beatEntity.add(ownBeat);
                 }
             }
-/*            List<Beat> beatList = beatRepository.findByOrderByStatusDesc();
-            */
             return beatEntity;
         }
     }
@@ -85,7 +74,7 @@ public class BeatService {
                 String beatName = beatDTO.getBeatName();
                 Double price = beatDTO.getPrice();
                 String beatSound = beatDTO.getBeatSound();
-                Beat newBeat = new Beat(beatName, beatSound, price, 1, (User) userEntity.get(),0 ,0);
+                Beat newBeat = new Beat(beatName, beatSound, price, 1, userEntity.get(),0 ,0);
                 this.beatRepository.save(newBeat);
                 return new ResponseEntity<>("Insert Successfully", HttpStatus.OK);
             } else {
@@ -107,26 +96,29 @@ public class BeatService {
         return new ResponseEntity<>("Update Failed", HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<String> likeBeat(Long id, BeatDTO beatDTO) {
-        Optional<User> user = this.userRepository.findById(beatDTO.getUserId());
-        Optional<Beat> foundBeat = this.beatRepository.findById(id);
-        if (user == null) {
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-        } else if (foundBeat.isPresent()) {
-            BeatLike found1=beatLikeRepository.findByUserAction(user.get());
-            BeatLike found2=beatLikeRepository.findByBeatAction(foundBeat.get());
-            if (found1== null && found2 == null) {
-                BeatLike likeEntity = new BeatLike(user.get(), foundBeat.get());
-                beatLikeRepository.save(likeEntity);
-
-                Beat beat = foundBeat.get();
-                beat.setTotalLike(beat.getTotalLike() + 1);
-                beatRepository.save(beat);
-                return new ResponseEntity<>("Like successfull", HttpStatus.OK);
-            } else return  new ResponseEntity<>("You already like this beat", HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<String> likeBeat(Long id1, Long id2) {
+        Optional<User> user = this.userRepository.findById(id1);
+        Optional<Beat> beat = this.beatRepository.findById(id2);
+        Beat foundBeat = beatRepository.findBeatById(id2);
+        User u = user.get();
+        Beat beatEntity = beat.get();
+        Set<Beat> b = user.get().getBeatSet();
+        List<Long> t= beatRepository.findUserLiked(id1);
+        for (Long i : t){
+            if (id2.equals(i)) {
+                b.remove(foundBeat);
+                u.setBeatSet(b);
+                userRepository.save(u);
+                beatEntity.setTotalLike( beat.get().getTotalLike() - 1);
+                beatRepository.save(beatEntity);
+                return new ResponseEntity<>("Unlike succesfully", HttpStatus.NOT_IMPLEMENTED);
+            }
         }
-
-        return new ResponseEntity<>("Like Failed", HttpStatus.NOT_IMPLEMENTED);
+        b.add(foundBeat);
+        beatEntity.setTotalLike( beat.get().getTotalLike() + 1);
+        beatRepository.save(beatEntity);
+        u.setBeatSet(b);
+        return new ResponseEntity<>("Like Ok", HttpStatus.NOT_IMPLEMENTED);
     }
 
 

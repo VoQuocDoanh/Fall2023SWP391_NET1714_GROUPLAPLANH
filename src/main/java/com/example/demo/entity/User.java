@@ -17,9 +17,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Setter
@@ -84,10 +82,21 @@ public class User implements UserDetails {
     @JsonInclude(Include.NON_NULL)
     private List<FeedbackSong> feedbackSongs = new ArrayList();
 
-    @OneToMany(mappedBy = "userAction")
+    /*@OneToMany(mappedBy = "userAction")
     @JsonIgnore
     @JsonInclude(Include.NON_NULL)
-    private List<BeatLike> beatLikes = new ArrayList();
+    private List<BeatLike> beatLikes = new ArrayList();*/
+
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JsonIgnore
+    @JoinTable(
+            name = "BeatLike",
+            joinColumns = {@JoinColumn(
+                    name = "userId")},
+            inverseJoinColumns = {@JoinColumn(
+                    name = "beatId")}
+    )
+    private Set<Beat> beatSet = new HashSet<>();
 
     @OneToMany(mappedBy = "userCollection")
     @JsonIgnore

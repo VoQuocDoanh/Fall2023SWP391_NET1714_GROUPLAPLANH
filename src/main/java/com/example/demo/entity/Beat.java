@@ -60,11 +60,8 @@ public class Beat {
     @JoinColumn(name = "orderBeat")
     private Order orderBeat;
 
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "beatAction")
-    private BeatLike beatAction;
-
+        @ManyToMany(mappedBy = "beatSet",cascade = {CascadeType.ALL})
+        private Set<User> userSet = new HashSet<>();
 
     @ManyToMany
     @JsonIgnore
