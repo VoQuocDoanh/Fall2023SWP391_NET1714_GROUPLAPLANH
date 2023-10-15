@@ -6,156 +6,146 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import Chords from "../../components/Chords";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight, faPause, faPlay, faPlayCircle, faRedo, faStepBackward, faStepForward } from "@fortawesome/free-solid-svg-icons";
+import GUITAR from "../../assets/ImageForChords/Guitar";
 
-import music from "../../assets/audio/audio.mp3";
+
 const cx = classNames.bind(styles);
+
+const KEY = ["All", "C", "D", "E", "F", "G", "A", "B"];
+const SUFFIX = ["All", "major", "minor", "7", "m7", "maj7"];
+const INSTRUMENT = ["All", "Ukulele", "Guitar", "Piano"];
 
 
 const DATA = [
     {
-
-        name: "Hot Xoan",
-        type: "BeatName",
-        price: "85$",
-        member: "85",
-    }, {
-
-        name: "Hot Xoan",
-        type: "BeatName",
-        price: "85$",
-        member: "85",
-    }, {
-
-        name: "Hot Xoan",
-        type: "BeatName",
-        price: "85$",
-        member: "85",
-    }, {
-
-        name: "Hot Xoan",
-        type: "BeatName",
-        price: "85$",
-        member: "85",
-    }, {
-
-        name: "Hot Xoan",
-        type: "BeatName",
-        price: "85$",
-        member: "85",
+        type: "Guitar",
+        value: GUITAR,
     },
     {
-
-        name: "Hot Xoan",
-        type: "BeatName",
-        price: "85$",
-        member: "85",
-    }, {
-
-        name: "Hot Xoan",
-        type: "BeatName",
-        price: "85$",
-        member: "85",
-    }, {
-
-        name: "Hot Xoan",
-        type: "BeatName",
-        price: "85$",
-        member: "85",
-    }, {
-
-        name: "Hot Xoan",
-        type: "BeatName",
-        price: "85$",
-        member: "85",
-    }, {
-
-        name: "Hot Xoan",
-        type: "BeatName",
-        price: "85$",
-        member: "85",
+        type: "Piano",
+        value: [
+            {
+                type: "Piano",
+                img: "https://i0.wp.com/pianohome.vn/wp-content/uploads/2020/10/16-scaled.jpeg",
+            }
+        ],
     },
     {
-
-        name: "Hot Xoan",
-        type: "BeatName",
-        price: "85$",
-        member: "85",
-    }, {
-
-        name: "Hot Xoan",
-        type: "BeatName",
-        price: "85$",
-        member: "85",
-    }, {
-
-        name: "Hot Xoan",
-        type: "BeatName",
-        price: "85$",
-        member: "85",
-    }, {
-
-        name: "Hot Xoan",
-        type: "BeatName",
-        price: "85$",
-        member: "85",
-    }, {
-
-        name: "Hot Xoan",
-        type: "BeatName",
-        price: "85$",
-        member: "85",
+        type: "Ukulele",
+        value: [
+            {
+                type: "Ukulele",
+                img: "https://upload.wikimedia.org/wikipedia/commons/5/56/Ukulele1_HiRes.jpg",
+            }
+        ],
     },
     {
-
-        name: "Hot Xoan",
-        type: "BeatName",
-        price: "85$",
-        member: "85",
-    },
-
-    {
-
-        name: "Hot Xoan",
-        type: "BeatName",
-        price: "85$",
-        member: "85",
-    },
-
-    {
-
-        name: "Hot Xoan",
-        type: "BeatName",
-        price: "85$",
-        member: "85",
-    },
-
-
-
+        type: "All",
+        value: [GUITAR, [
+            {
+                type: "Ukulele",
+                img: "https://upload.wikimedia.org/wikipedia/commons/5/56/Ukulele1_HiRes.jpg",
+            }
+        ],]
+    }
 ]
+
 
 function ChordsDetails() {
 
-    const [search, setSearch] = useState("");
-    const [list, setList] = useState(DATA);
-    const [play, setPlay] = useState(false);
-    const audioRef = useRef();
+    // const [list, setList] = useState(DATA);
 
-    const handleSearch = (e) => {
-        setSearch(e.target.value);
-        // setList(data);
+    const [key, setKey] = useState(KEY[0]);
+    const [suffix, setSuffix] = useState(SUFFIX[0]);
+    const [instrument, setInstrument] = useState(INSTRUMENT[0]);
+    const [listChord, setListChord] = useState([]);
+
+    const handleKeyChange = (e) => {
+        setKey(e.target.value);
     }
 
-    const handleClickBeat = () => {
-
+    const handleSuffixChange = (e) => {
+        setSuffix(e.target.value);
     }
 
+    const handleInstrumentChange = (e) => {
+        setInstrument(e.target.value);
+    }
 
+    useEffect(() => {
+        let listFilter = DATA.filter((list) => list.type === instrument);
+        let listType = listFilter[0].value.map((item) => {
+            return item;
+        })
+        setListChord(listType.flat(Infinity));
+    }, [])
 
+    useEffect(() => {
+        let listFilter = DATA.filter((list) => list.type === instrument);
+        let listType = listFilter[0].value.map((item) => {
+            return item;
+        })
+        if (key !== "All") {
+            let list = listType.flat(Infinity).filter((item) => {
+                return item.key === key;
+            });
+            if(suffix !== "All") {
+                list = list.filter(item => item.suffix === suffix);
+            }
+            setListChord(list);
+        } else {
+            setListChord(listType.flat(Infinity))
+        }
+    }, [key])
+
+    useEffect(() => {
+        let listFilter = DATA.filter((list) => list.type === instrument);
+        let listType = listFilter[0].value.map((item) => {
+            return item;
+        })
+        if (suffix !== "All") {
+            let list = listType.flat(Infinity).filter((item) => {
+                return item.suffix === suffix;
+            });
+            if(key !== "All") {
+                list = list.filter(item => item.key === key);
+            }
+            setListChord(list);
+        } else {
+            setListChord(listType.flat(Infinity))
+        }
+    }, [suffix])
+
+    useEffect(() => {
+        let listFilter = DATA.filter((list) => list.type === instrument);
+        let listType = listFilter[0].value.map((item) => {
+            return item;
+        })
+        if(key !== "All" && suffix == "All") {
+            let list = listType.flat(Infinity).filter((item) => {
+                return item.key === key;
+            });
+            setListChord(list);
+        } else if(key === "All" && suffix !== "All") {
+            let list = listType.flat(Infinity).filter((item) => {
+                return item.suffix === suffix;
+            });
+            setListChord(list);
+        }else if(key !== "All" && suffix !== "All"){
+            let list = listType.flat(Infinity).filter((item) => {
+                return item.key === key && item.suffix === suffix;
+            });
+            setListChord(list)
+        // }else {
+        //     setListChord(listType.flat(Infinity));
+        }
+    }, [instrument])
 
     return (
         <div className={cx("list-header")}>
             <div className={cx("title-back")}>
                 <h1 className={cx("title")}> CHORDS VARIATIONS</h1>
+
                 <div className={cx("back")}></div>
             </div>
             <div>
@@ -165,23 +155,36 @@ function ChordsDetails() {
                     </div>
                     <div class="collection-box">
                         <h4>Key</h4>
-                        <select id="chord-collection-keys" class="chord-collection-select"><option value="C" selected="selected">C</option><option value="C#">C#</option><option value="D">D</option><option value="D#">D#</option><option value="E">E</option><option value="F">F</option><option value="F#">F#</option><option value="G">G</option><option value="G#">G#</option><option value="A">A</option><option value="A#">A#</option><option value="B">B</option></select>
+                        <select id="chord-collection-keys" class="chord-collection-select" onChange={handleKeyChange} defaultValue={key}>
+                            {KEY.map((item, index) => {
+                                return <option key={index} value={item}>{item}</option>
+                            })}
+                        </select>
                     </div>
                     <div class="collection-box">
                         <h4>Suffix</h4>
-                        <select id="chord-collection-suffixes" class="chord-collection-select"><option value="" selected="selected">major</option><option value="m">minor</option><option value="dim">dim</option><option value="aug">aug</option><option value="sus2">sus2</option><option value="sus4">sus4</option><option value="majb5">majb5</option><option value="m#5">m#5</option><option value="mbb5">mbb5</option><option value="sus4#5">sus4#5</option><option value="sus2b5">sus2b5</option><option value="sus2#5">sus2#5</option><option value="7">7</option><option value="m7">m7</option><option value="maj7">maj7</option><option value="mmaj7">mmaj7</option><option value="dim7">dim7</option><option value="aug7">aug7</option><option value="augmaj7">augmaj7</option><option value="7b5">7b5</option><option value="maj7b5">maj7b5</option><option value="m7b5">m7b5</option><option value="mmaj7b5">mmaj7b5</option><option value="mmaj7bb5">mmaj7bb5</option><option value="m7#5">m7#5</option><option value="mmaj7#5">mmaj7#5</option><option value="7b9">7b9</option><option value="6">6</option><option value="m6">m6</option><option value="6b5">6b5</option><option value="6add9">6add9</option><option value="m6add9">m6add9</option><option value="9">9</option><option value="m9">m9</option><option value="maj9">maj9</option><option value="mmaj9">mmaj9</option><option value="9b5">9b5</option><option value="aug9">aug9</option><option value="9sus4">9sus4</option><option value="7#9">7#9</option><option value="7#9b5">7#9b5</option><option value="augmaj9">augmaj9</option><option value="11">11</option><option value="m11">m11</option><option value="maj11">maj11</option><option value="mmaj11">mmaj11</option><option value="maj#11">maj#11</option><option value="13">13</option><option value="m13">m13</option><option value="maj13">maj13</option><option value="mmaj13">mmaj13</option><option value="7sus2">7sus2</option><option value="maj7sus2">maj7sus2</option><option value="7sus4">7sus4</option><option value="maj7sus4">maj7sus4</option><option value="7sus2#5">7sus2#5</option><option value="7sus4#5">7sus4#5</option><option value="maj7sus4#5">maj7sus4#5</option><option value="sus2sus4">sus2sus4</option><option value="7sus2sus4">7sus2sus4</option><option value="maj7sus2sus4">maj7sus2sus4</option><option value="5">5</option><option value="add9">add9</option></select>
+                        <select id="chord-collection-suffixes" class="chord-collection-select" onChange={handleSuffixChange} defaultValue={suffix}>
+                            {SUFFIX.map((item, index) => {
+                                return <option key={index} value={item}>{item}</option>
+                            })}
+                        </select>
                     </div>
                     <div class="collection-box">
                         <h4>Instrument</h4>
-                        <select id="chord-collection-bass-note" class="chord-collection-select"><option value="" selected="selected"></option><option value="C">Ukulele</option><option value="C#">Guitar</option><option value="D">Piano</option></select>
+                        <select id="chord-collection-suffixes" class="chord-collection-select" onChange={handleInstrumentChange} defaultValue={instrument}>
+                            {INSTRUMENT.map((item, index) => {
+                                return <option key={index} value={item}>{item}</option>
+                            })}
+                        </select>
                     </div>
                 </nav>
                 <div className={cx("line")}>
                 </div>
             </div>
+
             <div className={cx("list-chords")}>
-                {list.map((item, index) => {
-                    return <Chords />
+                {listChord.map((item) => {
+                    return <img key={item.type} src={item.img} alt={item.type} />
                 })}
             </div>
 
