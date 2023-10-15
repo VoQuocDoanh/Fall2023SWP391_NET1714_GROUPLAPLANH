@@ -15,7 +15,7 @@ import ChordsDetails from "../Pages/ChordsDetails";
 import Songs from "../Pages/Songs";
 import ViewBeatsAll from "../Pages/ViewBeatsAll";
 import CustomerBeats from "../Pages/CustomerBeats";
-
+import ListSong from "../Pages/ListSong";
 const publicRoutes = [
   {
     path: "/",
@@ -86,7 +86,10 @@ const publicRoutes = [
     path: "/customerbeats",
     component: CustomerBeats,
   },
-
+  {
+    path: "/listsong",
+    component: ListSong,
+  },
 ];
 
 const privateRoute = [];
