@@ -16,6 +16,7 @@ import Songs from "../Pages/Songs";
 import ViewBeatsAll from "../Pages/ViewBeatsAll";
 import CustomerBeats from "../Pages/CustomerBeats";
 import ListSong from "../Pages/ListSong";
+import Uploadsong from "../Pages/UploadSong";
 const publicRoutes = [
   {
     path: "/",
@@ -89,6 +90,10 @@ const publicRoutes = [
   {
     path: "/listsong",
     component: ListSong,
+  },
+  {
+    path: "/uploadsong",
+    component: Uploadsong,
   },
 ];
 
