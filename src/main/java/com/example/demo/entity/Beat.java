@@ -40,9 +40,8 @@ public class Beat {
     @Column
     private String beatSound;
 
-
     @Column
-    private String Description;
+    private String description;
 
     @Column
     private int totalLike ;
@@ -60,8 +59,8 @@ public class Beat {
     @JoinColumn(name = "orderBeat")
     private Order orderBeat;
 
-        @ManyToMany(mappedBy = "beatSet",cascade = {CascadeType.ALL})
-        private Set<User> userSet = new HashSet<>();
+    @ManyToMany(mappedBy = "beatSet",cascade = {CascadeType.ALL})
+    private Set<User> userSet = new HashSet<>();
 
     @ManyToMany
     @JsonIgnore
@@ -81,16 +80,6 @@ public class Beat {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Beat(String beatName, String beatSound, Double price, int status, User userName, int totalLike, int view) {
-        this.beatName = beatName;
-        this.price = price;
-        this.status = status;
-        this.beatSound = beatSound;
-        this.userName = userName;
-        this.totalLike = totalLike;
-        this.view = view;
-    }
-
     public Beat(Long id, String beatName, String beatSound, Double price, int status, Order orderBeat, LocalDateTime createdAt,int totalLike, int view) {
         this.Id=id;
         this.beatName = beatName;
@@ -102,6 +91,18 @@ public class Beat {
         this.totalLike = totalLike;
         this.view = view;
        // this.beatLike = beatLike;
+    }
+
+    public Beat(String beatName, Double price, String beatSound, String description, int totalLike, int view, User userName, Set<Genre> genresofbeat, int status) {
+        this.beatName = beatName;
+        this.price = price;
+        this.status = status;
+        this.beatSound = beatSound;
+        this.description = description;
+        this.totalLike = totalLike;
+        this.view = view;
+        this.userName = userName;
+        this.genresofbeat = genresofbeat;
     }
 
     public String toString() {

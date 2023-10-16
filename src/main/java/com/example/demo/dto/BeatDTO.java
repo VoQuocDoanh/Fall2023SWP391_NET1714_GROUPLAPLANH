@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,10 +16,12 @@ public class BeatDTO {
     private String beatName;
     private String beatSound;
     private String username;
+    private String description;
     private Double price;
     private String fullName;
     private Long userId;
     private Long beatId;
+    private List<String> genres;
 
     @Override
     public String toString() {

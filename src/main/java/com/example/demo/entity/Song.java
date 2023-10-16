@@ -56,6 +56,12 @@ public class Song {
     @Column(name = "Status")
     private int status;
 
+    @Column
+    private int totalLike ;
+
+    @Column
+    private int view;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "userUploadSong")
@@ -65,6 +71,9 @@ public class Song {
     @JsonIgnore
     @JsonInclude(Include.NON_NULL)
     private List<FeedbackSong> feedbackSongs = new ArrayList();
+
+    @ManyToMany(mappedBy = "likedSongs",cascade = {CascadeType.ALL})
+    private Set<User> likedByUsers = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JsonIgnore
@@ -102,18 +111,7 @@ public class Song {
         this.feedbackSongs = feedbackSongs;
     }
 
-    public Song(String songname, String author, String tone, String description, String vocalRange, String songUrl, User userUploadSong, int status) {
-        this.songname = songname;
-        this.author = author;
-        this.tone = tone;
-        this.description = description;
-        this.vocalRange = vocalRange;
-        this.songUrl = songUrl;
-        this.userUploadSong = userUploadSong;
-        this.status = status;
-    }
-
-    public Song(String songname, String author, String tone, String description, String vocalRange, String songUrl, User userUploadSong, Set<Genre> genresofsong,Set<ChordBasic> chordsofsong, int status) {
+    public Song(String songname, String author, String tone, String description, String vocalRange, String songUrl, User userUploadSong, Set<Genre> genresofsong,Set<ChordBasic> chordsofsong, int totalLike, int view, int status) {
         this.songname = songname;
         this.author = author;
         this.tone = tone;
@@ -124,6 +122,8 @@ public class Song {
         this.userUploadSong = userUploadSong;
         this.genresofsong = genresofsong;
         this.chordsofsong = chordsofsong;
+        this.totalLike = totalLike;
+        this.view = view;
     }
 
     @Override

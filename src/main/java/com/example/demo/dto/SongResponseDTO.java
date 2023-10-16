@@ -25,12 +25,16 @@ public class SongResponseDTO {
     private String createAt;
     private List<GenreResponseDTO> genres;
     private List<ChordResponseDTO> chords;
+    private int totalLike;
+    private int view;
 
-    public SongResponseDTO(Long id, String songName, String author, String createAt, UserResponeDTO user) {
+    public SongResponseDTO(Long id, String songName, String author, String createAt, UserResponeDTO user, int totalLike, int view) {
         this.id = id;
         this.songName = songName;
         this.author = author;
         this.createAt = createAt;
         this.user = user;
+        this.view = view;
+        this.totalLike = totalLike;
     }
 }

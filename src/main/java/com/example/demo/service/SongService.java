@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -117,7 +118,9 @@ public class SongService {
                     value.getSongname(),
                     value.getAuthor(),
                     value.getCreatedAt().toString(),
-                    new UserResponeDTO(foundUser.get().getFullName()));
+                    new UserResponeDTO(foundUser.get().getFullName()),
+                    value.getTotalLike(),
+                    value.getView());
             dtos.add(dto);
         }
         return dtos;
@@ -134,7 +137,9 @@ public class SongService {
                         value.getSongname(),
                         value.getAuthor(),
                         value.getCreatedAt().toString(),
-                        getUser(value.getUserUploadSong()));
+                        getUser(value.getUserUploadSong()),
+                        value.getTotalLike(),
+                        value.getView());
                 songResponseDTOS.add(dto);
             }
             return songResponseDTOS;
@@ -154,6 +159,8 @@ public class SongService {
                     foundUser.get(),
                     genreSet(songDTO),
                     chordBasicSet(songDTO),
+                    0,
+                    0,
                     1);
             this.songRepository.save(song);
             return new ResponseEntity<>("Upload Successfully", HttpStatus.OK);
@@ -208,7 +215,7 @@ public class SongService {
         }
     }
 
-    public List<SongResponseDTO> findUserSongbyName(String name, Long id){
+    public List<SongResponseDTO> findUserSongbySongName(String name, Long id){
         Optional<User> foundUser = this.userRepository.findById(id);
         if(foundUser.isPresent()){
             List<Song> songs = this.songRepository.findUserSongByName(name, foundUser.get().getId());
@@ -218,13 +225,25 @@ public class SongService {
         }
     }
 
-    public List<SongResponseDTO> findUserSongByGenreName(String name, Long id){
-        List<Song> songs = this.songRepository.findUserSongByGenreName(name, id);
-        if (songs.isEmpty()){
-            return null;
-        } else {
-            return getSongResponseDTOS(songs);
+    public List<SongResponseDTO> findUserSongByGenreName(List<String> names, Long id){
+        Set<SongResponseDTO> songResponseDTOS = new HashSet<>();
+        for (String value : names) {
+            List<Song> songs = this.songRepository.findUserSongByGenreName(value, id);
+            for (Song song : songs) {
+                SongResponseDTO dto = new SongResponseDTO(song.getId(),
+                        song.getSongname(),
+                        song.getAuthor(),
+                        song.getCreatedAt().toString(),
+                        getUser(song.getUserUploadSong()),
+                        song.getTotalLike(),
+                        song.getView());
+                songResponseDTOS.add(dto);
+            }
         }
+        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+        List<SongResponseDTO> sortList = new ArrayList<>(songResponseDTOS);
+        sortList.sort(Comparator.comparing(SongResponseDTO::getId));
+        return sortList.isEmpty() ? sortList:null;
     }
 
     // Song
@@ -232,6 +251,7 @@ public class SongService {
         Optional<Song> foundSong = this.songRepository.findById(id);
         if (foundSong.isPresent()) {
             Song s = foundSong.get();
+            s.setView(s.getView() + 1);
             SongResponseDTO dto = new SongResponseDTO();
             dto.setId(s.getId());
             dto.setSongName(s.getSongname());
@@ -244,6 +264,8 @@ public class SongService {
             dto.setCreateAt(s.getCreatedAt().toString());
             dto.setGenres(getGenres(s.getId()));
             dto.setChords(getChords(s.getId()));
+            dto.setView(s.getView());
+            dto.setTotalLike(s.getTotalLike());
             return dto;
         } else {
             return null;
@@ -259,21 +281,76 @@ public class SongService {
                 SongResponseDTO dto = new SongResponseDTO(s.getId(),
                         s.getSongname(), s.getAuthor(),
                         s.getCreatedAt().toString(),
-                        getUser(s.getUserUploadSong()));
+                        getUser(s.getUserUploadSong()),
+                        s.getTotalLike(),
+                        s.getView());
                 responseDTOS.add(dto);
             }
             return responseDTOS;
         }
     }
-    public List<SongResponseDTO> findSongByGenre(String name){ // sửa lại theo json
-        List<Song> songs = this.songRepository.findSongsByGenreName(name);
-        return getSongResponseDTOS(songs);
+    public List<SongResponseDTO> findSongByGenre(List<String> genreNames) {
+        Set<SongResponseDTO> songResponseDTOS = new HashSet<>();
+        for (String value : genreNames) {
+            List<Song> songs = this.songRepository.findSongsByGenreName(value);
+            for (Song song : songs) {
+                SongResponseDTO dto = new SongResponseDTO(song.getId(),
+                        song.getSongname(),
+                        song.getAuthor(),
+                        song.getCreatedAt().toString(),
+                        getUser(song.getUserUploadSong()),
+                        song.getTotalLike(),
+                        song.getView());
+                songResponseDTOS.add(dto);
+            }
+        }
+        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+        List<SongResponseDTO> sortList = new ArrayList<>(songResponseDTOS);
+        sortList.sort(Comparator.comparing(SongResponseDTO::getId));
+        return sortList.isEmpty() ? sortList:null;
     }
     public List<SongResponseDTO> findSongByName (String name){
         List<Song> songs = this.songRepository.findSongsbyName(name);
         return getSongResponseDTOS(songs);
     }
+    public List<SongResponseDTO> findSongByUserName(String name){
+        List<Song> songs = this.songRepository.findSongByUserUploadSongName(name);
+        return getSongResponseDTOS(songs);
+    }
 
+    // Like
+    public ResponseEntity<String> likeSong (Long iduser, Long idsong){
+        Optional<User> foundUser = this.userRepository.findById(iduser);
+        if(foundUser.isPresent()){
+            User user = foundUser.get();
+            Optional<Song> foundSong = Optional.ofNullable(this.songRepository.findSongsLikeByUser(iduser ,idsong));
+            if(foundSong.isPresent()){
+                Song s = foundSong.get();
+                Set<Song> songSet = user.getLikedSongs();
+                songSet.remove(s);
+                s.setTotalLike(s.getTotalLike() - 1);
+                this.userRepository.save(user);
+                this.songRepository.save(s);
+                return new ResponseEntity<>("Unlike Successfully", HttpStatus.OK);
+            } else {
+                Optional<Song> song = this.songRepository.findById(idsong);
+                if(song.isPresent()){
+                    Song s = song.get();
+                    Set<Song> songSet = user.getLikedSongs();
+                    songSet.add(s);
+                    s.setTotalLike(s.getTotalLike() + 1);
+                    this.userRepository.save(user);
+                    this.songRepository.save(s);
+                    return new ResponseEntity<>("Like Successfully", HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>("Song was deteled or Song does not exist", HttpStatus.NOT_FOUND);
+                }
+            }
+        } else {
+            return new ResponseEntity<>("Like Failed", HttpStatus.NOT_IMPLEMENTED);
+        }
+
+    }
 
 }
 

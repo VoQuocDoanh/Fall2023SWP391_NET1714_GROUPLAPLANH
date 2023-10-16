@@ -12,4 +12,10 @@ import lombok.NoArgsConstructor;
 public class GenreResponseDTO {
     private Long id;
     private String name;
+    private String description;
+
+    public GenreResponseDTO(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

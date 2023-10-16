@@ -16,4 +16,6 @@ public interface GenreRepository extends JpaRepository<Genre, Long> {
     Set<Genre> findByGenre(String name);
     @Query("SELECT g.name FROM Genre g JOIN g.songs s WHERE s.Id = :id")
     List<String> findBySongs(Long id);
+    @Query("select g.name from Genre g join g.beats s where s.Id = :id")
+    List<String> findByBeats(Long id);
 }

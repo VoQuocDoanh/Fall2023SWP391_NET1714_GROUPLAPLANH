@@ -7,14 +7,15 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.SongDTO;
 import com.example.demo.dto.SongResponseDTO;
+import com.example.demo.entity.Song;
 import com.example.demo.service.SongService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/api/v1/song")
@@ -54,27 +55,27 @@ public class SongController {
     }
 
     // List all User Song
-    @GetMapping("/user/{userid}")
+    @GetMapping("/user/{userid}/all")
     public ResponseEntity<List<SongResponseDTO>> findAllUserSong(@PathVariable Long userid){
         return ResponseEntity.ok(this.songService.findAllUserSong(userid));
     }
 
     // Search User Song by name
     @GetMapping("/user/{id}/{name}")
-    public ResponseEntity<List<SongResponseDTO>> findUserSongbyName(@PathVariable String name, @PathVariable Long id){
-        return ResponseEntity.ok(this.songService.findUserSongbyName(name, id));
+    public ResponseEntity<List<SongResponseDTO>> findUserSongbySongName(@PathVariable String name, @PathVariable Long id){
+        return ResponseEntity.ok(this.songService.findUserSongbySongName(name, id));
     }
 
-    // Search Song by genre and user
-    @GetMapping("/user/{id}/genre/{name}")
-    public ResponseEntity<List<SongResponseDTO>> findUserSongByGenreName(@PathVariable String name, @PathVariable Long id){
-        return ResponseEntity.ok(this.songService.findUserSongByGenreName(name, id));
+    // Search User Song by genre
+    @GetMapping("/user/{id}/genre")
+    public ResponseEntity<List<SongResponseDTO>> findUserSongByGenreName(@Valid @RequestBody List<String> genreNames, @PathVariable Long id){
+        return ResponseEntity.ok(this.songService.findUserSongByGenreName(genreNames, id));
     }
 
     // Search Song by genre
-    @GetMapping("/genre/{name}")
-    public ResponseEntity<List<SongResponseDTO>> findSongByGenre(@PathVariable String name){
-        return ResponseEntity.ok(this.songService.findSongByGenre(name));
+    @GetMapping("/genre")
+    public ResponseEntity<List<SongResponseDTO>> findSongByGenre(@Valid @RequestBody List<String> genreNames){
+        return ResponseEntity.ok(this.songService.findSongByGenre(genreNames));
     }
 
     // Search Song by name
@@ -84,5 +85,14 @@ public class SongController {
         return ResponseEntity.ok(this.songService.findSongByName(name));
     }
 
+    @GetMapping("/user/{username}")
+    public ResponseEntity<List<SongResponseDTO>> findSongByUserUploadName(@PathVariable String username){
+        return ResponseEntity.ok(this.songService.findSongByUserName(username));
+    }
 
+    // Like Test
+    @PostMapping("/like/{id1}/{id2}")
+    public  ResponseEntity<String> likeBeat(@PathVariable Long id1, @PathVariable Long id2){
+        return this.songService.likeSong(id1, id2);
+    }
 }

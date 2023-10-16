@@ -24,9 +24,9 @@ public class BeatController {
     private BeatService beatService;
 
     // List own Beats in MS
-    @GetMapping("/own")
-    public ResponseEntity<List<Beat>> findAllOwnBeat(@Valid @RequestBody BeatDTO beatDTO) {
-        return ResponseEntity.ok(this.beatService.findAllOwnBeat(beatDTO));
+    @GetMapping("/user/{id}/all")
+    public ResponseEntity<List<BeatResponseDTO>> findAllOwnBeat(@PathVariable Long id) {
+        return ResponseEntity.ok(this.beatService.findAllOwnBeat(id));
     }
 
     // List all Beats in US
@@ -41,18 +41,16 @@ public class BeatController {
         return ResponseEntity.ok(this.beatService.getDetail(id));
     }
 
-
-
     // Search Beat by Name
-    @GetMapping("/name")
-    public ResponseEntity<List<Beat>> searchByBeatName(@Valid @RequestBody BeatDTO beatDTO) {
-        return ResponseEntity.ok(this.beatService.searchByBeatName(beatDTO));
+    @GetMapping("/name/{name}")
+    public ResponseEntity<List<BeatResponseDTO>> searchByBeatName(@PathVariable String name) {
+        return ResponseEntity.ok(this.beatService.searchByBeatName(name));
     }
 
     // Search Beat by Musician
-    @GetMapping("/musician")
-    public ResponseEntity<List<Beat>> searchByMusician(@Valid @RequestBody BeatDTO beatDTO) {
-        return ResponseEntity.ok(this.beatService.searchByMusician(beatDTO));
+    @GetMapping("/musician/{name}")
+    public ResponseEntity<List<BeatResponseDTO>> searchByMusician(@PathVariable String name) {
+        return ResponseEntity.ok(this.beatService.searchByMusician(name));
     }
 
     //Add Beat in MS
@@ -62,8 +60,8 @@ public class BeatController {
     }
 
     //Update beat in MS
-    @PutMapping({"/{id}"})
-    public ResponseEntity<String> updateBeat(@Valid @RequestBody Beat newBeat, @PathVariable Long id) {
+    @PatchMapping({"/{id}"})
+    public ResponseEntity<String> updateBeat(@Valid @RequestBody BeatDTO newBeat, @PathVariable Long id) {
         return this.beatService.updateBeat(newBeat, id);
     }
 
