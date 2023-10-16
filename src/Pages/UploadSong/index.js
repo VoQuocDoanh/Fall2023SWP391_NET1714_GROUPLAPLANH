@@ -3,11 +3,19 @@ import styles from "./UploadSong.module.scss";
 import classNames from "classnames/bind";
 import { Link } from "react-router-dom";
 import { React, useState } from "react";
+import MarkdownPreview from '../../MarkdownPreview';
+
 
 const cx = classNames.bind(styles);
 
 function UploadSong() {
     const [valueSearch, setValueSearch] = useState("");
+    const [GenreSearch, setGenreSearch] = useState("");
+    const [InfoSearch, setInfoSearch] = useState("");
+    const [ToneSearch, setToneSearch] = useState("");
+    const [LinkSearch, setLinkSearch] = useState("");
+    const [nameSongSearch, setnameSongSearch] = useState("");
+    const [postContent, setPostContent] = useState();
 
     return (
         <div className={cx('page-content')}> {/* trang tổng */}
@@ -19,9 +27,9 @@ function UploadSong() {
                         <input
                             type="text"
                             placeholder="Ví dụ: Cắt đôi nỗi sầu"
-                            value={valueSearch}
+                            value={nameSongSearch}
                             className={cx('input-song-name')}
-                            onChange={(event) => setValueSearch(event.target.value)}
+                            onChange={(event) => setnameSongSearch(event.target.value)}
                         />
                         <h2><b>Lời bài hát và hợp âm:</b></h2>
                         <div className={cx('toolbox')}>
@@ -97,7 +105,7 @@ function UploadSong() {
                             </div>
                         </div>
                         <div className={cx('song-lyric')}>
-                            <textarea id="ABC" name="ABC" rows="20" cols="174"></textarea>
+                            <textarea value={postContent} id="ABC" name="ABC" rows="20" cols="174" onChange={e => setPostContent(e.target.value)}></textarea>
                         </div>
                         <div className={cx('toolbox-bottom')}>
                             <span>Hợp âm:</span>
@@ -106,7 +114,10 @@ function UploadSong() {
                         <div className={cx('blue-header')}>
                             <h4>Xem trước</h4>
                         </div>
-                        <div className={cx('review-panel')}></div>
+                        <div className={cx('review-panel')}>
+                            <hr />
+                            <MarkdownPreview markdown={postContent} />
+                        </div>
                         <div className={cx('grid-5-alpha')}>
                             <div className={cx('song-authors')}>
                                 <h2><b>Tác giả:</b></h2>
@@ -123,9 +134,9 @@ function UploadSong() {
                                 <input
                                     type="text"
                                     placeholder="Ví dụ: Nhạc trẻ"
-                                    value={valueSearch}
+                                    value={GenreSearch}
                                     className={cx('input-song-name')}
-                                    onChange={(event) => setValueSearch(event.target.value)}
+                                    onChange={(event) => setGenreSearch(event.target.value)}
                                 />
                             </div>
                         </div>
@@ -138,9 +149,9 @@ function UploadSong() {
                                 <input
                                     type="text"
                                     placeholder="Ví dụ: Hoài Lâm"
-                                    value={valueSearch}
+                                    value={InfoSearch}
                                     className={cx('input-song-name')}
-                                    onChange={(event) => setValueSearch(event.target.value)}
+                                    onChange={(event) => setInfoSearch(event.target.value)}
                                 />
                             </div>
                             <div className={cx('tone-info')}>
@@ -148,19 +159,19 @@ function UploadSong() {
                                 <input
                                     type="text"
                                     placeholder="Ví dụ: Am"
-                                    value={valueSearch}
+                                    value={ToneSearch}
                                     className={cx('input-song-name')}
-                                    onChange={(event) => setValueSearch(event.target.value)}
+                                    onChange={(event) => setToneSearch(event.target.value)}
                                 />
                             </div>
                             <div className={cx('link-music')}>
-                                <h2><b>Tông:</b></h2>
+                                <h2><b>Link:</b></h2>
                                 <input
                                     type="text"
                                     placeholder="Ví dụ: http://mp3.zing.vn/..."
-                                    value={valueSearch}
+                                    value={LinkSearch}
                                     className={cx('input-song-name')}
-                                    onChange={(event) => setValueSearch(event.target.value)}
+                                    onChange={(event) => setLinkSearch(event.target.value)}
                                 />
                             </div>
                         </div>

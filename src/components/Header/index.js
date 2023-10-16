@@ -1,6 +1,7 @@
 // Import library
 import classNames from "classnames/bind";
 import { Link, useNavigate } from "react-router-dom";
+import Popup from 'reactjs-popup';
 
 
 // Import component
@@ -27,7 +28,7 @@ function Header() {
     console.log(userRole)
   }
   const handleLogout = () => {
-    if(token){
+    if (token) {
       localStorage.removeItem("token")
       navigate("/")
     }
@@ -43,7 +44,7 @@ function Header() {
           <Search />
         </div>
       </div>
-      <img className={cx("img-header")} src={require("../../assets/images/Other/Logo.png")}/>
+      <img className={cx("img-header")} src={require("../../assets/images/Other/Logo.png")} />
       <div className={cx("header-right")}>
         <div className={cx("navigation")}>
           <div className={cx("nav-item")}>Home</div>
@@ -87,15 +88,24 @@ function Header() {
             //     <MenuItem value={30}>Thirty</MenuItem>
             //   </Select>
             // </FormControl>
-            <div className={cx("username")}> 
-            {jwtDecode(token).sub} 
-            <Button onClick={handleLogout}>
-            <LogoutIcon/>
-            </Button>
-            
+            <div className={cx("username")}>
+              {jwtDecode(token).sub}
+              <Button onClick={handleLogout}>
+                <LogoutIcon />
+              </Button>
+
             </div>
           )
         }
+        <div className={cx("pop-up")}>
+          <Popup trigger={<button className={cx("button-popup")}>Doanhvq</button>} position="bottom left center">
+            <div className={cx("text-all")}>
+              <Link to="/myprofile"><div className={cx("link-text")}>My Account</div></Link>
+              <Link to="/viewcart"><div className={cx("link-text")}>Purchase order</div></Link>
+              <Link><div className={cx("link-text")}> Log out</div></Link>
+            </div>
+          </Popup>
+        </div>
       </div>
     </div>
   );
