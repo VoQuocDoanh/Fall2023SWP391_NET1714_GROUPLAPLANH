@@ -17,7 +17,7 @@
 // }
 
 .input-song-name {
-    width: 100%;
+    width: 80%;
     line-height: 32px;
     box-shadow: 1px 1px 5px #E6E6E6 inset;
 
@@ -117,6 +117,9 @@
 
 .page-content-right{
     margin-left: 10px;
+    position: fixed;
+    left: 1320px;
+    background: fixed   ;
 }
 
 .white-box {
@@ -127,6 +130,7 @@
 
 .white-box-final{
     padding: 20px;
+    width: 600px;
 }
 
 .check-failed-pass{

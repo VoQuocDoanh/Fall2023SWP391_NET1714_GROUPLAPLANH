@@ -19,7 +19,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 const cx = classNames.bind(styles);
 
 
-function Header() {
+function HeaderAdmin() {
   const navigate = useNavigate()
   const token = useToken();
   console.log(token)
@@ -73,21 +73,6 @@ function Header() {
             </Button>
           </Link>) :
           (
-
-            // <FormControl fullWidth>
-            //   <InputLabel id="demo-simple-select-label">{jwtDecode(token).sub}</InputLabel>
-            //   <Select
-            //     labelId="demo-simple-select-label"
-            //     id="demo-simple-select"
-            //     value={selectedOption}
-            //     label="Age"
-            //     onChange={handleSelectChange}
-            //   >
-            //     <MenuItem value={10}>Ten</MenuItem>
-            //     <MenuItem value={20}>Twenty</MenuItem>
-            //     <MenuItem value={30}>Thirty</MenuItem>
-            //   </Select>
-            // </FormControl>
             <div className={cx("username")}>
               {jwtDecode(token).sub}
               <Button onClick={handleLogout}>
@@ -98,10 +83,10 @@ function Header() {
           )
         }
         <div className={cx("pop-up")}>
-          <Popup trigger={<button className={cx("button-popup")}>Doanhvq</button>} position="bottom left  center">
+          <Popup trigger={<button className={cx("button-popup")}>Admin</button>} position="bottom left center">
             <div className={cx("text-all")}>
-              <Link to="/myprofile"><div className={cx("link-text")}>My Account</div></Link>
-              <Link to="/viewcart"><div className={cx("link-text")}>Purchase order</div></Link>
+              <Link to="/"><div className={cx("link-text")}>My Account</div></Link>
+              <Link to="/"><div className={cx("link-text")}>View User</div></Link>
               <Link><div className={cx("link-text")}> Log out</div></Link>
             </div>
           </Popup>
@@ -111,4 +96,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default HeaderAdmin;

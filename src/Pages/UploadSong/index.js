@@ -15,7 +15,7 @@ function UploadSong() {
     const [ToneSearch, setToneSearch] = useState("");
     const [LinkSearch, setLinkSearch] = useState("");
     const [nameSongSearch, setnameSongSearch] = useState("");
-    const [postContent, setPostContent] = useState();
+    const [postContent, setPostContent] = useState("");
 
     return (
         <div className={cx('page-content')}> {/* trang tổng */}
@@ -196,39 +196,43 @@ function UploadSong() {
                                 </div>
                                 <div className={cx('check-failed-pass')}>
                                     <div className={cx('icon-times-left')}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                        {nameSongSearch === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                             <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                    </div>
-                                    <div className={cx('text-failed')}>
-                                        <div>
-                                            <span>Lời và hợp âm đầy đủ</span>
-                                        </div>
-                                        <div>
-                                            <span>0/0 dòng hợp âm</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className={cx('check-failed-pass')}>
-                                    <div className={cx('icon-times-left')}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                        </svg>}
+                                        {nameSongSearch !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                             <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
+                                        </svg>}
                                     </div>
                                     <div className={cx('text-failed')}>
                                         <div>
-                                            <span>Độ dài của dòng vừa phải</span>
-                                        </div>
-                                        <div>
-                                            <span>Không vượt quá 80 ký tự</span>
+                                            {nameSongSearch === "" && <span>Lời và hợp âm đầy đủ 0/0 dòng hợp âm</span>}
+                                            {nameSongSearch !== "" && <span style={{ color: "green" }}>1/1 dòng hợp âm</span>}
                                         </div>
                                     </div>
                                 </div>
                                 <div className={cx('check-failed-pass')}>
                                     <div className={cx('icon-times-left')}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                        {postContent === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                             <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
+                                        </svg>}
+                                        {postContent !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                            <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>}
+                                    </div>
+                                    <div className={cx('text-failed')}>
+                                        <div>
+                                            <span>Độ dài của dòng vừa phải Không vượt quá 80 ký tự</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={cx('check-failed-pass')}>
+                                    <div className={cx('icon-times-left')}>
+                                        {LinkSearch === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                            <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>}
+                                        {LinkSearch !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                            <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>}
                                     </div>
                                     <div className={cx('text-failed')}>
                                         <div>
@@ -241,52 +245,64 @@ function UploadSong() {
                                 </div>
                                 <div className={cx('check-failed-pass')}>
                                     <div className={cx('icon-times-left')}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                        {InfoSearch === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                             <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
+                                        </svg>}
+                                        {InfoSearch !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                            <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>}
                                     </div>
                                     <div className={cx('text-failed')}>
                                         <div>
                                             <span>Thông tin ca sĩ / tác giả đầy đủ</span>
                                         </div>
                                         <div>
-                                            <span>Đã nhập 0 ca sĩ/tác giả</span>
+                                            {InfoSearch === "" && <span>Da nhap 0 nhac si tac gia</span>}
+                                            {InfoSearch !== "" && <span style={{ color: "red" }}> da nhap 1 nhac si tac gia</span>}
                                         </div>
                                     </div>
                                 </div>
                                 <div className={cx('check-failed-pass')}>
                                     <div className={cx('icon-times-left')}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                        {ToneSearch === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                             <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
+                                        </svg>}
+                                        {ToneSearch !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                            <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>}
                                     </div>
                                     <div className={cx('text-failed')}>
                                         <div>
                                             <span>Tông của ca sĩ</span>
                                         </div>
                                         <div>
-                                            <span>0/1 ca sĩ có tông</span>
+                                            {ToneSearch === "" && <span>Da nhap 0 nhac si tac gia</span>}
+                                            {ToneSearch !== "" && <span style={{ color: "green" }}> 1/1 ca si da co tong</span>}
                                         </div>
                                     </div>
                                 </div>
                                 <div className={cx('check-failed-pass')}>
                                     <div className={cx('icon-times-left')}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                        {GenreSearch === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                             <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
+                                        </svg>}
+                                        {GenreSearch !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                            <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>}
                                     </div>
                                     <div className={cx('text-failed')}>
                                         <div>
                                             <span>Thể loại</span>
                                         </div>
                                         <div>
-                                            <span>Giúp phân loại bài hát</span>
+                                            {GenreSearch === "" && <span>Giúp phân loại bài hát</span>}
+                                            {GenreSearch !== "" && <span style={{ color: "green" }}>Giúp phân loại bài hát</span>}
                                         </div>
                                     </div>
                                 </div>
                                 <div className={cx('white-box-text')}>
-                                    <h4>Sau khi đăng bài bạn vẫn có thể bổ sung/chỉnh sửa lại thông tin bài hát. Bạn lưu ý theo dõi bài đăng của mình nếu Admin có phản hồi về bài đăng của bạn.</h4>
-                                    <h4>Xin cảm ơn bạn đã đóng góp!</h4>
+                                    <h6>Sau khi đăng bài bạn vẫn có thể bổ sung/chỉnh sửa lại thông tin bài hát. Bạn lưu ý theo dõi bài đăng của mình nếu Admin có phản hồi về bài đăng của bạn.</h6>
+                                    <h6>Xin cảm ơn bạn đã đóng góp!</h6>
                                 </div>
                             </div>
                         </div>
