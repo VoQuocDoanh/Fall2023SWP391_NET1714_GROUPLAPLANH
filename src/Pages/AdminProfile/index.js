@@ -7,6 +7,7 @@ import { faChevronLeft, faChevronRight, faPause, faPlay, faPlayCircle, faRedo, f
 import { Button } from "bootstrap";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import { Checkbox, Row, Tag } from "antd";
 const cx = classNames.bind(styles);
 const DATA = [
     {
@@ -14,13 +15,11 @@ const DATA = [
         name: "abc",
     },
 ]
-function AdminProfile() {
+function AdminProfile({name, prioriry}) {
     const [search, setSearch] = useState("");
     const [list, setList] = useState(DATA);
     const [isChecked, setIsChecked] = useState(false);
     const [ten, setTen] = useState("");
-    const [otherChecked, setOtherChecked] = useState(false);
-    const [maleChecked, setMaleChecked] = useState(false);
     const [tenuser, setTenuser] = useState("");
     const [genre, setGenre] = useState("");
     const [profession, setProfession] = useState("");
@@ -40,6 +39,20 @@ function AdminProfile() {
     const handleSearch6 = (e) => {
         setProfession(e.target.value);
     }
+    //checkbox
+    const [checked, setChecked] = useState(false);
+    const [maleChecked, setMaleChecked] = useState(false);
+    const [femaleChecked, setFemaleChecked] = useState(false);
+
+    const toggleCheckbox2 = () => {
+        setFemaleChecked(!femaleChecked);
+    };
+    const toggleCheckbox1 = () => {
+        setMaleChecked(!maleChecked);
+    };
+    const toggleCheckbox = () => {
+        setChecked(!checked);
+    };
 
     useEffect(() => {
         const data = DATA.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
@@ -134,54 +147,39 @@ function AdminProfile() {
                                 <td>
                                     <div className={cx("sex-button")}>
                                         <div className={cx("stardus-radio-group")}>
-                                            <div className={cx("footer")}>
-                                                <div className={cx("footer-left")}>
-                                                    <input
-                                                        type="checkbox"
-                                                        id="remember"
-                                                        name="rememeber"
-                                                        value="check"
-                                                        checked={maleChecked}
-                                                        onChange={() => setMaleChecked(!maleChecked)}
-                                                        className={cx("input-check")}
-                                                    />
-                                                    <label className={cx("text")}>
-                                                        Male
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div className={cx("footer")}>
-                                                <div className={cx("footer-left")}>
-                                                    <input
-                                                        type="checkbox"
-                                                        id="remember"
-                                                        name="rememeber"
-                                                        value="check"
-                                                        checked={isChecked}
-                                                        onChange={() => setIsChecked(!isChecked)}
-                                                        className={cx("input-check")}
-                                                    />
-                                                    <label className={cx("text")}>
-                                                        Female
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div className={cx("footer")}>
-                                                <div className={cx("footer-left")}>
-                                                    <input
-                                                        type="checkbox"
-                                                        id="remember"
-                                                        name="rememeber"
-                                                        value="check"
-                                                        checked={otherChecked}
-                                                        onChange={() => setOtherChecked(!otherChecked)}
-                                                        className={cx("input-check")}
-                                                    />
-                                                    <label className={cx("text")}>
-                                                        Other
-                                                    </label>
-                                                </div>
-                                            </div>
+                                        <Row
+                                                justify='space-between'
+                                                style={{
+                                                    marginBottom: 3,
+                                                    ...(maleChecked ? { textDecoration: 'none' } : {}),
+                                                }}
+                                            >
+                                                <Checkbox maleChecked={maleChecked} onChange={toggleCheckbox1}>
+                                                    {name} Male
+                                                </Checkbox>
+                                            </Row>
+                                            <Row
+                                                justify='space-between'
+                                                style={{
+                                                    marginBottom: 3,
+                                                    ...(femaleChecked ? { textDecoration: 'none' } : {}),
+                                                }}
+                                            >
+                                                <Checkbox femaleChecked={femaleChecked} onChange={toggleCheckbox2}>
+                                                    {name} Female
+                                                </Checkbox>
+                                            </Row>
+                                            <Row
+                                                justify='space-between'
+                                                style={{
+                                                    marginBottom: 3,
+                                                    ...(checked ? { textDecoration: 'none' } : {}),
+                                                }}
+                                            >
+                                                <Checkbox checked={checked} onChange={toggleCheckbox}>
+                                                    {name} Other
+                                                </Checkbox>
+                                            </Row>
                                         </div>
                                     </div>
                                 </td>

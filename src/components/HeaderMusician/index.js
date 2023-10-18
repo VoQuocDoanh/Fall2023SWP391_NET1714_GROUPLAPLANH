@@ -50,18 +50,13 @@ function MusicianHeader() {
           <div className={cx("nav-item")}>Home</div>
           <div className={cx("nav-item")}>User</div>
           <div>
-            <select
-              className={cx("nav-item")}
-              onChange={(e) => setPage(e.target.value)}
-              defaultValue={page}
-            >
-              <option value="Page"> Page</option>
-
-              <option value="ViewBeat">View Beat</option>
-
-              <option value="ViewChords">View Chords</option>
-              <option value="ViewSongs">View Songs</option>
-            </select>
+            <Popup trigger={<button className={cx("button-page")}>Pages</button>} position="bottom center">
+              <div className={cx("text-all")}>
+                <Link to="/"><div className={cx("link-text")}>View Beat</div></Link>
+                <Link to="/"><div className={cx("link-text")}>View Chords</div></Link>
+                <Link><div className={cx("link-text")}> View Songs</div></Link> 
+              </div>
+            </Popup>
           </div>
           <div className={cx("nav-item")}>Contact</div>
         </div>
@@ -88,7 +83,7 @@ function MusicianHeader() {
               <Link to="/"><div className={cx("link-text")}>My Account</div></Link>
               <Link to="/"><div className={cx("link-text")}>View Beat</div></Link>
               <Link><div className={cx("link-text")}> Upload Beat</div></Link>
-              <Link><div className={cx("link-text")}> abc</div></Link>
+              <Link><div className={cx("link-text")}> Log out</div></Link>
             </div>
           </Popup>
         </div>

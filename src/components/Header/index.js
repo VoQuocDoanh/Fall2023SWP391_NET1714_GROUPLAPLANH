@@ -49,23 +49,15 @@ function Header() {
         <div className={cx("navigation")}>
           <div className={cx("nav-item")}>Home</div>
           <div className={cx("nav-item")}>User</div>
-          <div>
-            <select
-              className={cx("nav-item")}
-              onChange={(e) => setPage(e.target.value)}
-              defaultValue={page}
-            >
-              <option value="Page"> Page</option>
-
-              <option value="ViewBeat">View Beat</option>
-
-              <option value="ViewChords">View Chords</option>
-              <option value="ViewSongs">View Songs</option>
-            </select>
-          </div>
+          <Popup trigger={<button className={cx("button-page")}>Pages</button>} position="bottom center">
+              <div className={cx("text-all")}>
+                <Link to="/"><div className={cx("link-text")}>View Beat</div></Link>
+                <Link to="/"><div className={cx("link-text")}>View Chords</div></Link>
+                <Link><div className={cx("link-text")}> View Songs</div></Link> 
+              </div>
+            </Popup>
           <div className={cx("nav-item")}>Contact</div>
         </div>
-
         {!token ? (
           <Link to="/login">
             <Button variant="contained" className={cx("action")}>
@@ -98,7 +90,7 @@ function Header() {
           )
         }
         <div className={cx("pop-up")}>
-          <Popup trigger={<button className={cx("button-popup")}>Doanhvq</button>} position="bottom left  center">
+          <Popup trigger={<button className={cx("button-popup")}>Doanhvq</button>} position="bottom center">
             <div className={cx("text-all")}>
               <Link to="/myprofile"><div className={cx("link-text")}>My Account</div></Link>
               <Link to="/viewcart"><div className={cx("link-text")}>Purchase order</div></Link>

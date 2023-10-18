@@ -7,7 +7,6 @@ import { faChevronLeft, faChevronRight, faPause, faPlay, faPlayCircle, faRedo, f
 import { Button } from "bootstrap";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-
 import { Checkbox, Row, Tag } from "antd";
 import { Box } from "@mui/material";
 const cx = classNames.bind(styles);
@@ -48,7 +47,7 @@ function MusicianProfile({ name, prioriry }) {
     const [femaleChecked, setFemaleChecked] = useState(false);
 
     const toggleCheckbox2 = () => {
-        setChecked(!femaleChecked);
+        setFemaleChecked(!femaleChecked);
     };
     const toggleCheckbox1 = () => {
         setMaleChecked(!maleChecked);
