@@ -49,6 +49,9 @@ public class Beat {
     @Column
     private int view;
 
+    @Column
+    private int cmt;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "userName")
@@ -75,6 +78,10 @@ public class Beat {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @OneToMany (mappedBy = "beatComment")
+    @JsonIgnore
+    private Set<BeatComment> beatComment;
+
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
@@ -93,7 +100,7 @@ public class Beat {
        // this.beatLike = beatLike;
     }
 
-    public Beat(String beatName, Double price, String beatSound, String description, int totalLike, int view, User userName, Set<Genre> genresofbeat, int status) {
+    public Beat(String beatName, Double price, String beatSound, String description, int totalLike, int view, User userName, Set<Genre> genresofbeat, int status, int cmt) {
         this.beatName = beatName;
         this.price = price;
         this.status = status;
@@ -103,6 +110,7 @@ public class Beat {
         this.view = view;
         this.userName = userName;
         this.genresofbeat = genresofbeat;
+        this.cmt = cmt;
     }
 
     public String toString() {

@@ -114,6 +114,15 @@ public class User implements UserDetails {
     @JsonInclude(Include.NON_NULL)
     private List<ChordCollection> chordCollections = new ArrayList();
 
+    @OneToMany(mappedBy = "userCommentBeat")
+    @JsonIgnore
+    private Set<BeatComment> beatComments;
+
+    @OneToOne (cascade = CascadeType.ALL)
+    @JsonIgnore
+    @JoinColumn (name = "msId")
+    private MusicianInformation msInformation;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

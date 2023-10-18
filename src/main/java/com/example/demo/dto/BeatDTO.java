@@ -23,6 +23,7 @@ public class BeatDTO {
     private Long beatId;
     private List<String> genres;
 
+
     @Override
     public String toString() {
         return "BeatDTO{" +

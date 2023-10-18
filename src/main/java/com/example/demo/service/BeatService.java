@@ -129,7 +129,8 @@ public class BeatService {
                     0,
                     foundUser.get(),
                     genreSet(beatDTO),
-                    1);
+                    1,
+                    0);
             this.beatRepository.save(beat);
             return new ResponseEntity<>("Insert Successfully", HttpStatus.OK);
 
@@ -204,6 +205,7 @@ public class BeatService {
             beatRepository.save(beat);
             responseDTO.setView(beat.getView());
             responseDTO.setTotalLike(beat.getTotalLike());
+            responseDTO.setCmt(beat.getCmt());
             return responseDTO;
         }
         return null;

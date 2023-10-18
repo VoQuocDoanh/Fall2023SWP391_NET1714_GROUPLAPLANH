@@ -25,6 +25,7 @@ public class BeatResponseDTO {
     private int totalLike;
     private Set<User> userSet;
     private List<GenreResponseDTO> genres;
+    private int cmt;
 
     public BeatResponseDTO(Long id, String beatName, String beatSound, UserResponeDTO user, Double price, LocalDateTime creatAt, int view, int totalLike) {
         this.id = id;
