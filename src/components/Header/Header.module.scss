@@ -134,6 +134,9 @@ a:hover{
   border-radius: 5px;
   font-family: poppins;
   font-weight: 400;
+  .link-text{
+    font-size: 17px;
+  }
 }
 .button-page{
   background: none;
@@ -149,5 +152,6 @@ a:hover{
   background-color: transparent;
   color: white;
   border: none;
+
 
 }

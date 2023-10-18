@@ -10,7 +10,7 @@ import Search from "../Search";
 // Import css
 import styles from "./Header.module.scss";
 import Button from '@mui/material/Button';
-import { useState } from "react";
+import { useState,useRef,useMemo } from "react";
 import jwtDecode from "jwt-decode";
 import useToken from "../../authorization/useToken";
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -20,6 +20,7 @@ const cx = classNames.bind(styles);
 
 
 function Header() {
+
   const navigate = useNavigate()
   const token = useToken();
   console.log(token)
@@ -49,13 +50,13 @@ function Header() {
         <div className={cx("navigation")}>
           <div className={cx("nav-item")}>Home</div>
           <div className={cx("nav-item")}>User</div>
-          <Popup trigger={<button className={cx("button-page")}>Pages</button>} position="bottom center">
-              <div className={cx("text-all")}>
-                <Link to="/"><div className={cx("link-text")}>View Beat</div></Link>
-                <Link to="/"><div className={cx("link-text")}>View Chords</div></Link>
-                <Link><div className={cx("link-text")}> View Songs</div></Link> 
-              </div>
-            </Popup>
+          <Popup trigger={<button className={cx("button-page")}>Pages</button>} position="bottom center" closeOnDocumentClick   on={['hover', 'focus']}>
+            <div className={cx("text-all")}>
+              <Link to="/listbeat"><div className={cx("link-text")}>View Beat</div></Link>
+              <Link to="/chordsdetails"><div className={cx("link-text")}>View Chords</div></Link>
+              <Link to="/"><div className={cx("link-text")}> View Songs</div></Link>
+            </div>
+          </Popup>
           <div className={cx("nav-item")}>Contact</div>
         </div>
         {!token ? (
@@ -90,7 +91,7 @@ function Header() {
           )
         }
         <div className={cx("pop-up")}>
-          <Popup trigger={<button className={cx("button-popup")}>Doanhvq</button>} position="bottom center">
+          <Popup trigger={<button className={cx("button-popup")}>Doanhvq</button>} position="bottom center"  on={['hover', 'focus']}>
             <div className={cx("text-all")}>
               <Link to="/myprofile"><div className={cx("link-text")}>My Account</div></Link>
               <Link to="/viewcart"><div className={cx("link-text")}>Purchase order</div></Link>
