@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table (name = "MusicianInformation")
 public class MusicianInformation {
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "professional")
@@ -18,6 +18,6 @@ public class MusicianInformation {
     @Column (name = "YearOfOperation")
     private int year;
 
-    @OneToOne(mappedBy = "msInformation")
+    @OneToOne(mappedBy = "information")
     private User user;
 }

@@ -121,7 +121,7 @@ public class User implements UserDetails {
     @OneToOne (cascade = CascadeType.ALL)
     @JsonIgnore
     @JoinColumn (name = "msId")
-    private MusicianInformation msInformation;
+    private MusicianInformation information;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
