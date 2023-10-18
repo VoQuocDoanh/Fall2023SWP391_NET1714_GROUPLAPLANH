@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -67,5 +69,42 @@ public class BeatCommentService {
             beatRepository.save(beat.get());
         }
         return new ResponseEntity<>("Deleted!", HttpStatus.OK);
+    }
+
+    public List<CommentResponseDTO> viewComment(Long id) {
+        Optional<Beat> beatEntity = beatRepository.findById(id);
+        if (beatEntity.isPresent()){
+            List<BeatComment> list = commentRepository.findByBeatCommentAndParentCommentIsNull(beatEntity.get());
+            if (!list.isEmpty()){
+                List<CommentResponseDTO > dtoList = new ArrayList<>();
+                for (BeatComment entity: list){
+                    CommentResponseDTO dto = response(entity);
+                    dtoList.add(dto);
+                }
+                return dtoList;
+            }
+            else return null;
+        }else return null;
+    }
+
+    private CommentResponseDTO response(BeatComment comment){
+        if (comment.getStatus() == 1){
+            CommentResponseDTO commentResponseDTO = new CommentResponseDTO();
+            commentResponseDTO.setId(comment.getId());
+            if (comment.getParentComment() != null)
+                    commentResponseDTO.setParentId(comment.getParentComment().getId());
+            commentResponseDTO.setContent(comment.getContent());
+            commentResponseDTO.setBeatId(comment.getBeatComment().getId());
+            commentResponseDTO.setUserId(comment.getUserCommentBeat().getId());
+            commentResponseDTO.setStatus(comment.getStatus());
+            List<BeatComment> sub = commentRepository.findByParentComment(comment);
+            List<CommentResponseDTO> dtoList = new ArrayList<>();
+            for (BeatComment subcmt:sub){
+                CommentResponseDTO subCommentResponse = response(subcmt);
+                dtoList.add(subCommentResponse);
+            }
+            commentResponseDTO.setSubComment(dtoList);
+            return  commentResponseDTO;
+        } else return  null;
     }
 }

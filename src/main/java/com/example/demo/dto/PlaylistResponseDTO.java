@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
+/*@NoArgsConstructor
+@AllArgsConstructor*/
 @Data
 public class PlaylistResponseDTO {
 }
