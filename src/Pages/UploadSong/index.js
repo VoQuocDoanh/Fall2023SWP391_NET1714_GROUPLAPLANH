@@ -4,6 +4,7 @@ import classNames from "classnames/bind";
 import { Link } from "react-router-dom";
 import { React, useState } from "react";
 import MarkdownPreview from '../../MarkdownPreview';
+import TextArea from "antd/es/input/TextArea";
 
 
 const cx = classNames.bind(styles);
@@ -88,10 +89,6 @@ function UploadSong() {
                                         </div>
                                     </Button>
                                 </div>
-                                <label className={cx('tipsy-item')}>Tự động thêm ngoặc [ ]
-                                    <input type="checkbox" />
-                                    <span class="checkmark"></span>
-                                </label>
                             </div>
                             <div className={cx('pull-right')}>
                                 <Button className={cx('button')}>
@@ -105,7 +102,7 @@ function UploadSong() {
                             </div>
                         </div>
                         <div className={cx('song-lyric')}>
-                            <textarea value={postContent} id="ABC" name="ABC" rows="20" cols="174" onChange={e => setPostContent(e.target.value)}></textarea>
+                            <textarea className={cx("textarea-box")} value={postContent} id="ABC" name="ABC" rows="20" cols="174" onChange={e => setPostContent(e.target.value)}></textarea>
                         </div>
                         <div className={cx('toolbox-bottom')}>
                             <span>Hợp âm:</span>
@@ -182,7 +179,7 @@ function UploadSong() {
                                 </svg>
                             </div>
                             <div className={cx('text-add-singer')}>
-                                <h2>Thêm ca sĩ</h2>
+                                <h3>Thêm ca sĩ</h3>
                             </div>
                         </div>
                     </div>
@@ -257,8 +254,8 @@ function UploadSong() {
                                             <span>Thông tin ca sĩ / tác giả đầy đủ</span>
                                         </div>
                                         <div>
-                                            {InfoSearch === "" && <span>Da nhap 0 nhac si tac gia</span>}
-                                            {InfoSearch !== "" && <span style={{ color: "red" }}> da nhap 1 nhac si tac gia</span>}
+                                            {InfoSearch === "" && <span>Đã nhập 0 ca sĩ/tác giả</span>}
+                                            {InfoSearch !== "" && <span style={{ color: "red" }}> Đã nhập 1 ca sĩ/tác giả</span>}
                                         </div>
                                     </div>
                                 </div>
@@ -277,7 +274,7 @@ function UploadSong() {
                                         </div>
                                         <div>
                                             {ToneSearch === "" && <span>Da nhap 0 nhac si tac gia</span>}
-                                            {ToneSearch !== "" && <span style={{ color: "green" }}> 1/1 ca si da co tong</span>}
+                                            {ToneSearch !== "" && <span style={{ color: "green" }}> 1/1 ca sĩ đã có tông</span>}
                                         </div>
                                     </div>
                                 </div>

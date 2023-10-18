@@ -7,7 +7,9 @@ import { faChevronLeft, faChevronRight, faPause, faPlay, faPlayCircle, faRedo, f
 import { Button } from "bootstrap";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+
 import { Checkbox, Row, Tag } from "antd";
+import { Box } from "@mui/material";
 const cx = classNames.bind(styles);
 const DATA = [
     {
@@ -15,14 +17,11 @@ const DATA = [
         name: "abc",
     },
 ]
-function MusicianProfile({name, prioriry}) {
+function MusicianProfile({ name, prioriry }) {
     const [search, setSearch] = useState("");
     const [list, setList] = useState(DATA);
     const [isChecked, setIsChecked] = useState(false);
     const [ten, setTen] = useState("");
-    const [otherChecked, setOtherChecked] = useState(false);
-    const [maleChecked, setMaleChecked] = useState(false);
-    const [femaleChecked, setFemaleChecked] = useState(false);
     const [tenuser, setTenuser] = useState("");
     const [genre, setGenre] = useState("");
     const [profession, setProfession] = useState("");
@@ -43,26 +42,22 @@ function MusicianProfile({name, prioriry}) {
         setProfession(e.target.value);
     }
 
+    // Check box
+    const [checked, setChecked] = useState(false);
+    const [maleChecked, setMaleChecked] = useState(false);
+    const [femaleChecked, setFemaleChecked] = useState(false);
 
-    // const [checked, setChecked] = useState(false);
-    // const [malechecked, setMalechecked] = useState(false);
-    // const [femalechecked, setFemalechecked] = useState(false);
+    const toggleCheckbox2 = () => {
+        setChecked(!femaleChecked);
+    };
+    const toggleCheckbox1 = () => {
+        setMaleChecked(!maleChecked);
+    };
+    const toggleCheckbox = () => {
+        setChecked(!checked);
+    };
 
-    // const toggleCheckbox = () => {
-    //     setChecked(!checked);
-    // };
-    // const toggleCheckbox2 = () => {
-    //     setChecked(!femalechecked);
-    // };
-    // const toggleCheckbox1 = () => {
-    //     setChecked(!malechecked);
-    // };
-    // const priorityColorMapping = {
-    //     High: 'red',
-    //     Medium: 'blue',
-    //     Low: 'gray',
-    //   };
-
+    //Input
     useEffect(() => {
         const data = DATA.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
         setList(data);
@@ -180,87 +175,39 @@ function MusicianProfile({name, prioriry}) {
                                 <td>
                                     <div className={cx("sex-button")}>
                                         <div className={cx("stardus-radio-group")}>
-                                        {/* <Row
+                                            <Row
                                                 justify='space-between'
                                                 style={{
                                                     marginBottom: 3,
-                                                    ...(malechecked ? { opacity: 0.5, textDecoration: 'none' } : {}),
+                                                    ...(maleChecked ? { textDecoration: 'none' } : {}),
                                                 }}
                                             >
-                                                <Checkbox checked={checked} onChange={toggleCheckbox1}>
+                                                <Checkbox maleChecked={maleChecked} onChange={toggleCheckbox1}>
                                                     {name} Male
                                                 </Checkbox>
-                                            </Row> */}
-                                            <div className={cx("footer")}>
-                                                <div className={cx("footer-left")}>
-                                                    <input
-                                                        type="checkbox"
-                                                        id="remember"
-                                                        name="rememeber"
-                                                        value="check"
-                                                        checked={maleChecked}
-                                                        onChange={() => setMaleChecked(!maleChecked)}
-                                                        className={cx("input-check")}
-                                                    />
-                                                    <label className={cx("text")}>
-                                                        Male
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div className={cx("footer")}>
-                                                <div className={cx("footer-left")}>
-                                                    <input
-                                                        type="checkbox"
-                                                        id="remember"
-                                                        name="rememeber"
-                                                        value="check"
-                                                        checked={femaleChecked}
-                                                        onChange={() => setFemaleChecked(!femaleChecked)}
-                                                        className={cx("input-check")}
-                                                    />
-                                                    <label className={cx("text")}>
-                                                        FeMale
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            {/* <Row
+                                            </Row>
+                                            <Row
                                                 justify='space-between'
                                                 style={{
                                                     marginBottom: 3,
-                                                    ...(femalechecked ? { opacity: 0.5, textDecoration: 'none' } : {}),
+                                                    ...(femaleChecked ? { textDecoration: 'none' } : {}),
                                                 }}
                                             >
-                                                <Checkbox checked={checked} onChange={toggleCheckbox2}>
-                                                    {name} Male
+                                                <Checkbox femaleChecked={femaleChecked} onChange={toggleCheckbox2}>
+                                                    {name} Female
                                                 </Checkbox>
-                                            </Row> */}
-                                            <div className={cx("footer")}>
-                                                <div className={cx("footer-left")}>
-                                                    <input
-                                                        type="checkbox"
-                                                        id="remember"
-                                                        name="rememeber"
-                                                        value="check"
-                                                        checked={otherChecked}
-                                                        onChange={() => setOtherChecked(!otherChecked)}
-                                                        className={cx("input-check")}
-                                                    />
-                                                    <label className={cx("text")}>
-                                                        Other
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            {/* <Row
+                                            </Row>
+                                            <Row
                                                 justify='space-between'
                                                 style={{
                                                     marginBottom: 3,
-                                                    ...(checked ? { opacity: 0.5, textDecoration: 'none' } : {}),
+                                                    ...(checked ? { textDecoration: 'none' } : {}),
                                                 }}
                                             >
                                                 <Checkbox checked={checked} onChange={toggleCheckbox}>
-                                                    {name} Male
+                                                    {name} Other
                                                 </Checkbox>
-                                            </Row> */}
+                                            </Row>
                                         </div>
                                     </div>
                                 </td>
