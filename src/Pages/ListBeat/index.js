@@ -151,19 +151,19 @@ function ListBeat() {
 
     //Thao comment cho nay
     const [search, setSearch] = useState("");
-    // const [list, setList] = useState(DATA);
-    // const [play, setPlay] = useState(false);
-    // const audioRef = useRef();
-    //
-
-    //Comment lai cho nay
-    const navigate = useNavigate()
-    const { cartItems } = useContext(ShopContext)
-    const [list, setList] = useState([]);
+    const [list, setList] = useState(DATA);
     const [play, setPlay] = useState(false);
     const audioRef = useRef();
-    sessionStorage.setItem("listBeat", JSON.stringify(list))
-    console.log(JSON.parse(sessionStorage.getItem("listBeat")))
+    
+
+    //Comment lai cho nay
+    // const navigate = useNavigate()
+    // const { cartItems } = useContext(ShopContext)
+    // const [list, setList] = useState([]);
+    // const [play, setPlay] = useState(false);
+    // const audioRef = useRef();
+    // sessionStorage.setItem("listBeat", JSON.stringify(list))
+    // console.log(JSON.parse(sessionStorage.getItem("listBeat")))
     // 
 
     const handleSearch = (e) => {
@@ -197,21 +197,21 @@ function ListBeat() {
         }
     }, [play])
 
-    useEffect(() => {
-        loadBeats();
-    }, []);
+    // useEffect(() => {
+    //     loadBeats();
+    // }, []);
 
-    const loadBeats = async () => {
-        await axiosInstance.get("http://localhost:8080/api/v1/beat")
-            .then(res => {
-                setList(res.data)
-            })
-            .catch((error) => {
-                if (error.message.includes("Network")) {
-                    navigate("/login")
-                }
-            })
-    }
+    // const loadBeats = async () => {
+    //     await axiosInstance.get("http://localhost:8080/api/v1/beat")
+    //         .then(res => {
+    //             setList(res.data)
+    //         })
+    //         .catch((error) => {
+    //             if (error.message.includes("Network")) {
+    //                 navigate("/login")
+    //             }
+    //         })
+    // }
     //
 
 

@@ -10,7 +10,7 @@ import Search from "../Search";
 // Import css
 import styles from "./Header.module.scss";
 import Button from '@mui/material/Button';
-import { useState,useRef,useMemo } from "react";
+import { useState } from "react";
 import jwtDecode from "jwt-decode";
 import useToken from "../../authorization/useToken";
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -19,8 +19,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 const cx = classNames.bind(styles);
 
 
-function Header() {
-
+function HeaderAdmin() {
   const navigate = useNavigate()
   const token = useToken();
   console.log(token)
@@ -50,15 +49,23 @@ function Header() {
         <div className={cx("navigation")}>
           <div className={cx("nav-item")}>Home</div>
           <div className={cx("nav-item")}>User</div>
-          <Popup trigger={<button className={cx("button-page")}>Pages</button>} position="bottom center" closeOnDocumentClick   on={['hover', 'focus']}>
-            <div className={cx("text-all")}>
-              <Link to="/listbeat"><div className={cx("link-text")}>View Beat</div></Link>
-              <Link to="/chordsdetails"><div className={cx("link-text")}>View Chords</div></Link>
-              <Link to="/"><div className={cx("link-text")}> View Songs</div></Link>
-            </div>
-          </Popup>
+          <div>
+            <select
+              className={cx("nav-item")}
+              onChange={(e) => setPage(e.target.value)}
+              defaultValue={page}
+            >
+              <option value="Page"> Page</option>
+
+              <option value="ViewBeat">View Beat</option>
+
+              <option value="ViewChords">View Chords</option>
+              <option value="ViewSongs">View Songs</option>
+            </select>
+          </div>
           <div className={cx("nav-item")}>Contact</div>
         </div>
+
         {!token ? (
           <Link to="/login">
             <Button variant="contained" className={cx("action")}>
@@ -66,21 +73,6 @@ function Header() {
             </Button>
           </Link>) :
           (
-
-            // <FormControl fullWidth>
-            //   <InputLabel id="demo-simple-select-label">{jwtDecode(token).sub}</InputLabel>
-            //   <Select
-            //     labelId="demo-simple-select-label"
-            //     id="demo-simple-select"
-            //     value={selectedOption}
-            //     label="Age"
-            //     onChange={handleSelectChange}
-            //   >
-            //     <MenuItem value={10}>Ten</MenuItem>
-            //     <MenuItem value={20}>Twenty</MenuItem>
-            //     <MenuItem value={30}>Thirty</MenuItem>
-            //   </Select>
-            // </FormControl>
             <div className={cx("username")}>
               {jwtDecode(token).sub}
               <Button onClick={handleLogout}>
@@ -91,10 +83,10 @@ function Header() {
           )
         }
         <div className={cx("pop-up")}>
-          <Popup trigger={<button className={cx("button-popup")}>Doanhvq</button>} position="bottom center"  on={['hover', 'focus']}>
+          <Popup trigger={<button className={cx("button-popup")}>Admin</button>} position="bottom left center">
             <div className={cx("text-all")}>
-              <Link to="/myprofile"><div className={cx("link-text")}>My Account</div></Link>
-              <Link to="/viewcart"><div className={cx("link-text")}>Purchase order</div></Link>
+              <Link to="/"><div className={cx("link-text")}>My Account</div></Link>
+              <Link to="/"><div className={cx("link-text")}>View User</div></Link>
               <Link><div className={cx("link-text")}> Log out</div></Link>
             </div>
           </Popup>
@@ -104,4 +96,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default HeaderAdmin;

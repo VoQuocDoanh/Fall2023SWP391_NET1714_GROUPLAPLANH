@@ -1,7 +1,11 @@
+*input {
+    padding: 10px;
+}
+
 .grid-9 {
     display: flex;
     justify-content: space-between;
-    
+
 }
 
 .container-16 {
@@ -17,7 +21,7 @@
 // }
 
 .input-song-name {
-    width: 100%;
+    width: 80%;
     line-height: 32px;
     box-shadow: 1px 1px 5px #E6E6E6 inset;
 }
@@ -106,6 +110,10 @@
 
 .text-add-singer {
     color: #5c9bcb;
+
+    .text-add-singer>h2 {
+        font-size: 15px;
+    }
 }
 
 .icon-plus {
@@ -113,9 +121,7 @@
     margin-right: 5px;
 }
 
-.page-content-right{
-    margin-left: 10px;
-}
+
 
 .white-box {
     margin: 10px 0;
@@ -123,19 +129,30 @@
     box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
 }
 
-.white-box-final{
+.white-box-final {
     padding: 20px;
+    width: 500px;
+    margin-left: 10px;
+    position: fixed;
+    left: 1320px;
+    background: fixed;
+    box-shadow: 1px 1px ;
+    border-radius: 20px;
 }
 
-.check-failed-pass{
+.check-failed-pass {
     display: flex;
     justify-content: start;
 }
 
-.icon-times-left{
+.icon-times-left {
     margin-right: 5px;
 }
 
-.text-failed{
+.text-failed {
     text-align: start;
+}
+
+.textarea {
+    resize: none;
 }

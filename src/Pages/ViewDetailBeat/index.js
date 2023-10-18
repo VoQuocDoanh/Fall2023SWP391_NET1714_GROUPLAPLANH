@@ -1,14 +1,44 @@
-import React from 'react'
 import classNames from "classnames/bind";
 import styles from "./ViewDetailBeat.module.scss";
-import { useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@mui/material";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft, faChevronRight, faPause, faPlay, faPlayCircle, faRedo, faStepBackward, faStepForward } from "@fortawesome/free-solid-svg-icons";
+import music from "../../assets/audio/audio.mp3";
+import { ShopContext } from "../../context/shop-context";
+import axiosInstance from "../../authorization/axiosInstance";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
 function ViewDetailBeat() {
+    const [play, setPlay] = useState(false);
+    const audioRef = useRef();
 
+    const navigate = useNavigate();
+    const [list, setList] = useState([]);
+    useEffect(() => {
+        if (play) {
+            audioRef.current.play();
+        } else {
+            audioRef.current.pause();
+        }
+    }, [play])
+
+    useEffect(() => {
+        loadBeats();
+    }, []);
+    const loadBeats = async () => {
+        await axiosInstance.get("http://localhost:8080/api/v1/beat")
+            .then(res => {
+                setList(res.data)
+            })
+            .catch((error) => {
+                if (error.message.includes("Network")) {
+                    navigate("/login")
+                }
+            })
+    }
     return (
 
         <div>
@@ -317,6 +347,38 @@ function ViewDetailBeat() {
                         <option value="Oldest comment">Oldest comment</option>
                     </select>
                 </div>
+            </div>
+            <div className={cx("audio")}>
+                <div className={cx("image-audio")}>
+                    <img className={cx("trending-ellipse")} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")}>
+                    </img>
+                </div>
+                <div className={cx("control")}>
+                    <div className={cx("btn", "btn-prev")}>
+                        <i class="fas fa-step-backward"></i>
+                        <FontAwesomeIcon icon={faStepBackward} />
+                    </div>
+                    <div className={cx("btn", "btn-toggle-play")} onClick={() => setPlay(!play)}>
+                        <FontAwesomeIcon icon={faPause} className={cx("icon-pause", "icon", {
+                            "play": play === true,
+                        })} />
+                        <FontAwesomeIcon icon={faPlay} className={cx("icon-play", "icon", {
+                            "play": play === false,
+                        })} />
+                    </div>
+                    <div className={cx("btn", "btn-next")}>
+                        <FontAwesomeIcon icon={faStepForward} />
+                    </div>
+
+                </div>
+                <div className={cx("time-audio")}>
+                    <span className={cx("start")}>0:00</span>
+                    <input id="progress" className={cx("progress")} type="range" value="0" step="1" min="0" max="100" />
+                    <span className={cx("end")}>0:00</span>
+                </div>
+
+                <audio id="audio" ref={audioRef} src={music}></audio>
+
             </div>
 
         </div>
