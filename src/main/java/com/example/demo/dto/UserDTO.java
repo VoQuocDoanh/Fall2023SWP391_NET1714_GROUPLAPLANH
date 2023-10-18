@@ -5,17 +5,30 @@
 
 package com.example.demo.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
     private String username;
+    private String password;
+    private String phone;
+    private String mail;
+    private String gender;
+    private String fullName;
+    private String address;
+    private String role;
+
+    private String professional;
+    private String prize;
+    private int year;
+
+
+
+    public UserDTO(String username) {
+        this.username = username;
+    }
 
     public String toString() {
         return "UserDTO{userName='" + this.username + "'}";

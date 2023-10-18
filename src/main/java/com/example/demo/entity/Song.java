@@ -96,6 +96,9 @@ public class Song {
     )
     private Set<ChordBasic> chordsofsong = new HashSet<>();
 
+    @ManyToMany(mappedBy = "songsinplaylist",cascade = {CascadeType.ALL})
+    private Set<SongPlaylist> playlists = new HashSet<>();
+
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();

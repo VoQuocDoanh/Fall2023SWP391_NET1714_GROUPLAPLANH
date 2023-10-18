@@ -148,7 +148,7 @@ public class SongService {
 
     // CUD
     public ResponseEntity<String> insertSong(SongDTO songDTO) {
-        Optional<User> foundUser = Optional.ofNullable(this.userRepository.findByUsername(songDTO.getUsername()));
+        Optional<User> foundUser = this.userRepository.findById(songDTO.getUserid());
         if (foundUser.isPresent()) {
             Song song = new Song(songDTO.getSongName(),
                     songDTO.getAuthor(),
@@ -169,10 +169,10 @@ public class SongService {
         }
     }
 
-    public ResponseEntity<String> updateSong(SongDTO songDTO, Long id) {
-        Optional<User> foundUser = Optional.ofNullable(this.userRepository.findByUsername(songDTO.getUsername()));
+    public ResponseEntity<String> updateSong(SongDTO songDTO) {
+        Optional<User> foundUser = this.userRepository.findById(songDTO.getUserid());
         if (foundUser.isPresent()) {
-            Optional<Song> foundSong = this.songRepository.findById(id);
+            Optional<Song> foundSong = this.songRepository.findUserSongByUser(songDTO.getId(), foundUser.get().getId());
             if(foundSong.isPresent()){
                 Song song = foundSong.get();
                 song.setSongname(songDTO.getSongName());
@@ -193,13 +193,18 @@ public class SongService {
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
-    public ResponseEntity<String> deleteSong(Long id){
-        Optional<Song> foundSong = this.songRepository.findById(id);
-        if (foundSong.isPresent()) {
-            Song song = foundSong.get();
-            song.setStatus(0);
-            this.songRepository.save(song);
-            return new ResponseEntity<>("Delete Successfully", HttpStatus.OK);
+    public ResponseEntity<String> deleteSong(Long songid, Long userid){
+        Optional<User> foundUser = this.userRepository.findById(userid);
+        if(foundUser.isPresent()) {
+            Optional<Song> foundSong = this.songRepository.findUserSongByUserUploadSongAndSongId(songid, foundUser.get().getId());
+            if (foundSong.isPresent()) {
+                Song song = foundSong.get();
+                song.setStatus(0);
+                this.songRepository.save(song);
+                return new ResponseEntity<>("Delete Successfully", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("This Song isn't owned by you", HttpStatus.NOT_FOUND);
+            }
         }
         return new ResponseEntity<>("Delete Failed", HttpStatus.NOT_IMPLEMENTED);
     }

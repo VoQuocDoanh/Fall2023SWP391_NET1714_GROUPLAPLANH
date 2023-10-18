@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface SongRepository extends JpaRepository<Song, Long> {
@@ -20,9 +21,12 @@ public interface SongRepository extends JpaRepository<Song, Long> {
     List<Song> findUserSongByUserUploadSong(Long id);
     @Query("select s from Song s where s.songname like %:songName% and s.status = 1 and s.userUploadSong.Id = :id")
     List<Song> findUserSongByName(String songName, Long id);
-    
+    @Query("select s from Song s where s.userUploadSong = :userid and s.Id = :songid and s.status = 1")
+    Optional<Song> findUserSongByUserUploadSongAndSongId(Long userid, Long songid);
     @Query("select s from Song s join s.genresofsong sg where sg.name = :genreName and s.status = 1 and s.userUploadSong.Id = :id order by s.Id asc")
     List<Song> findUserSongByGenreName(String genreName, Long id);
+    @Query("select s from Song s where s.userUploadSong.Id = :userid and s.Id = :songid and s.status = 1")
+    Optional<Song> findUserSongByUser (Long songid, Long userid);
 
     // Song
     @Query("select s from Song s where s.status = 1")
@@ -40,7 +44,8 @@ public interface SongRepository extends JpaRepository<Song, Long> {
     @Query("select s from Song s join s.likedByUsers sl where s.status = 1 and sl.Id = :iduser and s.Id = :idsong")
     Song findSongsLikeByUser(Long iduser, long idsong);
 
-
+    @Query("select s from Song s where s.Id = :id and s.status = 1")
+    Song findSongbyId(Long id);
 
 
 }

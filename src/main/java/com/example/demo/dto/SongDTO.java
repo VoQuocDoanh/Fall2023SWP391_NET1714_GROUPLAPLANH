@@ -11,7 +11,6 @@ public class SongDTO {
     private Long id;
     private String songName;
     private String author;
-    private String username;
     private Long userid;
     private String description;
     private String tone;

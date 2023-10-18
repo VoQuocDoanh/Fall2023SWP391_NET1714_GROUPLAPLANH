@@ -31,15 +31,15 @@ public class SongController {
     }
 
     // Update Song
-    @PatchMapping("/own/{id}")
-    public ResponseEntity<String> updateSong (@Valid @RequestBody SongDTO songDTO, @PathVariable Long id){
-        return this.songService.updateSong(songDTO, id);
+    @PatchMapping("/own")
+    public ResponseEntity<String> updateSong (@Valid @RequestBody SongDTO songDTO){
+        return this.songService.updateSong(songDTO);
     }
 
     // Delete Song
-    @DeleteMapping("/own/{id}")
-    public ResponseEntity<String> deleteSong (@PathVariable Long id){
-        return this.songService.deleteSong(id);
+    @DeleteMapping("/own/{userid}/{songid}")
+    public ResponseEntity<String> deleteSong (@PathVariable Long songid, @PathVariable Long userid){
+        return this.songService.deleteSong(songid, userid);
     }
 
     // List all Song

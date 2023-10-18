@@ -7,6 +7,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserResponeDTO;
+import com.example.demo.entity.MusicianInformation;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -35,20 +36,32 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public ResponseEntity<String> addUser(User user) {
-        Optional<User> foundUser = userRepository.findUserByUsername(user.getUsername());
+    public ResponseEntity<String> addUser(UserDTO userDTO) {
+        Optional<User> foundUser = userRepository.findUserByUsername(userDTO.getUsername());
         if (foundUser.isEmpty()) {
-            User us = new User(user.getUsername(),
-                    this.passwordEncoder.encode(user.getPassword()),
-                    user.getFullName(),
-                    user.getGender(),
-                    user.getMail(),
-                    user.getAddress(),
-                    user.getPhoneNumber(),
-                    user.getRole(),
-                    1);
-            this.userRepository.save(us);
-            return new ResponseEntity<>("Signup Successfully", HttpStatus.OK);
+            try {
+                User.Gender gender = User.Gender.valueOf(userDTO.getGender());
+                User us = new User(userDTO.getUsername(),
+                        this.passwordEncoder.encode(userDTO.getPassword()),
+                        userDTO.getFullName(),
+                        gender,
+                        userDTO.getMail(),
+                        userDTO.getAddress(),
+                        userDTO.getPhone(),
+                        userDTO.getRole(),
+                        1);
+                if(us.getRole().equals("MS")) {
+                    MusicianInformation information = new MusicianInformation(userDTO.getProfessional(),
+                            userDTO.getPrize(),
+                            userDTO.getYear()
+                    );
+                    us.setInformation(information);
+                }
+                this.userRepository.save(us);
+                return new ResponseEntity<>("Signup Successfully", HttpStatus.OK);
+            } catch (IllegalArgumentException e) {
+                return new ResponseEntity<>("Invalid Gender Value", HttpStatus.BAD_REQUEST);
+            }
         }
         return new ResponseEntity<>("Signup Failed", HttpStatus.NOT_IMPLEMENTED);
     }

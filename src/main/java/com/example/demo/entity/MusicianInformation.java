@@ -1,7 +1,15 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table (name = "MusicianInformation")
 public class MusicianInformation {
@@ -20,4 +28,10 @@ public class MusicianInformation {
 
     @OneToOne(mappedBy = "information")
     private User user;
+
+    public MusicianInformation(String professional, String prize, int year) {
+        this.professional = professional;
+        this.prize = prize;
+        this.year = year;
+    }
 }
