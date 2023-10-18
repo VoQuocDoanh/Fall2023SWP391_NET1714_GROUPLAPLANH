@@ -52,6 +52,12 @@ public class Beat {
     @Column
     private int cmt;
 
+    @Column
+    private double rating;
+
+    @Column
+    private int totalRating;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "userName")
@@ -64,6 +70,9 @@ public class Beat {
 
     @ManyToMany(mappedBy = "beatSet",cascade = {CascadeType.ALL})
     private Set<User> userSet = new HashSet<>();
+
+    @ManyToMany(mappedBy = "beatRating",cascade = {CascadeType.ALL})
+    private Set<User> userRating = new HashSet<>();
 
     @ManyToMany
     @JsonIgnore

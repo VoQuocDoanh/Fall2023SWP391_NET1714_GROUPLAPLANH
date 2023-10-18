@@ -61,6 +61,10 @@ public class User implements UserDetails {
 
     @Column(name = "Date")
     private LocalDateTime createdAt;
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
 
     @OneToMany(mappedBy = "userName")
     @JsonIgnore
@@ -82,10 +86,6 @@ public class User implements UserDetails {
     @JsonInclude(Include.NON_NULL)
     private List<FeedbackSong> feedbackSongs = new ArrayList();
 
-    /*@OneToMany(mappedBy = "userAction")
-    @JsonIgnore
-    @JsonInclude(Include.NON_NULL)
-    private List<BeatLike> beatLikes = new ArrayList();*/
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JsonIgnore
@@ -97,6 +97,17 @@ public class User implements UserDetails {
                     name = "beatId")}
     )
     private Set<Beat> beatSet = new HashSet<>();
+
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JsonIgnore
+    @JoinTable(
+            name = "RatingBeat",
+            joinColumns = {@JoinColumn(
+                    name = "userId")},
+            inverseJoinColumns = {@JoinColumn(
+                    name = "beatId")}
+    )
+    private Set<Beat> beatRating = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JsonIgnore
@@ -153,10 +164,7 @@ public class User implements UserDetails {
         return "User{Id=" + this.Id + ", username='" + this.username + "', pass='" + this.password + "', fullName='" + this.fullName + "', mail='" + this.mail + "', roleID='" + this.role + "', status=" + this.status + ", address='" + this.address + "', phoneNumber='" + this.phoneNumber + "'}";
     }
 
-    @PrePersist
-    public void prePersist() {
-        this.createdAt = LocalDateTime.now();
-    }
+
 
     public User(String username, String password, String fullName, Gender gender, String mail, String address, String phoneNumber, String role, int status) {
         this.username = username;

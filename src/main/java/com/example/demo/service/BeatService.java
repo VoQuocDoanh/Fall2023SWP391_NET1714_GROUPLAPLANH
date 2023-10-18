@@ -153,28 +153,30 @@ public class BeatService {
         return new ResponseEntity<>("Update Failed", HttpStatus.NOT_IMPLEMENTED);
     }
 
+    public ResponseEntity<String> ratingBeat(Long id1, Long id2) {
+
+    }
+
     public ResponseEntity<String> likeBeat(Long id1, Long id2) {
         Optional<User> foundUser = this.userRepository.findById(id1);
         Optional<Beat> beat = this.beatRepository.findById(id2);
         Beat foundBeat = beatRepository.findBeatById(id2);
-        User u = foundUser.get();
-        Beat beatEntity = beat.get();
         Set<Beat> b = foundUser.get().getBeatSet();
         List<Long> t= beatRepository.findUserLiked(id1);
         for (Long i : t){
             if (id2.equals(i)) {
                 b.remove(foundBeat);
-                u.setBeatSet(b);
-                userRepository.save(u);
-                beatEntity.setTotalLike( beat.get().getTotalLike() - 1);
-                beatRepository.save(beatEntity);
+                foundUser.get().setBeatSet(b);
+                userRepository.save(foundUser.get());
+                beat.get().setTotalLike( beat.get().getTotalLike() - 1);
+                beatRepository.save(beat.get());
                 return new ResponseEntity<>("Unlike succesfully", HttpStatus.NOT_IMPLEMENTED);
             }
         }
         b.add(foundBeat);
-        beatEntity.setTotalLike( beat.get().getTotalLike() + 1);
-        beatRepository.save(beatEntity);
-        u.setBeatSet(b);
+        beat.get().setTotalLike( beat.get().getTotalLike() + 1);
+        beatRepository.save(beat.get());
+        foundUser.get().setBeatSet(b);
         return new ResponseEntity<>("Like Ok", HttpStatus.OK);
     }
 
@@ -220,4 +222,6 @@ public class BeatService {
         List<Beat> beats = this.beatRepository.findBeatByMusician(name);
         return getBeatResponseDTOS(beats);
     }
+
+
 }
