@@ -109,7 +109,7 @@ public class Beat {
        // this.beatLike = beatLike;
     }
 
-    public Beat(String beatName, Double price, String beatSound, String description, int totalLike, int view, User userName, Set<Genre> genresofbeat, int status, int cmt) {
+    public Beat(String beatName, Double price, String beatSound, String description, int totalLike, int view, User userName, Set<Genre> genresofbeat, int status, int cmt,double rating, int totalRating) {
         this.beatName = beatName;
         this.price = price;
         this.status = status;
@@ -120,6 +120,8 @@ public class Beat {
         this.userName = userName;
         this.genresofbeat = genresofbeat;
         this.cmt = cmt;
+        this.rating = rating;
+        this.totalRating = totalRating;
     }
 
     public String toString() {

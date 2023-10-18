@@ -22,7 +22,7 @@ public class BeatDTO {
     private Long userId;
     private Long beatId;
     private List<String> genres;
-
+    private int rating;
 
     @Override
     public String toString() {

@@ -72,8 +72,8 @@ public class BeatController {
     }
 
     @PostMapping("/ratingStar/{id1}/{id2}")
-    public ResponseEntity<String> ratingbeat (@PathVariable Long id1, @PathVariable Long id2){
-        return beatService.ratingBeat(id1,id2);
+    public ResponseEntity<String> ratingbeat (@PathVariable Long id1, @PathVariable Long id2, @RequestBody BeatDTO beatDTO){
+        return beatService.ratingBeat(id1,id2, beatDTO);
     }
 
     //delete beat by update status in MS
