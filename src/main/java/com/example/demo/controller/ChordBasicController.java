@@ -29,9 +29,9 @@ public class ChordBasicController {
         return ResponseEntity.ok(chordBasicService.findById(id));
     }
 
-    @GetMapping(path="/searchChord")
-    public ResponseEntity<List<ChordBasic>> searchChord(@RequestBody ChordBasicResponseDTO chordBasicResponseDTO){
-        return ResponseEntity.ok(chordBasicService.searchChord(chordBasicResponseDTO));
+    @GetMapping(path="/searchChord/{key},{suffix},{type}")
+    public ResponseEntity<List<ChordBasic>> searchChord(@PathVariable String key, @PathVariable String suffix, @PathVariable String type){
+        return ResponseEntity.ok(chordBasicService.searchChord(key,suffix,type));
     }
 
 }

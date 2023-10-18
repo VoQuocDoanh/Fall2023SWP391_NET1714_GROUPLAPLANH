@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/chordCollection")
+@RequestMapping(path = "/api/v1/chordCollection")
 public class ChordCollectionController {
     @Autowired
     ChordCollectionRepository chordCollectionRepository;
@@ -23,10 +23,10 @@ public class ChordCollectionController {
     ChordCollectionService chordCollectionService;
 
     //List own collection
-    @GetMapping("")
-    public ResponseEntity<List<ChordCollection>> getAllCollection(@RequestBody ChordCollectionDTO chordCollectionDTO)
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<ChordCollection>> getAllCollection(@PathVariable Long id)
     {
-        return ResponseEntity.ok(chordCollectionService.findAllColletion(chordCollectionDTO));
+        return ResponseEntity.ok(chordCollectionService.findAllColletion(id));
     }
 
     //Get detail

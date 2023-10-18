@@ -17,6 +17,7 @@ public class UserResponeDTO {
     private String role;
     private int status;
 
+
     public UserResponeDTO(String fullName) {
         this.fullName = fullName;
     }

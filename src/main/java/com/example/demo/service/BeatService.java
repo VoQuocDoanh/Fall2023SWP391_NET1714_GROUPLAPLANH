@@ -227,6 +227,7 @@ public class BeatService {
             responseDTO.setView(beat.getView());
             responseDTO.setTotalLike(beat.getTotalLike());
             responseDTO.setCmt(beat.getCmt());
+
             return responseDTO;
         }
         return null;

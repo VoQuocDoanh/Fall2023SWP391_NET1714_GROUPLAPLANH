@@ -23,8 +23,9 @@ public class ChordBasicService {
         }
     }
 
-    public List<ChordBasic> searchChord(ChordBasicResponseDTO chordDTO){
-        List<ChordBasic> chordEntity=chordBasicRepository.findChord(chordDTO.getKey(),chordDTO.getSuffix(), chordDTO.getType());
+    public List<ChordBasic> searchChord(String key, String suffix, String type){
+        List<ChordBasic> chordEntity=chordBasicRepository.findChord
+                (key, suffix, type);
         if (chordEntity.isEmpty()){
             return null;
         } else{

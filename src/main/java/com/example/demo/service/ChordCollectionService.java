@@ -32,8 +32,8 @@ public class ChordCollectionService {
     private ChordBasicRepository chordRepository;
 
 
-    public List<ChordCollection> findAllColletion(ChordCollectionDTO chordCollectionDTO) {
-        User userEntity = userRepository.findByUsername(chordCollectionDTO.getUsername());
+    public List<ChordCollection> findAllColletion(Long id) {
+        Optional<User> userEntity = userRepository.findById(id);
         List<ChordCollection> collection = chordCollectionRepository.findAll();
         if (userEntity == null) {
             return null;
@@ -42,7 +42,7 @@ public class ChordCollectionService {
             for (ChordCollection chordCollection : collection) {
                 //userCollection is username in User Entity
                 User t = chordCollection.getUserCollection();
-                if (t != null && t.getId().equals(userEntity.getId())) {
+                if (t != null && t.getId().equals(userEntity.get().getId())) {
                     ChordCollection ownCollection = new ChordCollection(
                             chordCollection.getId(),
                             chordCollection.getName(),
@@ -58,22 +58,6 @@ public class ChordCollectionService {
 
     public ChordCollectionResponseDTO getDetail(Long id) {
         Optional<ChordCollection> foundCollections = chordCollectionRepository.findByCollectionId(id);
-        /*ChordCollectionDTO chordCollectionDTO = new ChordCollectionDTO();
-        List<ChordCollectionDTO> collectionDTOS = new ArrayList<>();
-        List<String> chordName = new ArrayList<>();
-        List<String> chordImage = new ArrayList<>();
-        List<String> chords = chordRepository.findByCollection(collections.getId());
-        chordName.addAll(chords);
-        List<String> images=chordRepository.findImageByCollection(collections.getId());
-        chordImage.addAll(images);
-        chordCollectionDTO.setChordCollectionId(collections.getId());
-        chordCollectionDTO.setName(collections.getName());
-        chordCollectionDTO.setDescription(collections.getDescription());
-        chordCollectionDTO.setChordName(chordName);
-        //chordCollectionDTO.setChordId(collections.getChords());
-        chordCollectionDTO.setImage(chordImage);
-        chordCollectionDTO.setUsername(collections.getUserCollection().getUsername());
-        collectionDTOS.add(chordCollectionDTO);*/
 
         if (foundCollections.isPresent()){
             ChordCollection collection = foundCollections.get();
