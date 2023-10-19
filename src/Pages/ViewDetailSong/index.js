@@ -1,14 +1,48 @@
-import React from 'react'
+// import React from 'react'
 import { Button } from "@mui/material";
 import styles from "./ViewDetailSong.module.scss";
 import classNames from "classnames/bind";
 import { Link } from "react-router-dom";
+import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import Popover from '@mui/material/Popover';
+import React, { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
 
 function ViewDetailSong() {
 
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    
+    const [isCommenting, setIsCommenting] = useState(false);
+    const [commentText, setCommentText] = useState('');
+
+    const handleCommentClick = () => {
+        setIsCommenting(true);
+    };
+
+    const handleInputChange = (event) => {
+        setCommentText(event.target.value);
+    };
+
+    const handlePostComment = () => {
+        console.log('Posted comment:', commentText);
+        setIsCommenting(false);
+        setCommentText('');
+    };
+    
     return (
         <div className={cx('view-detail-song')}>
             <div className={cx('song-name')}>
@@ -601,13 +635,107 @@ function ViewDetailSong() {
                                 <span className={cx('times')}>2 tháng trước</span>
                             </div>
                             <div className={cx('comment-username')}>
-                                <span>Bài hát hay mà hợp âm dễ học nữa ^^^^</span>
+                                <div className={cx('text-comment-username')}>
+                                    <span>Bài hát hay mà hợp âm dễ học nữa ^^^^</span>
+                                </div>
+                                <div className={cx('eidt-delete')}>
+                                    <React.Fragment>
+                                        <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+                                            <Tooltip title="Chỉnh sửa hoặc xóa bình luận này">
+                                                <IconButton
+                                                    onClick={handleClick}
+                                                    size="small"
+                                                    sx={{ ml: 2 }}
+                                                    aria-controls={open ? 'account-menu' : undefined}
+                                                    aria-haspopup="true"
+                                                    aria-expanded={open ? 'true' : undefined}
+                                                >
+                                                    <Avatar sx={{
+                                                        width: 20,
+                                                        height: 20,
+                                                        color: 'black',
+                                                        backgroundColor: 'white',
+                                                        '&:hover': {
+                                                            backgroundColor: 'lightgray',
+                                                            cursor: 'pointer'
+                                                        },
+                                                    }}>...</Avatar>
+                                                </IconButton>
+                                            </Tooltip>
+                                        </Box>
+                                        <Menu
+                                            anchorEl={anchorEl}
+                                            id="account-menu"
+                                            open={open}
+                                            onClose={handleClose}
+                                            onClick={handleClose}
+                                            PaperProps={{
+                                                elevation: 0,
+                                                sx: {
+                                                    overflow: 'visible',
+                                                    filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                                                    mt: 1.5,
+                                                    '& .MuiAvatar-root': {
+                                                        width: 32,
+                                                        height: 32,
+                                                        ml: -0.5,
+                                                        mr: 1,
+                                                    },
+                                                    '&:before': {
+                                                        content: '""',
+                                                        display: 'block',
+                                                        position: 'absolute',
+                                                        top: 0,
+                                                        right: 14,
+                                                        width: 10,
+                                                        height: 10,
+                                                        bgcolor: 'background.paper',
+                                                        transform: 'translateY(-50%) rotate(45deg)',
+                                                        zIndex: 0,
+                                                    },
+                                                },
+                                            }}
+                                            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                                            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                                        >
+                                            <MenuItem onClick={handleClose}>
+                                                Chỉnh sửa
+                                            </MenuItem>
+                                            <MenuItem onClick={handleClose}>
+                                                Xóa
+                                            </MenuItem>
+                                        </Menu>
+                                    </React.Fragment>
+                                </div>
                             </div>
                             <div className={cx('reply')}>
                                 <div className={cx('replay-title')}>
-                                    <span><b>trả lời</b></span>
-                                    <span>.</span>
-                                    <span>2</span>
+                                    <div className={cx('comment-box')}>
+                                        <span
+                                            onClick={handleCommentClick}
+                                        >
+                                            trả lời
+                                        </span>
+                                        {isCommenting && (
+                                            <div>
+                                                <textarea
+                                                    value={commentText}
+                                                    onChange={handleInputChange}
+                                                    placeholder="Enter your comment..."
+                                                    rows="2"
+                                                    cols="50"
+                                                />
+                                                <br />
+                                                <button onClick={handlePostComment}>Post a comment</button>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className={cx('dot')}>
+                                        <span>.</span>
+                                    </div>
+                                    <div className={cx('sum-like')}>
+                                        <span>2</span>
+                                    </div>
                                 </div>
                                 <div className={cx('icon-like')}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -615,7 +743,6 @@ function ViewDetailSong() {
                                         <path d="M7.68003 18.2396H4.80003C4.27203 18.2396 3.84003 17.8076 3.84003 17.2796V10.5596C3.84003 10.0316 4.27203 9.59961 4.80003 9.59961H7.68003C8.20803 9.59961 8.64003 10.0316 8.64003 10.5596V17.2796C8.64003 17.8076 8.20803 18.2396 7.68003 18.2396ZM4.80003 10.5596V17.2796H7.68003V10.5596H4.80003Z" fill="#699BF7" />
                                     </svg>
                                 </div>
-
                             </div>
                         </div>
                     </div>
