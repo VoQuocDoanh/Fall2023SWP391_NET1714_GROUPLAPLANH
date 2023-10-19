@@ -55,8 +55,14 @@ public class BeatController {
 
     //list beat bought in MS
     @GetMapping ("/musician/bought/{id}")
-    public ResponseEntity<List<Beat>> beatSoldOut(@PathVariable Long id){
+    public ResponseEntity<List<BeatResponseDTO>> beatSoldOut(@PathVariable Long id){
         return ResponseEntity.ok(beatService.beatSoldOut(id));
+    }
+
+    //income in MS
+    @GetMapping ("musician/beatSoldOut/income/{id}")
+    public ResponseEntity<Double> income(@PathVariable Long id){
+        return beatService.income(id);
     }
 
     //Add Beat in MS

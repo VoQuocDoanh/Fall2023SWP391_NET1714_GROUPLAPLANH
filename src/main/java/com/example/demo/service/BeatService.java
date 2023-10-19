@@ -244,8 +244,27 @@ public class BeatService {
     }
 
 
-    public List<Beat> beatSoldOut(Long id) {
+    public List<BeatResponseDTO> beatSoldOut(Long id) {
         List<Beat> beats = beatRepository.findBeatSoldOut(id);
-        return new ArrayList<>(beats);
+        List<BeatResponseDTO> beatResponseDTOS = new ArrayList<>();
+        for (Beat i : beats){
+            BeatResponseDTO responseDTO = new BeatResponseDTO();
+            responseDTO.setId(i.getId());
+            responseDTO.setBeatName(i.getBeatName());
+            responseDTO.setBeatSound(i.getBeatSound());
+            responseDTO.setPrice(i.getPrice());
+            responseDTO.setCreatAt(i.getCreatedAt());
+            beatResponseDTOS.add(responseDTO);
+        }
+        return new ArrayList<>(beatResponseDTOS);
+    }
+
+    public ResponseEntity<Double> income(Long id) {
+        List<BeatResponseDTO> beatEntity = beatSoldOut(id);
+        Double totalPrice = 0.0;
+        for (BeatResponseDTO i : beatEntity){
+            totalPrice = totalPrice + i.getPrice();
+        }
+        return new ResponseEntity<>(totalPrice,HttpStatus.OK);
     }
 }
