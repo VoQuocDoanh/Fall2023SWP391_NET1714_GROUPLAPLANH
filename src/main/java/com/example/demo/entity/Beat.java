@@ -38,7 +38,8 @@ public class Beat {
     private int status;
 
     @Column
-    private String beatSound;
+    @Lob
+    private byte[] beatSound;
 
     @Column
     private String description;
@@ -96,7 +97,7 @@ public class Beat {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Beat(Long id, String beatName, String beatSound, Double price, int status, Order orderBeat, LocalDateTime createdAt,int totalLike, int view) {
+    public Beat(Long id, String beatName, byte[] beatSound, Double price, int status, Order orderBeat, LocalDateTime createdAt,int totalLike, int view) {
         this.Id=id;
         this.beatName = beatName;
         this.price = price;
@@ -109,7 +110,7 @@ public class Beat {
        // this.beatLike = beatLike;
     }
 
-    public Beat(String beatName, Double price, String beatSound, String description, int totalLike, int view, User userName, Set<Genre> genresofbeat, int status, int cmt,double rating, int totalRating) {
+    public Beat(String beatName, Double price, byte[] beatSound, String description, int totalLike, int view, User userName, Set<Genre> genresofbeat, int status, int cmt,double rating, int totalRating) {
         this.beatName = beatName;
         this.price = price;
         this.status = status;

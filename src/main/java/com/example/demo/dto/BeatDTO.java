@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class BeatDTO {
     private String beatName;
-    private String beatSound;
+    private byte[] beatSound;
     private String username;
     private String description;
     private Double price;

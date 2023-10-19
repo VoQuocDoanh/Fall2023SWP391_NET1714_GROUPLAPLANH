@@ -13,10 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -34,7 +31,7 @@ public class ChordBasic {
     private String chordName;
 
     @Column(name = "Image")
-    private String image;
+    private byte[] image;
 
     @Column(name = "ChordKey")
     private String chordKey;
@@ -55,12 +52,21 @@ public class ChordBasic {
     @ManyToMany(mappedBy = "chordsofcollections",cascade = {CascadeType.ALL})
     private Set<ChordCollection> collections = new HashSet<>();
 
+    public ChordBasic(String chordName, byte[] image, String chordKey, String suffix, String description, String type) {
+        this.chordName = chordName;
+        this.image = image;
+        this.chordKey = chordKey;
+        this.suffix = suffix;
+        this.description = description;
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "ChordBasic{" +
                 "chordId=" + chordId +
                 ", chordName='" + chordName + '\'' +
-                ", image='" + image + '\'' +
+                ", image='" + Arrays.toString(image) + '\'' +
                 ", chordKey='" + chordKey + '\'' +
                 ", suffix='" + suffix + '\'' +
                 ", description='" + description + '\'' +

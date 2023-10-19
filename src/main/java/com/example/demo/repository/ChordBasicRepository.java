@@ -19,12 +19,12 @@ public interface ChordBasicRepository extends JpaRepository<ChordBasic,Long> {
     @Query("SELECT c.chordId FROM ChordBasic c JOIN c.collections cl WHERE cl.id=:id")
     List<Long> findByCollection(Long id);
 
-   ChordBasic findByChordKey(String name);
+    ChordBasic findByChordKey(String name);
 
     @Query("SELECT cb.chordKey FROM ChordBasic cb JOIN cb.songs s WHERE s.Id = :id")
     List<String> findBySongs(Long id);
 
-
+    ChordBasic findByChordNameAndType(String name, String type);
 
     @Query("SELECT c.image FROM ChordBasic c JOIN c.collections cl WHERE cl.id=:id")
     List<String> findImageByCollection(Long id);

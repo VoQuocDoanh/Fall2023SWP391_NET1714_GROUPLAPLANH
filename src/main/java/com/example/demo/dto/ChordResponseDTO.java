@@ -9,21 +9,21 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class ChordResponseDTO {
-    private Long Id;
+    private Long id;
     private String chordName;
-    private String image;
+    private byte[] image;
     private String key;
     private String suffix;
     private String description;
-    private String Type;
+    private String type;
 
-    public ChordResponseDTO(Long id, String chordName, String image, String key, String suffix, String type, String description) {
-        Id = id;
+    public ChordResponseDTO(Long id, String chordName, byte[] image, String key, String suffix, String type, String description) {
+        this.id = id;
         this.chordName = chordName;
         this.image = image;
         this.key = key;
         this.suffix = suffix;
-        Type = type;
+        this.type = type;
         this.description = description;
     }
 

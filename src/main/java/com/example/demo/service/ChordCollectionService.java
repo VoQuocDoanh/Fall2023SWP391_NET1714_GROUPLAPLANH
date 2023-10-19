@@ -9,6 +9,7 @@ import com.example.demo.entity.User;
 import com.example.demo.repository.ChordBasicRepository;
 import com.example.demo.repository.ChordCollectionRepository;
 import com.example.demo.repository.UserRepository;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -85,7 +86,7 @@ public class ChordCollectionService {
                 chordResponseDTOS.add(new ChordResponseDTO(
                         basic.getChordId(),
                         basic.getChordName(),
-                        basic.getImage(),
+                        Base64.decodeBase64(basic.getImage()),
                         basic.getChordKey(),
                         basic.getSuffix(),
                         basic.getType(),

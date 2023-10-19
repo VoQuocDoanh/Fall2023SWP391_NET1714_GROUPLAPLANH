@@ -8,7 +8,6 @@ package com.example.demo.service;
 import com.example.demo.dto.*;
 import com.example.demo.entity.Beat;
 import com.example.demo.entity.Genre;
-import com.example.demo.entity.Song;
 import com.example.demo.entity.User;
 import com.example.demo.repository.BeatRepository;
 import com.example.demo.repository.GenreRepository;
@@ -19,9 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.apache.commons.codec.binary.Base64;
 
 import java.util.*;
-import java.util.stream.IntStream;
 
 @Service
 public class BeatService {
@@ -70,7 +69,7 @@ public class BeatService {
             for (Beat value: beats) {
                 BeatResponseDTO dto = new BeatResponseDTO(value.getId(),
                         value.getBeatName(),
-                        value.getBeatSound(),
+                        Base64.decodeBase64(value.getBeatSound()),
                         getUser(value.getUserName()),
                         value.getPrice(),
                         value.getCreatedAt(),
@@ -87,7 +86,7 @@ public class BeatService {
         List<BeatResponseDTO> dtos = new ArrayList<>();
         for(Beat value: beats){
             BeatResponseDTO dto = new BeatResponseDTO(value.getId(),
-                    value.getBeatSound(),
+                    value.getBeatName(),
                     value.getBeatSound(),
                     new UserResponeDTO(foundUser.get().getFullName()),
                     value.getPrice(),
@@ -118,12 +117,13 @@ public class BeatService {
         }
     }
 
-    public ResponseEntity<String> insertBeat(BeatDTO beatDTO) {
+    public ResponseEntity<String> insertBeat(byte[] sound, BeatDTO beatDTO) {
         Optional<User> foundUser = Optional.ofNullable(this.userRepository.findByUsername(beatDTO.getUsername()));
         if (foundUser.isPresent()) {
+            byte[] encodeSound = Base64.encodeBase64(sound);
             Beat beat = new Beat(beatDTO.getBeatName(),
                     beatDTO.getPrice(),
-                    beatDTO.getBeatSound(),
+                    encodeSound,
                     beatDTO.getDescription(),
                     0,
                     0,
@@ -141,12 +141,12 @@ public class BeatService {
         }
     }
 
-    public ResponseEntity<String> updateBeat(BeatDTO newBeat, Long id) {
+    public ResponseEntity<String> updateBeat(byte[] sound,BeatDTO newBeat, Long id) {
         Optional<Beat> foundBeat = this.beatRepository.findById(id);
         if (foundBeat.isPresent()) {
             Beat beat = foundBeat.get();
             beat.setBeatName(newBeat.getBeatName());
-            beat.setBeatSound(newBeat.getBeatSound());
+            beat.setBeatSound(Base64.encodeBase64(newBeat.getBeatSound()));
             beat.setPrice(newBeat.getPrice());
             beat.setGenresofbeat(genreSet(newBeat));
             this.beatRepository.save(beat);

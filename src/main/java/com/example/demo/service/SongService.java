@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.apache.commons.codec.binary.Base64;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -67,7 +68,7 @@ public class SongService {
                 ChordBasic basic = this.chordBasicRepository.findByChordKey(value);
                 chordResponseDTOS.add(new ChordResponseDTO(basic.getChordId(),
                         basic.getChordName(),
-                        basic.getImage(),
+                        Base64.decodeBase64(basic.getImage()),
                         basic.getChordKey(),
                         basic.getSuffix(),
                         basic.getType(),
