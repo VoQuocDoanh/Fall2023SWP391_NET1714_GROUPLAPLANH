@@ -1,0 +1,21 @@
+@import url('https://fonts.cdnfonts.com/css/inter');
+.pagination {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: -320px;
+
+
+    .page {
+        margin-left: 380px;
+        font-size: 18px;
+        font-family: inter;
+        font-weight: 400;
+    }
+
+    .paging {
+        margin-top: -160px; 
+    }
+}
+.pagination-part{
+    font-size: 20px;
+}
