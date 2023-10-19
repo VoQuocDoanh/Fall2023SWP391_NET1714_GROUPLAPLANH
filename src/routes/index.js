@@ -74,11 +74,11 @@ const publicRoutes = [
     path: "/listbeat2",
     component: ListBeat2,
   }
-  ,{
+  , {
     path: "/chordsdetails",
     component: ChordsDetails,
   }
-  ,{
+  , {
     path: "/songs",
     component: Songs,
   },
@@ -105,11 +105,18 @@ const publicRoutes = [
   {
     path: "/adminprofile",
     component: AdminProfile,
+<<<<<<< HEAD
   },
   {
     path: "/viewdetailsong",
     component: ViewDetailSong,
+=======
+>>>>>>> 32c95c24e186362d91ab88c80ce328a0dc8473ee
   },
+  {
+    path: "/viewdetailsong",
+    component: ViewDetailSong,
+  }
 ];
 
 const privateRoute = [];

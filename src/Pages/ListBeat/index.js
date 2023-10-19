@@ -8,56 +8,65 @@ import ListBeatBox from "../../components/ListBeatBox";
 import videoBg from '../../assets/video/video (2160p).mp4'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight, faPause, faPlay, faPlayCircle, faRedo, faStepBackward, faStepForward } from "@fortawesome/free-solid-svg-icons";
-
-
-
-import music from "../../assets/audio/audio.mp3";
+import audio from "../../assets/audio";
 import { ShopContext } from "../../context/shop-context";
 import axiosInstance from "../../authorization/axiosInstance";
 const cx = classNames.bind(styles);
 const DATA = [
     {
-
         name: "Hot Xoan",
         type: "BeatName",
         price: "85$",
         member: "85",
+        audio: audio.bai01,
+        play: false,
     }, {
 
         name: "Hot Xoan",
         type: "BeatName",
         price: "85$",
         member: "85",
+        audio: audio.bai02,
+        play: false,
+
     }, {
 
         name: "Hot Xoan",
         type: "BeatName",
         price: "85$",
         member: "85",
+        audio: audio.bai03,
+        play: false,
     }, {
 
         name: "Hot Xoan",
         type: "BeatName",
         price: "85$",
         member: "85",
+        play: false,
     }, {
 
         name: "Hot Xoan",
         type: "BeatName",
         price: "85$",
         member: "85",
+        play: false,
     }, {
 
         name: "Hot Xoan",
         type: "BeatName",
         price: "85$",
         member: "85",
+        play: false,
+
     }, {
 
         name: "Hot Xoan",
         type: "BeatName",
         price: "85$",
         member: "85",
+        play: false,
+
     },
     {
 
@@ -65,14 +74,8 @@ const DATA = [
         type: "BeatName",
         price: "85$",
         member: "85",
-    },
+        play: false,
 
-    {
-
-        name: "Hot Xoan",
-        type: "BeatName",
-        price: "85$",
-        member: "85",
     },
 
     {
@@ -81,6 +84,8 @@ const DATA = [
         type: "BeatName",
         price: "85$",
         member: "85",
+        play: false,
+
     },
 
     {
@@ -89,6 +94,8 @@ const DATA = [
         type: "BeatName",
         price: "85$",
         member: "85",
+        play: false,
+
     },
 
     {
@@ -97,6 +104,8 @@ const DATA = [
         type: "BeatName",
         price: "85$",
         member: "85",
+        play: false,
+
     },
 
     {
@@ -105,6 +114,8 @@ const DATA = [
         type: "BeatName",
         price: "85$",
         member: "85",
+        play: false,
+
     },
 
     {
@@ -113,6 +124,18 @@ const DATA = [
         type: "BeatName",
         price: "85$",
         member: "85",
+        play: false,
+
+    },
+
+    {
+
+        name: "Hot Xoan",
+        type: "BeatName",
+        price: "85$",
+        member: "85",
+        play: false,
+
     },
 
     {
@@ -121,6 +144,8 @@ const DATA = [
         type: "BeatName",
         price: "85$",
         member: "85",
+        play: false,
+
     },
     {
 
@@ -128,12 +153,16 @@ const DATA = [
         type: "BeatName",
         price: "85$",
         member: "85",
+        play: false,
+
     },
     {
         name: "Hot Xoan wyx",
         type: "BeatName",
         price: "85$",
         member: "85",
+        play: false,
+
     },
     {
 
@@ -141,10 +170,9 @@ const DATA = [
         type: "BeatName",
         price: "85$",
         member: "85",
+        play: false,
+
     },
-
-
-
 ]
 
 function ListBeat() {
@@ -153,8 +181,8 @@ function ListBeat() {
     const [search, setSearch] = useState("");
     const [list, setList] = useState(DATA);
     const [play, setPlay] = useState(false);
+    const [srcMusic, setSrcMusic] = useState("");
     const audioRef = useRef();
-    
 
     //Comment lai cho nay
     // const navigate = useNavigate()
@@ -171,8 +199,9 @@ function ListBeat() {
         // setList(data);
     }
 
-    const handleClickBeat = () => {
-
+    const handleClickAudio = (value) => {
+        value.play = !value.play;
+        setSrcMusic(value.audio);
     }
 
     // useEffect(() => {
@@ -192,6 +221,7 @@ function ListBeat() {
     useEffect(() => {
         if (play) {
             audioRef.current.play();
+
         } else {
             audioRef.current.pause();
         }
@@ -223,7 +253,6 @@ function ListBeat() {
                 </h1>
 
             </div>
-
             <div className={cx("icon-shopping")}>
                 <Button>
                     <Link className={cx("viewCart")} to="/viewcart">
@@ -256,7 +285,7 @@ function ListBeat() {
 
             <div className={cx("list-beat")}>
                 {list.map((item, index) => {
-                    return <ListBeatBox id={item.id} name={item.beatName} genre={item.genre} price={item.price} play={play} setPlay={setPlay} />
+                    return <ListBeatBox id={item.id} name={item.beatName} genre={item.genre} price={item.price} play={item.play} setPlay={setPlay} onClick={() => handleClickAudio(item)} />
                 })}
             </div>
 
@@ -289,7 +318,8 @@ function ListBeat() {
                     <span className={cx("end")}>0:00</span>
                 </div>
 
-                <audio id="audio" ref={audioRef} src={music}></audio>
+                <audio id="audio" ref={audioRef} src={srcMusic}>
+                </audio>
 
             </div>
         </div>

@@ -12,16 +12,16 @@ import { red } from "@mui/material/colors";
 
 const cx = classNames.bind(styles);
 
-function ListBeatBox({id, name, genre, price, play, setPlay }) {
+function ListBeatBox({id, name, genre, price, play, setPlay, onClick }) {
     const {addToCart, cartItems} = useContext(ShopContext)
-    return (<div className={cx("list-box")}>
+    return (<div className={cx("list-box")} onClick={onClick}>
         <div className={cx("card-item")}>
                 <div onClick={() => setPlay(!play)}>
                     <FontAwesomeIcon icon={faPlay} className={cx("play-btn", "play", {
-                        "playing": play === true
+                        "playing": play === false
                     })} />
                     <FontAwesomeIcon icon={faPause} className={cx("play-btn", "pause", {
-                        "playing": play === false
+                        "playing": play === true
                     })} />
                 </div>
                 <img className={cx("box-img")} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} alt="anh" />

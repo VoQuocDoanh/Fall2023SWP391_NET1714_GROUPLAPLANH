@@ -193,26 +193,26 @@ function UploadSong() {
                                 </div>
                                 <div className={cx('check-failed-pass')}>
                                     <div className={cx('icon-times-left')}>
-                                        {nameSongSearch === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                        {postContent === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                             <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>}
-                                        {nameSongSearch !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                        {postContent !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                             <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>}
                                     </div>
                                     <div className={cx('text-failed')}>
                                         <div>
-                                            {nameSongSearch === "" && <span>Lời và hợp âm đầy đủ 0/0 dòng hợp âm</span>}
-                                            {nameSongSearch !== "" && <span style={{ color: "green" }}>1/1 dòng hợp âm</span>}
+                                            {postContent === "" && <span>Lời và hợp âm đầy đủ 0/0 dòng hợp âm</span>}
+                                            {postContent == "[]" && <span style={{ color: "green" }}>Lời và hợp âm đầy đủ, 1/1 dòng hợp âm</span>}
                                         </div>
                                     </div>
                                 </div>
                                 <div className={cx('check-failed-pass')}>
                                     <div className={cx('icon-times-left')}>
-                                        {postContent === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                        {nameSongSearch === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                             <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>}
-                                        {postContent !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                        {nameSongSearch !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                             <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>}
                                     </div>

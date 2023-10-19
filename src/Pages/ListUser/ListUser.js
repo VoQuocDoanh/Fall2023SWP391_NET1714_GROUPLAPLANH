@@ -3,6 +3,8 @@ import classNames from "classnames/bind";
 import React, { useMemo } from "react";
 import { useState } from "react";
 import styles from "./ListUser.module.scss";
+import BasicPagination from "../../components/Pagination";
+import PaginationControlled from "../../components/Pagination";
 
 const cx = classNames.bind(styles);
 
@@ -14,7 +16,7 @@ const DATA = [
         name: "Doanh",
         beatsound: "Beat Sound",
         datecreate: "10/10/2010",
-        role:"Admin",
+        role: "Admin",
         status: "Active",
     },
     {
@@ -22,7 +24,7 @@ const DATA = [
         name: "Doanh",
         beatsound: "Beat Sound",
         datecreate: "10/10/2010",
-        role:"Admin",
+        role: "Admin",
         status: "Active",
     },
     {
@@ -30,7 +32,7 @@ const DATA = [
         name: "Doanh",
         beatsound: "Beat Sound",
         datecreate: "10/10/2010",
-        role:"Admin",
+        role: "Admin",
         status: "Active",
     },
     {
@@ -38,7 +40,7 @@ const DATA = [
         name: "Doanh",
         beatsound: "Beat Sound",
         datecreate: "10/10/2010",
-        role:"Admin",
+        role: "Admin",
         status: "Active",
     },
     {
@@ -46,10 +48,10 @@ const DATA = [
         name: "Doanh",
         beatsound: "Beat Sound",
         datecreate: "10/10/2010",
-        role:"Admin",
+        role: "Admin",
         status: "Active",
     },
- 
+
 
 ];
 
@@ -77,8 +79,6 @@ function ListUser() {
 
 
                     </tr>
-
-
                 </thead>
                 <tbody>
                     {DATA.map((item, index) => (
@@ -92,6 +92,7 @@ function ListUser() {
                     ))}
                 </tbody>
             </table>
+            <PaginationControlled></PaginationControlled>
         </div>
     );
 }
