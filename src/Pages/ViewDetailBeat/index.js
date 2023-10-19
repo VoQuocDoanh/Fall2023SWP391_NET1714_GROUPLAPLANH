@@ -8,13 +8,13 @@ import music from "../../assets/audio/audio.mp3";
 import { ShopContext } from "../../context/shop-context";
 import axiosInstance from "../../authorization/axiosInstance";
 import { useNavigate } from "react-router-dom";
-
+import Rating from '@mui/material/Rating';
+import Stack from '@mui/material/Stack';
 const cx = classNames.bind(styles);
-
+    
 function ViewDetailBeat() {
     const [play, setPlay] = useState(false);
     const audioRef = useRef();
-
     const navigate = useNavigate();
     const [list, setList] = useState([]);
     useEffect(() => {
@@ -40,21 +40,8 @@ function ViewDetailBeat() {
             })
     }
     return (
-
         <div>
-            {/* <div className={cx("text-header")}>
-                <h1>
-                    Beats Name
-                </h1>
-                <div className={cx('header-submit')}>
-                    <Button variant="contained" className={cx('button-1')}>
-                        <div>Share Beat</div>
-                    </Button>
-                </div>
-            </div> */}
             <div className={cx('view-detail')}>
-
-
                 <div className={cx('view-detail-beat')}>
                     <div className={cx('detail-1')}>
                         <div className={cx('mid-detail-left')}>
@@ -73,18 +60,11 @@ function ViewDetailBeat() {
                                     <h4> Tăng Duy Tân, Drum7 &#x2022; 2023 </h4>
                                     <span>1K người yêu thích</span>
                                 </div>
-                                {/* <div className={cx('button-submit')}>
-                            <Button variant="contained" className={cx('button-1')}>
-                                <div>Follow</div>
-                            </Button>
-                            <Button variant="contained" className={cx('button-1')}>
-                                <div>Message</div>
-                            </Button>
-                        </div> */}
-                                <div></div>
+                                <Stack className={cx("rating-form")} spacing={1}>
+                                    <Rating className={cx("start-icon")} name="size-large" defaultValue={2} size="large" />
+                                </Stack>
                             </div>
                         </div>
-
                         <div className={cx('mid-detail-right')}>
                             <h4><b>Musician information</b></h4>
                             <div className={cx('info-musician')}>
@@ -111,26 +91,6 @@ function ViewDetailBeat() {
                                     <span>Standard License</span>
                                     <span>MP3</span>
                                 </div>
-                                {/* <div className={cx('cart')}>
-                            <span>$25.00</span>
-                            <span>Standard License</span>
-                            <span>MP3</span>
-                        </div>
-                        <div className={cx('cart')}>
-                            <span>$25.00</span>
-                            <span>Standard License</span>
-                            <span>MP3</span>
-                        </div>
-                        <div className={cx('cart')}>
-                            <span>$25.00</span>
-                            <span>Standard License</span>
-                            <span>MP3</span>
-                        </div>
-                        <div className={cx('cart')}>
-                            <span>$25.00</span>
-                            <span>Standard License</span>
-                            <span>MP3</span>
-                        </div> */}
                             </div>
                             <div className={cx('list')}>
                                 <div className={cx('genre')}>
@@ -149,21 +109,7 @@ function ViewDetailBeat() {
 
                         </div>
                     </div>
-                    {/* <div className={cx('final-submit')}>
-                <Button variant="contained" className={cx('button-1')}>
-                    <div>ABC</div>
-                </Button>
-
-                </div> */}
-                    {/* <div className={cx('comment')}>
-                <textarea id="ABC" name="ABC" rows="5" cols="150" placeholder='Comment...'></textarea>
-                </div> */}
-
-
                     <div className={cx('total-detail')}>
-                        {/* <div className={cx('text-detail')}>
-                    <h1>ABC</h1>
-                </div> */}
                         <div className={cx('title-detail')}>
                             <span>Song List</span>
                         </div>
@@ -369,18 +315,14 @@ function ViewDetailBeat() {
                     <div className={cx("btn", "btn-next")}>
                         <FontAwesomeIcon icon={faStepForward} />
                     </div>
-
                 </div>
                 <div className={cx("time-audio")}>
                     <span className={cx("start")}>0:00</span>
                     <input id="progress" className={cx("progress")} type="range" value="0" step="1" min="0" max="100" />
                     <span className={cx("end")}>0:00</span>
                 </div>
-
                 <audio id="audio" ref={audioRef} src={music}></audio>
-
             </div>
-
         </div>
 
     );
