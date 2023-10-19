@@ -87,7 +87,7 @@ public class BeatService {
         for(Beat value: beats){
             BeatResponseDTO dto = new BeatResponseDTO(value.getId(),
                     value.getBeatName(),
-                    value.getBeatSound(),
+                    Base64.decodeBase64(value.getBeatSound()),
                     new UserResponeDTO(foundUser.get().getFullName()),
                     value.getPrice(),
                     value.getCreatedAt(),
