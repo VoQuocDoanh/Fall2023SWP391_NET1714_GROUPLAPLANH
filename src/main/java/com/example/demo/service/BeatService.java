@@ -244,4 +244,8 @@ public class BeatService {
     }
 
 
+    public List<Beat> beatSoldOut(Long id) {
+        List<Beat> beats = beatRepository.findBeatSoldOut(id);
+        return new ArrayList<>(beats);
+    }
 }

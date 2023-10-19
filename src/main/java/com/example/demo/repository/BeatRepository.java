@@ -35,6 +35,10 @@ public interface BeatRepository extends JpaRepository<Beat, Long> {
     @Query("SELECT b FROM Beat b WHERE b.status = 1")
     List<Beat> findAllBeat();
 
+    @Query("SELECT b FROM Beat b where b.status = -1 and b.Id = :id")
+    List<Beat> findBeatSoldOut(Long id);
+
+
     Beat findBeatById(Long Id);
     @Query("SELECT b FROM Beat b WHERE b.userName=:username")
     Optional<Beat> findBeatByUserName(Long username);

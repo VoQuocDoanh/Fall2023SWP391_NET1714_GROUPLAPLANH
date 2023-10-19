@@ -53,6 +53,12 @@ public class BeatController {
         return ResponseEntity.ok(this.beatService.searchByMusician(name));
     }
 
+    //list beat bought in MS
+    @GetMapping ("/musician/bought/{id}")
+    public ResponseEntity<List<Beat>> beatSoldOut(@PathVariable Long id){
+        return ResponseEntity.ok(beatService.beatSoldOut(id));
+    }
+
     //Add Beat in MS
     @PostMapping({""})
     public ResponseEntity<String> uploadBeat(@Valid @RequestBody BeatDTO beatDTO) {
