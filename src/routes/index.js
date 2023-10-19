@@ -17,13 +17,9 @@ import ViewBeatsAll from "../Pages/ViewBeatsAll";
 import CustomerBeats from "../Pages/CustomerBeats";
 import ListSong from "../Pages/ListSong";
 import Uploadsong from "../Pages/UploadSong";
-<<<<<<< HEAD
-import ViewDetailSong from "../Pages/ViewDetailSong";
-
-=======
 import MusicianProfile from "../Pages/MusicianProfile";
 import AdminProfile from "../Pages/AdminProfile";
->>>>>>> b47aa0ac215e6af30e4d91ad0b750500f580829b
+import ViewDetailSong from "../Pages/ViewDetailSong";
 const publicRoutes = [
   {
     path: "/",
@@ -78,11 +74,11 @@ const publicRoutes = [
     path: "/listbeat2",
     component: ListBeat2,
   }
-  ,{
+  , {
     path: "/chordsdetails",
     component: ChordsDetails,
   }
-  ,{
+  , {
     path: "/songs",
     component: Songs,
   },
@@ -103,18 +99,17 @@ const publicRoutes = [
     component: Uploadsong,
   },
   {
-<<<<<<< HEAD
-    path: "/viewdetailsong",
-    component: ViewDetailSong,
-=======
     path: "/musicianprofile",
     component: MusicianProfile,
   },
   {
     path: "/adminprofile",
     component: AdminProfile,
->>>>>>> b47aa0ac215e6af30e4d91ad0b750500f580829b
   },
+  {
+    path: "/viewdetailsong",
+    component: ViewDetailSong,
+  }
 ];
 
 const privateRoute = [];
