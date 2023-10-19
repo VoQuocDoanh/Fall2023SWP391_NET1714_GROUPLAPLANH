@@ -154,7 +154,7 @@ function ListBeat() {
     const [list, setList] = useState(DATA);
     const [play, setPlay] = useState(false);
     const audioRef = useRef();
-    
+
 
     //Comment lai cho nay
     // const navigate = useNavigate()
@@ -223,7 +223,6 @@ function ListBeat() {
                 </h1>
 
             </div>
-
             <div className={cx("icon-shopping")}>
                 <Button>
                     <Link className={cx("viewCart")} to="/viewcart">
