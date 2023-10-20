@@ -7,6 +7,7 @@ import com.example.demo.entity.User;
 import com.example.demo.repository.BeatRepository;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.UserRepository;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,7 +61,10 @@ public class OrderService {
         }
     }
 
-
+    public List<Order> findOrder (Long id){
+        List<Order> orderEntity =  orderRepository.findOrderByUserID(id);
+        return  orderEntity;
+    }
 
 
 

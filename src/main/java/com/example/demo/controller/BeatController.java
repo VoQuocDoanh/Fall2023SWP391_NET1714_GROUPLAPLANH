@@ -109,4 +109,10 @@ public class BeatController {
         return this.beatService.deleteBeat(id);
     }
 
+    //list beat that user bought
+    @GetMapping ("user/{id}")
+    public ResponseEntity<List<BeatResponseDTO>> beatPurchased (@PathVariable Long id){
+        return ResponseEntity.ok( this.beatService.beatPurchased(id));
+    }
+
 }

@@ -8,10 +8,12 @@ package com.example.demo.service;
 import com.example.demo.dto.*;
 import com.example.demo.entity.Beat;
 import com.example.demo.entity.Genre;
+import com.example.demo.entity.Order;
 import com.example.demo.entity.User;
 import com.example.demo.repository.BeatRepository;
 import com.example.demo.repository.GenreRepository;
 import com.example.demo.repository.UserRepository;
+import org.aspectj.weaver.ast.Or;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,8 @@ public class BeatService {
     private BeatRepository beatRepository;
     @Autowired
     private GenreRepository genreRepository;
+    @Autowired
+    private OrderService orderService;
 
     private UserResponeDTO getUser(User user){
         return new UserResponeDTO(user.getId(), user.getFullName(), user.getPhoneNumber(), user.getMail());
@@ -77,7 +81,9 @@ public class BeatService {
                         genres,
                         value.getView(),
                         value.getTotalLike(),
-                        value.getVocalRange());
+                        value.getVocalRange(),
+                        value.getTotalRating(),
+                        value.getRating());
 
                 beatResponseDTOS.add(dto);
             }
@@ -99,7 +105,9 @@ public class BeatService {
                     genres,
                     value.getView(),
                     value.getTotalLike(),
-                    value.getVocalRange());
+                    value.getVocalRange(),
+                    value.getTotalRating(),
+                    value.getRating());
             dtos.add(dto);
         }
         return dtos;
@@ -240,6 +248,8 @@ public class BeatService {
             responseDTO.setCmt(beat.getCmt());
             responseDTO.setGenres(getGenres(id));
             responseDTO.setVocalRange(beat.getVocalRange());
+            responseDTO.setRating(beat.getRating());
+            responseDTO.setTotalRating(beat.getTotalRating());
             return responseDTO;
         }
         return null;
@@ -278,5 +288,22 @@ public class BeatService {
             totalPrice = totalPrice + i.getPrice();
         }
         return new ResponseEntity<>(totalPrice,HttpStatus.OK);
+    }
+
+    public List<BeatResponseDTO> beatPurchased(Long id) {
+       List<Order> order = orderService.findOrder(id);
+        List<BeatResponseDTO> beat = new ArrayList<>();
+        BeatResponseDTO b = new BeatResponseDTO();
+        for (Order o:order){
+            Beat beatEntity = (beatRepository.findBeatByOrderBeat(o));
+            b.setBeatName(beatEntity.getBeatName());
+            b.setPrice(beatEntity.getPrice());
+            b.setBeatSound(beatEntity.getBeatSound());
+            b.setDescription(b.getDescription());
+            b.setUser(getUser(beatEntity.getUserName()));
+            beat.add(b);
+
+        }
+        return beat;
     }
 }

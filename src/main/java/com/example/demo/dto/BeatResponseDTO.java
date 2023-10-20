@@ -27,8 +27,11 @@ public class BeatResponseDTO {
     private List<GenreResponseDTO> genres;
     private int cmt;
     private String vocalRange;
+    private int totalRating;
+    private Double rating;
+    private String description;
 
-    public BeatResponseDTO(Long id, String beatName, byte[] beatSound, UserResponeDTO user, Double price, LocalDateTime creatAt, List<GenreResponseDTO> genres, int view, int totalLike, String vocalRange) {
+    public BeatResponseDTO(Long id, String beatName, byte[] beatSound, UserResponeDTO user, Double price, LocalDateTime creatAt, List<GenreResponseDTO> genres, int view, int totalLike, String vocalRange,int totalRating, Double rating) {
         this.id = id;
         this.beatName = beatName;
         this.beatSound = beatSound;
@@ -39,6 +42,16 @@ public class BeatResponseDTO {
         this.genres = genres;
         this.totalLike = totalLike;
         this.vocalRange = vocalRange;
+        this.totalRating = totalRating;
+        this.rating = rating;
+
+    }
+
+    public BeatResponseDTO(String beatName, byte[] beatSound, Double price,String description) {
+        this.beatName = beatName;
+        this.beatSound = beatSound;
+        this.price = price;
+        this.description = description;
     }
 
     @Override

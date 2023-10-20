@@ -66,4 +66,15 @@ public class Order {
         this.userOrder = userOrder;
         this.beats = beats;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", price=" + price +
+                ", createdAt=" + createdAt +
+                ", userOrder=" + userOrder +
+                ", beats=" + beats +
+                '}';
+    }
 }
