@@ -10,7 +10,7 @@ import Search from "../Search";
 // Import css
 import styles from "./Header.module.scss";
 import Button from '@mui/material/Button';
-import { useState,useRef,useMemo } from "react";
+import { useState, useRef, useMemo } from "react";
 import jwtDecode from "jwt-decode";
 import useToken from "../../authorization/useToken";
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -50,7 +50,7 @@ function Header() {
         <div className={cx("navigation")}>
           <div className={cx("nav-item")}>Home</div>
           <div className={cx("nav-item")}>User</div>
-          <Popup trigger={<button className={cx("button-page")}>Pages</button>} position="bottom center" closeOnDocumentClick   on={['hover', 'focus']}>
+          <Popup trigger={<button className={cx("button-page")}>Pages</button>} position="bottom center" closeOnDocumentClick on={['hover', 'focus']}>
             <div className={cx("text-all")}>
               <Link to="/listbeat"><div className={cx("link-text")}>View Beat</div></Link>
               <Link to="/chordsdetails"><div className={cx("link-text")}>View Chords</div></Link>
@@ -91,7 +91,7 @@ function Header() {
           )
         }
         <div className={cx("pop-up")}>
-          <Popup trigger={<button className={cx("button-popup")}>Doanhvq</button>} position="bottom center"  on={['hover', 'focus']}>
+          <Popup trigger={<button className={cx("button-popup")}>Doanhvq</button>} position="bottom center" on={['hover', 'focus']}>
             <div className={cx("text-all")}>
               <Link to="/myprofile"><div className={cx("link-text")}>My Account</div></Link>
               <Link to="/viewcart"><div className={cx("link-text")}>Purchase order</div></Link>

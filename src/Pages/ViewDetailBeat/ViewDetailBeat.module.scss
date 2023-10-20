@@ -330,12 +330,17 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    background-color: rgb(27, 27, 27);
-    border-radius: 8px;
+    background-color: #06c;
+    outline: 1px solid white;
+    // position: fixed;
+    // top: 647px;
+    // left: 20px;
+    // width: 2500px;
+    // margin-left: -20px;
+
     .icon {
         display: none;
         user-select: none;
-        
     }
 
     .icon-pause.play {
@@ -345,9 +350,6 @@
     .icon-play.play {
         display: block;
     }
-
-
-
     .control {
         display: flex;
         align-items: center;
@@ -377,12 +379,13 @@
         background-color: var(--primary-color);
     }
 
-    
+
     .time-audio {
         width: 80%;
         display: inline-flex;
         align-items: center;
         gap: 10px;
+
         .progress {
             width: 100%;
             -webkit-appearance: none;
@@ -393,7 +396,7 @@
             -webkit-transition: 0.2s;
             transition: opacity 0.2s;
         }
-    
+
         .progress::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
@@ -402,23 +405,26 @@
             background-color: var(--primary-color);
             cursor: pointer;
         }
-    
+
     }
 
 
 }
-.trending-ellipse   {
+
+.trending-ellipse {
     width: 115px;
     height: 115px;
     object-fit: cover;
     border-radius: 10px;
-    outline: 2px solid white ;
+    outline: 2px solid white;
     margin-top: 10px;
 }
-.time-audio{
+
+.time-audio {
     color: white;
-    .time-audio>progress{
-            width: 500px;
+
+    .time-audio>progress {
+        width: 500px;
     }
 }
 // rating

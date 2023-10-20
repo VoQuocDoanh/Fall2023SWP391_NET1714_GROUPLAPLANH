@@ -581,7 +581,7 @@ function ViewDetailSong() {
             </div>
             <div className={cx('comment-all')}>
                 <div className={cx('comment')}>
-                    <textarea id="ABC" name="ABC" rows="2" cols="174" placeholder=' Comment...'></textarea>
+                    <textarea style={{width: '80%'}} id="ABC" name="ABC" rows="2" cols="174" placeholder=' Comment...'></textarea>
                     <div className={cx('post-button')}>
                         <button>Post a comment</button>
                     </div>

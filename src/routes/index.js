@@ -108,7 +108,7 @@ const publicRoutes = [
   },
   {
     path: "/viewdetailsong",
-    component: ViewDetailSong,
+    component: ViewDetailSong,  
   }
 ];
 

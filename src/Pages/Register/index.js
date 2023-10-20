@@ -25,22 +25,22 @@ function Register() {
   const user = { username, password, fullName, mail, role, address, phoneNumber, gender }
   const navigate = useNavigate();
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     setRegistrationMessage()
     console.log(username, password, fullName, mail, role, address, phoneNumber, gender);
     if (!username || !password || !fullName || !mail || !role || !address || !phoneNumber || !gender) {
       alert("Please fill in all fields!");
       return;
     }
-    if(password != checkPassword){
+    if (password != checkPassword) {
       alert("Confirm Password not match Password")
       return;
     }
     e.preventDefault()
-    try{
+    try {
       await axios.post("http://localhost:8080/api/auth/register", user);
       navigate("/login")
-    }catch(error){
+    } catch (error) {
       setRegistrationMessage("Username has been used!")
     }
   };
@@ -48,9 +48,9 @@ function Register() {
   return (
     <div className={cx("login-wrapper")}>
       <div className={cx("main")}>
-                <div className={cx("overlay")}></div>
-              <video src={videoBg} autoPlay loop muted ></video>
-            </div>
+        <div className={cx("overlay")}></div>
+        <video src={videoBg} autoPlay loop muted ></video>
+      </div>
       <div className={cx("heading")}>
         <span className={cx("title")}>Have an account ?</span>
         <Link to="/login" className={cx("link")}>
@@ -287,10 +287,10 @@ function Register() {
         </Button>
       </div>
       {registrationMessage && (
-          <p style={{ color: "red", marginTop: 10, paddingLeft: 5 }}>
-            {registrationMessage}
-          </p>
-        )}
+        <p style={{ color: "red", marginTop: 10, paddingLeft: 5 }}>
+          {registrationMessage}
+        </p>
+      )}
       {/* Footer */}
       <div className={cx("footer")}>
         <div className={cx("footer-left")}>

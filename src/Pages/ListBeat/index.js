@@ -192,7 +192,6 @@ function ListBeat() {
     // const audioRef = useRef();
     // sessionStorage.setItem("listBeat", JSON.stringify(list))
     // console.log(JSON.parse(sessionStorage.getItem("listBeat")))
-    // 
 
     const handleSearch = (e) => {
         setSearch(e.target.value);

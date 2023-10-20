@@ -5,6 +5,8 @@ import { useState } from "react";
 import styles from "./ListUser.module.scss";
 import BasicPagination from "../../components/Pagination";
 import PaginationControlled from "../../components/Pagination";
+import ReactPaginate from 'react-paginate';
+
 
 const cx = classNames.bind(styles);
 
@@ -63,6 +65,9 @@ function ListUser() {
     const handleUpdate = (id) => {
         console.log(id);
     };
+    const handlePageClick = () => {
+
+    }
 
     return (
 
@@ -92,7 +97,25 @@ function ListUser() {
                     ))}
                 </tbody>
             </table>
-            <PaginationControlled></PaginationControlled>
+            {/* <ReactPaginate
+                breakLabel="..."
+                nextLabel="next >"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={5}
+                pageCount={69}
+                previousLabel="< previous"
+
+                pageClassName="page=item"
+                pageLinkClassName="page-link"
+                previousClassName="page-item"
+                previousLinkClassName="page-link"
+                nextClassName="page-item"
+                nextLinkClassName="page-link"
+                breakClassName="page-item"
+                breakLinkClassName="page-link"
+                containerClassName="pagination"
+                activeClassName="active"
+            /> */}
         </div>
     );
 }

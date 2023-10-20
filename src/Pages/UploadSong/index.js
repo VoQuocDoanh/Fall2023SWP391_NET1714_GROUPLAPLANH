@@ -2,13 +2,14 @@ import { Button } from "@mui/material";
 import styles from "./UploadSong.module.scss";
 import classNames from "classnames/bind";
 import { Link } from "react-router-dom";
-import { React, useState } from "react";
+import { React, useState, useRef, useEffect } from "react";
 import MarkdownPreview from '../../MarkdownPreview';
 import TextArea from "antd/es/input/TextArea";
 
 
 const cx = classNames.bind(styles);
 
+const tone = "[A7]-[C7]-[D7]"
 function UploadSong() {
     const [valueSearch, setValueSearch] = useState("");
     const [GenreSearch, setGenreSearch] = useState("");
@@ -17,6 +18,22 @@ function UploadSong() {
     const [LinkSearch, setLinkSearch] = useState("");
     const [nameSongSearch, setnameSongSearch] = useState("");
     const [postContent, setPostContent] = useState("");
+
+    const [listTone, setListTone] = useState([]);
+    const regValue = useRef(/\[[^\]]{0,6}\]/g);
+
+    useEffect(() => {
+        let tmp = postContent.match(regValue.current);
+        if (Array.isArray(tmp)) {
+            setListTone(tmp);
+            const a = tmp.map((item) => {
+                let check = tone.includes(item);
+                if(check) return "da hop le";
+                else return "khong hop le" 
+            })
+            console.log(a);
+        }
+    }, [postContent])
 
     return (
         <div className={cx('page-content')}> {/* trang tổng */}
@@ -108,6 +125,9 @@ function UploadSong() {
                             <span>Hợp âm:</span>
                         </div>
                         <h2><b>Hợp âm sử dụng:</b></h2>
+                        <div style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap" }}>
+                            {listTone.map((item, index) => <span key={index} style={{ fontSize: 20 }}>{item}</span>)}
+                        </div>
                         <div className={cx('blue-header')}>
                             <h4>Xem trước</h4>
                         </div>

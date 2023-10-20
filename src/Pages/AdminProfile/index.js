@@ -15,7 +15,7 @@ const DATA = [
         name: "abc",
     },
 ]
-function AdminProfile({name, prioriry}) {
+function AdminProfile({ name, prioriry }) {
     const [search, setSearch] = useState("");
     const [list, setList] = useState(DATA);
     const [isChecked, setIsChecked] = useState(false);
@@ -147,7 +147,7 @@ function AdminProfile({name, prioriry}) {
                                 <td>
                                     <div className={cx("sex-button")}>
                                         <div className={cx("stardus-radio-group")}>
-                                        <Row
+                                            <Row
                                                 justify='space-between'
                                                 style={{
                                                     marginBottom: 3,
