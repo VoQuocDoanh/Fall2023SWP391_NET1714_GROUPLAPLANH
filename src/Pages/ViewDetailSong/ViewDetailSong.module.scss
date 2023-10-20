@@ -14,6 +14,7 @@
     &:hover {
         background-color: #a5f062;
     }
+
     cursor: pointer;
 }
 
@@ -129,12 +130,12 @@
     justify-content: space-between;
 }
 
-.song-lyric{
+.song-lyric {
     margin: 20px;
-    
+
 }
 
-.song-lyric-sum{
+.song-lyric-sum {
     box-shadow: 1px 1px 5px #E6E6E6 inset;
 }
 
@@ -148,79 +149,93 @@
     justify-content: space-between;
 }
 
-.chord-list-title{
+.chord-list-title {
     display: flex;
     justify-content: start;
     background-color: #E6E6E6;
     align-items: center;
 }
 
-.text-chord-list-title{
+.text-chord-list-title {
     margin-left: 10px;
-    
+
 }
 
-.inmage-chord{
+.inmage-chord {
     display: flex;
     justify-content: center;
 }
 
-.change-tone{
+.change-tone {
     display: flex;
     justify-content: center;
 }
 
-.chord-list{
+.chord-list {
     margin: 20px;
     border: #E6E6E6 solid 1px;
 }
 
-.comment{
+.comment {
     margin-left: 25px;
     margin-top: 30px;
 }
 
-.post-button{
+.post-button {
     display: flex;
     justify-content: center;
     margin-left: 600px;
 }
 
-.comment-all{
+.comment-all {
     border: #E6E6E6 solid 1px;
 }
 
-.background-image{
+.background-image {
     width: 50px;
     border-radius: 5px;
     margin-top: 10px;
 }
 
-.comment-item-username{
+.comment-item-username {
     display: flex;
     justify-content: start;
 }
 
-.times{
+.times {
     margin-left: 5px;
 }
 
-.show-comment-of-cus{
+.show-comment-of-cus {
     display: flex;
     justify-content: start;
 }
 
-.show-comment-right{
+.show-comment-right {
     margin-left: 15px;
 }
 
-.reply{
+.reply {
     display: flex;
     justify-content: start;
     text-align: center;
 }
 
-.icon-like{
+.replay-title {
+    display: flex;
+    justify-content: center;
+}
+
+.icon-like {
     margin-bottom: 10px;
+}
+
+// .eidt-delete{
+//     margin-bottom: 10px;
+
+// }
+.comment-username {
+    display: flex;
+    justify-content: center;
 }
 
