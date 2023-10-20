@@ -33,7 +33,7 @@ public class BeatService {
     private GenreRepository genreRepository;
 
     private UserResponeDTO getUser(User user){
-        return new UserResponeDTO(user.getId(), user.getFullName());
+        return new UserResponeDTO(user.getId(), user.getFullName(), user.getPhoneNumber(), user.getMail());
     }
     private Set<Genre> genreSet(BeatDTO beatDTO) {
         Set<Genre> genres = new HashSet<>();
@@ -67,14 +67,18 @@ public class BeatService {
         }else {
             List<BeatResponseDTO> beatResponseDTOS = new ArrayList<>();
             for (Beat value: beats) {
+                List<GenreResponseDTO> genres = getGenres(value.getId());
                 BeatResponseDTO dto = new BeatResponseDTO(value.getId(),
                         value.getBeatName(),
                         Base64.decodeBase64(value.getBeatSound()),
                         getUser(value.getUserName()),
                         value.getPrice(),
                         value.getCreatedAt(),
+                        genres,
                         value.getView(),
-                        value.getTotalLike());
+                        value.getTotalLike(),
+                        value.getVocalRange());
+
                 beatResponseDTOS.add(dto);
             }
             return beatResponseDTOS;
@@ -85,18 +89,23 @@ public class BeatService {
     private List<BeatResponseDTO> getBeatResponseDTOS(Optional<User> foundUser, List<Beat> beats) {
         List<BeatResponseDTO> dtos = new ArrayList<>();
         for(Beat value: beats){
+            List<GenreResponseDTO> genres = getGenres(value.getId());
             BeatResponseDTO dto = new BeatResponseDTO(value.getId(),
                     value.getBeatName(),
                     Base64.decodeBase64(value.getBeatSound()),
                     new UserResponeDTO(foundUser.get().getFullName()),
                     value.getPrice(),
                     value.getCreatedAt(),
+                    genres,
                     value.getView(),
-                    value.getTotalLike());
+                    value.getTotalLike(),
+                    value.getVocalRange());
             dtos.add(dto);
         }
         return dtos;
     }
+
+
 
     public List<Beat> findAllBeat(){
         List<Beat> beats = this.beatRepository.findAllBeat();
@@ -132,7 +141,8 @@ public class BeatService {
                     1,
                     0,
                     0,
-                    0);
+                    0,
+                    beatDTO.getVocalRange());
             this.beatRepository.save(beat);
             return new ResponseEntity<>("Insert Successfully", HttpStatus.OK);
 
@@ -149,6 +159,7 @@ public class BeatService {
             beat.setBeatSound(Base64.encodeBase64(newBeat.getBeatSound()));
             beat.setPrice(newBeat.getPrice());
             beat.setGenresofbeat(genreSet(newBeat));
+            beat.setVocalRange(newBeat.getVocalRange());
             this.beatRepository.save(beat);
             return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
         }
@@ -227,7 +238,8 @@ public class BeatService {
             responseDTO.setView(beat.getView());
             responseDTO.setTotalLike(beat.getTotalLike());
             responseDTO.setCmt(beat.getCmt());
-
+            responseDTO.setGenres(getGenres(id));
+            responseDTO.setVocalRange(beat.getVocalRange());
             return responseDTO;
         }
         return null;

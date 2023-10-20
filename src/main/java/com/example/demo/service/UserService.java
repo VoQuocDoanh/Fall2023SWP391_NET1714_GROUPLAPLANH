@@ -133,6 +133,9 @@ public class UserService {
                     user.getFullName(),
                     user.getGender().toString(),
                     user.getRole(),
+                    user.getMail()
+                  ,
+                    user.getPhoneNumber(),
                     user.getStatus())).collect(Collectors.toList());
             return userResponeDTOList;
         }

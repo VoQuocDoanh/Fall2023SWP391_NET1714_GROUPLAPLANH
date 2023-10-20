@@ -23,6 +23,7 @@ public class BeatDTO {
     private Long beatId;
     private List<String> genres;
     private int rating;
+    private String vocalRange;
 
     @Override
     public String toString() {

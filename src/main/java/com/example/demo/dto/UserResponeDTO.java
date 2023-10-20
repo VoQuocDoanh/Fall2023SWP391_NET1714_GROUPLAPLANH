@@ -15,11 +15,20 @@ public class UserResponeDTO {
     private String fullName;
     private String gender;
     private String role;
+    private String phone;
+    private String mail;
     private int status;
 
 
     public UserResponeDTO(String fullName) {
         this.fullName = fullName;
+    }
+
+    public UserResponeDTO(Long id, String fullName, String phone, String mail) {
+        this.id = id;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.mail = mail;
     }
 
     public UserResponeDTO(Long id, String fullName) {

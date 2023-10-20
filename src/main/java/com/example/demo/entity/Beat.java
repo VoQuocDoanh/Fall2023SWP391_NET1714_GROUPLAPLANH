@@ -37,7 +37,7 @@ public class Beat {
     @Column
     private int status;
 
-    @Column
+    @Column (length = Integer.MAX_VALUE)
     @Lob
     private byte[] beatSound;
 
@@ -58,6 +58,9 @@ public class Beat {
 
     @Column
     private int totalRating;
+
+    @Column
+    private String vocalRange;
 
     @ManyToOne
     @JsonIgnore
@@ -110,7 +113,7 @@ public class Beat {
        // this.beatLike = beatLike;
     }
 
-    public Beat(String beatName, Double price, byte[] beatSound, String description, int totalLike, int view, User userName, Set<Genre> genresofbeat, int status, int cmt,double rating, int totalRating) {
+    public Beat(String beatName, Double price, byte[] beatSound, String description, int totalLike, int view, User userName, Set<Genre> genresofbeat, int status, int cmt,double rating, int totalRating, String vocalRange) {
         this.beatName = beatName;
         this.price = price;
         this.status = status;
@@ -123,6 +126,7 @@ public class Beat {
         this.cmt = cmt;
         this.rating = rating;
         this.totalRating = totalRating;
+        this.vocalRange = vocalRange;
     }
 
     public String toString() {
