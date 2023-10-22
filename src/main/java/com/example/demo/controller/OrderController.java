@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/v1/Order")
+@RequestMapping(path = "api/v1/order")
 public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @PostMapping("/user/{id}")
-    public ResponseEntity<String> orderBeat(@Valid @RequestBody OrderDTO orderDTO, @PathVariable Long id){
-        return orderService.orderBeat(orderDTO,id);
-    }
+//    @PostMapping("/user/{id}")
+//    public ResponseEntity<String> orderBeat(@Valid @RequestBody OrderDTO orderDTO, @PathVariable Long id){
+//        return orderService.orderBeat(orderDTO,id);
+//    }
 
     @GetMapping("test/{id}")
     public List<Order> tets (@PathVariable Long id ){

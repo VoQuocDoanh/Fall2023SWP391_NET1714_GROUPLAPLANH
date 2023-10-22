@@ -17,8 +17,14 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
+    // Update Admin Info
+    @PatchMapping("{id}")
+    public ResponseEntity<String> updateAdminInfo(@Valid @RequestBody UserDTO userDTO, @Valid @PathVariable Long id){
+        return this.userService.updateAdminInfo(userDTO, id);
+    }
+
     //List all User in Admin
-    @GetMapping(path = {""})
+    @GetMapping
     public ResponseEntity<List<UserResponeDTO>> getAllUsers() {
         return ResponseEntity.ok(this.userService.getAllUsers());
     }

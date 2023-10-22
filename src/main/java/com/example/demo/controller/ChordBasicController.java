@@ -5,6 +5,7 @@ import com.example.demo.dto.ChordDTO;
 import com.example.demo.entity.ChordBasic;
 import com.example.demo.repository.ChordBasicRepository;
 import com.example.demo.service.ChordBasicService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -40,7 +41,7 @@ public class ChordBasicController {
     }
 
     @PostMapping("")
-    public ResponseEntity<String> uploadChord(@RequestParam("file") MultipartFile image, @RequestBody ChordDTO chordDTO){
+    public ResponseEntity<String> uploadChord(@RequestParam("file") MultipartFile image,@Valid @RequestPart("json") ChordDTO chordDTO){
         try {
             return this.chordBasicService.uploadChord(image.getBytes(), chordDTO);
         } catch (IOException e) {

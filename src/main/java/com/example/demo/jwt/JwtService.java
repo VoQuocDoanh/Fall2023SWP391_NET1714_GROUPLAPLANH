@@ -17,7 +17,7 @@ import java.util.Date;
 @Slf4j
 public class JwtService {
 
-    String secretKey = SecretKey.secret_key;
+    private final String secretKey = SecretKey.getSecret_key();
 
     public String generateToken(User user){
         Algorithm algorithm = Algorithm.HMAC256(secretKey.getBytes());

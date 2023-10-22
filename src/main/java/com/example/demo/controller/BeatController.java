@@ -70,7 +70,7 @@ public class BeatController {
 
     //Add Beat in MS
     @PostMapping({""})
-    public ResponseEntity<String> uploadBeat(@Valid @RequestParam("file1")MultipartFile sound,@Valid @RequestParam("file2")MultipartFile sound2, @Valid @RequestPart("json") BeatDTO beatDTO) {
+    public ResponseEntity<String> uploadBeat(@Valid @RequestPart("file1")MultipartFile sound,@Valid @RequestPart("file2")MultipartFile sound2, @Valid @RequestPart("json") BeatDTO beatDTO) {
         try {
             byte[] soundByte = sound.getBytes();
             byte[] soundByte2 = sound2.getBytes();
@@ -83,7 +83,7 @@ public class BeatController {
 
     //Update beat in MS
     @PatchMapping({"/{id}"})
-    public ResponseEntity<String> updateBeat(@Valid @RequestParam("file")MultipartFile sound, @Valid @RequestBody BeatDTO newBeat, @PathVariable Long id) {
+    public ResponseEntity<String> updateBeat(@Valid @RequestPart("file")MultipartFile sound, @Valid @RequestPart("json") BeatDTO newBeat, @PathVariable Long id) {
         try {
             byte[] soundByte = sound.getBytes();
             return this.beatService.updateBeat(soundByte, newBeat, id);

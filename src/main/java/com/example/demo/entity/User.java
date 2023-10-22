@@ -129,6 +129,11 @@ public class User implements UserDetails {
     @JoinColumn (name = "msId")
     private MusicianInformation information;
 
+    @OneToOne (cascade = CascadeType.ALL)
+    @JsonIgnore
+    @JoinColumn (name = "activeToken")
+    private ActivationToken activationToken;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
@@ -159,13 +164,20 @@ public class User implements UserDetails {
         return "User{Id=" + this.Id + ", username='" + this.username + "', pass='" + this.password + "', fullName='" + this.fullName + "', mail='" + this.mail + "', roleID='" + this.role + "', status=" + this.status + ", address='" + this.address + "', phoneNumber='" + this.phoneNumber + "'}";
     }
 
-
+    public User(String username, String password, String mail, String role, int status) {
+        this.username = username;
+        this.password = password;
+        this.mail = mail;
+        this.role = role;
+        this.status = status;
+    }
 
     public User(String username, String password, String fullName, Gender gender, String mail, String address, String phoneNumber, String role, int status) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
         this.mail = mail;
+        this.gender = gender;
         this.role = role;
         this.status = status;
         this.address = address;

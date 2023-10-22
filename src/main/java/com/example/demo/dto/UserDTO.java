@@ -20,15 +20,11 @@ public class UserDTO {
     private String address;
     private String role;
 
+    // Musician
     private String professional;
     private String prize;
     private int year;
 
-
-
-    public UserDTO(String username) {
-        this.username = username;
-    }
 
     public String toString() {
         return "UserDTO{userName='" + this.username + "'}";
