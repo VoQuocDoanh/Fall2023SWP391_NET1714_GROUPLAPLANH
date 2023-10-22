@@ -115,12 +115,16 @@ public class BeatService {
 
 
 
-    public List<Beat> findAllBeat(){
+    public List<BeatResponseDTO> findAllBeat(){
         List<Beat> beats = this.beatRepository.findAllBeat();
+        List<BeatResponseDTO> responseDTOS = new ArrayList<>();
         if (beats.isEmpty()) {
             return null;
         } else {
-            return new ArrayList<>(beats);
+            for (Beat i : beats){
+                responseDTOS.add(getDetail(i.getId()));
+            }
+            return new ArrayList<>(responseDTOS);
         }
     }
 
@@ -302,7 +306,6 @@ public class BeatService {
             b.setDescription(b.getDescription());
             b.setUser(getUser(beatEntity.getUserName()));
             beat.add(b);
-
         }
         return beat;
     }

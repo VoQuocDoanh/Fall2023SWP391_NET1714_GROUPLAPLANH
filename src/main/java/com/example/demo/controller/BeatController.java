@@ -34,7 +34,7 @@ public class BeatController {
 
     // List all Beats in US
     @GetMapping("")
-    public ResponseEntity<List<Beat>> findAllBeat() {
+    public ResponseEntity<List<BeatResponseDTO>> findAllBeat() {
         return ResponseEntity.ok(this.beatService.findAllBeat());
     }
 
