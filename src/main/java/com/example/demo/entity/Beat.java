@@ -39,7 +39,12 @@ public class Beat {
 
     @Column (length = Integer.MAX_VALUE)
     @Lob
-    private byte[] beatSound;
+    private byte[] beatSoundDemo;
+
+    @Column (length = Integer.MAX_VALUE)
+    @Lob
+    private byte[] beatSoundFull;
+
 
     @Column
     private String description;
@@ -100,12 +105,12 @@ public class Beat {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Beat(Long id, String beatName, byte[] beatSound, Double price, int status, Order orderBeat, LocalDateTime createdAt,int totalLike, int view) {
+    public Beat(Long id, String beatName, byte[] beatSoundDemo, Double price, int status, Order orderBeat, LocalDateTime createdAt, int totalLike, int view) {
         this.Id=id;
         this.beatName = beatName;
         this.price = price;
         this.status=status;
-        this.beatSound = beatSound;
+        this.beatSoundDemo = beatSoundDemo;
         this.orderBeat = orderBeat;
         this.createdAt = createdAt;
         this.totalLike = totalLike;
@@ -113,11 +118,12 @@ public class Beat {
        // this.beatLike = beatLike;
     }
 
-    public Beat(String beatName, Double price, byte[] beatSound, String description, int totalLike, int view, User userName, Set<Genre> genresofbeat, int status, int cmt,double rating, int totalRating, String vocalRange) {
+    public Beat(String beatName, Double price, byte[] beatSoundDemo,byte[] beatSoundFull, String description, int totalLike, int view, User userName, Set<Genre> genresofbeat, int status, int cmt, double rating, int totalRating, String vocalRange) {
         this.beatName = beatName;
         this.price = price;
         this.status = status;
-        this.beatSound = beatSound;
+        this.beatSoundDemo = beatSoundDemo;
+        this.beatSoundFull = beatSoundFull;
         this.description = description;
         this.totalLike = totalLike;
         this.view = view;
@@ -130,6 +136,6 @@ public class Beat {
     }
 
     public String toString() {
-        return "Beat{Id=" + this.Id + ", beatName='" + this.beatName + "', price=" + this.price + ", status=" + this.status + ", beatSound='" + this.beatSound + "', userName=" + this.userName + "}";
+        return "Beat{Id=" + this.Id + ", beatName='" + this.beatName + "', price=" + this.price + ", status=" + this.status + ", beatSound='" + this.beatSoundDemo + "', userName=" + this.userName + "}";
     }
 }
