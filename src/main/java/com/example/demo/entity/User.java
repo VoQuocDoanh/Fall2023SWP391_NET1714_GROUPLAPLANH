@@ -98,16 +98,11 @@ public class User implements UserDetails {
     )
     private Set<Beat> beatSet = new HashSet<>();
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+
+
+    @OneToMany(mappedBy = "userRatingBeat")
     @JsonIgnore
-    @JoinTable(
-            name = "RatingBeat",
-            joinColumns = {@JoinColumn(
-                    name = "userId")},
-            inverseJoinColumns = {@JoinColumn(
-                    name = "beatId")}
-    )
-    private Set<Beat> beatRating = new HashSet<>();
+    private Set<BeatRating> beatRatings;
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JsonIgnore

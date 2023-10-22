@@ -197,26 +197,7 @@ public class BeatService {
         return new ResponseEntity<>("Update Failed", HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<String> ratingBeat(Long id1, Long id2, BeatDTO beatDTO) {
-        Optional<User> foundUser = this.userRepository.findById(id1);
-        Optional<Beat> beat = this.beatRepository.findById(id2);
-        Beat foundBeat = beatRepository.findBeatById(id2);
-        Set<Beat> b = foundUser.get().getBeatRating();
-        List<Long> t= beatRepository.findUserRating(id1);
-        for (Long i : t){
-            if (id2.equals(i)) {
 
-                foundUser.get().setBeatRating(b);
-                userRepository.save(foundUser.get());
-                return new ResponseEntity<>("Rerating!", HttpStatus.NOT_IMPLEMENTED);
-            }
-        }
-        b.add(foundBeat);
-        beat.get().setRating((beat.get().getRating() * beat.get().getTotalRating() + beatDTO.getRating())/(beat.get().getTotalRating()+1));
-        beat.get().setTotalRating( beat.get().getTotalRating() + 1);
-        beatRepository.save(beat.get());
-        return  new ResponseEntity<>("rating!", HttpStatus.OK);
-    }
 
     public ResponseEntity<String> likeBeat(Long id1, Long id2) {
         Optional<User> foundUser = this.userRepository.findById(id1);
@@ -328,4 +309,5 @@ public class BeatService {
         }
         return beat;
     }
+
 }

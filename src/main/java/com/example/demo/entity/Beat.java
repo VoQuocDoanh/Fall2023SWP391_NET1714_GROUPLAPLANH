@@ -80,8 +80,9 @@ public class Beat {
     @ManyToMany(mappedBy = "beatSet",cascade = {CascadeType.ALL})
     private Set<User> userSet = new HashSet<>();
 
-    @ManyToMany(mappedBy = "beatRating",cascade = {CascadeType.ALL})
-    private Set<User> userRating = new HashSet<>();
+    @OneToMany (mappedBy = "beatRating")
+    @JsonIgnore
+    private Set<BeatRating> beatRatings;
 
     @ManyToMany
     @JsonIgnore
@@ -95,15 +96,16 @@ public class Beat {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
+
 
     @OneToMany (mappedBy = "beatComment")
     @JsonIgnore
     private Set<BeatComment> beatComment;
 
-    @PrePersist
-    public void prePersist() {
-        this.createdAt = LocalDateTime.now();
-    }
 
     public Beat(Long id, String beatName, byte[] beatSoundDemo, Double price, int status, Order orderBeat, LocalDateTime createdAt, int totalLike, int view) {
         this.Id=id;
