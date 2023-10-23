@@ -1,28 +1,41 @@
+@import url('https://fonts.cdnfonts.com/css/sono');
+
 body {
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-
     background: #ffffff;
-    font-size: 24px;
+    font-size: 29px;
 }
-.sidebar {
-    background: #a8d5e5;
-    height: 1067px;
+
+.side-bar {
+    background-color:#06c ;
+    height: 790px;
     margin-top: -154px;
+    width: 350px;
+    margin-bottom: -1330px;
+    border-radius: 30px;
+    outline: 2px solid white;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0; 
 }
-.sidebar >.aside{
-    width: 900px;
-}
+
 h1 {
     color: #165a72;
     margin: 50px auto;
     font-size: 40px;
 }
+
 .menu1 {
     margin-bottom: 40px;
     margin-top: 20px;
 }
+
 h2 {
     color: #165a72;
+}
+
+.menu-item {
+    margin-top: 300px;
 }

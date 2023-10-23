@@ -5,7 +5,7 @@
     font-family: Sono;
 }
 .list-header {
-    margin-top: 170px;
+    margin-top: 670px;
     margin-bottom: 170px;
 }
 
@@ -13,8 +13,8 @@
     margin-top: 12px;
     display: grid;
     grid-gap: 36px;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    margin-left: 50px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin-left: 380px;
     margin-right: 50px;
 }
 
@@ -107,7 +107,7 @@
     padding-bottom: 40px;
     letter-spacing: .15em;
     font-size: 80px;
-    margin-left: -80px;
+    margin-right: 400px;
 }
 
 .text-welcome {
@@ -152,8 +152,9 @@
 .icon-shopping {
     display: flex;
     justify-content: space-between;
-    margin-left: 60px;
-    margin-right: 60px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: 180px;
 
     .cart-icon {
         margin-top: 25px;
@@ -180,11 +181,11 @@
     gap: 10px;
     background-color: #06c;
     outline: 1px solid white;
-    position: fixed;
-    top: 647px;
-    left: 20px;
-    width: 2500px;
-    margin-left: -20px;
+    // position: fixed;
+    // top: 647px;
+    // left: 20px;
+    // width: 2500px;
+    // margin-left: -20px;
 
     .icon {
         display: none;

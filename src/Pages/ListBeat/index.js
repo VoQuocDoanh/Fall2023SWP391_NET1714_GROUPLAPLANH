@@ -11,6 +11,7 @@ import { faChevronLeft, faChevronRight, faPause, faPlay, faPlayCircle, faRedo, f
 import audio from "../../assets/audio";
 import { ShopContext } from "../../context/shop-context";
 import axiosInstance from "../../authorization/axiosInstance";
+import Sidebar from "../../components/SideBar";
 const cx = classNames.bind(styles);
 const DATA = [
     {
@@ -246,11 +247,11 @@ function ListBeat() {
 
     return (
         <div className={cx("list-header")}>
+            <Sidebar></Sidebar>
             <div className={cx("text-header")}>
                 <h1 className={cx("text-welcome")}>
                     Welcome To Our Beat
                 </h1>
-
             </div>
             <div className={cx("icon-shopping")}>
                 <Button>
@@ -320,6 +321,7 @@ function ListBeat() {
                 </audio>
 
             </div>
+            
         </div>
 
     );
