@@ -54,6 +54,10 @@ public class BeatResponseDTO {
         this.description = description;
     }
 
+    public BeatResponseDTO(String beatName) {
+        this.beatName = beatName;
+    }
+
     @Override
     public String toString() {
         return "BeatDTO{" +
