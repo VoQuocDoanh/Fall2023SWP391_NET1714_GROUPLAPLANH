@@ -67,10 +67,6 @@ public class Song {
     @JoinColumn(name = "userUploadSong")
     private User userUploadSong;
 
-    @OneToMany(mappedBy = "feedbackSong")
-    @JsonIgnore
-    @JsonInclude(Include.NON_NULL)
-    private List<FeedbackSong> feedbackSongs = new ArrayList();
 
     @ManyToMany(mappedBy = "likedSongs",cascade = {CascadeType.ALL})
     private Set<User> likedByUsers = new HashSet<>();
@@ -109,11 +105,6 @@ public class Song {
         this.userUploadSong = userUploadSong;
     }
 
-    @JsonIgnore
-    public void setFeedbackSongs(final List<FeedbackSong> feedbackSongs) {
-        this.feedbackSongs = feedbackSongs;
-    }
-
     public Song(String songname, String author, String tone, String description, String vocalRange, String songUrl, User userUploadSong, Set<Genre> genresofsong,Set<ChordBasic> chordsofsong, int totalLike, int view, int status) {
         this.songname = songname;
         this.author = author;
@@ -142,7 +133,6 @@ public class Song {
                 ", songUrl='" + songUrl + '\'' +
                 ", status=" + status +
                 ", userUploadSong=" + userUploadSong +
-                ", feedbackSongs=" + feedbackSongs +
                 ", genres=" + genresofsong +
                 ", chordsofsong=" + chordsofsong +
                 '}';

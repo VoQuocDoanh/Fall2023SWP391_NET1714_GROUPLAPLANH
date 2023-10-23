@@ -5,6 +5,7 @@
 
 package com.example.demo.entity;
 
+import com.example.demo.dto.Feedback;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -81,12 +82,6 @@ public class User implements UserDetails {
     @JsonInclude(Include.NON_NULL)
     private List<Song> songs = new ArrayList();
 
-    @OneToMany(mappedBy = "userFeedback")
-    @JsonIgnore
-    @JsonInclude(Include.NON_NULL)
-    private List<FeedbackSong> feedbackSongs = new ArrayList();
-
-
     @ManyToMany(cascade = {CascadeType.ALL})
     @JsonIgnore
     @JoinTable(
@@ -123,6 +118,10 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "userCommentBeat")
     @JsonIgnore
     private Set<BeatComment> beatComments;
+
+    @OneToMany(mappedBy = "userFeedback")
+    @JsonIgnore
+    private Set<Feedback> beatFeedback;
 
     @OneToOne (cascade = CascadeType.ALL)
     @JsonIgnore

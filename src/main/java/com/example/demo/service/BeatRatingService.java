@@ -44,4 +44,5 @@ public class BeatRatingService {
             beatRepository.save(beat.get());
         return new ResponseEntity<>("Rating!", HttpStatus.OK);
     }
+
 }

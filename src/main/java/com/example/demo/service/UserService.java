@@ -51,7 +51,8 @@ public class UserService {
                         userDTO.getRole(),
                         1);
                 if(us.getRole().equals("MS")) {
-                    MusicianInformation information = new MusicianInformation(userDTO.getProfessional(),
+                    MusicianInformation information = new MusicianInformation(
+                            userDTO.getProfessional(),
                             userDTO.getPrize(),
                             userDTO.getYear()
                     );
@@ -100,15 +101,16 @@ public class UserService {
         }
     }
 
-    public ResponseEntity<String> updateInfomation(User newUser, Long id){
+    public ResponseEntity<String> updateInfomation(UserDTO newUser, Long id){
         Optional<User> foundUser = this.userRepository.findById(id);
         if(foundUser.isPresent()) {
             User user = foundUser.get();
             user.setFullName(newUser.getFullName());
-            user.setGender(newUser.getGender());
+            user.setGender(User.Gender.valueOf(newUser.getGender()));
             user.setMail(newUser.getMail());
-            user.setPhoneNumber(newUser.getPhoneNumber());
+            user.setPhoneNumber(newUser.getPhone());
             user.setAddress(newUser.getAddress());
+
             this.userRepository.save(user);
             return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
         }else {

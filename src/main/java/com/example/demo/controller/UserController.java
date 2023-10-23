@@ -5,6 +5,7 @@
 
 package com.example.demo.controller;
 
+import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserResponeDTO;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
@@ -22,7 +23,7 @@ public class UserController {
 
     // Edit information (fullname, password, address...)
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateInformation(@Valid @RequestBody User user, @PathVariable Long id){
+    public ResponseEntity<String> updateInformation(@Valid @RequestBody UserDTO user, @PathVariable Long id){
         return this.userService.updateInfomation(user, id);
     }
 
