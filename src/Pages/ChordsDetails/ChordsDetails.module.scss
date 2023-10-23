@@ -1,7 +1,9 @@
 @import url('https://fonts.cdnfonts.com/css/newsreader-2');
 @import url('https://fonts.cdnfonts.com/css/inter');
 @import url('https://fonts.cdnfonts.com/css/sono');
-
+*{
+  font-family: Sono;
+}
 .title
 {
    text-transform: uppercase;

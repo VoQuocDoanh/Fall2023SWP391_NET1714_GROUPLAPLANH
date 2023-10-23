@@ -48,9 +48,9 @@ function Login() {
   return (
     <div className={cx("login-wrapper")}>
       <div className={cx("main")}>
-                <div className={cx("overlay")}></div>
-              <video src={videoBg} autoPlay loop muted ></video>
-            </div>
+        <div className={cx("overlay")}></div>
+        <video src={videoBg} autoPlay loop muted ></video>
+      </div>
       <div className={cx("heading")}>
         <span className={cx("title")}>Do not have an account ?</span>
         <Link to="/register" className={cx("link")}>

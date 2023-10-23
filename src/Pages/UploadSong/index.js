@@ -6,10 +6,24 @@ import { React, useState, useRef, useEffect } from "react";
 import MarkdownPreview from '../../MarkdownPreview';
 import TextArea from "antd/es/input/TextArea";
 
+import IMG_A7 from "../../assets/ImageForChords/Guitar/A/A7.png";
+import IMG_C7 from "../../assets/ImageForChords/Guitar/C/C7.png";
+import IMG_D7 from "../../assets/ImageForChords/Guitar/D/D7.png";
 
 const cx = classNames.bind(styles);
 
-const tone = "[A7]-[C7]-[D7]"
+const TONE = [
+    {
+        name_tone: "[A7]",
+        img: IMG_A7,
+    }, {
+        name_tone: "[C7]",
+        img: IMG_C7,
+    }, {
+        name_tone: "[D7]",
+        img: IMG_D7,
+    }
+]
 function UploadSong() {
     const [valueSearch, setValueSearch] = useState("");
     const [GenreSearch, setGenreSearch] = useState("");
@@ -22,18 +36,47 @@ function UploadSong() {
     const [listTone, setListTone] = useState([]);
     const regValue = useRef(/\[[^\]]{0,6}\]/g);
 
+    /* 
+        [
+            {
+                id: 1,
+                name: 
+                Img: 
+                check: true || false
+            }
+        ]
+
+    */
+
     useEffect(() => {
-        let tmp = postContent.match(regValue.current);
+        let tmp = postContent.match(regValue.current); // Text .....
         if (Array.isArray(tmp)) {
-            setListTone(tmp);
-            const a = tmp.map((item) => {
-                let check = tone.includes(item);
-                if(check) return "da hop le";
-                else return "khong hop le" 
+            const a = tmp.filter((item) => {
+                let index_tone = TONE.findIndex((x) => x.name_tone === item);
+                if (index_tone >= 0) {
+                    let tone = listTone.some((x) => x.name_tone === item);
+                    if (!tone) {
+                        setListTone(prev => [...prev, {
+                            name_tone: TONE[index_tone].name_tone,
+                            img: TONE[index_tone].img,
+                            check: true,
+                        }])
+                    }
+                } else {
+                    let tone = listTone.some((x) => x.name_tone === item);
+                    if(!tone) {
+                        setListTone(prev => [...prev, {
+                            name_tone: item,
+                            img: null,
+                            check: false,
+                        }])
+                    }
+                }
             })
-            console.log(a);
         }
     }, [postContent])
+
+    console.log(listTone)
 
     return (
         <div className={cx('page-content')}> {/* trang tổng */}
@@ -125,15 +168,20 @@ function UploadSong() {
                             <span>Hợp âm:</span>
                         </div>
                         <h2><b>Hợp âm sử dụng:</b></h2>
-                        <div style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap" }}>
-                            {listTone.map((item, index) => <span key={index} style={{ fontSize: 20 }}>{item}</span>)}
+                        <div style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap" }} className={cx("list-tone")}>
+                            {listTone.map((item, index) => <span key={index} style={{ fontSize: 20 }}>
+                                <div className={cx("tone-item")}>
+                                    <h5 className={cx("name-tone")}>{item.name_tone}</h5>
+                                    {item.img ? <img src={item.img} alt={item.name_tone} /> : <span>Hop am chua ho tro</span>}
+                                </div>
+                            </span>)}
                         </div>
                         <div className={cx('blue-header')}>
                             <h4>Xem trước</h4>
                         </div>
                         <div className={cx('review-panel')}>
                             <hr />
-                            <MarkdownPreview markdown={postContent} />
+                            <MarkdownPreview inputProps={{ maxLength: 1200 }} markdown={postContent} />
                         </div>
                         <div className={cx('grid-5-alpha')}>
                             <div className={cx('song-authors')}>

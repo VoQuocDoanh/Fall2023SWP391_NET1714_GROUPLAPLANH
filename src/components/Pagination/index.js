@@ -15,10 +15,9 @@ export default function PaginationControlled() {
 
   return (
     <div className={cx("pagination")}>
-        <Stack className={cx("pagination-part")} spacing={2}>
-          <Typography className={cx("page")}>Page: {page}</Typography>
-          <Pagination className={cx("paging")} count={10} page={page} onChange={handleChange} size="large" style={{ fontSize: "20" }} variant="outlined" color="secondary" showFirstButton showLastButton/>
-        </Stack>
+      <Stack className={cx("pagination-part")} spacing={2}>
+        <Pagination className={cx("count-page")} count={10} page={page} size="large" onChange={handleChange} variant="outlined" />
+      </Stack>
     </div>
   );
 }

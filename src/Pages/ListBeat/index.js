@@ -316,7 +316,6 @@ function ListBeat() {
                     <input id="progress" className={cx("progress")} type="range" value="0" step="1" min="0" max="100" />
                     <span className={cx("end")}>0:00</span>
                 </div>
-
                 <audio id="audio" ref={audioRef} src={srcMusic}>
                 </audio>
 

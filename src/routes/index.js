@@ -20,6 +20,7 @@ import Uploadsong from "../Pages/UploadSong";
 import MusicianProfile from "../Pages/MusicianProfile";
 import AdminProfile from "../Pages/AdminProfile";
 import ViewDetailSong from "../Pages/ViewDetailSong";
+import ListUser2 from "../Pages/ListUser2";
 const publicRoutes = [
   {
     path: "/",
@@ -105,17 +106,14 @@ const publicRoutes = [
   {
     path: "/adminprofile",
     component: AdminProfile,
-<<<<<<< HEAD
-  },
-  {
-    path: "/viewdetailsong",
-    component: ViewDetailSong,
-=======
->>>>>>> 32c95c24e186362d91ab88c80ce328a0dc8473ee
   },
   {
     path: "/viewdetailsong",
     component: ViewDetailSong,  
+  },
+  {
+    path: "/listuser2",
+    component: ListUser2,  
   }
 ];
 

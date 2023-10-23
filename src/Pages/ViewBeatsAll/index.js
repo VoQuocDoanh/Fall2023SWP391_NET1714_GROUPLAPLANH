@@ -6,6 +6,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { faChevronLeft, faChevronRight, faPause, faPlay, faPlayCircle, faRedo, faStepBackward, faStepForward } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "bootstrap";
 import ListBeat2 from "../ListBeat2";
+import SideBar from "../../components/SideBar";
 const cx = classNames.bind(styles);
 const DATA = [
     {
@@ -34,6 +35,7 @@ function ViewBeatsAll() {
     }, [search])
     return (
         <div className={cx("all")}>
+
             <div className={cx("searchBox")}>
                 <input className={cx("searchInput")} type="text" placeholder="Search Beat..." value={search} onChange={handleSearch} />
                 <button className={cx("searchButton")} href="#">
@@ -67,6 +69,7 @@ function ViewBeatsAll() {
                     </div>
                 </div>
             </div>
+            <SideBar></SideBar>
         </div>
     );
 }

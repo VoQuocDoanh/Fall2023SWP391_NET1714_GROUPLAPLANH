@@ -17,13 +17,13 @@ function ViewDetailBeat() {
     const audioRef = useRef();
     const navigate = useNavigate();
     const [list, setList] = useState([]);
-    useEffect(() => {
-        if (play) {
-            audioRef.current.play();
-        } else {
-            audioRef.current.pause();
-        }
-    }, [play])
+    // useEffect(() => {
+    //     if (play) {
+    //         audioRef.current.play();
+    //     } else {
+    //         audioRef.current.pause();
+    //     }
+    // }, [play])
 
     useEffect(() => {
         loadBeats();
@@ -293,35 +293,6 @@ function ViewDetailBeat() {
                         <option value="Oldest comment">Oldest comment</option>
                     </select>
                 </div>
-            </div>
-            <div className={cx("audio")}>
-                <div className={cx("image-audio")}>
-                    <img className={cx("trending-ellipse")} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")}>
-                    </img>
-                </div>
-                <div className={cx("control")}>
-                    <div className={cx("btn", "btn-prev")}>
-                        <i class="fas fa-step-backward"></i>
-                        <FontAwesomeIcon icon={faStepBackward} />
-                    </div>
-                    <div className={cx("btn", "btn-toggle-play")} onClick={() => setPlay(!play)}>
-                        <FontAwesomeIcon icon={faPause} className={cx("icon-pause", "icon", {
-                            "play": play === true,
-                        })} />
-                        <FontAwesomeIcon icon={faPlay} className={cx("icon-play", "icon", {
-                            "play": play === false,
-                        })} />
-                    </div>
-                    <div className={cx("btn", "btn-next")}>
-                        <FontAwesomeIcon icon={faStepForward} />
-                    </div>
-                </div>
-                <div className={cx("time-audio")}>
-                    <span className={cx("start")}>0:00</span>
-                    <input id="progress" className={cx("progress")} type="range" value="0" step="1" min="0" max="100" />
-                    <span className={cx("end")}>0:00</span>
-                </div>
-                <audio id="audio" ref={audioRef} src={music}></audio>
             </div>
         </div>
 

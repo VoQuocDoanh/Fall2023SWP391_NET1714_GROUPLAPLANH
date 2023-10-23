@@ -1,59 +1,81 @@
-// import { Link } from "react-router-dom";
-// import classNames from "classnames/bind";
-// import React, { useMemo } from "react";
-// import { useState } from "react";
-// import styles from "./ListUser.module.scss";
-// import BasicPagination from "../../components/Pagination";
-// import PaginationControlled from "../../components/Pagination";
-// import ReactPaginate from 'react-paginate';
-// import Table from '@mui/material/Table';
-// import TableBody from '@mui/material/TableBody';
-// import TableCell from '@mui/material/TableCell';
-// import TableContainer from '@mui/material/TableContainer';
-// import TableHead from '@mui/material/TableHead';
-// import TableRow from '@mui/material/TableRow';
-// import Paper from '@mui/material/Paper';
-// const cx = classNames.bind(styles);
-// function ListUSer2(name, calories, fat, carbs, protein) {
-//     return (name, calories, fat, carbs, protein);
-// }
-// const rows = [
-//     createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-//     createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-//     createData('Eclair', 262, 16.0, 24, 6.0),
-//     createData('Cupcake', 305, 3.7, 67, 4.3),
-//     createData('Gingerbread', 356, 16.0, 49, 3.9),
-// ];
-// export default function ListUser2() {
-//     return (
-//       <TableContainer component={Paper}>
-//         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-//           <TableHead>
-//             <TableRow>
-//               <TableCell>Dessert (100g serving)</TableCell>
-//               <TableCell align="right">Calories</TableCell>
-//               <TableCell align="right">Fat&nbsp;(g)</TableCell>
-//               <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-//               <TableCell align="right">Protein&nbsp;(g)</TableCell>
-//             </TableRow>
-//           </TableHead>
-//           <TableBody>
-//             {rows.map((row) => (
-//               <TableRow
-//                 key={row.name}
-//                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-//               >
-//                 <TableCell component="th" scope="row">
-//                   {row.name}
-//                 </TableCell>
-//                 <TableCell align="right">{row.calories}</TableCell>
-//                 <TableCell align="right">{row.fat}</TableCell>
-//                 <TableCell align="right">{row.carbs}</TableCell>
-//                 <TableCell align="right">{row.protein}</TableCell>
-//               </TableRow>
-//             ))}
-//           </TableBody>
-//         </Table>
-//       </TableContainer>
-//     );
-//   }
+import React from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import styles from "./ListUser2.module.scss";
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import classNames from "classnames/bind";
+import PaginationControlled from '../../components/Pagination';
+import { useState } from 'react';
+
+const cx = classNames.bind(styles);
+
+function createData(id, name, beatsound, datecrate, status) {
+    return { id, name, beatsound, datecrate, status };
+}
+
+const rows = [
+    createData('1', 'Doanh', 'BeatSound', '10-10-2010', 'Active'),
+    createData('2', 'Doanh', 'BeatSound', '10-10-2010', 'Active'),
+    createData('3', 'Doanh', 'BeatSound', '10-10-2010', 'Active'),
+    createData('4', 'Doanh', 'BeatSound', '10-10-2010', 'Active'),
+    createData('5', 'Doanh', 'BeatSound', '10-10-2010', 'Active'),
+    createData('6', 'Doanh', 'BeatSound', '10-10-2010', 'Active'),
+    createData('7', 'Doanh', 'BeatSound', '10-10-2010', 'Active'),
+    createData('8', 'Doanh', 'BeatSound', '10-10-2010', 'Active'),
+    createData('9', 'Doanh', 'BeatSound', '10-10-2010', 'Active'),
+    createData('10', 'Doanh', 'BeatSound', '10-10-2010', 'Active'),
+];
+
+export default function ListUser2() {
+    // const getUsers = async () => {
+    //     let res = await fetchAllUsers();
+    //     if (res && res.rows) {
+    //         console.log(res)
+    //         setTotalUsers(res.total)
+    //         setListUsers(set.rows)
+    //     }
+    // }
+    // const [totalUsers, setTotalUsers] = useState(0);
+    // const [listUsers, setListUsers] = useState([]);
+    return (
+        <div className={cx("table")}>
+            <h2 className={cx("header-text")}>
+                List User
+            </h2>
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell style={{ fontSize: '20px', fontWeight: '500' }}>ID</TableCell>
+                            <TableCell style={{ fontSize: '20px', fontWeight: '500' }} align="right">Name&nbsp;</TableCell>
+                            <TableCell style={{ fontSize: '20px', fontWeight: '500' }} align="right">BeatSound&nbsp;</TableCell>
+                            <TableCell style={{ fontSize: '20px', fontWeight: '500' }} align="right">Date create&nbsp;</TableCell>
+                            <TableCell style={{ fontSize: '20px', fontWeight: '500' }} align="right">Role&nbsp;</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {rows.map((row) => (
+                            <TableRow
+                                key={row.name}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell style={{ fontSize: '17px' }} component="th" scope="row">
+                                    {row.id}
+                                </TableCell>
+                                <TableCell style={{ fontSize: "17px" }} align="right">{row.name}</TableCell>
+                                <TableCell style={{ fontSize: '17px' }} align="right">{row.beatsound}</TableCell>
+                                <TableCell style={{ fontSize: '17px' }} align="right">{row.datecrate}</TableCell>
+                                <TableCell style={{ fontSize: '17px' }} align="right">{row.status}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <PaginationControlled></PaginationControlled>
+        </div>
+    );
+}

@@ -1,21 +1,24 @@
 @import url('https://fonts.cdnfonts.com/css/inter');
+@import url('https://fonts.cdnfonts.com/css/sono');
 .pagination {
     display: flex;
     justify-content: flex-end;
-    margin-right: -320px;
-
-
+    margin-top: 60px;
     .page {
         margin-left: 380px;
-        font-size: 18px;
-        font-family: inter;
-        font-weight: 400;
+        font-weight: 400;   
     }
+    .count-page button {
+        font-size: 17px;
+        font-family: Sono;
+    }
+}
+.count-page{
+    margin-top: -400px;
+    margin-left: -200px;
+   
+}
+.count-page :root{
+    font-family: sono;
+}
 
-    .paging {
-        margin-top: -160px; 
-    }
-}
-.pagination-part{
-    font-size: 20px;
-}
