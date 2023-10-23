@@ -27,4 +27,9 @@ public class FeedbackController {
     public ResponseEntity<String> addFeedback (@RequestBody FeedbackDTO dto){
         return feedbackService.addFeedback(dto);
     }
+
+    @PutMapping("")
+    public ResponseEntity<String> updateFeedBack (@RequestBody FeedbackDTO dto){
+        return feedbackService.updateFeedback (dto);
+    }
 }

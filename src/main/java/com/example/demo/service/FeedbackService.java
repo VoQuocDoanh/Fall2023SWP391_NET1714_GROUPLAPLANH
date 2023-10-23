@@ -77,4 +77,16 @@ public class FeedbackService {
         }
         return feedbackDTOS;
     }
+
+    public ResponseEntity<String> updateFeedback(FeedbackDTO dto) {
+        Optional<Feedback> feedback = feedbackRepository.findById(dto.getId());
+        if (feedback.isPresent()){
+            feedback.get().setContent(dto.getContent());
+            feedbackRepository.save(feedback.get());
+            return new ResponseEntity<>("Updated!",HttpStatus.OK);
+        }
+        return new ResponseEntity<>("No update",HttpStatus.NOT_IMPLEMENTED);
+    }
+
+
 }
