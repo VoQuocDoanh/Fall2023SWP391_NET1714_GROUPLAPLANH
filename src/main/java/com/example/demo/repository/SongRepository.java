@@ -44,6 +44,6 @@ public interface SongRepository extends JpaRepository<Song, Long> {
     @Query("select s from Song s join s.likedByUsers sl where s.status = 1 and sl.Id = :iduser and s.Id = :idsong")
     Song findSongsLikeByUser(Long iduser, long idsong);
 
-    Optional<Song> findSongbyIdAndStatus(Long id, int status);
+    Optional<Song> findSongByIdAndStatus(Long id, int status);
 
 }

@@ -24,6 +24,7 @@ import java.util.Optional;
 @Service
 public class GenreService {
 
+    @Autowired
     private GenreRepository genreRepository;
 
     public List<Genre> findAllGenre() {

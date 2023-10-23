@@ -30,7 +30,7 @@ public class ChordBasic {
     @Column(name = "ChordName")
     private String chordName;
 
-    @Column(name = "Image")
+    @Column(name = "Image", length = Integer.MAX_VALUE)
     private byte[] image;
 
     @Column(name = "ChordKey")

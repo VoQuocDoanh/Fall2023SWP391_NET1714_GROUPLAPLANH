@@ -161,6 +161,9 @@ public class SongService {
                     chordBasicSet(songDTO),
                     0,
                     0,
+                    0,
+                    0,
+                    0,
                     1);
             this.songRepository.save(song);
             return new ResponseEntity<>("Upload Successfully", HttpStatus.OK);
@@ -362,7 +365,7 @@ public class SongService {
     public ResponseEntity<String> rateSong(SongRatingDTO dto) {
         Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(dto.getUserId(), 1);
         if(foundUser.isPresent()) {
-            Optional<Song> foundSong = this.songRepository.findSongbyIdAndStatus(dto.getSongId(), 1);
+            Optional<Song> foundSong = this.songRepository.findSongByIdAndStatus(dto.getSongId(), 1);
             if (foundSong.isPresent()) {
                 Song song = foundSong.get();
                 Optional<SongRating> foundRating = this.songRatingRepository.findSongRatingBySongRatingAndRateByUsers(song, foundUser.get());

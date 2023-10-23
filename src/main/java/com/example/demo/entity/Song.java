@@ -56,19 +56,19 @@ public class Song {
     @Column(name = "Status")
     private int status;
 
-    @Column
+    @Column(name = "totalLike")
     private int totalLike ;
 
-    @Column
+    @Column(name = "view")
     private int view;
 
-    @Column
+    @Column(name = "rating")
     private double rating;
 
-    @Column
+    @Column(name = "totalUserRating")
     private int totalUserRating;
 
-    @Column
+    @Column(name = "cmt")
     private int cmt;
 
     @ManyToOne
@@ -122,7 +122,7 @@ public class Song {
         this.userUploadSong = userUploadSong;
     }
 
-    public Song(String songname, String author, String tone, String description, String vocalRange, String songUrl, User userUploadSong, Set<Genre> genresofsong,Set<ChordBasic> chordsofsong, int totalLike, int view, int status) {
+    public Song(String songname, String author, String tone, String description, String vocalRange, String songUrl, User userUploadSong, Set<Genre> genresofsong,Set<ChordBasic> chordsofsong, int totalLike, int view, int rating, int totalUserRating, int cmt,int status) {
         this.songname = songname;
         this.author = author;
         this.tone = tone;
@@ -135,6 +135,9 @@ public class Song {
         this.chordsofsong = chordsofsong;
         this.totalLike = totalLike;
         this.view = view;
+        this.rating = rating;
+        this.totalUserRating = totalUserRating;
+        this.cmt = cmt;
     }
 
     @Override

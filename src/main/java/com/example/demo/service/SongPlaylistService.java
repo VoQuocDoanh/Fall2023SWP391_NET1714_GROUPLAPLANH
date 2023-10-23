@@ -29,7 +29,7 @@ public class SongPlaylistService {
     private Set<Song> songSet(PlaylistDTO playlistDTO) {
         Set<Song> songs = new HashSet<>();
         for (Long songid : playlistDTO.getSongids()) {
-            Optional<Song> foundSong = this.songRepository.findSongbyIdAndStatus(songid, 1);
+            Optional<Song> foundSong = this.songRepository.findSongByIdAndStatus(songid, 1);
             if (foundSong.isPresent()) {
                 songs.add(foundSong.get());
             }

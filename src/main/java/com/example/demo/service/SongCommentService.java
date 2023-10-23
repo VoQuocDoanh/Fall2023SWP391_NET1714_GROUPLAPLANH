@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.CommentBeatResponseDTO;
 import com.example.demo.dto.CommentSongDTO;
 import com.example.demo.dto.CommentSongResponseDTO;
 import com.example.demo.entity.*;
@@ -16,6 +15,7 @@ import java.util.Optional;
 
 @Service
 public class SongCommentService {
+
     @Autowired
     private SongRepository songRepository;
 
@@ -28,7 +28,7 @@ public class SongCommentService {
     public ResponseEntity<String> commentSong(CommentSongDTO dto) {
         Optional<User> foundUser = userRepository.findUserByIdAndStatus(dto.getUserId(), 1);
         if (foundUser.isPresent()) {
-            Optional<Song> foundSong = this.songRepository.findSongbyIdAndStatus(dto.getSongId(), 1);
+            Optional<Song> foundSong = this.songRepository.findSongByIdAndStatus(dto.getSongId(), 1);
             if (foundSong.isPresent()) {
                 Song song = foundSong.get();
                 Optional<SongComment> foundParentCommnent = this.songCommentRepository.findParentCommentById(dto.getParentId());
@@ -73,7 +73,7 @@ public class SongCommentService {
     public ResponseEntity<String> deleteComment(CommentSongDTO dto) {
         Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(dto.getUserId(), 1);
         if (foundUser.isPresent()) {
-            Optional<Song> foundSound = this.songRepository.findSongbyIdAndStatus(dto.getSongId(), 1);
+            Optional<Song> foundSound = this.songRepository.findSongByIdAndStatus(dto.getSongId(), 1);
             if (foundSound.isPresent()) {
                 Song song = foundSound.get();
                 Optional<SongComment> foundComment = this.songCommentRepository.findSongCommentByIdAndCommentByUsers(dto.getId(), foundUser.get());
@@ -100,7 +100,7 @@ public class SongCommentService {
     }
 
     public List<CommentSongResponseDTO> viewComment(Long id) {
-        Optional<Song> foundSong = this.songRepository.findSongbyIdAndStatus(id, 1);
+        Optional<Song> foundSong = this.songRepository.findSongByIdAndStatus(id, 1);
         if (foundSong.isPresent()) {
             List<SongComment> songComments = this.songCommentRepository.findSongCommentsBySongOfCommentAndParentCommentIsNull(foundSong.get());
             if (!songComments.isEmpty()) {

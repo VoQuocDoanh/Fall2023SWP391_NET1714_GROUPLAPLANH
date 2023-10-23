@@ -41,7 +41,7 @@ public class ChordBasicController {
     }
 
     @PostMapping("")
-    public ResponseEntity<String> uploadChord(@RequestParam("file") MultipartFile image,@Valid @RequestPart("json") ChordDTO chordDTO){
+    public ResponseEntity<String> uploadChord(@RequestPart("file") MultipartFile image,@Valid @RequestPart("json") ChordDTO chordDTO){
         try {
             return this.chordBasicService.uploadChord(image.getBytes(), chordDTO);
         } catch (IOException e) {

@@ -110,11 +110,11 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "rateByUsers")
     @JsonIgnore
-    private Set<BeatRating> rateSongs;
+    private Set<SongRating> rateSongs;
 
     @OneToMany(mappedBy = "commentByUsers")
     @JsonIgnore
-    private Set<BeatRating> commentSongs;
+    private Set<SongComment> commentSongs;
 
     @OneToMany(mappedBy = "userCollection")
     @JsonIgnore
