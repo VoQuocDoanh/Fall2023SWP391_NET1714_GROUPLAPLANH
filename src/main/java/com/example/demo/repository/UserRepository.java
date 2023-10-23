@@ -18,7 +18,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findUserByUsername(String username);
 
+    Optional<User> findUserByUsernameAndStatus(String username, int status);
     List<User> findByOrderByStatusDesc();
+    @Query("select u.mail from User u where u.mail = :mail")
+    Optional<String> findUserMail(String mail);
 
     @Query("SELECT u FROM User u WHERE u.username = :username")
     User findByUsernameDesc(String username);
@@ -31,4 +34,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u FROM User u WHERE u.username like %:username%")
     List<User> searchByUserName(String username);
+    @Query("select a.user from ActivationToken a where a.token = :token")
+    User findByActivationToken(String token);
 }

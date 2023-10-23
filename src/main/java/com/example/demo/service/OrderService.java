@@ -46,7 +46,7 @@ public class OrderService {
         Order newOrder=new Order(beats,user.get(),price);
         orderRepository.save(newOrder);
         setOrderId(newOrder);
-        return new ResponseEntity<>("Order successfullly", HttpStatus.OK);
+        return new ResponseEntity<>("Payment Successfullly", HttpStatus.OK);
     }
 
     private void setOrderId (Order order){

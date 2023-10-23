@@ -7,7 +7,6 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserResponeDTO;
-import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +20,15 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // Edit information (fullname, password, address...)
-    @PutMapping("/{id}")
-    public ResponseEntity<String> updateInformation(@Valid @RequestBody UserDTO user, @PathVariable Long id){
-        return this.userService.updateInfomation(user, id);
+    @GetMapping("/active")
+    public ResponseEntity<String> activeAccount(@Valid @RequestParam("activetoken") String token){
+        return this.userService.activateUserAccount(token);
+    }
+
+    // Update Customer Info
+    @PatchMapping("/customer/{id}")
+    public ResponseEntity<String> updateUserInfo(@Valid @RequestBody UserDTO userDTO, @PathVariable Long id){
+        return this.userService.updateUserInfo(userDTO, id);
     }
 
     // Get detail User
@@ -33,4 +37,9 @@ public class UserController {
         return ResponseEntity.ok(this.userService.getDetailUser_User(id));
     }
 
+    // Update Musician Info
+    @PatchMapping("/musician/{id}")
+    public ResponseEntity<String> updateMusicianInfo(@Valid @RequestBody UserDTO userDTO, @Valid @PathVariable Long id){
+        return this.userService.updateMusicianInfo(userDTO, id);
+    }
 }

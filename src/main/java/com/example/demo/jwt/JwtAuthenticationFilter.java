@@ -26,7 +26,9 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    String secretKey = SecretKey.secret_key;
+
+
+    private final String secretKey = SecretKey.getSecret_key();
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
