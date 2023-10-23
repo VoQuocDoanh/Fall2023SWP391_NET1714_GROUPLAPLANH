@@ -11,12 +11,12 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "BeatRating")
+@Table(name = "SongRating")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BeatRating {
+public class SongRating {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,17 +33,17 @@ public class BeatRating {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn (name = "beatID")
-    private Beat beatRating;
+    @JoinColumn (name = "songId")
+    private Song songRating;
 
     @ManyToOne
     @JsonIgnore
     @JoinColumn (name = "userId")
-    private User userRatingBeat;
+    private User rateByUsers;
 
-    public BeatRating( User userRatingBeat, Beat beatRating,int rating) {
+    public SongRating(User rateByUsers, Song songRating,int rating) {
         this.rating = rating;
-        this.beatRating = beatRating;
-        this.userRatingBeat = userRatingBeat;
+        this.songRating = songRating;
+        this.rateByUsers = rateByUsers;
     }
 }

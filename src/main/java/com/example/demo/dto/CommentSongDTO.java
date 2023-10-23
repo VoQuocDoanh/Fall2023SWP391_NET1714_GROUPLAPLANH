@@ -5,16 +5,14 @@ import lombok.*;
 import java.util.List;
 
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentResponseDTO {
+public class CommentSongDTO {
     private Long id;
     private Long parentId;
     private String content;
     private Long userId;
-    private Long beatId;
+    private Long songId;
     private int status;
-    private List<CommentResponseDTO> subComment;
+    private List<CommentBeatResponseDTO> subComment;
 }

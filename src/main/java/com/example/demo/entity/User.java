@@ -98,8 +98,6 @@ public class User implements UserDetails {
     )
     private Set<Beat> beatSet = new HashSet<>();
 
-
-
     @OneToMany(mappedBy = "userRatingBeat")
     @JsonIgnore
     private Set<BeatRating> beatRatings;
@@ -114,6 +112,14 @@ public class User implements UserDetails {
                     name = "songId")}
     )
     private Set<Song> likedSongs = new HashSet<>();
+
+    @OneToMany(mappedBy = "rateByUsers")
+    @JsonIgnore
+    private Set<BeatRating> rateSongs;
+
+    @OneToMany(mappedBy = "commentByUsers")
+    @JsonIgnore
+    private Set<BeatRating> commentSongs;
 
     @OneToMany(mappedBy = "userCollection")
     @JsonIgnore

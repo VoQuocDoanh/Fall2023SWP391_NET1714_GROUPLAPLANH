@@ -1,8 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.PlaylistDTO;
-import com.example.demo.dto.SongDTO;
-import com.example.demo.entity.Genre;
 import com.example.demo.entity.Song;
 import com.example.demo.entity.SongPlaylist;
 import com.example.demo.entity.User;
@@ -10,7 +8,6 @@ import com.example.demo.repository.SongPlaylistRepository;
 import com.example.demo.repository.SongRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -32,9 +29,9 @@ public class SongPlaylistService {
     private Set<Song> songSet(PlaylistDTO playlistDTO) {
         Set<Song> songs = new HashSet<>();
         for (Long songid : playlistDTO.getSongids()) {
-            Song song = this.songRepository.findSongbyId(songid);
-            if (song != null) {
-                songs.add(song);
+            Optional<Song> foundSong = this.songRepository.findSongbyIdAndStatus(songid, 1);
+            if (foundSong.isPresent()) {
+                songs.add(foundSong.get());
             }
         }
         return songs;

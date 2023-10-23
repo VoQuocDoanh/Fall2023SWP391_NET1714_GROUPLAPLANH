@@ -44,7 +44,7 @@ public class Song {
     @Column(name = "Tone")
     private String tone;
 
-    @Column(name = "Description")
+    @Column(name = "Description",columnDefinition = "LONGTEXT")
     private String description;
 
     @Column(name = "VocalRange")
@@ -61,6 +61,15 @@ public class Song {
 
     @Column
     private int view;
+
+    @Column
+    private double rating;
+
+    @Column
+    private int totalUserRating;
+
+    @Column
+    private int cmt;
 
     @ManyToOne
     @JsonIgnore
@@ -98,6 +107,14 @@ public class Song {
 
     @ManyToMany(mappedBy = "songsinplaylist",cascade = {CascadeType.ALL})
     private Set<SongPlaylist> playlists = new HashSet<>();
+
+    @OneToMany (mappedBy = "songRating")
+    @JsonIgnore
+    private Set<SongRating> songRatings;
+
+    @OneToMany (mappedBy = "songOfComment")
+    @JsonIgnore
+    private Set<SongComment> songComments;
 
     @PrePersist
     public void prePersist() {

@@ -6,8 +6,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.SongDTO;
+import com.example.demo.dto.SongRatingDTO;
 import com.example.demo.dto.SongResponseDTO;
-import com.example.demo.entity.Song;
 import com.example.demo.service.SongService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,9 +90,15 @@ public class SongController {
         return ResponseEntity.ok(this.songService.findSongByUserName(username));
     }
 
-    // Like Test
+    // Like Song
     @PostMapping("/like/{id1}/{id2}")
     public  ResponseEntity<String> likeBeat(@PathVariable Long id1, @PathVariable Long id2){
         return this.songService.likeSong(id1, id2);
+    }
+
+    // Rate Song
+    @PostMapping("/rate")
+    public ResponseEntity<String> rateSong (@Valid @RequestBody SongRatingDTO dto){
+        return this.songService.rateSong(dto);
     }
 }

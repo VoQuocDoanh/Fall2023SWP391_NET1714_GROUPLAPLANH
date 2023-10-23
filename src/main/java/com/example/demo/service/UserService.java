@@ -66,7 +66,7 @@ public class UserService {
                     this.userRepository.save(user);
                     this.emailService.sendEmail(userDTO.getMail(),
                             "Activate Your Account",
-                            "http://localhost:8080/api/v1/user/active?activetoken=" + token);
+                            "http://localhost:3000/registeractivation?activetoken=" + token);
                     if (user.getRole().equals("MS")) {
                         MusicianInformation information = new MusicianInformation();
                         user.setInformation(information);
@@ -131,24 +131,6 @@ public class UserService {
         }
     }
 
-    // Update User Info
-    public ResponseEntity<String> updateUserInfo(UserDTO userDTO, Long id) {
-        Optional<User> foundUser = this.userRepository.findById(id);
-        if (foundUser.isPresent()) {
-            User.Gender gender = User.Gender.valueOf(userDTO.getGender());
-            User user = foundUser.get();
-            user.setFullName(userDTO.getFullName());
-            user.setGender(gender);
-            user.setMail(userDTO.getMail());
-            user.setPhoneNumber(userDTO.getPhone());
-            user.setAddress(userDTO.getAddress());
-            this.userRepository.save(user);
-            return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Update Failed", HttpStatus.NOT_IMPLEMENTED);
-        }
-    }
-
     // Update Admin Info
     public ResponseEntity<String> updateAdminInfo(UserDTO userDTO, Long id) {
         Optional<User> foundUser = this.userRepository.findById(id);
@@ -164,6 +146,23 @@ public class UserService {
         }
     }
 
+    // Update User Info
+    public ResponseEntity<String> updateUserInfo(UserDTO userDTO, Long id) {
+        Optional<User> foundUser = this.userRepository.findById(id);
+        if (foundUser.isPresent()) {
+            User.Gender gender = User.Gender.valueOf(userDTO.getGender());
+            User user = foundUser.get();
+            user.setFullName(userDTO.getFullName());
+            user.setGender(gender);
+            user.setPhoneNumber(userDTO.getPhone());
+            user.setAddress(userDTO.getAddress());
+            this.userRepository.save(user);
+            return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Update Failed", HttpStatus.NOT_IMPLEMENTED);
+        }
+    }
+
     // Update Musician Info
     public ResponseEntity<String> updateMusicianInfo(UserDTO userDTO, Long id) {
         Optional<User> foundUser = this.userRepository.findById(id);
@@ -172,7 +171,6 @@ public class UserService {
             User user = foundUser.get();
             user.setFullName(userDTO.getFullName());
             user.setGender(gender);
-            user.setMail(userDTO.getMail());
             user.setPhoneNumber(userDTO.getPhone());
             user.setAddress(userDTO.getAddress());
             MusicianInformation information = user.getInformation();

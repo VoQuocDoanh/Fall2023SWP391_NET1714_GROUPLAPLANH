@@ -17,7 +17,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findUserByUsername(String username);
-
+    Optional<User> findUserByIdAndStatus(Long id, int status);
     Optional<User> findUserByUsernameAndStatus(String username, int status);
     List<User> findByOrderByStatusDesc();
     @Query("select u.mail from User u where u.mail = :mail")
@@ -36,4 +36,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> searchByUserName(String username);
     @Query("select a.user from ActivationToken a where a.token = :token")
     User findByActivationToken(String token);
+
 }
