@@ -64,14 +64,19 @@ public class SongService {
         } else {
             List<ChordResponseDTO> chordResponseDTOS = new ArrayList<>();
             for (String value : chords) {
-                ChordBasic basic = this.chordBasicRepository.findByChordName(value);
-                chordResponseDTOS.add(new ChordResponseDTO(basic.getChordId(),
-                        basic.getChordName(),
-                        Base64.decodeBase64(basic.getImage()),
-                        basic.getChordKey(),
-                        basic.getSuffix(),
-                        basic.getType(),
-                        basic.getDescription()));
+                List<ChordBasic> basics = this.chordBasicRepository.findByChordName(value);
+                if(!basics.isEmpty()){
+                    for (ChordBasic basic : basics) {
+                        chordResponseDTOS.add(new ChordResponseDTO(basic.getChordId(),
+                                basic.getChordName(),
+                                Base64.decodeBase64(basic.getImage()),
+                                basic.getChordKey(),
+                                basic.getSuffix(),
+                                basic.getType(),
+                                basic.getDescription()));
+                    }
+                }
+
             }
             return chordResponseDTOS;
         }
@@ -90,9 +95,9 @@ public class SongService {
         } else {
             Set<ChordBasic> chords = new HashSet<>();
             for (String value : scanned) {
-                ChordBasic basic = this.chordBasicRepository.findByChordName(value);
-                if (basic != null) {
-                    chords.add(basic);
+                List<ChordBasic> basics = this.chordBasicRepository.findByChordName(value);
+                if (!basics.isEmpty()) {
+                    chords.addAll(basics);
                 }
             }
             return chords;
