@@ -96,7 +96,7 @@ function Login() {
           />
         </div>
         {error.username && (
-          <p style={{ color: "red",paddingLeft: 5 }}>
+          <p style={{ color: "red",paddingLeft: 5 , marginBottom: -210}}>
             {error.username}
           </p>
         )}
@@ -124,7 +124,7 @@ function Login() {
           />
         </div>
         {error.password && (
-          <p style={{ color: "red",paddingLeft: 5 }}>
+          <p style={{ color: "red",paddingLeft: 5 , marginBottom: -210}}>
             {error.password}
           </p>
         )}
@@ -136,7 +136,7 @@ function Login() {
           />
         </Button>
         {loginMessage && (
-        <p style={{ color: "red",paddingLeft: 5 }}>
+        <p style={{ color: "red",paddingLeft: 5 , marginBottom: -210}}>
           {loginMessage}
         </p>
       )}

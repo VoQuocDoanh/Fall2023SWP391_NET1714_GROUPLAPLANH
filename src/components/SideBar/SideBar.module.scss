@@ -1,5 +1,7 @@
 @import url('https://fonts.cdnfonts.com/css/sono');
-
+* span{
+    font-size: 25px;
+}
 body {
     margin: 0;
     -webkit-font-smoothing: antialiased;
@@ -10,17 +12,17 @@ body {
 
 .sidebar {
     background-color:#06c ;
-    height: 790px;
+    height: 990px;
     margin-top: -154px;
     width: 350px;
-    margin-bottom: -1330px;
+    margin-bottom: -1440px;
     border-radius: 30px;
     outline: 2px solid white;
-    position: -webkit-sticky;
-    position: sticky;
     top: 0; 
 }
-
+.aside-1 aside{
+    width: 350px;
+}
 h1 {
     color: #165a72;
     margin: 50px auto;

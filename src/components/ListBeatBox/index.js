@@ -43,6 +43,8 @@ function ListBeatBox({ id, name, genre, price, view, like, play, setPlay, onClic
                         <span className={cx("number")}>{rating}</span>
                     </span>
                 </div>
+                <audio className={cx("audio")} id="audio" ref={audioRef} controls src={require("../../assets/audio/Good_Times.mp3")}>
+                </audio>
             </div>
             {/* Content right  */}
             <div className={cx("content-right")}>
@@ -53,7 +55,7 @@ function ListBeatBox({ id, name, genre, price, view, like, play, setPlay, onClic
 
             </div>
         </div>
-        <div className={cx("control")}>
+        {/* <div className={cx("control")}>
             <div className={cx("btn", "btn-prev")}>
                 <i className="fas fa-step-backward"></i>
                 <FontAwesomeIcon icon={faStepBackward} />
@@ -70,9 +72,7 @@ function ListBeatBox({ id, name, genre, price, view, like, play, setPlay, onClic
                 <FontAwesomeIcon icon={faStepForward} />
             </div>
 
-        </div>
-        <audio id="audio" ref={audioRef} controls src={require("../../assets/audio/Good_Times.mp3")}>
-                </audio>
+        </div> */}
     </div>);
 }
 export default ListBeatBox

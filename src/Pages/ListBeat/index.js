@@ -336,7 +336,7 @@ function ListBeat() {
                     })}
                 </div> : <div className={cx("sold-out")}> 404 Not Found!<div> Hết Beat Rồi Bạn Ơi!.... </div> </div>}
 
-            <div className={cx("audio")}>
+            {/* <div className={cx("audio")}>
 
                 <div className={cx("control")}>
                     <div className={cx("btn", "btn-prev")}>
@@ -356,13 +356,13 @@ function ListBeat() {
                     </div>
 
                 </div>
-                {/* <div className={cx("time-audio")}>
+                <div className={cx("time-audio")}>
                     <span className={cx("start")}>0:00</span>
                     <input id="progress" className={cx("progress")} type="range" value="0" step="1" min="0" max="100" />
                     <span className={cx("end")}>0:00</span>
-                </div> */}
-            </div>
-            <audio id="audio" ref={audioRef} src={srcMusic}>
+                </div>
+            </div> */}
+            <audio style={{borderRadius: 10}} id="audio" ref={audioRef} src={srcMusic}>
             </audio>
 
         </div>
