@@ -83,7 +83,7 @@ public class Song {
     @ManyToMany(mappedBy = "likedSongs",cascade = {CascadeType.ALL})
     private Set<User> likedByUsers = new HashSet<>();
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JsonIgnore
     @JoinTable(
             name = "GenreSong",

@@ -84,7 +84,7 @@ public class Beat {
     @JsonIgnore
     private Set<BeatRating> beatRatings;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JsonIgnore
     @JoinTable(name = "GenreBeat",
             joinColumns = {@JoinColumn(
@@ -92,7 +92,7 @@ public class Beat {
             inverseJoinColumns = {@JoinColumn(
                     name = "genreId")}
     )
-    private Set<Genre> genresofbeat = new HashSet<>();
+    private Set<Genre>  genresofbeat = new HashSet<>();
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
