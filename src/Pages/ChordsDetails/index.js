@@ -24,21 +24,11 @@ const DATA = [
     },
     {
         type: "Piano",
-        value: [
-            {
-                type: "Piano",
-                img: "https://i0.wp.com/pianohome.vn/wp-content/uploads/2020/10/16-scaled.jpeg",
-            }
-        ],
+        value: PIANO,
     },
     {
         type: "Ukulele",
-        value: [
-            {
-                type: "Ukulele",
-                img: "https://upload.wikimedia.org/wikipedia/commons/5/56/Ukulele1_HiRes.jpg",
-            }
-        ],
+        value: UKULELE,
     },
     {
         type: "All",
