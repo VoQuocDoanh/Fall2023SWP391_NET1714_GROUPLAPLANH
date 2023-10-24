@@ -292,7 +292,7 @@ public class BeatService {
         return new ResponseEntity<>(totalPrice,HttpStatus.OK);
     }
 
-    public List<BeatResponseDTO> beatPurchased(Long id) {
+    public List<BeatResponseDTO> listBeatPurchased(Long id) {
        List<Order> order = orderService.findOrder(id);
         List<BeatResponseDTO> beat = new ArrayList<>();
         BeatResponseDTO b = new BeatResponseDTO();
@@ -300,12 +300,29 @@ public class BeatService {
             Beat beatEntity = (beatRepository.findBeatByOrderBeat(o));
             b.setBeatName(beatEntity.getBeatName());
             b.setPrice(beatEntity.getPrice());
-            b.setBeatSound(beatEntity.getBeatSoundFull());
+        //    b.setBeatSound(beatEntity.getBeatSoundFull());
             b.setDescription(b.getDescription());
             b.setUser(getUser(beatEntity.getUserName()));
             beat.add(b);
         }
         return beat;
+    }
+
+    public BeatResponseDTO getBeatPurchasedDetail(Long id) {
+        Optional<Beat> foundBeat = this.beatRepository.findById(id);
+        if (foundBeat.isPresent()) {
+            Beat beat = foundBeat.get();
+            BeatResponseDTO responseDTO = new BeatResponseDTO();
+            responseDTO.setBeatName(beat.getBeatName());
+            responseDTO.setBeatSound(beat.getBeatSoundFull());
+            responseDTO.setPrice(beat.getPrice());
+            responseDTO.setCreatAt(beat.getCreatedAt());
+            responseDTO.setUser(getUser(beat.getUserName()));
+            responseDTO.setGenres(getGenres(id));
+            responseDTO.setVocalRange(beat.getVocalRange());
+            return responseDTO;
+        }
+        return null;
     }
 
 }

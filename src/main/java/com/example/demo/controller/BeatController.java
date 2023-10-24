@@ -7,7 +7,6 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.BeatDTO;
 import com.example.demo.dto.BeatResponseDTO;
-import com.example.demo.entity.Beat;
 import com.example.demo.service.BeatService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,7 +108,12 @@ public class BeatController {
     //list beat that user bought
     @GetMapping ("user/{id}")
     public ResponseEntity<List<BeatResponseDTO>> beatPurchased (@PathVariable Long id){
-        return ResponseEntity.ok( this.beatService.beatPurchased(id));
+        return ResponseEntity.ok( this.beatService.listBeatPurchased(id));
+    }
+
+    @GetMapping("user/beat/{id}")
+    public ResponseEntity<BeatResponseDTO> getBeatPurchasedDetail(@PathVariable Long id){
+        return ResponseEntity.ok(this.beatService.getBeatPurchasedDetail(id));
     }
 
 }
