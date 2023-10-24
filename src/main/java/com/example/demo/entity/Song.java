@@ -83,14 +83,14 @@ public class Song {
     @ManyToMany(mappedBy = "likedSongs",cascade = {CascadeType.ALL})
     private Set<User> likedByUsers = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JsonIgnore
     @JoinTable(
             name = "GenreSong",
-            joinColumns = {@JoinColumn(
-                    name = "songId")},
-            inverseJoinColumns = {@JoinColumn(
-                    name = "genreId")}
+            joinColumns = @JoinColumn(
+                    name = "songId"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "genreId")
     )
     private Set<Genre> genresofsong = new HashSet<>();
 
