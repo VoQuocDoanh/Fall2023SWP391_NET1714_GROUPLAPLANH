@@ -60,13 +60,13 @@ public class UserService {
                             this.passwordEncoder.encode(userDTO.getPassword()),
                             userDTO.getMail(),
                             userDTO.getRole(),
-                            1);
+                            -1);
                     ActivationToken activationToken = new ActivationToken(token, LocalDateTime.now().plusHours(12), user);
                     user.setActivationToken(activationToken);
                     this.userRepository.save(user);
-              /*      this.emailService.sendEmail(userDTO.getMail(),
+                    this.emailService.sendEmail(userDTO.getMail(),
                             "Activate Your Account",
-                            "http://localhost:3000/registeractivation?activetoken=" + token);*/
+                            "http://localhost:3000/registeractivation?activetoken=" + token);
                     if (user.getRole().equals("MS")) {
                         MusicianInformation information = new MusicianInformation();
                         user.setInformation(information);
