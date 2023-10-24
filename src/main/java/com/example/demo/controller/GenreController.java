@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.GenreDTO;
+import com.example.demo.dto.GenreResponseDTO;
 import com.example.demo.entity.Genre;
 import com.example.demo.service.GenreService;
 import jakarta.validation.Valid;
@@ -20,7 +21,7 @@ public class GenreController {
 
     // List all genres
     @GetMapping("")
-    public ResponseEntity<List<Genre>> getAllGenre(){
+    public ResponseEntity<List<GenreResponseDTO>> getAllGenre(){
         return ResponseEntity.ok(this.genreService.findAllGenre());
     }
 

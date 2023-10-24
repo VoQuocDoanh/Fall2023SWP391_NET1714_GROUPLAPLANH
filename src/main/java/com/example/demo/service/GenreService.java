@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.BeatDTO;
 import com.example.demo.dto.GenreDTO;
+import com.example.demo.dto.GenreResponseDTO;
 import com.example.demo.entity.Beat;
 import com.example.demo.entity.Genre;
 import com.example.demo.entity.User;
@@ -27,13 +28,21 @@ public class GenreService {
     @Autowired
     private GenreRepository genreRepository;
 
-    public List<Genre> findAllGenre() {
+    public List<GenreResponseDTO> findAllGenre() {
         List<Genre> genres = this.genreRepository.findAll();
-        if (genres.isEmpty()) {
-            return null;
-        } else {
-            return new ArrayList<>(genres);
+        if (!genres.isEmpty()) {
+            List<GenreResponseDTO> dtos = new ArrayList<>();
+            for (Genre value : genres) {
+                GenreResponseDTO dto = new GenreResponseDTO(
+                        value.getId(),
+                        value.getName(),
+                        value.getDescription()
+                );
+                dtos.add(dto);
+            }
+            return dtos;
         }
+        return null;
     }
 
     public ResponseEntity<String> addGerne (GenreDTO genreDTO){

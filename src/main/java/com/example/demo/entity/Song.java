@@ -87,10 +87,10 @@ public class Song {
     @JsonIgnore
     @JoinTable(
             name = "GenreSong",
-            joinColumns = {@JoinColumn(
-                    name = "songId")},
-            inverseJoinColumns = {@JoinColumn(
-                    name = "genreId")}
+            joinColumns = @JoinColumn(
+                    name = "songId"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "genreId")
     )
     private Set<Genre> genresofsong = new HashSet<>();
 
