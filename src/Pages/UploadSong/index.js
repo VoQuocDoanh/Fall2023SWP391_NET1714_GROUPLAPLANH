@@ -65,13 +65,15 @@ function UploadSong() {
             .then((res) => {
                 navigate("/songs")
             })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     const handleAddToList = () => {
         const values = inputGenres.split(','); // Split the input string by comma
         setGenres([...genres, ...values]);
         setInputGenres(''); // Clear the input field
-        console.log(genres)
       };
 
     /* 
@@ -118,6 +120,7 @@ function UploadSong() {
 
     return (
         <div className={cx('page-content')}> {/* trang tổng */}
+        {console.log(songInput)}
             <div className={cx('container-16')}>
                 <h1>Đăng bài hát mới</h1>
                 <div className={cx('grid-9')}> {/* trang tổng gổm 2 div trái phải*/}
@@ -245,7 +248,6 @@ function UploadSong() {
                             </div>
                         </div>
                         <div className={cx('blue-header')} style={{ width: '80%' }}>
-                            <h4>Thông tin ca sĩ</h4>
                         </div>
                         <div className={cx('grid-3-alpha')} style={{ width: '80%' }}>
                             <div className={cx('singer-info')}>
@@ -279,7 +281,7 @@ function UploadSong() {
                                 />
                             </div>
                         </div>
-                        <div className={cx('add-singer')} style={{ width: '80%' }}>
+                        <div className={cx('add-singer')} style={{ width: '80%' }} onClick={() => handleUploadSong()}> 
                             <footer className={cx("Add-Songs")} >
                                 <Link to="/UploadSong" className={cx("Add-Songs-body", "card-action")}>Add new song</Link>
                             </footer>
