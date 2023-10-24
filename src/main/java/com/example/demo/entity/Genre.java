@@ -34,10 +34,10 @@ public class Genre {
     @Column(name = "Description")
     private String description;
 
-    @ManyToMany(mappedBy = "genresofbeat", cascade = {CascadeType.ALL})
+    @ManyToMany(mappedBy = "genresofbeat", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private Set<Beat> beats = new HashSet<>();
 
-    @ManyToMany(mappedBy = "genresofsong",cascade = {CascadeType.ALL})
+    @ManyToMany(mappedBy = "genresofsong",cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private Set<Song> songs = new HashSet<>();
 
     public Genre(String name, String description) {
