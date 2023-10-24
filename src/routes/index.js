@@ -21,6 +21,10 @@ import MusicianProfile from "../Pages/MusicianProfile";
 import AdminProfile from "../Pages/AdminProfile";
 import ViewDetailSong from "../Pages/ViewDetailSong";
 import ListUser2 from "../Pages/ListUser2";
+import MyProfile from "../Pages/MyProfile";
+import Invoice from "../Pages/Invoice/Invoice";
+import PaymentActivation from "../Pages/PaymentActivation";
+import RegisterActivation from "../Pages/RegisterActivation";
 const publicRoutes = [
   {
     path: "/",
@@ -68,7 +72,7 @@ const publicRoutes = [
     component: ViewCart,
   },
   {
-    path: "/viewdetailbeat",
+    path: "/viewdetailbeat/:beatId",
     component: ViewDetailBeat,
   },
   {
@@ -109,12 +113,24 @@ const publicRoutes = [
   },
   {
     path: "/viewdetailsong",
-    component: ViewDetailSong,  
+    component: ViewDetailSong,
   },
   {
-    path: "/listuser2",
-    component: ListUser2,  
-  }
+    path: "/myprofile",
+    component: MyProfile,
+  },
+  {
+    path: "/invoice",
+    component: Invoice,
+  },
+  {
+    path: "/paymentactivation",
+    component: PaymentActivation,
+  },
+  {
+    path: "/registeractivation",
+    component: RegisterActivation,
+  },  
 ];
 
 const privateRoute = [];

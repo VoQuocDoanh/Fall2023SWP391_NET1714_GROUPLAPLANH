@@ -3,10 +3,28 @@ import styles from "./Home.module.scss";
 import { Button } from "@mui/material";
 import OwlCarousel from "../../components/OwlCarousel";
 import videoBg from '../../assets/video/video (2160p).mp4'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useToken from "../../authorization/useToken";
+import jwtDecode from "jwt-decode";
+import { useEffect } from "react";
 
 const cx = classNames.bind(styles);
 function Home() {
+    const navigate = useNavigate() 
+    useEffect(() =>{
+      if(!token){
+
+      }else if(jwtDecode(token).role === "MS"){
+        navigate("/viewBeat")
+      }else if(jwtDecode(token).role === "AD"){
+        navigate("/listUser")
+      }else{
+
+      }
+    },[])
+    const token = useToken()
+
+    
   return (
     <div className={cx("home-wrapper")}>
       {/* Intro */}
@@ -98,22 +116,22 @@ function Home() {
 
                 <div className={cx("trending-top-right")}>
 
-                  <div className={cx("icon-trending")}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 30 30" fill="none">
-                      <g clip-path="url(#clip0_655_36)">
-                        <path d="M15 0C6.71572 0 0 6.71572 0 15C0 23.2843 6.71572 30 15 30C23.2843 30 30 23.2843 30 15C30 6.71572 23.2843 0 15 0ZM18.3197 8.58757C20.1021 8.55972 21.714 9.52872 22.4781 11.1807C23.185 13.3646 22.5935 15.5863 21.3469 17.2607C20.5241 18.3961 19.5407 19.3752 18.5353 20.2308C17.6104 21.0918 15.5401 22.7956 14.9915 22.8429C14.5065 22.7502 13.9621 22.201 13.5771 21.9187C11.4138 20.2742 9.08545 18.2752 7.90465 16.0885C6.91463 13.9893 6.91283 11.3919 8.45365 9.7825C10.4516 7.9813 13.4634 8.33385 14.9915 10.2156C15.4018 9.68325 15.9066 9.26398 16.5055 8.95895C17.1125 8.7167 17.7256 8.59688 18.3197 8.58757Z" fill="black" />
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_655_36">
-                          <rect width="30" height="30" fill="white" />
-                        </clipPath>
-                      </defs>
-                    </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
-                      <path d="M21.25 23.875L24.375 25.75L23.5 22.25L26.25 19.875L22.625 19.625L21.25 16.25L19.875 19.5L16.25 19.875L19 22.25L18.125 25.75L21.25 23.875ZM3.75 17.5H13.75V20H3.75V17.5ZM3.75 7.5H18.75V10H3.75V7.5ZM3.75 12.5H18.75V15H3.75V12.5Z" fill="black" />
-                    </svg>
-                  </div>
-                </div>
+                        <div className={cx("icon-trending")}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 30 30" fill="none">
+                            <g clipPath="url(#clip0_655_36)">
+                              <path d="M15 0C6.71572 0 0 6.71572 0 15C0 23.2843 6.71572 30 15 30C23.2843 30 30 23.2843 30 15C30 6.71572 23.2843 0 15 0ZM18.3197 8.58757C20.1021 8.55972 21.714 9.52872 22.4781 11.1807C23.185 13.3646 22.5935 15.5863 21.3469 17.2607C20.5241 18.3961 19.5407 19.3752 18.5353 20.2308C17.6104 21.0918 15.5401 22.7956 14.9915 22.8429C14.5065 22.7502 13.9621 22.201 13.5771 21.9187C11.4138 20.2742 9.08545 18.2752 7.90465 16.0885C6.91463 13.9893 6.91283 11.3919 8.45365 9.7825C10.4516 7.9813 13.4634 8.33385 14.9915 10.2156C15.4018 9.68325 15.9066 9.26398 16.5055 8.95895C17.1125 8.7167 17.7256 8.59688 18.3197 8.58757Z" fill="black" />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_655_36">
+                                <rect width="30" height="30" fill="white" />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
+                            <path d="M21.25 23.875L24.375 25.75L23.5 22.25L26.25 19.875L22.625 19.625L21.25 16.25L19.875 19.5L16.25 19.875L19 22.25L18.125 25.75L21.25 23.875ZM3.75 17.5H13.75V20H3.75V17.5ZM3.75 7.5H18.75V10H3.75V7.5ZM3.75 12.5H18.75V15H3.75V12.5Z" fill="black" />
+                          </svg>
+                        </div>
+                      </div>
 
 
               </div>

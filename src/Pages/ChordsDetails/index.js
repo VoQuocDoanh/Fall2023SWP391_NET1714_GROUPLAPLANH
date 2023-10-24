@@ -7,7 +7,8 @@ import Chords from "../../components/Chords";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight, faPause, faPlay, faPlayCircle, faRedo, faStepBackward, faStepForward } from "@fortawesome/free-solid-svg-icons";
 import GUITAR from "../../assets/ImageForChords/Guitar";
-
+import PIANO from "../../assets/ImageForChords/Piano";
+import UKULELE from "../../assets/ImageForChords/Ukulele";
 
 const cx = classNames.bind(styles);
 

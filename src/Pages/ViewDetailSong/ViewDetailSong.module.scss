@@ -23,7 +23,6 @@
     text-align: center;
     text-transform: capitalize;
 }
-
 .text-button-bb-small {
     color: #fff;
     text-transform: capitalize;
@@ -146,7 +145,7 @@
 
 .lyric-left-right {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .chord-list-title {

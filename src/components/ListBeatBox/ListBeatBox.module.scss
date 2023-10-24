@@ -68,11 +68,15 @@
     }
 
     .like {
-        margin-left: 12px;
+        margin-left: 10px;
     }
 
     .check{
-        padding-left: 5px;
+        padding-left: 10px;
+    }
+
+    .rating{
+        padding-left: 10px;
     }
 }
 
@@ -83,7 +87,7 @@
 }
 
 .number-sell {
-    margin-left: 20px;
+    margin-left: 0px;
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -91,8 +95,7 @@
     .box {
         width: 10px;
         height: 10px;
-        border-radius: 50%;
-        background-color: white;
+        
     }
 
     .number {}
@@ -139,4 +142,46 @@
     width: fit-content;
     height: 20px;
     border-radius: 100px;
+}
+
+.icon {
+    display: none;
+    user-select: none;
+}
+
+.icon-pause.play {
+    display: block;
+}
+
+.icon-play.play {
+    display: block;
+}
+
+.control {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 18px 0 8px 0;
+}
+
+.control .btn {
+    color: #666;
+    padding: 18px;
+    font-size: 18px;
+}
+
+.control .btn.active {
+    color: var(--primary-color);
+}
+
+.control .btn-toggle-play {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    font-size: 24px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color);
 }

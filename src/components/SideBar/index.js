@@ -9,7 +9,7 @@ const SideBar = () => {
     return (
         <div style={{  height: "100%"}}>
             <div style={{ height: "100%"}}>
-                <Sidebar className={cx("side-bar")}>
+                <Sidebar className={cx("sidebar")}>
                     <Menu className={cx("menu-item")}>
                         <MenuItem className="menu1">
                             <h2>List Beat</h2>

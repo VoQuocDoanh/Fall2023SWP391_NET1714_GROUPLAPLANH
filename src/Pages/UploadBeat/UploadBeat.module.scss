@@ -2,6 +2,16 @@
 *{
   font-family: Sono;
 }
+.main {
+  top: 0;
+  left: 0;
+  height: 2500px;
+  width: 100%;
+  z-index: -1;
+  opacity: 2;
+  position: absolute;
+}
+
 .login-wrapper {
     padding: 150px 254px;
     text-align: center;

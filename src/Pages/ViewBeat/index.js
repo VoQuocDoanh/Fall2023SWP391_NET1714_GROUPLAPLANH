@@ -135,7 +135,6 @@ function ViewBeat() {
                         <tr key={index}>
                             <td>{index + 1}</td>
                             <td>{beat.beatName}</td>
-                            <td>{beat.beatSound}</td>
                             <td>{beat.price}</td>
                             <td>{beat.genre}</td>
                             <td>{beat.description}</td>

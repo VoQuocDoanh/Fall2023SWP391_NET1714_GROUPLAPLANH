@@ -1,0 +1,237 @@
+@import url('https://fonts.cdnfonts.com/css/newsreader-2');
+@import url('https://fonts.cdnfonts.com/css/inter');
+@import "@fontsource/newsreader"; // Defaults to weight 400
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800&display=swap');
+@import url('https://fonts.cdnfonts.com/css/sono');
+@import url('https://fonts.cdnfonts.com/css/inter');
+.profile{
+    display: flex;
+    justify-content: center;
+    gap: 120px;
+    margin-top: 130px;
+    background-color: rgb(245, 241, 241);
+    padding: 20px;
+    width: 70%;
+    margin-left: 250px;
+}
+.line{
+//     width: 60%;
+    background: #ececec;
+//     border-radius: 30px;
+    border: 0.5px black solid;
+    // margin-bottom: 60px;
+//     margin-left: 360px;
+//     margin-top :60px;
+height: 300px;
+}
+.title-myprofile
+{
+   text-transform: uppercase;
+   margin-left: 610px;
+  background-image: linear-gradient(
+    -225deg,
+    #231557 0%,
+    #44107a 29%,
+    #ff1361 67%,
+    #fff800 100%
+
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 2s linear infinite;
+  display: inline-block;
+      font-size: 100px;
+}
+
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}
+// image
+.box-img{
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    gap: 60px;
+    object-fit: cover;
+    background-position: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    background-image: url(../../assets/images/Trending/beautiful-girl-sitting-down-playing-the-piano.webp);
+
+}
+
+
+//form info user
+.volt8A{
+    width: 600px;
+    height: 570px;
+    padding: 10px;
+    padding-left:20px;
+
+}
+.profile-2{
+    display: table;
+    border-collapse: separate;
+    box-sizing: border-box;
+    text-indent: initial;
+    border-spacing: 2px;
+    border-color: gray;
+}
+.input-username{
+    width: 380px;
+    height: 40px;
+    outline: 1px solid grey;
+}
+.input-username0{
+    width: 380px;
+    height: 40px;
+    outline: 1px solid grey;
+}
+.text-username{
+    margin-left: 30px;
+}
+.text-username0{
+    margin-left: 65px;
+}
+.input-text{
+    margin: 0;
+    padding: 4px 0 0;
+    font-size: 1.3rem;
+    line-height: 1.25rem;
+    margin-top: 10px;
+}
+.login-text{
+    font-family: inter;
+}
+.part4{
+    display: flex;
+    .stardus-radio-group{
+        justify-content: center;
+    }
+
+}
+.part1{
+    margin-top: 40px;
+    display: flex;
+    .placeholder-ten{
+        margin-left: 117px;
+        width: 240px;
+        height: 28px;
+        .input-ten{ 
+            width: 240px;
+            height: 28px;
+        }
+    }
+}
+.part4{
+    margin-top: 40px;
+    margin-left: -4px;
+}
+
+.part3{
+    margin-top: 40px;
+    margin-left: -5px;
+    .add-phonenumber{
+        margin-left: 48px;
+        border: none;
+        text-decoration: underline;
+        color: #06c;
+    }
+}
+.text-name{
+    font-family:inter;
+}
+.stardus-radio-group{
+    display: flex;
+    margin-left: 60px ;
+    gap: 30px;
+}
+.part0{
+    margin-bottom: 40px;
+}
+.part2{
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    margin-left: -200px;
+}
+.part5{
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+    .button-save-details{
+        width: 70px;
+        height: 40px;
+        border: none;
+        background-color: #06c;
+        color: white;
+        font-family: inter ;
+        border-radius: 5px;
+
+    }
+    
+}
+.email-button{
+    margin-left: 30px;
+    border: none;
+    font-family: Sono;
+    text-decoration: underline;
+    color: #06c;
+}
+
+// male female 
+.footer {   
+    display: inline-flex;
+    align-content: center;
+    gap: 55px;
+  
+    .footer-left {
+      display: inline-flex;
+      align-items: center;
+  
+      .input-check {
+        width: 18px;
+        height: 18px;
+        border-radius: 60%;
+        border: 2px solid rgba(0,0,0,.26);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+    
+      }
+    }
+  
+    .text {
+      font-size: 1.5rem;
+      font-weight: 400;
+      user-select: none;
+      cursor: pointer;
+      
+    }
+  }
+  
+  .submit {
+    outline: 3px solid #fff;
+
+  }
+  //iamge user
+  .img-click{
+    display: flex;
+    justify-content: center;
+    margin-left: 40px;
+    margin-top: 20px;
+    background-color: none;
+    
+  }
+  //line
+  

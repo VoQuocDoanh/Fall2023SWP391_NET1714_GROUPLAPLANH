@@ -1,4 +1,6 @@
-
+p{
+  height: 20px;
+}
 .main{
     top: 0;
     left: 0;
@@ -159,4 +161,9 @@ video{
   outline: 3px solid #fff;
 }
 
+.login-message{
+  height: 20px;
+  color: red;
+  text-align: center;
+}
 /*Footer*/

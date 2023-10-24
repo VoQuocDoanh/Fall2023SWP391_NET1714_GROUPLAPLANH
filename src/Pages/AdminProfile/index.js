@@ -93,53 +93,6 @@ function AdminProfile({ name, prioriry }) {
                                     </div>
                                 </td>
                             </div>
-                            <div className={cx("part")}>
-                                <td >
-                                    <label className={cx("login-text")}>Ten dang nhap</label>
-                                </td>
-                                <td>
-                                    <div className={cx("text-username")}>
-                                        <div>
-                                            <input className={cx("input-username")} type="text" placeholder value={tenuser} onChange={handleSearch1} />
-                                        </div>
-                                        <div className={cx("input-text")}>Username can only be logged in once</div>
-                                    </div>
-                                </td>
-                            </div>
-                            <div className={cx("part1")}>
-                                <td>
-                                    <label className={cx("text-name")}>Ten</label>
-                                </td>
-                                <td className={cx("")}>
-                                    <div className={cx("placeholder-ten")}>
-                                        <input className={cx("input-username")} type="text" placeholder value={ten} onChange={handleSearch2} />
-                                    </div>
-                                </td>
-                            </div>
-                            <div className={cx("part2")}>
-                                <td>
-                                    <div className={cx("email-txet0")}>
-                                        Email:
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className={cx("email-text")}>
-                                        do**********@fpt.edu.vn
-                                    </div>
-                                </td>
-                                <button className={cx("email-button")}>Change</button>
-                            </div>
-                            <div className={cx("part3")}>
-                                <td className={cx("phone-number")}>
-                                    Phone number
-                                </td>
-                                <td className={cx("button-phone")}>
-                                    <div className={cx("button-details")}>
-                                        <div className="space"></div>
-                                        <button className={cx("add-phonenumber")}>Add</button>
-                                    </div>
-                                </td>
-                            </div>
                             <div className={cx("part4")}>
                                 <td className={cx("Sex")}>
                                     Sex

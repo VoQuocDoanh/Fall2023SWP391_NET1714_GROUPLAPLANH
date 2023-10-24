@@ -203,34 +203,37 @@ const cx = classNames.bind(styles);
 // ];
 
 function ViewCart() {
-    const listBeat = JSON.parse(sessionStorage.getItem("listBeat"))
-    const {cartItems, getTotalCartAmount, checkOut} = useContext(ShopContext)
+    const { cartItems, getTotalCartAmount, checkOut, listBeatContext } = useContext(ShopContext)
     const totalAmount = getTotalCartAmount()
     const beatCheckout = []
-    const data = {beatId: beatCheckout}
+    const data = { beatId: beatCheckout }
     console.log(data)
     const navigate = useNavigate()
-    let userID = ""
     const token = useToken()
-    if(token){
-        userID = jwtDecode(token).id
-    }
-    const handleCheckout = async() => {
-        if(beatCheckout.length ===0){
+    console.log(token)
+    const [checkoutMessage, setCheckoutMessage] = useState()
+    console.log(checkoutMessage)
+    const handleCheckout = async () => {
+        if (beatCheckout.length === 0) {
+            setCheckoutMessage("You have not chosen anything to buy")
             return
         }
-        await axiosInstance.post(`http://localhost:8080/api/v1/Order/user/${userID}`,data)
-        .catch((error) => {
-            if (error.message.includes("Network")) {
-                navigate("/login")
-            }else if(error.message.includes("501")){
-                console.log("Beat Bought")
-                navigate("/viewcart")  
-            }
-        })
-        checkOut()
-        navigate("/listBeat")
-        
+        if(token){
+        console.log(data)
+        await axiosInstance.post(`http://localhost:8080/api/v1/Order/user/${jwtDecode(token).sub}`, data)
+            .catch((error) => {
+                if (error.message.includes("Network")) {
+                    navigate("/login")
+                } else if (error.message.includes("501")) {
+                    console.log("Beat Bought")
+                    navigate("/viewcart")
+                }
+            })
+        navigate("/invoice")}
+        else{
+            navigate("/login")
+        }
+
     }
     // const [listData, setListData] = useState(DATA);
     // // Remove product
@@ -286,27 +289,35 @@ function ViewCart() {
                     {/* <div className={cx("card-sub", "card-title")}>TOTAL</div> */}
                 </div>
 
+                {listBeatContext ?
                 <div className={cx("list-card")}>
-                    {listBeat.map((item, index) => {
-                    if (cartItems[item.id] !== 0) {
-                        beatCheckout.push(item.id)
-                        return (
-                            <CardItem
-                                id = {item.id}
-                                name={item.beatName}
-                                author="Minh Hien"
-                                genre="POP"
-                                price={item.price}
-                                beatId={item.id}                              
-                            />
-                        );
-}})}
-                </div>
+                    
+                     
+                    {listBeatContext.map((item, index) => {
+                        if (cartItems) {
+                            if (cartItems[item.id] !== 0) {
+                                beatCheckout.push(item.id)
+                                return (
+                                    <CardItem
+                                        id={item.id}
+                                        name={item.beatName}
+                                        author="Minh Hien"
+                                        genre="POP"
+                                        price={item.price}
+                                        beatId={item.id}
+                                    />
+                                );
+                            }
+                        }
+                    })}
+                    </div>: <div></div>}
+                
                 {/* Footer */}
                 <footer className={cx("card-footer")}>
                     <Link to="/listbeat" className={cx("card-return", "card-action")}>RETURN TO SHOP</Link>
                     {/* <div className={cx("card-update", "card-action")}>UPDATE CART</div> */}
                 </footer>
+                <div>{checkoutMessage}</div>
             </section>
 
             {/* Card total */}
@@ -367,6 +378,7 @@ function ViewCart() {
         </section>
 
     );
+    
 }
 
 export default ViewCart;

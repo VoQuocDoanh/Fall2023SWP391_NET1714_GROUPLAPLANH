@@ -4,8 +4,6 @@
 .img-header{
   width: 250px;
   height: 150px;
-  margin-right: -80px;
-  margin-left: -25px;
 }
 .header-wrapper {
   // padding-top: 68px;
@@ -24,9 +22,7 @@
   // width: 100%;
   
 }
-a:hover{
-  background-color: blue;
-}
+
 .header-left {
   display: flex;
   align-items: center;
@@ -37,10 +33,10 @@ a:hover{
 
   .logo {
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    font-size: 4.5rem;
+    font-size: 4rem;
+    font-weight: 400;
     user-select: none;
-    font-family: Sono;
-    font-weight: 700;
+    font-size: 3.5rem;
   }
   img{
     width: 150px;
@@ -56,6 +52,7 @@ a:hover{
   display: flex;
   align-items: center;
   gap: 42px;
+  margin-right: 50px;
 
   .navigation {
     display: flex;

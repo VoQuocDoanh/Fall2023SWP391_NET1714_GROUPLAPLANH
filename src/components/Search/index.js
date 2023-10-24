@@ -3,6 +3,7 @@ import styles from "./Seach.module.scss";
 import { React, useState } from "react";
 import TippyHeadless from '@tippyjs/react/headless';
 import Wrapper from "../Wrapper";
+import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
@@ -32,6 +33,7 @@ function Search() {
         {/* <div className={cx("search")}>
         </div> */}
         <div className={cx("submit")}>
+        <Link to="/Chordsdetails">
           <svg
             className={cx("icon-search")}
             xmlns="http://www.w3.org/2000/svg"
@@ -45,6 +47,7 @@ function Search() {
               fill="white"
             />
           </svg>
+          </Link >
         </div>
       </div>
     </TippyHeadless>

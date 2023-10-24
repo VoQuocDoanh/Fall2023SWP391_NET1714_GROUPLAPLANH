@@ -9,6 +9,7 @@ import videoBg from '../../assets/video/video (2160p).mp4'
 
 import axios from "axios";
 import ValidationLogin from "../../Validation/ValidationLogin";
+import jwtDecode from "jwt-decode";
 const cx = classNames.bind(styles);
 
 function Login() {
@@ -19,6 +20,7 @@ function Login() {
   const [error, setError] = useState({});
   const [loginMessage, setLoginMessage] = useState("");
   const user = { username, password }
+  
   const handleSubmit = async () => {
     console.log(username, password, isChecked);
 
@@ -32,17 +34,25 @@ function Login() {
       setLoginMessage("");
       return;
     }
-    try {
-      const result = await axios.post("http://localhost:8080/api/auth/login", user);
-      setLoginMessage();
-      console.log(result.data.token)
-      localStorage.setItem("token", result.data.token);
-      navigate("/")
-    } catch (error) {
-      console.log(error)
+    
+      await axios.post("http://localhost:8080/api/auth/login", user)
+      .then((res) =>{
+        setLoginMessage();
+        console.log(res.data.token)
+        localStorage.setItem("token", res.data.token);
+        if(jwtDecode(res.data.token).role === "CUS"){
+          navigate("/")
+        }else if(jwtDecode(res.data.token).role === "MS"){
+          navigate("/ViewBeat")
+        }else{
+          navigate("/ListUser")
+        }
+      })
+      .catch((error) =>{
+        console.log(error)
       setError(err)
       setLoginMessage("Wrong username or password!");
-    }
+      })
   };
 
   return (
@@ -86,7 +96,7 @@ function Login() {
           />
         </div>
         {error.username && (
-          <p style={{ color: "red", marginTop: 10, paddingLeft: 5 }}>
+          <p style={{ color: "red",paddingLeft: 5 }}>
             {error.username}
           </p>
         )}
@@ -114,7 +124,7 @@ function Login() {
           />
         </div>
         {error.password && (
-          <p style={{ color: "red", marginTop: 10, paddingLeft: 5 }}>
+          <p style={{ color: "red",paddingLeft: 5 }}>
             {error.password}
           </p>
         )}
@@ -125,12 +135,15 @@ function Login() {
             className={cx("input-submit")}
           />
         </Button>
-      </div>
-      {loginMessage && (
-        <p style={{ color: "red", marginTop: 10, paddingLeft: 5 }}>
+        {loginMessage && (
+        <p style={{ color: "red",paddingLeft: 5 }}>
           {loginMessage}
         </p>
       )}
+      </div>
+      
+      
+      
       {/* Footer */}
       <div className={cx("footer")}>
         <div className={cx("footer-left")}>

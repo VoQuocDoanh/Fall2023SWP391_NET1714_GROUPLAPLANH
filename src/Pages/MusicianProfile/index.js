@@ -77,7 +77,7 @@ function MusicianProfile({ name, prioriry }) {
         <div>
             <div>
                 <h2 className={cx("title-myprofile")}>
-                    My Profile
+                    Musician
                 </h2>
             </div>
             <div className={cx("profile")}>
@@ -96,22 +96,21 @@ function MusicianProfile({ name, prioriry }) {
                                     </div>
                                 </td>
                             </div>
-                            <div className={cx("part")}>
+                            <div className={cx("part0")}>
                                 <td >
-                                    <label className={cx("login-text")}>Ten dang nhap</label>
+                                    <label className={cx("login-text")}>Address</label>
                                 </td>
                                 <td>
-                                    <div className={cx("text-username")}>
+                                    <div className={cx("text-username0")}>
                                         <div>
-                                            <input className={cx("input-username")} type="text" placeholder value={tenuser} onChange={handleSearch1} />
+                                            <input className={cx("input-username0")} type="text" placeholder value={search} onChange={handleSearch} />
                                         </div>
-                                        <div className={cx("input-text")}>Username can only be logged in once</div>
                                     </div>
                                 </td>
                             </div>
                             <div className={cx("part1")}>
                                 <td>
-                                    <label className={cx("text-name")}>Ten</label>
+                                    <label className={cx("text-name")}>Professional</label>
                                 </td>
                                 <td className={cx("")}>
                                     <div className={cx("placeholder-ten")}>
@@ -121,7 +120,7 @@ function MusicianProfile({ name, prioriry }) {
                             </div>
                             <div className={cx("part6")}>
                                 <td >
-                                    <label className={cx("Genre")}>Genre</label>
+                                    <label className={cx("Genre")}>Prize</label>
                                 </td>
                                 <td>
                                     <div className={cx("text-username6")}>
@@ -133,7 +132,7 @@ function MusicianProfile({ name, prioriry }) {
                             </div>
                             <div className={cx("part6")}>
                                 <td >
-                                    <label className={cx("Genre")}>Profession</label>
+                                    <label className={cx("Genre")}>Year of Operation</label>
                                 </td>
                                 <td>
                                     <div className={cx("text-username6")}>
