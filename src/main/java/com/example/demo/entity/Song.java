@@ -71,6 +71,9 @@ public class Song {
     @Column(name = "cmt")
     private int cmt;
 
+    @Column(name = "report")
+    private int report;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "userUploadSong")
@@ -112,6 +115,10 @@ public class Song {
     @JsonIgnore
     private Set<SongComment> songComments;
 
+    @OneToMany (mappedBy = "songOfReport")
+    @JsonIgnore
+    private Set<SongReport> songReports;
+
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
@@ -122,7 +129,7 @@ public class Song {
         this.userUploadSong = userUploadSong;
     }
 
-    public Song(String songname, String author, String tone, String description, String vocalRange, String songUrl, User userUploadSong, Set<Genre> genresofsong,Set<ChordBasic> chordsofsong, int totalLike, int view, int rating, int totalUserRating, int cmt,int status) {
+    public Song(String songname, String author, String tone, String description, String vocalRange, String songUrl, User userUploadSong, Set<Genre> genresofsong,Set<ChordBasic> chordsofsong, int totalLike, int view, int rating, int totalUserRating, int cmt,int report,int status) {
         this.songname = songname;
         this.author = author;
         this.tone = tone;
@@ -138,6 +145,7 @@ public class Song {
         this.rating = rating;
         this.totalUserRating = totalUserRating;
         this.cmt = cmt;
+        this.report = report;
     }
 
     @Override

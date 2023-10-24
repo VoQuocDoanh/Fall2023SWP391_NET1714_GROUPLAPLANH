@@ -55,10 +55,10 @@ public class SongCommentService {
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
-    public ResponseEntity<String> updateComment(CommentSongDTO dto) {
+    public ResponseEntity<String> updateComment(CommentSongDTO dto, Long id) {
         Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(dto.getUserId(), 1);
         if (foundUser.isPresent()) {
-            Optional<SongComment> foundComment = this.songCommentRepository.findSongCommentByIdAndCommentByUsers(dto.getId(), foundUser.get());
+            Optional<SongComment> foundComment = this.songCommentRepository.findSongCommentByIdAndCommentByUsers(id, foundUser.get());
             if (foundComment.isPresent()) {
                 SongComment comment = foundComment.get();
                 comment.setContent(dto.getContent());
@@ -70,13 +70,13 @@ public class SongCommentService {
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
-    public ResponseEntity<String> deleteComment(CommentSongDTO dto) {
+    public ResponseEntity<String> deleteComment(CommentSongDTO dto, Long id) {
         Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(dto.getUserId(), 1);
         if (foundUser.isPresent()) {
             Optional<Song> foundSound = this.songRepository.findSongByIdAndStatus(dto.getSongId(), 1);
             if (foundSound.isPresent()) {
                 Song song = foundSound.get();
-                Optional<SongComment> foundComment = this.songCommentRepository.findSongCommentByIdAndCommentByUsers(dto.getId(), foundUser.get());
+                Optional<SongComment> foundComment = this.songCommentRepository.findSongCommentByIdAndCommentByUsers(id, foundUser.get());
                 if (foundComment.isPresent()) {
                     Optional<SongComment> isParentComment = this.songCommentRepository.findParentCommentById(dto.getParentId());
                     if (isParentComment.isEmpty()) {

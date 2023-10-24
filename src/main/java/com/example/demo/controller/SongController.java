@@ -31,9 +31,9 @@ public class SongController {
     }
 
     // Update Song
-    @PatchMapping("/own")
-    public ResponseEntity<String> updateSong (@Valid @RequestBody SongDTO songDTO){
-        return this.songService.updateSong(songDTO);
+    @PatchMapping("/own/{id}")
+    public ResponseEntity<String> updateSong (@Valid @RequestBody SongDTO songDTO, @Valid @PathVariable Long id){
+        return this.songService.updateSong(songDTO, id);
     }
 
     // Delete Song

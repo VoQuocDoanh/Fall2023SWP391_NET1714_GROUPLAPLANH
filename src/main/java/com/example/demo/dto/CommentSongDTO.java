@@ -8,7 +8,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentSongDTO {
-    private Long id;
+
     private Long parentId;
     private String content;
     private Long userId;

@@ -22,18 +22,18 @@ public class SongCommentController {
         return this.songCommentService.commentSong(dto);
     }
 
-    @PatchMapping
-    public ResponseEntity<String> updateComment (@Valid @RequestBody CommentSongDTO dto){
-        return this.songCommentService.updateComment(dto);
+    @PatchMapping("/{id}")
+    public ResponseEntity<String> updateComment (@Valid @PathVariable Long id, @Valid @RequestBody CommentSongDTO dto){
+        return this.songCommentService.updateComment(dto, id);
     }
 
-    @DeleteMapping
-    public ResponseEntity<String> deleteComment (@Valid @RequestBody CommentSongDTO dto){
-        return this.songCommentService.deleteComment(dto);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteComment (@Valid @PathVariable Long id,@Valid @RequestBody CommentSongDTO dto){
+        return this.songCommentService.deleteComment(dto, id);
     }
 
     @GetMapping("/song/{id}")
-    public ResponseEntity<List<CommentSongResponseDTO>> viewComment (@Valid @PathVariable Long id){
-        return ResponseEntity.ok(this.songCommentService.viewComment(id));
+    public ResponseEntity<List<CommentSongResponseDTO>> viewComment (@Valid @PathVariable Long songid){
+        return ResponseEntity.ok(this.songCommentService.viewComment(songid));
     }
 }
