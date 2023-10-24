@@ -132,7 +132,7 @@ function Register() {
             <option value="1">Musician</option>
           </select> */}
           <select
-            className={cx("input-text")}
+            className={cx("input-text-choose")}
             onChange={(e) => setRole(e.target.value)}
             defaultValue={role}
           >
@@ -189,7 +189,7 @@ function Register() {
           <input
             type="submit"
             value="Register"
-            className={cx("input-text", "input-submit")}
+            className={cx("input-text-register", "input-submit")}
           />
         </Button>
         {registrationMessage ?
