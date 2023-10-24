@@ -27,25 +27,25 @@ function OwlCarousel() {
     }
   };
   return (
-    <OwlCarouselComponent
+    <OwlCarouselComponent 
       id="customer-testimonoals"
       className="owl-carousel owl-theme"
       {...options}
     >
       {/* .module.scss */}
-      <div className="item" >
+      <div className="item" style={{zIndex: 0}} >
         <img className="img" src={require("../../assets/images/Slide/unsplash_cOMpgWOxNuk.png")} alt='' />
       </div>
-      <div className="item">
+      <div className="item" style={{zIndex: 0}}>
         <img className="img" src={require("../../assets/images/Slide/360_F_296943919_ydzSknEpuX42GIqns2VqYLzwHLlu00np.jpg")} alt='' />
       </div>
-      <div className="item">
+      <div className="item" style={{zIndex: 0}}>
         <img className="img" src={require("../../assets/images/Slide/lottie.jpg")} alt='' />
       </div>
-      <div className="item">
+      <div className="item" style={{zIndex: 0}}> 
         <img className="img" src={require("../../assets/images/Slide/istockphoto-1293058709-612x612.jpg")} alt='' />
       </div>
-      <div className="item">
+      <div className="item" style={{zIndex: 0}}>
         <img className="img" src={require("../../assets/images/Slide/Ichika-Nito-Landscape.png")} alt='' />
       </div>
 
