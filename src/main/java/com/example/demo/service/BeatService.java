@@ -95,7 +95,6 @@ public class BeatService {
         List<GenreResponseDTO> genres = getGenres(beat.getId());
         BeatResponseDTO dto = new BeatResponseDTO(beat.getId(),
                 beat.getBeatName(),
-                Base64.decodeBase64(beat.getBeatSoundDemo()),
                 new UserResponeDTO(beat.getUserName().getFullName()),
                 beat.getPrice(),
                 beat.getCreatedAt(),
@@ -115,7 +114,6 @@ public class BeatService {
             List<GenreResponseDTO> genres = getGenres(value.getId());
             BeatResponseDTO dto = new BeatResponseDTO(value.getId(),
                     value.getBeatName(),
-                    Base64.decodeBase64(value.getBeatSoundDemo()),
                     new UserResponeDTO(foundUser.get().getFullName()),
                     value.getPrice(),
                     value.getCreatedAt(),

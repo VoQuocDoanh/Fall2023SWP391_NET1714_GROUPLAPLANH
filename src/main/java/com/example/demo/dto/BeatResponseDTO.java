@@ -46,6 +46,20 @@ public class BeatResponseDTO {
         this.rating = rating;
 
     }
+    public BeatResponseDTO(Long id, String beatName, UserResponeDTO user, Double price, LocalDateTime creatAt, List<GenreResponseDTO> genres, int view, int totalLike, String vocalRange,int totalRating, Double rating) {
+        this.id = id;
+        this.beatName = beatName;
+        this.user = user;
+        this.price = price;
+        this.creatAt = creatAt;
+        this.view = view;
+        this.genres = genres;
+        this.totalLike = totalLike;
+        this.vocalRange = vocalRange;
+        this.totalRating = totalRating;
+        this.rating = rating;
+
+    }
 
     public BeatResponseDTO(String beatName, byte[] beatSound, Double price,String description) {
         this.beatName = beatName;
