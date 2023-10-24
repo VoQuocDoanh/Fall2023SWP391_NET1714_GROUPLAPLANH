@@ -16,10 +16,10 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-//    @PostMapping("/user/{id}")
-//    public ResponseEntity<String> orderBeat(@Valid @RequestBody OrderDTO orderDTO, @PathVariable Long id){
-//        return orderService.orderBeat(orderDTO,id);
-//    }
+    @PostMapping("/user/{id}")
+    public ResponseEntity<String> orderBeat(@Valid @RequestBody OrderDTO orderDTO, @PathVariable Long id){
+        return orderService.orderBeat(orderDTO,id);
+    }
 
     @GetMapping("test/{id}")
     public List<Order> tets (@PathVariable Long id ){
