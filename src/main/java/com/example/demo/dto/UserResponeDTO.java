@@ -19,6 +19,9 @@ public class UserResponeDTO {
     private String mail;
     private int status;
 
+    private String professional;
+    private String prize;
+    private int year;
 
     public UserResponeDTO(String fullName) {
         this.fullName = fullName;

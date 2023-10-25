@@ -38,6 +38,8 @@ public class BeatService {
     private UserResponeDTO getUser(User user){
         return new UserResponeDTO(user.getId(), user.getFullName(), user.getPhoneNumber(), user.getMail());
     }
+
+
     private Set<Genre> genreSet(BeatDTO beatDTO) {
         Set<Genre> genres = new HashSet<>();
         for (String genreName : beatDTO.getGenres()) {
@@ -130,6 +132,8 @@ public class BeatService {
 
 
 
+
+
     public List<BeatResponseDTO> findAllBeat(){
         List<Beat> beats = this.beatRepository.findAllBeat();
         List<BeatResponseDTO> responseDTOS = new ArrayList<>();
@@ -151,6 +155,21 @@ public class BeatService {
         } else {
             return null;
         }
+    }
+
+    public BeatResponseDTO getDemoBeat(Long id){
+        BeatResponseDTO responseDTO = new BeatResponseDTO();
+        Optional<Beat> beat = beatRepository.findById(id);
+        beat.get().setView(beat.get().getView() + 1);
+        beatRepository.save(beat.get());
+        responseDTO.setBeatSound(beat.get().getBeatSoundDemo());
+        return responseDTO;
+    }
+    public BeatResponseDTO getFullBeat(Long id){
+        BeatResponseDTO responseDTO = new BeatResponseDTO();
+        Optional<Beat> beat = beatRepository.findById(id);
+        responseDTO.setBeatSound(beat.get().getBeatSoundFull());
+        return responseDTO;
     }
 
     public ResponseEntity<String> insertBeat(byte[] sound, byte[] sound2, BeatDTO beatDTO) {
@@ -239,12 +258,10 @@ public class BeatService {
             BeatResponseDTO responseDTO = new BeatResponseDTO();
             responseDTO.setId(beat.getId());
             responseDTO.setBeatName(beat.getBeatName());
-            responseDTO.setBeatSound(beat.getBeatSoundDemo());
+  //          responseDTO.setBeatSound(beat.getBeatSoundDemo());
             responseDTO.setPrice(beat.getPrice());
             responseDTO.setCreatAt(beat.getCreatedAt());
             responseDTO.setUser(getUser(beat.getUserName()));
-            beat.setView(beat.getView() + 1 );
-            beatRepository.save(beat);
             responseDTO.setView(beat.getView());
             responseDTO.setTotalLike(beat.getTotalLike());
             responseDTO.setCmt(beat.getCmt());
