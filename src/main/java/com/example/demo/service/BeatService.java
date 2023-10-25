@@ -277,12 +277,20 @@ public class BeatService {
 
     public List<BeatResponseDTO> searchByBeatName(String name) {
         List<Beat> beatEntity = this.beatRepository.findByBeatName(name);
-        return getBeatResponseDTOS(beatEntity);
+        List<BeatResponseDTO> responseDTOS = new ArrayList<>();
+        for (Beat i :beatEntity){
+            responseDTOS.add(getDetailBeatResponseDTO(i));
+        }
+        return responseDTOS;
     }
 
     public List<BeatResponseDTO> searchByMusician(String name) {
-        List<Beat> beats = this.beatRepository.findBeatByMusician(name);
-        return getBeatResponseDTOS(beats);
+        List<Beat> beatEntity = this.beatRepository.findBeatByMusician(name);
+        List<BeatResponseDTO> responseDTOS = new ArrayList<>();
+        for (Beat i :beatEntity){
+            responseDTOS.add(getDetailBeatResponseDTO(i));
+        }
+        return responseDTOS;
     }
 
 
