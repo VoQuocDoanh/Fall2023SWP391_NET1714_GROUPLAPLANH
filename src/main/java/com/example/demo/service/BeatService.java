@@ -204,7 +204,8 @@ public class BeatService {
         if (foundBeat.isPresent()) {
             Beat beat = foundBeat.get();
             beat.setBeatName(newBeat.getBeatName());
-            beat.setBeatSoundDemo(Base64.encodeBase64(newBeat.getBeatSound()));
+            beat.setBeatSoundDemo(Base64.encodeBase64(newBeat.getBeatDemoSound()));
+            beat.setBeatSoundFull(Base64.encodeBase64(newBeat.getBeatFullSound()));
             beat.setPrice(newBeat.getPrice());
             beat.setGenresofbeat(genreSet(newBeat));
             beat.setVocalRange(newBeat.getVocalRange());

@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -14,7 +13,8 @@ import java.util.List;
 @AllArgsConstructor
 public class BeatDTO {
     private String beatName;
-    private byte[] beatSound;
+    private byte[] beatDemoSound;
+    private byte[] beatFullSound;
     private String username;
     private String description;
     private Double price;
@@ -29,7 +29,7 @@ public class BeatDTO {
     public String toString() {
         return "BeatDTO{" +
                 "beatName='" + beatName + '\'' +
-                ", beatSound='" + beatSound + '\'' +
+                ", beatSound='" + beatDemoSound + '\'' +
                 ", username='" + username + '\'' +
                 ", price=" + price +
                 ", fullName='" + fullName + '\'' +
