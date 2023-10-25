@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.CommentBeatDTO;
 import com.example.demo.dto.CommentBeatResponseDTO;
 import com.example.demo.service.BeatCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +22,17 @@ public class BeatCommentController {
     }
 
     @PostMapping("/addComment")
-    public ResponseEntity<String> addComment(@RequestBody CommentBeatResponseDTO commentBeatResponseDTO){
-        return service.addComment(commentBeatResponseDTO);
+    public ResponseEntity<String> addComment(@RequestBody CommentBeatDTO commentBeatDTO){
+        return service.addComment(commentBeatDTO);
     }
 
     @PutMapping("")
-    public ResponseEntity<String> updateComment(@RequestBody CommentBeatResponseDTO commentBeatResponseDTO){
-        return service.updateComment(commentBeatResponseDTO);
+    public ResponseEntity<String> updateComment(@RequestBody CommentBeatDTO commentBeatDTO){
+        return service.updateComment(commentBeatDTO);
     }
 
     @DeleteMapping("")
-    public ResponseEntity<String> deleteComment(@RequestBody CommentBeatResponseDTO commentBeatResponseDTO){
-        return service.deleteComment(commentBeatResponseDTO);
+    public ResponseEntity<String> deleteComment(@RequestBody CommentBeatDTO commentBeatDTO){
+        return service.deleteComment(commentBeatDTO);
     }
 }

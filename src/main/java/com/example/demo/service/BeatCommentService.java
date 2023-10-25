@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.BeatResponseDTO;
+import com.example.demo.dto.CommentBeatDTO;
 import com.example.demo.dto.CommentBeatResponseDTO;
+import com.example.demo.dto.UserResponeDTO;
 import com.example.demo.entity.Beat;
 import com.example.demo.entity.BeatComment;
 import com.example.demo.entity.User;
@@ -27,7 +30,7 @@ public class BeatCommentService {
 
     @Autowired
     BeatCommentRepository commentRepository;
-    public ResponseEntity<String> addComment(CommentBeatResponseDTO dto){
+    public ResponseEntity<String> addComment(CommentBeatDTO dto){
 
         Optional<Beat> beat= beatRepository.findById(dto.getBeatId());
         Optional<User> user=userRepository.findById(dto.getUserId());
@@ -49,7 +52,7 @@ public class BeatCommentService {
         return new ResponseEntity<>("No comment", HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<String> updateComment(CommentBeatResponseDTO dto){
+    public ResponseEntity<String> updateComment(CommentBeatDTO dto){
         Optional<BeatComment> comment = commentRepository.findById(dto.getId());
         if (comment.isPresent()){
             comment.get().setContent(dto.getContent());
@@ -58,7 +61,7 @@ public class BeatCommentService {
         return new ResponseEntity<>("Updated!",HttpStatus.OK);
     }
 
-    public ResponseEntity<String> deleteComment(CommentBeatResponseDTO dto){
+    public ResponseEntity<String> deleteComment(CommentBeatDTO dto){
         Optional<BeatComment> comment = commentRepository.findById(dto.getId());
         Optional<Beat> beat = beatRepository.findById(dto.getBeatId());
         if (comment.isPresent()){
@@ -68,6 +71,14 @@ public class BeatCommentService {
             beatRepository.save(beat.get());
         }
         return new ResponseEntity<>("Deleted!", HttpStatus.OK);
+    }
+
+    private UserResponeDTO getUser(User user){
+        return new UserResponeDTO(user.getId(), user.getFullName(), user.getPhoneNumber(), user.getMail());
+    }
+
+    private BeatResponseDTO getBeat(Beat beat){
+        return new BeatResponseDTO(beat.getBeatName());
     }
 
     public List<CommentBeatResponseDTO> viewComment(Long id) {
@@ -88,22 +99,22 @@ public class BeatCommentService {
 
     private CommentBeatResponseDTO response(BeatComment comment){
         if (comment.getStatus() == 1){
-            CommentBeatResponseDTO commentBeatResponseDTO = new CommentBeatResponseDTO();
-            commentBeatResponseDTO.setId(comment.getId());
+            CommentBeatResponseDTO commentBeatDTO = new CommentBeatResponseDTO();
+            commentBeatDTO.setId(comment.getId());
             if (comment.getParentComment() != null)
-                    commentBeatResponseDTO.setParentId(comment.getParentComment().getId());
-            commentBeatResponseDTO.setContent(comment.getContent());
-            commentBeatResponseDTO.setBeatId(comment.getBeatComment().getId());
-            commentBeatResponseDTO.setUserId(comment.getUserCommentBeat().getId());
-            commentBeatResponseDTO.setStatus(comment.getStatus());
+                    commentBeatDTO.setParentId(comment.getParentComment().getId());
+            commentBeatDTO.setContent(comment.getContent());
+            commentBeatDTO.setBeatId(getBeat(comment.getBeatComment()));
+            commentBeatDTO.setUserId(getUser(comment.getUserCommentBeat()));
+            commentBeatDTO.setStatus(comment.getStatus());
             List<BeatComment> sub = commentRepository.findByParentComment(comment);
             List<CommentBeatResponseDTO> dtoList = new ArrayList<>();
             for (BeatComment subcmt:sub){
                 CommentBeatResponseDTO subCommentResponse = response(subcmt);
                 dtoList.add(subCommentResponse);
             }
-            commentBeatResponseDTO.setSubComment(dtoList);
-            return commentBeatResponseDTO;
+            commentBeatDTO.setSubComment(dtoList);
+            return commentBeatDTO;
         } else return  null;
     }
 }
