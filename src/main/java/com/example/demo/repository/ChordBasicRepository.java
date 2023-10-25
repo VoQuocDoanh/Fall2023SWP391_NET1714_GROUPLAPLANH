@@ -19,7 +19,7 @@ public interface ChordBasicRepository extends JpaRepository<ChordBasic,Long> {
     @Query("SELECT c.chordId FROM ChordBasic c JOIN c.collections cl WHERE cl.id=:id")
     List<Long> findByCollection(Long id);
 
-    ChordBasic findByChordName(String name);
+    List<ChordBasic> findByChordName(String name);
 
     @Query("SELECT cb.chordKey FROM ChordBasic cb JOIN cb.songs s WHERE s.Id = :id")
     List<String> findBySongs(Long id);
