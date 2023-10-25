@@ -294,6 +294,16 @@ public class BeatService {
         return responseDTOS;
     }
 
+    public List<String> listAllMusician(){
+        List<User> beat = beatRepository.findAllUser();
+        List<String> list=new ArrayList<>();
+        String name;
+        for (User i : beat){
+            name = String.valueOf(userRepository.findUserName(i.getId()));
+            list.add(name);
+        }
+        return  list;
+    }
 
     public List<BeatResponseDTO> beatSoldOut(Long id) {
         List<Beat> beats = beatRepository.findBeatSoldOut(id);

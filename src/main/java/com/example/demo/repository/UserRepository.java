@@ -20,6 +20,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findUserByIdAndStatus(Long id, int status);
     Optional<User> findUserByUsernameAndStatus(String username, int status);
     List<User> findByOrderByStatusDesc();
+
+    @Query("SELECT u.fullName from User u where u.Id =:id")
+    String findUserName(Long id);
     @Query("select u.mail from User u where u.mail = :mail")
     Optional<String> findUserMail(String mail);
 

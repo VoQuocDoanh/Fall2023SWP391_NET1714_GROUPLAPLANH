@@ -7,6 +7,7 @@ package com.example.demo.repository;
 
 import com.example.demo.entity.Beat;
 import com.example.demo.entity.Order;
+import com.example.demo.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -25,6 +26,8 @@ public interface BeatRepository extends JpaRepository<Beat, Long> {
     List<Beat> findUserBeatByUsername(Long id);
 
     List<Beat> findByOrderByStatusDesc();
+    @Query("SELECT b.userName from Beat b ")
+    List<User> findAllUser();
 
     Beat findBeatByOrderBeat(Order id);
 

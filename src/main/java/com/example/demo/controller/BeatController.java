@@ -94,6 +94,8 @@ public class BeatController {
 
     }
 
+
+
     //like beat
     @PostMapping("/like/{id1}/{id2}")
     public  ResponseEntity<String> likeBeat(@PathVariable Long id1, @PathVariable Long id2){
@@ -126,5 +128,10 @@ public class BeatController {
     @GetMapping("user/full/{id}")
     public BeatResponseDTO getFullSound(@PathVariable Long id){
         return beatService.getFullBeat(id);
+    }
+
+    @GetMapping("musician/full")
+    public List<String> getName(){
+        return beatService.listAllMusician();
     }
 }
