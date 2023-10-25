@@ -135,6 +135,12 @@
 			<artifactId>rest-api-sdk</artifactId>
 			<version>1.14.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>6.2.0.Final</version> <!-- Thay phiên bản phù hợp -->
+		</dependency>
+
 	</dependencies>
 
 	<build>
