@@ -14,8 +14,8 @@ public class BeatRatingController {
     @Autowired
     private BeatRatingService service;
 
-    @PostMapping("/rating")
-    public ResponseEntity<String> ratingBeat(@RequestBody BeatRatingDTO dto) {
-        return service.addRating(dto);
+    @PostMapping("/rating/{userId}/{beatId}")
+    public ResponseEntity<String> ratingBeat(@PathVariable Long userId, @PathVariable Long beatId,@RequestBody BeatRatingDTO dto) {
+        return service.addRating(userId,beatId,dto);
     }
 }

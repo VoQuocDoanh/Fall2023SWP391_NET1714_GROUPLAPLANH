@@ -23,9 +23,9 @@ public class BeatRatingService {
     UserRepository userRepository;
     @Autowired
     BeatRatingRepository beatRatingRepository;
-    public ResponseEntity<String> addRating(BeatRatingDTO dto) {
-        Optional<Beat> beat = beatRepository.findById(dto.getBeatId());
-        Optional<User> user = userRepository.findById(dto.getUserId());
+    public ResponseEntity<String> addRating(Long userID, Long beatID,BeatRatingDTO dto) {
+        Optional<Beat> beat = beatRepository.findById(beatID);
+        Optional<User> user = userRepository.findById(userID);
         int total =0;
         BeatRating foundRating = beatRatingRepository.findBeatRatingByBeatRatingAndUserRatingBeat(beat.get(),user.get());
         if (foundRating!= null) {
