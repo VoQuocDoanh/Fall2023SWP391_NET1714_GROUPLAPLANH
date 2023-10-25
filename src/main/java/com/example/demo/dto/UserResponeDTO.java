@@ -1,8 +1,6 @@
 package com.example.demo.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 @NoArgsConstructor
@@ -38,4 +36,16 @@ public class UserResponeDTO {
         this.id = id;
         this.fullName = fullName;
     }
+
+    public UserResponeDTO(Long id, String username, String fullName, String gender, String role, String mail, String phoneNumber, int status) {
+        this.id = id;
+        this.username = username;
+        this.fullName = fullName;
+        this.gender = gender;
+        this.role = role;
+        this.phone = phoneNumber;
+        this.mail = mail;
+        this.status = status;
+    }
+
 }

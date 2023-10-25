@@ -113,6 +113,12 @@ public class UserService {
             dto.setUsername(user.getUsername());
             dto.setFullName(user.getFullName());
             dto.setGender(user.getGender().toString());
+            if (user.getRole().equals("MS")){
+                MusicianInformation information = user.getInformation();
+                dto.setProfessional(information.getProfessional());
+                dto.setYear(information.getYear());
+                dto.setPrize(information.getPrize());
+            }
             return dto;
         }
         return null;
@@ -203,8 +209,7 @@ public class UserService {
                     user.getFullName(),
                     user.getGender().toString(),
                     user.getRole(),
-                    user.getMail()
-                    ,
+                    user.getMail(),
                     user.getPhoneNumber(),
                     user.getStatus())).collect(Collectors.toList());
             return userResponeDTOList;
