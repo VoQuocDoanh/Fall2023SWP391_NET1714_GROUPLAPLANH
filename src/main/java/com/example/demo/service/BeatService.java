@@ -199,7 +199,7 @@ public class BeatService {
         }
     }
 
-    public ResponseEntity<String> updateBeat(byte[] sound,BeatDTO newBeat, Long id) {
+    public ResponseEntity<String> updateBeat(byte[] sound1, byte[] sound2,BeatDTO newBeat, Long id) {
         Optional<Beat> foundBeat = this.beatRepository.findById(id);
         if (foundBeat.isPresent()) {
             Beat beat = foundBeat.get();
