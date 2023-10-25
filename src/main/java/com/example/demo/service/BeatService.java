@@ -6,10 +6,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.*;
-import com.example.demo.entity.Beat;
-import com.example.demo.entity.Genre;
-import com.example.demo.entity.Order;
-import com.example.demo.entity.User;
+import com.example.demo.entity.*;
 import com.example.demo.repository.BeatRepository;
 import com.example.demo.repository.GenreRepository;
 import com.example.demo.repository.UserRepository;
@@ -259,6 +256,10 @@ public class BeatService {
             BeatResponseDTO responseDTO = new BeatResponseDTO();
             responseDTO.setId(beat.getId());
             responseDTO.setBeatName(beat.getBeatName());
+            MusicianInformation information = beat.getUserName().getInformation();
+            responseDTO.setYear(information.getYear());
+            responseDTO.setProfessional(information.getProfessional());
+            responseDTO.setPrize(information.getPrize());
   //          responseDTO.setBeatSound(beat.getBeatSoundDemo());
             responseDTO.setPrice(beat.getPrice());
             responseDTO.setCreatAt(beat.getCreatedAt());
