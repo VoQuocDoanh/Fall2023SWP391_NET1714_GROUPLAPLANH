@@ -13,6 +13,7 @@ function Songs() {
     const token = useToken()
     const navigate = useNavigate()
     const [listSongs, setListSongs] = useState(null)
+    const [listGenres, setListGenres] = useState(null)
     const loadSongs = async () => {
         if (!token) {
             navigate("/login")
@@ -25,12 +26,22 @@ function Songs() {
                 console.log(error)
             })
     }
+    const loadGenres = async() => {
+        await axiosInstance.get("http://localhost:8080/api/v1/genre")
+        .then((res) =>{
+            setListGenres(res.data)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
+    useEffect(() => {
+        loadGenres()
+    },[])
     useEffect(() => {
         loadSongs()
     }, [])
     if (listSongs !== null) {
-
-
         return (
 
             <div className={cx("list-songs")}>
@@ -63,35 +74,17 @@ function Songs() {
                             <h3 >Songs Style</h3>
                         </div>
                         <div className={cx('sum')}>
+                        {listGenres ? 
                             <div className={cx("rhythm-list")} id="rhythms">
-                                <a className={cx("rhythm-item")} data-rhythm="ballad" >
-                                    Pop
+                                {listGenres.map((item) => {
+
+                                
+                                return <a className={cx("rhythm-item")} data-rhythm="ballad" >
+                                    {item.name}
                                 </a>
-                                <a className={cx("rhythm-item")} data-rhythm="blue" >
-                                    Jazz
-                                </a>
-                                <a className={cx("rhythm-item")} data-rhythm="disco" >
-                                    Country
-                                </a>
-                                <a className={cx("rhythm-item")} data-rhythm="slow">
-                                    Rock
-                                </a>
-                                <a className={cx("rhythm-item")} data-rhythm="bollero" >
-                                    Edm
-                                </a>
-                                <a className={cx("rhythm-item")} data-rhythm="slowrock" >
-                                    R&B
-                                </a>
-                                <a className={cx("rhythm-item")} data-rhythm="valse" >
-                                    HipHop
-                                </a>
-                                <a className={cx("rhythm-item")} data-rhythm="fox" >
-                                    Classical
-                                </a>
-                                <a className={cx("rhythm-item")} data-rhythm="boston">
-                                    Latin
-                                </a>
-                            </div>
+                                })}
+                                
+                            </div> : <div></div>}
                         </div>
 
 
