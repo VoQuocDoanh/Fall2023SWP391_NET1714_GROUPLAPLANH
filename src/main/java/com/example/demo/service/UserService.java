@@ -24,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -199,19 +200,28 @@ public class UserService {
     // Get All User
     public List<UserResponeDTO> getAllUsers() {
         List<User> userList = this.userRepository.findByOrderByStatusDesc();
-        List<UserResponeDTO> userResponeDTOList;
+        List<UserResponeDTO> userResponeDTOList =new ArrayList<>();
+        UserResponeDTO dto;
         if (userList.isEmpty()) {
             return null;
         } else {
-            userResponeDTOList = userList.stream().map(user -> new UserResponeDTO(
-                    user.getId(),
-                    user.getUsername(),
-                    user.getFullName(),
-                    user.getGender().toString(),
-                    user.getRole(),
-                    user.getMail(),
-                    user.getPhoneNumber(),
-                    user.getStatus())).collect(Collectors.toList());
+            for (User user : userList){
+                dto = new UserResponeDTO(
+                        user.getId(),
+                        user.getUsername(),
+                        user.getFullName(),
+                        user.getGender().toString(),
+                        user.getRole(),
+                        user.getMail(),
+                        user.getPhoneNumber());
+                    if (user.getRole().equals("MS")){
+                        MusicianInformation information = user.getInformation();
+                        dto.setProfessional(information.getProfessional());
+                        dto.setYear(information.getYear());
+                        dto.setPrize(information.getPrize());
+                    }
+                userResponeDTOList.add(dto);
+            }
             return userResponeDTOList;
         }
     }

@@ -16,7 +16,7 @@ import java.util.List;
 public class ChordCollectionResponseDTO {
     private String name;
     private int status;
-    private User username;
+    private UserResponeDTO username;
     private String description;
     private long chordCollectionId;
     private String flag;

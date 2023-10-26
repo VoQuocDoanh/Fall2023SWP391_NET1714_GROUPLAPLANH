@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dto.ChordCollectionDTO;
 import com.example.demo.dto.ChordCollectionResponseDTO;
 import com.example.demo.dto.ChordResponseDTO;
+import com.example.demo.dto.UserResponeDTO;
 import com.example.demo.entity.ChordBasic;
 import com.example.demo.entity.ChordCollection;
 import com.example.demo.entity.User;
@@ -57,9 +58,12 @@ public class ChordCollectionService {
         }
     }
 
+    private UserResponeDTO getUser(User user){
+        return new UserResponeDTO(user.getId(),user.getUsername(), user.getFullName(), user.getPhoneNumber(), user.getMail());
+    }
+
     public ChordCollectionResponseDTO getDetail(Long id) {
         Optional<ChordCollection> foundCollections = chordCollectionRepository.findByCollectionId(id);
-
         if (foundCollections.isPresent()){
             ChordCollection collection = foundCollections.get();
             ChordCollectionResponseDTO collectionResponse = new ChordCollectionResponseDTO();
@@ -67,7 +71,7 @@ public class ChordCollectionService {
             collectionResponse.setName(collection.getName());
             collectionResponse.setDescription(collection.getDescription());
             collectionResponse.setChords(getChords(collection.getId()));
-            collectionResponse.setUsername(collection.getUserCollection());
+            collectionResponse.setUsername(getUser(collection.getUserCollection()));
             return collectionResponse;
         }
         return  null;

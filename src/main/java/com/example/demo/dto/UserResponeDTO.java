@@ -37,7 +37,7 @@ public class UserResponeDTO {
         this.fullName = fullName;
     }
 
-    public UserResponeDTO(Long id, String username, String fullName, String gender, String role, String mail, String phoneNumber, int status) {
+    public UserResponeDTO(Long id, String username, String fullName, String gender, String role, String mail, String phoneNumber) {
         this.id = id;
         this.username = username;
         this.fullName = fullName;
@@ -45,7 +45,13 @@ public class UserResponeDTO {
         this.role = role;
         this.phone = phoneNumber;
         this.mail = mail;
-        this.status = status;
     }
 
+    public UserResponeDTO(Long id, String username, String fullName, String phoneNumber, String mail) {
+        this.id = id;
+        this.username = username;
+        this.fullName = fullName;
+        this.phone = phoneNumber;
+        this.mail = mail;
+    }
 }
