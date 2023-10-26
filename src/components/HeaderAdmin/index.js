@@ -58,30 +58,14 @@ function HeaderAdmin() {
           <div>
             <Popup trigger={<button className={cx("button-page")}>Pages</button>} position="bottom centers" closeOnDocumentClick on={['hover', 'focus']}>
               <div className={cx("text-all")}>
-                <Link to="/listbeat"><div className={cx("link-text")}>View Beat</div></Link>
-                <Link to="/chordsdetails"><div className={cx("link-text")}>View Chords</div></Link>
-                <Link to="/songs"><div className={cx("link-text")}> View Songs</div></Link>
+                <Link to="/listbeat"><div className={cx("link-text")}>Beat</div></Link>
+                <Link to="/chordsdetails"><div className={cx("link-text")}>Chords</div></Link>
+                <Link to="/songs"><div className={cx("link-text")}> Songs</div></Link>
               </div>
             </Popup>
           </div>
           <div className={cx("nav-item")}>Contact</div>
           <div className={cx("nav-item")}>
-            <Button>
-              {/* Phan quyen */}
-              {token ?
-                <Link className={cx("viewCart")} to="/viewcart">
-                  <img className={cx("img-shopping-cart")} src={require("../../assets/images/Other/png-transparent-white-shopping-cart-illustration-shopping-cart-computer-icons-white-cart-simple-miscellaneous-angle-white.png")} />
-
-                </Link>
-                :
-                <Link className={cx("viewCart")} to="/login">
-                  <img className={cx("img-shopping-cart")} src={require("../../assets/images/Other/png-transparent-white-shopping-cart-illustration-shopping-cart-computer-icons-white-cart-simple-miscellaneous-angle-white.png")} />
-                </Link>
-              }
-              <div className={cx("cart-number")}>123</div>
-
-
-            </Button>
           </div>
         </div>
 
