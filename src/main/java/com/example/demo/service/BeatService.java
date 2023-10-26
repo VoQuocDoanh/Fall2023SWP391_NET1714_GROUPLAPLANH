@@ -322,14 +322,23 @@ public class BeatService {
        List<Order> order = orderService.findOrder(id);
         List<BeatResponseDTO> beat = new ArrayList<>();
         BeatResponseDTO b = new BeatResponseDTO();
+        if (order.isEmpty()){
+            return null;
+        }
         for (Order o:order){
-            Beat beatEntity = (beatRepository.findBeatByOrderBeat(o));
-            b.setBeatName(beatEntity.getBeatName());
-            b.setPrice(beatEntity.getPrice());
-        //    b.setBeatSound(beatEntity.getBeatSoundFull());
-            b.setDescription(b.getDescription());
-            b.setUser(getUser(beatEntity.getUserName()));
-            beat.add(b);
+            List<Beat> beatEntity = (beatRepository.findBeatByOrderBeat(o));
+            if (beatEntity.isEmpty()){
+                return null;
+            }
+            for (Beat i : beatEntity){
+                b.setBeatName(i.getBeatName());
+                b.setPrice(i.getPrice());
+                //    b.setBeatSound(beatEntity.getBeatSoundFull());
+                b.setDescription(b.getDescription());
+                b.setUser(getUser(i.getUserName()));
+                beat.add(b);
+            }
+
         }
         return beat;
     }

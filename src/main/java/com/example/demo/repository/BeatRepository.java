@@ -29,7 +29,7 @@ public interface BeatRepository extends JpaRepository<Beat, Long> {
     @Query("SELECT b.userName from Beat b ")
     List<User> findAllUser();
 
-    Beat findBeatByOrderBeat(Order id);
+    List<Beat> findBeatByOrderBeat(Order id);
 
     @Query("SELECT b.Id FROM Beat b join b.userSet u where u.Id =:id")
     List<Long> findUserLiked(Long id);
