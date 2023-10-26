@@ -86,7 +86,7 @@ public class ChordCollectionService {
                 chordResponseDTOS.add(new ChordResponseDTO(
                         basic.getChordId(),
                         basic.getChordName(),
-                        Base64.decodeBase64(basic.getImage()),
+                        basic.getImage(),
                         basic.getChordKey(),
                         basic.getSuffix(),
                         basic.getType(),

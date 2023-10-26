@@ -11,13 +11,13 @@ import lombok.NoArgsConstructor;
 public class ChordResponseDTO {
     private Long id;
     private String chordName;
-    private byte[] image;
+    private String image;
     private String key;
     private String suffix;
     private String description;
     private String type;
 
-    public ChordResponseDTO(Long id, String chordName, byte[] image, String key, String suffix, String type, String description) {
+    public ChordResponseDTO(Long id, String chordName, String image, String key, String suffix, String type, String description) {
         this.id = id;
         this.chordName = chordName;
         this.image = image;
