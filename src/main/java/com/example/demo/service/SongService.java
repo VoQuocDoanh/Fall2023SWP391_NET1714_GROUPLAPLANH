@@ -58,7 +58,7 @@ public class SongService {
     }
 
     private List<ChordResponseDTO> getChords(Long id) {
-        List<String> chords = this.chordBasicRepository.findBySongs(id);
+        List<String> chords = this.chordBasicRepository.findBySong(id);
         if (chords.isEmpty()) {
             return null;
         } else {
@@ -69,7 +69,7 @@ public class SongService {
                     for (ChordBasic basic : basics) {
                         chordResponseDTOS.add(new ChordResponseDTO(basic.getChordId(),
                                 basic.getChordName(),
-                                Base64.decodeBase64(basic.getImage()),
+                                basic.getImage(),
                                 basic.getChordKey(),
                                 basic.getSuffix(),
                                 basic.getType(),

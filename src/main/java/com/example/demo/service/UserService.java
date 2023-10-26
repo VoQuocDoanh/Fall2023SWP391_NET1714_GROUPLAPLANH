@@ -5,6 +5,7 @@
 
 package com.example.demo.service;
 
+import com.example.demo.dto.RegisterDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserResponeDTO;
 import com.example.demo.entity.ActivationToken;
@@ -50,17 +51,17 @@ public class UserService {
     }
 
     // Sign Up
-    public ResponseEntity<String> signup(UserDTO userDTO) {
-        Optional<User> foundUser = this.userRepository.findUserByUsername(userDTO.getUsername());
+    public ResponseEntity<String> signup(RegisterDTO registerDTO) {
+        Optional<User> foundUser = this.userRepository.findUserByUsername(registerDTO.getUserName());
         if (foundUser.isEmpty()) {
-            Optional<String> mail = this.userRepository.findUserMail(userDTO.getMail());
+            Optional<String> mail = this.userRepository.findUserMail(registerDTO.getEmail());
             if (mail.isEmpty()) {
                 try {
                     String token = RandomStringUtils.randomAlphanumeric(64);
-                    User user = new User(userDTO.getUsername(),
-                            this.passwordEncoder.encode(userDTO.getPassword()),
-                            userDTO.getMail(),
-                            userDTO.getRole(),
+                    User user = new User(registerDTO.getUserName(),
+                            this.passwordEncoder.encode(registerDTO.getPassword()),
+                            registerDTO.getEmail(),
+                            registerDTO.getRole(),
                             1);
                    /* ActivationToken activationToken = new ActivationToken(token, LocalDateTime.now().plusHours(12), user);
                     user.setActivationToken(activationToken);*/

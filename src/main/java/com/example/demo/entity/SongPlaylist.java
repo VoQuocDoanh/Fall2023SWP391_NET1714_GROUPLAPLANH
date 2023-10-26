@@ -43,7 +43,7 @@ public class SongPlaylist {
     @JoinColumn(name = "owner")
     private User user;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany
     @JsonIgnore
     @JoinTable(
             name = "songofplaylist",

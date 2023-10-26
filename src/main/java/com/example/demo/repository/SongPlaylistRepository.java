@@ -11,8 +11,12 @@ import java.util.Optional;
 
 @Repository
 public interface SongPlaylistRepository extends JpaRepository<SongPlaylist, Long> {
-    @Query("select p from SongPlaylist p where p.user.Id = :userid and p.name = :name and p.status = 1")
+    @Query("select p from SongPlaylist p where p.user.Id = :userid and p.name = :name")
     Optional<SongPlaylist> findUserSongPlaylistByName (String name, Long userid);
 
-    List<SongPlaylist>  findSongPlaylistsByUserAndNameAndStatus(User user, String name, int status);
+    List<SongPlaylist>  findSongPlaylistsByUser(User user);
+
+    Optional<SongPlaylist>  findSongPlaylistByUserAndName(User user, String name);
+
+
 }

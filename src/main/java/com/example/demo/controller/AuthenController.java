@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.AuthenRequest;
 import com.example.demo.dto.AuthenRespone;
+import com.example.demo.dto.RegisterDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.jwt.JwtTokenProvider;
 import com.example.demo.service.UserService;
@@ -25,8 +26,8 @@ public class AuthenController {
 
     // Register a new account
     @PostMapping(path = "/register")
-    public ResponseEntity<String> register(@Valid @RequestBody UserDTO userDTO){
-        return this.userService.signup(userDTO);
+    public ResponseEntity<String> register(@Valid @RequestBody RegisterDTO registerDTO){
+        return this.userService.signup(registerDTO);
     }
 
     // Login to authentication
