@@ -22,16 +22,16 @@ function UploadBeat() {
   const [genre, setGenre] = useState("");
   const [description, setDescription] = useState("");
   const [uploadMessage, setUploadMessage] = useState('')
-  const [beatSound, setBeatSound] = useState(null)
   const [beatSoundDemo, setBeatSoundDemo] = useState(null)
   const [beatSoundFull, setBeatSoundFull] = useState(null)
+  const [vocalRange, setVocalRange] = useState(null)
 
-  const beat = { beatName, price, beatSound, username, genre, description }
+  const beat = { beatName, price, username, genre, description, vocalRange }
   const navigate = useNavigate();
 
   const handleUpload = async (e) => {
 
-    if (!beatName || !price || !beatSound || !username || !genre || !price) {
+    if (!beatName || !price || !username || !genre || !price || !vocalRange) {
       <Popup>Please fill in all fields!</Popup>
       return;
     }
@@ -223,7 +223,7 @@ function UploadBeat() {
             type="Text"
             placeholder="Tone"
             className={cx("input-text")}
-            value={description}
+            value={vocalRange}
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
@@ -239,7 +239,7 @@ function UploadBeat() {
             placeholder="BeatSound"
             className={cx("input-text")}
             value={beatSoundDemo}
-            onChange={(e) => setBeatSound(e.target.value)}
+            onChange={(e) => setBeatSoundDemo(e.target.value)}
           />
         </div>
 
@@ -254,7 +254,7 @@ function UploadBeat() {
             placeholder="BeatSound"
             className={cx("input-text")}
             value={beatSoundFull}
-            onChange={(e) => setBeatSound(e.target.value)}
+            onChange={(e) => setBeatSoundFull(e.target.value)}
           />
         </div>
 

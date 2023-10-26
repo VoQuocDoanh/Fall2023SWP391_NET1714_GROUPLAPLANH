@@ -12,9 +12,9 @@ import UKULELE from "../../assets/ImageForChords/Ukulele";
 
 const cx = classNames.bind(styles);
 
-const KEY = ["All", "C", "D", "E", "F", "G", "A", "B"];
-const SUFFIX = ["All", "major", "minor", "7", "m7", "maj7"];
-const INSTRUMENT = ["All", "Ukulele", "Guitar", "Piano"];
+const KEY = ["C", "D", "E", "F", "G", "A", "B"];
+const SUFFIX = ["major", "minor", "7", "m7", "maj7"];
+const INSTRUMENT = ["Ukulele", "Guitar", "Piano"];
 
 
 const DATA = [
@@ -48,7 +48,7 @@ function ChordsDetails() {
 
     const [key, setKey] = useState(KEY[0]);
     const [suffix, setSuffix] = useState(SUFFIX[0]);
-    const [instrument, setInstrument] = useState(INSTRUMENT[0]);
+    const [instrument, setInstrument] = useState(INSTRUMENT[1]);
     const [listChord, setListChord] = useState([]);
 
     const handleKeyChange = (e) => {
@@ -63,13 +63,13 @@ function ChordsDetails() {
         setInstrument(e.target.value);
     }
 
-    useEffect(() => {
-        let listFilter = DATA.filter((list) => list.type === instrument);
-        let listType = listFilter[0].value.map((item) => {
-            return item;
-        })
-        setListChord(listType.flat(Infinity));
-    }, [])
+    // useEffect(() => {
+    //     let listFilter = DATA.filter((list) => list.type === instrument);
+    //     let listType = listFilter[0].value.map((item) => {
+    //         return item;
+    //     })
+    //     setListChord(listType.flat(Infinity));
+    // }, [])
 
     useEffect(() => {
         let listFilter = DATA.filter((list) => list.type === instrument);
@@ -84,9 +84,10 @@ function ChordsDetails() {
                 list = list.filter(item => item.suffix === suffix);
             }
             setListChord(list);
-        } else {
-            setListChord(listType.flat(Infinity))
         }
+        // } else {
+        //     setListChord(listType.flat(Infinity))
+        // }
     }, [key])
 
     useEffect(() => {
@@ -102,9 +103,10 @@ function ChordsDetails() {
                 list = list.filter(item => item.key === key);
             }
             setListChord(list);
-        } else {
-            setListChord(listType.flat(Infinity))
         }
+        // } else {
+        //     setListChord(listType.flat(Infinity))
+        // }
     }, [suffix])
 
     useEffect(() => {
@@ -112,17 +114,17 @@ function ChordsDetails() {
         let listType = listFilter[0].value.map((item) => {
             return item;
         })
-        if(key !== "All" && suffix == "All") {
-            let list = listType.flat(Infinity).filter((item) => {
-                return item.key === key;
-            });
-            setListChord(list);
-        } else if(key === "All" && suffix !== "All") {
-            let list = listType.flat(Infinity).filter((item) => {
-                return item.suffix === suffix;
-            });
-            setListChord(list);
-        }else if(key !== "All" && suffix !== "All"){
+        // if(key !== "All" && suffix == "All") {
+        //     let list = listType.flat(Infinity).filter((item) => {
+        //         return item.key === key;
+        //     });
+        //     setListChord(list);
+        // } else if(key === "All" && suffix !== "All") {
+        //     let list = listType.flat(Infinity).filter((item) => {
+        //         return item.suffix === suffix;
+        //     });
+        //     setListChord(list);
+        if(key !== "All" && suffix !== "All"){
             let list = listType.flat(Infinity).filter((item) => {
                 return item.key === key && item.suffix === suffix;
             });

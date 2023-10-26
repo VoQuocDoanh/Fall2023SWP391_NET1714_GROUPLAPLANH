@@ -4,54 +4,14 @@ import classNames from "classnames/bind";
 import useToken from '../../authorization/useToken';
 import jwtDecode from 'jwt-decode';
 import { ShopContext } from '../../context/shop-context';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
-
-const DATA = [
-    {
-
-        selectedbeats: "FANTASTIC BABY",
-        amount: "$50",
-        quantity: "1",
-        total: "$50",
-
-    },
-    {
-
-        selectedbeats: "BANG BANG BANG",
-        amount: "$75",
-        quantity: "3",
-        total: "$225",
-    },
-    {
-
-        selectedbeats: "LAST DANCE",
-        amount: "$80",
-        quantity: "2",
-        total: "$160",
-    },
-    {
-
-        selectedbeats: "HARU HARU",
-        amount: "$45",
-        quantity: "4",
-        total: "$180",
-    },
-    {
-
-        selectedbeats: "FXXK IT",
-        amount: "$90",
-        quantity: "6",
-        total: "$540",
-    },
-
-
-];
 
 function Invoice() {
     const { cartItems, getTotalCartAmount, checkOut, listBeatContext } = useContext(ShopContext)
     const totalAmount = getTotalCartAmount()
     const token = useToken()
+    const navigate = useNavigate()
     let fullName = ""
     let mail = ""
     let phoneNumber = ""
@@ -61,13 +21,10 @@ function Invoice() {
         phoneNumber = jwtDecode(token).phoneNumber
     }
 
-    const handleDelete = (id) => {
-        console.log(id);
-    };
-
-    const handleUpdate = (id) => {
-        console.log(id);
-    };
+    const handleCheckout = () =>{
+        checkOut()
+        navigate("/listbeat")
+    }
 
     return (
         <div className={cx('Invoice')}>
@@ -77,7 +34,7 @@ function Invoice() {
             </div>
 
             <footer className={cx("before-body")}>
-                    <Link to="/listbeat" className={cx("before-body-1", "card-action")}>RETURN TO SHOP</Link>
+                    <div className={cx("before-body-1", "card-action")} onClick={() => handleCheckout()}>RETURN TO SHOP</div>
                     {/* <div className={cx("card-update", "card-action")}>UPDATE CART</div> */}
                 </footer>
             <div className={cx('body')}>

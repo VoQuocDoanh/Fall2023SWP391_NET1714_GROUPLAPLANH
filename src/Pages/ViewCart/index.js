@@ -220,7 +220,7 @@ function ViewCart() {
         }
         if(token){
         console.log(data)
-        await axiosInstance.post(`http://localhost:8080/api/v1/Order/user/${jwtDecode(token).sub}`, data)
+        await axiosInstance.post(`http://localhost:8080/api/v1/order/user/${jwtDecode(token).sub}`, data)
             .catch((error) => {
                 if (error.message.includes("Network")) {
                     navigate("/login")
@@ -301,8 +301,8 @@ function ViewCart() {
                                     <CardItem
                                         id={item.id}
                                         name={item.beatName}
-                                        author="Minh Hien"
-                                        genre="POP"
+                                        author={item.user.fullName}
+                                        genre={item.genres}
                                         price={item.price}
                                         beatId={item.id}
                                     />

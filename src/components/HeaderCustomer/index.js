@@ -8,7 +8,7 @@ import Popup from 'reactjs-popup';
 import Search from "../Search";
 
 // Import css
-import styles from "./HeaderAdmin.module.scss";
+import styles from "./HeaderCustomer.module.scss";
 import Button from '@mui/material/Button';
 import { useContext, useState, useRef, useMemo } from "react";
 import jwtDecode from "jwt-decode";
@@ -20,7 +20,7 @@ import { ShopContext } from "../../context/shop-context";
 const cx = classNames.bind(styles);
 
 
-function HeaderAdmin() {
+function HeaderCustomer() {
 
   const navigate = useNavigate()
   const { checkOut } = useContext(ShopContext)
@@ -85,19 +85,22 @@ function HeaderAdmin() {
           </div>
         </div>
 
-        {/* Phan quyen header */}
-        <div className={cx("pop-up")}>
-          <Popup trigger={<button className={cx("button-popup")}>Hi, {name}</button>} position="bottom left center">
-            <div className={cx("text-all")}>
-              <Link to="/adminprofile"><div className={cx("link-text")}>My Account</div></Link>
-              <Link to="/listuser"><div className={cx("link-text")}>View User</div></Link>
-              <Link to="/"><div className={cx("link-text")} onClick={handleLogout}> Log out</div></Link>
-            </div>
-          </Popup>
-        </div>
+        {/* Phan quyen header */}                     
+            <div className={cx("username")}>
+              <div className={cx("pop-up")}>
+                <Popup trigger={<button className={cx("button-popup")}>Hi, {name}</button>} position="bottom left  center" closeOnDocumentClick on={['hover', 'focus']}>
+                  <div className={cx("text-all")}>
+                    <Link to="/myprofile"><div className={cx("link-text")}>My Account</div></Link>
+                    <Link to="/listBeatPurchased"><div className={cx("link-text")}>My Purchased</div></Link>
+                    <Link to="/viewcart"><div className={cx("link-text")}>My Song's Playlist</div></Link>
+                    <Link to="/"><div className={cx("link-text")} onClick={handleLogout}> Log out</div></Link>
+                  </div>
+                </Popup>
+              </div>
+            </div> 
       </div>
     </div>
   );
 }
 
-export default HeaderAdmin;
+export default HeaderCustomer;

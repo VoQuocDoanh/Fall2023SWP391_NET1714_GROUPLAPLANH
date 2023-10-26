@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import styles from "./ListBeatBox.module.scss";
+import styles from "./listBeatPurchasedBox.module.scss";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faPlay, faPause, faCheckCircle, faUsersViewfinder, faEye, faStar, faStepBackward, faStepForward } from "@fortawesome/free-solid-svg-icons";
@@ -13,14 +13,14 @@ import axiosInstance from "../../authorization/axiosInstance";
 
 const cx = classNames.bind(styles);
 
-function ListBeatBox({ id, name, genre, price, view, like, onClick, handleLike, rating, vocalRange, fullName }) {
+function ListBeatPurchasedBox({ id, name, genre, price, view, like, onClick, handleLike, rating, vocalRange, fullName }) {
     const token = useToken()
     const audioRef = useRef()
     const { addToCart, cartItems } = useContext(ShopContext)
     const [play, setPlay] = useState(false)
     const [beatSoundDemo, setBeatSoundDemo] = useState("")
-    const loadSoundDemo = async() => {
-        await axiosInstance(`http://localhost:8080/api/v1/beat/user/demo/${id}`)
+    const loadSoundFull = async() => {
+        await axiosInstance(`http://localhost:8080/api/v1/beat/user/full/${id}`)
         .then((res) =>{
             setBeatSoundDemo(atob(res.data.beatSound))
         })
@@ -33,7 +33,7 @@ function ListBeatBox({ id, name, genre, price, view, like, onClick, handleLike, 
         <div className={cx("content")}>
             {/* Content left */}
             <div className={cx("content-left")}>
-                <h2 className={cx("name-beat")}> <Link to={`/viewdetailbeat/${id}`}>{name}</Link> <FontAwesomeIcon className={cx("check")} icon={faCheckCircle} /></h2>
+                <h2 className={cx("name-beat")}> <Link to={`/viewdetailbeatpurchased/${id}`}>{name}</Link> <FontAwesomeIcon className={cx("check")} icon={faCheckCircle} /></h2>
                 <span className={cx("type-beat")}>{fullName}</span> <br />
                 <span className={cx("type-beat")}>{vocalRange}</span>
 
@@ -54,18 +54,12 @@ function ListBeatBox({ id, name, genre, price, view, like, onClick, handleLike, 
                     </span>
                 </div>
                 {!play ?
-                    <Button onClick={() => loadSoundDemo()}>listen to Beat</Button>
+                    <Button onClick={() => loadSoundFull()}>listen to Beat</Button>
                     : <audio className={cx("audio")} id="audio" ref={audioRef} controls src={`data:audio/mpeg;base64, ${beatSoundDemo}`}>
                     </audio>}
             </div>
             {/* Content right  */}
-            <div className={cx("content-right")}>
-                {token ?
-                    <Button className={cx("action")} onClick={() => addToCart(id)}><FontAwesomeIcon icon={faCartShopping} className={cx("shop")} /></Button>
-                    : <Link to={"/login"}><Button className={cx("action")}><FontAwesomeIcon icon={faCartShopping} className={cx("shop")} /></Button></Link>
-                }
-
-            </div>
+            
         </div>
         {/* <div className={cx("control")}>
             <div className={cx("btn", "btn-prev")}>
@@ -87,4 +81,4 @@ function ListBeatBox({ id, name, genre, price, view, like, onClick, handleLike, 
         </div> */}
     </div>);
 }
-export default ListBeatBox
+export default ListBeatPurchasedBox;

@@ -6,6 +6,8 @@ import { async } from "q";
 import axios from "axios";
 import { Button } from "@mui/material";
 import axiosInstance from "../../authorization/axiosInstance";
+import useToken from "../../authorization/useToken";
+import jwtDecode from "jwt-decode";
 
 const cx = classNames.bind(styles);
 
@@ -66,6 +68,11 @@ function ViewBeat() {
     const navigate = useNavigate();
     const [beats, setBeats] = useState([]);
     const [searchBeat, setSearchBeat] = useState("");
+    let fullName = ""
+    const token = useToken()
+    if(token){
+        fullName = jwtDecode(token).fullName
+    }
     // const [listBeat, setListBeat] = useState(DATA);
     useEffect(() => {
         loadBeats();
@@ -73,7 +80,7 @@ function ViewBeat() {
 
     const loadBeats = async () => {
 
-        await axiosInstance.get("http://localhost:8080/api/v1/beat")
+        await axiosInstance.get(`http://localhost:8080/api/v1/beat/musician/${fullName}`)
         .then(res => {
             setBeats(res.data)
         })

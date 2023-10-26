@@ -10,14 +10,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const cx = classNames.bind(styles);
 
 function Songs() {
-    const token = useToken()
-    const navigate = useNavigate()
     const [listSongs, setListSongs] = useState(null)
     const [listGenres, setListGenres] = useState(null)
+
+    useEffect(() => {
+        loadGenres()
+    }, [])
+    useEffect(() => {
+        loadSongs()
+    }, [])
+
     const loadSongs = async () => {
-        if (!token) {
-            navigate("/login")
-        }
         await axiosInstance.get("http://localhost:8080/api/v1/song")
             .then((res) => {
                 setListSongs(res.data)
@@ -26,21 +29,15 @@ function Songs() {
                 console.log(error)
             })
     }
-    const loadGenres = async() => {
+    const loadGenres = async () => {
         await axiosInstance.get("http://localhost:8080/api/v1/genre")
-        .then((res) =>{
-            setListGenres(res.data)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+            .then((res) => {
+                setListGenres(res.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
-    useEffect(() => {
-        loadGenres()
-    },[])
-    useEffect(() => {
-        loadSongs()
-    }, [])
     if (listSongs !== null) {
         return (
 
@@ -49,6 +46,7 @@ function Songs() {
                 <footer className={cx("Add-Songs")}>
                     <Link to="/UploadSong" className={cx("Add-Songs-body", "card-action")}>Add new song</Link>
                 </footer>
+                <h3 className={cx("title-song-style2")}>  Most Popular Today</h3>
                 {/* <div className={cx("button-chords")}>
                 <Link to="/chordsdetails">
                     <button variant="contained" className={cx("button")}>
@@ -74,17 +72,17 @@ function Songs() {
                             <h3 >Songs Style</h3>
                         </div>
                         <div className={cx('sum')}>
-                        {listGenres ? 
-                            <div className={cx("rhythm-list")} id="rhythms">
-                                {listGenres.map((item) => {
+                            {listGenres ?
+                                <div className={cx("rhythm-list")} id="rhythms">
+                                    {listGenres.map((item) => {
 
-                                
-                                return <a className={cx("rhythm-item")} data-rhythm="ballad" >
-                                    {item.name}
-                                </a>
-                                })}
-                                
-                            </div> : <div></div>}
+
+                                        return <a className={cx("rhythm-item")} data-rhythm="ballad" >
+                                            {item.name}
+                                        </a>
+                                    })}
+
+                                </div> : <div></div>}
                         </div>
 
 
@@ -93,37 +91,37 @@ function Songs() {
 
                     {listSongs ?
                         <div>
-                            {listSongs.map((song, index) => {
-                                return (
-                                    <div className={cx("list-songs-middle")}>
+                            <div className={cx("list-songs-middle")}>
 
 
-                                        <h3 className={cx("title-song-style2")}>  Most Popular Today</h3>
-                                        <div className={cx("hot-today-item flex-center-between")}>
-                                            <div className="flex-center-start">
-                                                <span className={cx("hot-today-views")}>
-                                                    <FontAwesomeIcon icon={faStar} />
-                                                    <span className={cx("hot-today-view-count")}>{song.view}</span>
-                                                </span>
-
-                                                <div>
-                                                    <a className={cx("hot-today-item-song")}>
-                                                        {song.songName} |                                </a>
-                                                    <span className={("hot-today-item-singers")}>
-                                                        <a className={cx("author-item")}>
-                                                            {song.author}                                  </a>
-
+                                <div className={cx("list-songs-details")}>
+                                    {listSongs.map((song, index) => {
+                                        return (
+                                            <div>
+                                                <div className="flex-center-start">
+                                                    <span className={cx("hot-today-views")}>
+                                                        <FontAwesomeIcon icon={faStar} />
+                                                        <span className={cx("hot-today-view-count")}>{song.view}</span>
                                                     </span>
-                                                </div>
-                                            </div>
-                                            <div className={cx("text-gray nowrap text-small pr-10")}>
-                                                <FontAwesomeIcon icon={faComment} />
-                                            </div>
-                                        </div>
 
-                                    </div>
-                                )
-                            })}
+                                                    <div>
+                                                        <a className={cx("hot-today-item-song")}>
+                                                            {song.songName} |                                </a>
+                                                        <span className={("hot-today-item-singers")}>
+                                                            <a className={cx("author-item")}>
+                                                                {song.author}                                  </a>
+
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div className={cx("text-gray nowrap text-small pr-10")}>
+                                                    <FontAwesomeIcon icon={faComment} />
+                                                </div>
+                                            </div>)
+                                    })}
+                                </div>
+                            </div>
+
                         </div> : <div>There are no songs in the system</div>}
                     <div className={cx("moinoi")}>
                         <div className={cx("new-release")}>New Realse</div>
@@ -140,7 +138,7 @@ function Songs() {
                                 </div>
                             </div>
                         </div>
-                        
+
 
                     </div>
 
