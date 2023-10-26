@@ -13,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChordCollectionDTO {
+    private Long userId;
     private String name;
     private int status;
     private String username;
