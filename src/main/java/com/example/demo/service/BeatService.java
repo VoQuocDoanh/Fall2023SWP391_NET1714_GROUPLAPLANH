@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
@@ -31,12 +32,29 @@ public class BeatService {
     private GenreRepository genreRepository;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private GoogleCloudService service;
+
+    private String extractObjectNameFromUrl(String fullUrl) {
+        if (fullUrl.startsWith("https://storage.googleapis.com/")) {
+            int startIndex = "https://storage.googleapis.com/".length();
+            return fullUrl.substring(startIndex);
+        } else {
+            return null;
+        }
+    }
+
+    private void setPathAndName(String path, String pathDemo, String fileName, String fileNameDemo, Beat beat){
+        beat.setBeatSoundFull(path);
+        beat.setBeatSoundDemo(pathDemo);
+        beat.setObjectName(fileName);
+        beat.setObjectNameDemo(fileNameDemo);
+        this.beatRepository.save(beat);
+    }
 
     private UserResponeDTO getUser(User user){
         return new UserResponeDTO(user.getId(), user.getFullName(), user.getPhoneNumber(), user.getMail());
     }
-
-
     private Set<Genre> genreSet(BeatDTO beatDTO) {
         Set<Genre> genres = new HashSet<>();
         for (String genreName : beatDTO.getGenres()) {
@@ -72,7 +90,7 @@ public class BeatService {
                 List<GenreResponseDTO> genres = getGenres(value.getId());
                 BeatResponseDTO dto = new BeatResponseDTO(value.getId(),
                         value.getBeatName(),
-                        Base64.decodeBase64(value.getBeatSoundDemo()),
+                        value.getBeatSoundDemo(),
                         getUser(value.getUserName()),
                         value.getPrice(),
                         value.getCreatedAt(),
@@ -82,7 +100,6 @@ public class BeatService {
                         value.getVocalRange(),
                         value.getTotalRating(),
                         value.getRating());
-
                 beatResponseDTOS.add(dto);
             }
             return beatResponseDTOS;
@@ -127,10 +144,6 @@ public class BeatService {
         return dtos;
     }
 
-
-
-
-
     public List<BeatResponseDTO> findAllBeat(){
         List<Beat> beats = this.beatRepository.findAllBeat();
         List<BeatResponseDTO> responseDTOS = new ArrayList<>();
@@ -154,55 +167,39 @@ public class BeatService {
         }
     }
 
-    public BeatResponseDTO getDemoBeat(Long id){
-        BeatResponseDTO responseDTO = new BeatResponseDTO();
-        Optional<Beat> beat = beatRepository.findById(id);
-        beat.get().setView(beat.get().getView() + 1);
-        beatRepository.save(beat.get());
-        responseDTO.setBeatSound(beat.get().getBeatSoundDemo());
-        return responseDTO;
-    }
-    public BeatResponseDTO getFullBeat(Long id){
-        BeatResponseDTO responseDTO = new BeatResponseDTO();
-        Optional<Beat> beat = beatRepository.findById(id);
-        responseDTO.setBeatSound(beat.get().getBeatSoundFull());
-        return responseDTO;
-    }
-
-    public ResponseEntity<String> insertBeat(byte[] sound, byte[] sound2, BeatDTO beatDTO) {
+    public ResponseEntity<String> insertBeat(MultipartFile sound, MultipartFile sound2, BeatDTO beatDTO) {
         Optional<User> foundUser = Optional.ofNullable(this.userRepository.findByUsername(beatDTO.getUsername()));
         if (foundUser.isPresent()) {
-            byte[] encodeSound = Base64.encodeBase64(sound);
-            byte[] encodeSound2 = Base64.encodeBase64(sound2);
             Beat beat = new Beat(beatDTO.getBeatName(),
                     beatDTO.getPrice(),
-                    encodeSound,
-                    encodeSound2,
                     beatDTO.getDescription(),
-                    0,
-                    0,
                     foundUser.get(),
                     genreSet(beatDTO),
-                    1,
-                    0,
-                    0,
-                    0,
-                    beatDTO.getVocalRange());
+                    beatDTO.getVocalRange(),
+                    0, 0, 1, 0, 0, 0);
             this.beatRepository.save(beat);
-            return new ResponseEntity<>("Insert Successfully", HttpStatus.OK);
 
+            String path = this.service.uploadFile(sound, beat.getId(), "audio", "full");
+            String pathDemo = this.service.uploadFile(sound, beat.getId(), "audio", "demo");;
+
+            String fileName = extractObjectNameFromUrl(path);
+            String fileNameDemo = extractObjectNameFromUrl(pathDemo);
+
+            setPathAndName(path, pathDemo, fileName, fileNameDemo , beat);
+
+            return new ResponseEntity<>("Insert Successfully", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
     }
 
-    public ResponseEntity<String> updateBeat(byte[] sound1, byte[] sound2,BeatDTO newBeat, Long id) {
+    public ResponseEntity<String> updateBeat(MultipartFile sound, MultipartFile sound2,BeatDTO newBeat, Long id) {
         Optional<Beat> foundBeat = this.beatRepository.findById(id);
         if (foundBeat.isPresent()) {
             Beat beat = foundBeat.get();
             beat.setBeatName(newBeat.getBeatName());
-            beat.setBeatSoundDemo(Base64.encodeBase64(sound1));
-            beat.setBeatSoundFull(Base64.encodeBase64(sound2));
+            service.updateFile(sound, beat.getObjectName());
+            service.updateFile(sound2, beat.getObjectNameDemo());
             beat.setPrice(newBeat.getPrice());
             beat.setGenresofbeat(genreSet(newBeat));
             beat.setVocalRange(newBeat.getVocalRange());
@@ -260,7 +257,7 @@ public class BeatService {
             responseDTO.setYear(information.getYear());
             responseDTO.setProfessional(information.getProfessional());
             responseDTO.setPrize(information.getPrize());
-  //          responseDTO.setBeatSound(beat.getBeatSoundDemo());
+            responseDTO.setBeatSound(beat.getBeatSoundDemo());
             responseDTO.setPrice(beat.getPrice());
             responseDTO.setCreatAt(beat.getCreatedAt());
             responseDTO.setUser(getUser(beat.getUserName()));
@@ -278,20 +275,12 @@ public class BeatService {
 
     public List<BeatResponseDTO> searchByBeatName(String name) {
         List<Beat> beatEntity = this.beatRepository.findByBeatName(name);
-        List<BeatResponseDTO> responseDTOS = new ArrayList<>();
-        for (Beat i :beatEntity){
-            responseDTOS.add(getDetailBeatResponseDTO(i));
-        }
-        return responseDTOS;
+        return getBeatResponseDTOS(beatEntity);
     }
 
     public List<BeatResponseDTO> searchByMusician(String name) {
-        List<Beat> beatEntity = this.beatRepository.findBeatByMusician(name);
-        List<BeatResponseDTO> responseDTOS = new ArrayList<>();
-        for (Beat i :beatEntity){
-            responseDTOS.add(getDetailBeatResponseDTO(i));
-        }
-        return responseDTOS;
+        List<Beat> beats = this.beatRepository.findBeatByMusician(name);
+        return getBeatResponseDTOS(beats);
     }
 
     public List<String> listAllMusician(){

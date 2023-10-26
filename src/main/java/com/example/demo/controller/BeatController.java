@@ -70,31 +70,14 @@ public class BeatController {
     //Add Beat in MS
     @PostMapping({""})
     public ResponseEntity<String> uploadBeat(@Valid @RequestPart("file1")MultipartFile sound,@Valid @RequestPart("file2")MultipartFile sound2, @Valid @RequestPart("json") BeatDTO beatDTO) {
-        try {
-            byte[] soundByte = sound.getBytes();
-            byte[] soundByte2 = sound2.getBytes();
-            return this.beatService.insertBeat(soundByte,soundByte2, beatDTO);
-        } catch (IOException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_IMPLEMENTED);
-        }
-
+        return this.beatService.insertBeat(sound, sound2, beatDTO);
     }
 
     //Update beat in MS
     @PatchMapping({"/{id}"})
     public ResponseEntity<String> updateBeat(@Valid @RequestPart("file1")MultipartFile sound,@Valid @RequestPart("file2")MultipartFile sound2, @Valid @RequestPart("json") BeatDTO newBeat, @PathVariable Long id) {
-        try {
-            byte[] soundByte = sound.getBytes();
-            byte[] soundByte2 = sound2.getBytes();
-
-            return this.beatService.updateBeat(soundByte,soundByte2, newBeat, id);
-        } catch (IOException e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_IMPLEMENTED);
-        }
-
+            return this.beatService.updateBeat(sound, sound2, newBeat, id);
     }
-
-
 
     //like beat
     @PostMapping("/like/{id1}/{id2}")
@@ -120,15 +103,15 @@ public class BeatController {
         return ResponseEntity.ok(this.beatService.getBeatPurchasedDetail(id));
     }
 
-    @GetMapping("user/demo/{id}")
-    public BeatResponseDTO getDemoSound(@PathVariable Long id){
-        return beatService.getDemoBeat(id);
-    }
-
-    @GetMapping("user/full/{id}")
-    public BeatResponseDTO getFullSound(@PathVariable Long id){
-        return beatService.getFullBeat(id);
-    }
+//    @GetMapping("user/demo/{id}")
+//    public BeatResponseDTO getDemoSound(@PathVariable Long id){
+//        return beatService.getDemoBeat(id);
+//    }
+//
+//    @GetMapping("user/full/{id}")
+//    public BeatResponseDTO getFullSound(@PathVariable Long id){
+//        return beatService.getFullBeat(id);
+//    }
 
     @GetMapping("musician/full")
     public List<String> getName(){

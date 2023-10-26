@@ -17,7 +17,7 @@ import java.util.Set;
 public class BeatResponseDTO {
     private Long id;
     private String beatName;
-    private byte[] beatSound;
+    private String beatSound;
     private UserResponeDTO user;
     private Double price;
     private LocalDateTime creatAt;
@@ -35,7 +35,7 @@ public class BeatResponseDTO {
     private int year;
     private String professional;
 
-    public BeatResponseDTO(Long id, String beatName, byte[] beatSound, UserResponeDTO user, Double price, LocalDateTime creatAt, List<GenreResponseDTO> genres, int view, int totalLike, String vocalRange,int totalRating, Double rating) {
+    public BeatResponseDTO(Long id, String beatName, String beatSound, UserResponeDTO user, Double price, LocalDateTime creatAt, List<GenreResponseDTO> genres, int view, int totalLike, String vocalRange,int totalRating, Double rating) {
         this.id = id;
         this.beatName = beatName;
         this.beatSound = beatSound;
@@ -62,15 +62,14 @@ public class BeatResponseDTO {
         this.vocalRange = vocalRange;
         this.totalRating = totalRating;
         this.rating = rating;
-
     }
 
-    public BeatResponseDTO(String beatName, byte[] beatSound, Double price,String description) {
-        this.beatName = beatName;
-        this.beatSound = beatSound;
-        this.price = price;
-        this.description = description;
-    }
+//    public BeatResponseDTO(String beatName, byte[] beatSound, Double price,String description) {
+//        this.beatName = beatName;
+//        this.beatSound = beatSound;
+//        this.price = price;
+//        this.description = description;
+//    }
 
     public BeatResponseDTO(String beatName) {
         this.beatName = beatName;

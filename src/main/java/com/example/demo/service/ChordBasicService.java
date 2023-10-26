@@ -9,14 +9,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ChordBasicService {
+
     @Autowired
-    ChordBasicRepository chordBasicRepository;
+    private ChordBasicRepository chordBasicRepository;
+    @Autowired
+    private GoogleCloudService service;
 
     public ChordBasic findById(Long id){
         Optional<ChordBasic> foundChord=chordBasicRepository.findById(id);
@@ -33,22 +37,23 @@ public class ChordBasicService {
             return null;
         } else {
             for (ChordBasic value : chordEntity) {
-                value.setImage(Base64.decodeBase64(value.getImage()));
+                value.setImage(value.getImage());
             }
             return chordEntity;
         }
     }
     
-    public ResponseEntity<String> uploadChord(byte[] image ,ChordDTO chordDTO){
+    public ResponseEntity<String> uploadChord(MultipartFile image , ChordDTO chordDTO){
         Optional<ChordBasic> foundChord = Optional.ofNullable(this.chordBasicRepository.findByChordNameAndType(chordDTO.getName(), chordDTO.getType()));
         if(foundChord.isEmpty()){
-            byte[] encodeImage = Base64.encodeBase64(image);
             ChordBasic basic = new ChordBasic(chordDTO.getName(),
-                    encodeImage,
                     chordDTO.getKey(),
                     chordDTO.getSuffix(),
                     chordDTO.getScript(),
                     chordDTO.getType());
+            this.chordBasicRepository.save(basic);
+            String path = this.service.uploadFile(image, basic.getChordId(), "image", "full");
+            basic.setImage(path);
             this.chordBasicRepository.save(basic);
         return new ResponseEntity<>("Add được rồi đó Hiển", HttpStatus.OK);
         } else {

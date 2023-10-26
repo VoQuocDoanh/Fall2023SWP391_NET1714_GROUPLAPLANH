@@ -30,8 +30,8 @@ public class ChordBasic {
     @Column(name = "ChordName")
     private String chordName;
 
-    @Column(name = "Image", length = Integer.MAX_VALUE)
-    private byte[] image;
+    @Column(name = "Image")
+    private String image;
 
     @Column(name = "ChordKey")
     private String chordKey;
@@ -52,9 +52,8 @@ public class ChordBasic {
     @ManyToMany(mappedBy = "chordsofcollections",cascade = {CascadeType.ALL})
     private Set<ChordCollection> collections = new HashSet<>();
 
-    public ChordBasic(String chordName, byte[] image, String chordKey, String suffix, String description, String type) {
+    public ChordBasic(String chordName, String chordKey, String suffix, String description, String type) {
         this.chordName = chordName;
-        this.image = image;
         this.chordKey = chordKey;
         this.suffix = suffix;
         this.description = description;
@@ -66,7 +65,7 @@ public class ChordBasic {
         return "ChordBasic{" +
                 "chordId=" + chordId +
                 ", chordName='" + chordName + '\'' +
-                ", image='" + Arrays.toString(image) + '\'' +
+                ", image='" + image + '\'' +
                 ", chordKey='" + chordKey + '\'' +
                 ", suffix='" + suffix + '\'' +
                 ", description='" + description + '\'' +

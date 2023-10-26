@@ -122,10 +122,11 @@ public class SongService {
             SongResponseDTO dto = new SongResponseDTO(value.getId(),
                     value.getSongname(),
                     value.getAuthor(),
-                    value.getCreatedAt().toString(),
+                    value.getCreatedAt(),
                     new UserResponeDTO(foundUser.getFullName()),
                     value.getTotalLike(),
-                    value.getView());
+                    value.getView(),
+                    value.getRating());
             dtos.add(dto);
         }
         return dtos;
@@ -141,10 +142,11 @@ public class SongService {
                 SongResponseDTO dto = new SongResponseDTO(value.getId(),
                         value.getSongname(),
                         value.getAuthor(),
-                        value.getCreatedAt().toString(),
+                        value.getCreatedAt(),
                         getUser(value.getUserUploadSong()),
                         value.getTotalLike(),
-                        value.getView());
+                        value.getView(),
+                        value.getRating());
                 songResponseDTOS.add(dto);
             }
             return songResponseDTOS;
@@ -243,10 +245,11 @@ public class SongService {
                 SongResponseDTO dto = new SongResponseDTO(song.getId(),
                         song.getSongname(),
                         song.getAuthor(),
-                        song.getCreatedAt().toString(),
+                        song.getCreatedAt(),
                         getUser(song.getUserUploadSong()),
                         song.getTotalLike(),
-                        song.getView());
+                        song.getView(),
+                        song.getRating());
                 songResponseDTOS.add(dto);
             }
         }
@@ -271,7 +274,7 @@ public class SongService {
             dto.setVocalRange(s.getVocalRange());
             dto.setSongUrl(s.getSongUrl());
             dto.setUser(getUser(s.getUserUploadSong()));
-            dto.setCreateAt(s.getCreatedAt().toString());
+            dto.setCreateAt(s.getCreatedAt());
             dto.setGenres(getGenres(s.getId()));
             dto.setChords(getChords(s.getId()));
             dto.setView(s.getView());
@@ -290,10 +293,11 @@ public class SongService {
             for (Song s : songs) {
                 SongResponseDTO dto = new SongResponseDTO(s.getId(),
                         s.getSongname(), s.getAuthor(),
-                        s.getCreatedAt().toString(),
+                        s.getCreatedAt(),
                         getUser(s.getUserUploadSong()),
                         s.getTotalLike(),
-                        s.getView());
+                        s.getView(),
+                        s.getRating());
                 responseDTOS.add(dto);
             }
             return responseDTOS;
@@ -307,10 +311,11 @@ public class SongService {
                 SongResponseDTO dto = new SongResponseDTO(song.getId(),
                         song.getSongname(),
                         song.getAuthor(),
-                        song.getCreatedAt().toString(),
+                        song.getCreatedAt(),
                         getUser(song.getUserUploadSong()),
                         song.getTotalLike(),
-                        song.getView());
+                        song.getView(),
+                        song.getRating());
                 songResponseDTOS.add(dto);
             }
         }

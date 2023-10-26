@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.PlaylistDTO;
+import com.example.demo.dto.*;
 import com.example.demo.entity.Song;
 import com.example.demo.entity.SongPlaylist;
 import com.example.demo.entity.User;
@@ -12,9 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class SongPlaylistService {
@@ -26,17 +24,35 @@ public class SongPlaylistService {
     @Autowired
     private SongPlaylistRepository songPlaylistRepository;
 
+    private UserResponeDTO getUser(User user){
+        return new UserResponeDTO(user.getId(), user.getFullName());
+    }
+
     private Set<Song> songSet(PlaylistDTO playlistDTO) {
         Set<Song> songs = new HashSet<>();
         for (Long songid : playlistDTO.getSongids()) {
             Optional<Song> foundSong = this.songRepository.findSongByIdAndStatus(songid, 1);
-            if (foundSong.isPresent()) {
-                songs.add(foundSong.get());
-            }
+            foundSong.ifPresent(songs::add);
         }
         return songs;
     }
 
+    private List<SongResponseDTO> getSongs (SongPlaylist playlist){
+        List<SongResponseDTO> dtos = new ArrayList<>();
+        for (Song value : playlist.getSongsinplaylist()){
+            SongResponseDTO dto = new SongResponseDTO(value.getId(),
+                    value.getSongname(),
+                    value.getAuthor(),
+                    value.getCreatedAt(),
+                    getUser(value.getUserUploadSong()),
+                    value.getTotalLike(),
+                    value.getView(),
+                    value.getRating());
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+    // create
     public ResponseEntity<String> createPlaylist (PlaylistDTO playlistDTO){
         Optional<User> foundUser = this.userRepository.findById(playlistDTO.getUserid());
         if(foundUser.isPresent()){
@@ -55,8 +71,9 @@ public class SongPlaylistService {
         return new ResponseEntity<>("Create Failed", HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<String> updatePlaylist (PlaylistDTO playlistDTO){
-        Optional<User> foundUser = this.userRepository.findById(playlistDTO.getUserid());
+    // update
+    public ResponseEntity<String> updatePlaylist (Long id, PlaylistDTO playlistDTO){
+        Optional<User> foundUser = this.userRepository.findById(id);
         if(foundUser.isPresent()){
             Optional<SongPlaylist> foundPlaylist = this.songPlaylistRepository.findUserSongPlaylistByName(playlistDTO.getName(), foundUser.get().getId());
             if(foundPlaylist.isPresent()){
@@ -72,8 +89,9 @@ public class SongPlaylistService {
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
+    // delete
     public ResponseEntity<String> deletePlaylist (String name, Long userid){
-        Optional<User> foundUser = this.userRepository.findById(userid);
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userid, 1);
         if(foundUser.isPresent()){
             Optional<SongPlaylist> foundPlaylist = this.songPlaylistRepository.findUserSongPlaylistByName(name, userid);
             if(foundPlaylist.isPresent()){
@@ -85,5 +103,27 @@ public class SongPlaylistService {
             }
         }
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+    }
+
+    // view
+    public List<PlaylistResponseDTO> viewall (Long userid, String name){
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userid, 1);
+        if(foundUser.isPresent()){
+            List<SongPlaylist> foundPlaylists = this.songPlaylistRepository.findSongPlaylistsByUserAndNameAndStatus(foundUser.get(), name, 1);
+            if(!foundPlaylists.isEmpty()){
+                List<PlaylistResponseDTO> dtos = new ArrayList<>();
+                for (SongPlaylist value : foundPlaylists) {
+                    PlaylistResponseDTO dto = new PlaylistResponseDTO(value.getId(),
+                            value.getName(),
+                            getUser(value.getUser()),
+                            value.getCreatedAt(),
+                            getSongs(value));
+                    dtos.add(dto);
+                }
+                return dtos;
+            }
+            return null;
+        }
+        return null;
     }
 }

@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,13 +23,14 @@ public class SongResponseDTO {
     private String tone;
     private String vocalRange;
     private String songUrl;
-    private String createAt;
+    private LocalDateTime createAt;
     private List<GenreResponseDTO> genres;
     private List<ChordResponseDTO> chords;
     private int totalLike;
     private int view;
+    private double rating;
 
-    public SongResponseDTO(Long id, String songName, String author, String createAt, UserResponeDTO user, int totalLike, int view) {
+    public SongResponseDTO(Long id, String songName, String author, LocalDateTime createAt, UserResponeDTO user, int totalLike, int view, double rating) {
         this.id = id;
         this.songName = songName;
         this.author = author;
@@ -36,5 +38,6 @@ public class SongResponseDTO {
         this.user = user;
         this.view = view;
         this.totalLike = totalLike;
+        this.rating = rating;
     }
 }

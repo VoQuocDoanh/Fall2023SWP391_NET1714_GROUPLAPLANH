@@ -11,9 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class PlaylistDTO {
-    private Long id;
     private String name;
-    private int status;
     private Long userid;
     private List<Long> songids;
 }
