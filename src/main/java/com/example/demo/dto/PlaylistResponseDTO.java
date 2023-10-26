@@ -16,4 +16,11 @@ public class PlaylistResponseDTO {
     private UserResponeDTO userid;
     private LocalDateTime createAt;
     private List<SongResponseDTO> songs;
+
+    public PlaylistResponseDTO(Long id, String name, UserResponeDTO userid, LocalDateTime createAt) {
+        this.id = id;
+        this.name = name;
+        this.userid = userid;
+        this.createAt = createAt;
+    }
 }

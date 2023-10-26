@@ -24,22 +24,13 @@ public class SongPlaylistService {
     @Autowired
     private SongPlaylistRepository songPlaylistRepository;
 
-    private UserResponeDTO getUser(User user){
+    private UserResponeDTO getUser(User user) {
         return new UserResponeDTO(user.getId(), user.getFullName());
     }
 
-    private Set<Song> songSet(PlaylistDTO playlistDTO) {
-        Set<Song> songs = new HashSet<>();
-        for (Long songid : playlistDTO.getSongids()) {
-            Optional<Song> foundSong = this.songRepository.findSongByIdAndStatus(songid, 1);
-            foundSong.ifPresent(songs::add);
-        }
-        return songs;
-    }
-
-    private List<SongResponseDTO> getSongs (SongPlaylist playlist){
+    private List<SongResponseDTO> getSongs(SongPlaylist playlist) {
         List<SongResponseDTO> dtos = new ArrayList<>();
-        for (Song value : playlist.getSongsinplaylist()){
+        for (Song value : playlist.getSongsinplaylist()) {
             SongResponseDTO dto = new SongResponseDTO(value.getId(),
                     value.getSongname(),
                     value.getAuthor(),
@@ -52,12 +43,13 @@ public class SongPlaylistService {
         }
         return dtos;
     }
+
     // create
-    public ResponseEntity<String> createPlaylist (PlaylistDTO playlistDTO){
-        Optional<User> foundUser = this.userRepository.findById(playlistDTO.getUserid());
-        if(foundUser.isPresent()){
+    public ResponseEntity<String> createPlaylist(Long id, PlaylistDTO playlistDTO) {
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(id, 1);
+        if (foundUser.isPresent()) {
             Optional<SongPlaylist> foundPlaylist = this.songPlaylistRepository.findUserSongPlaylistByName(playlistDTO.getName(), foundUser.get().getId());
-            if(foundPlaylist.isPresent()){
+            if (foundPlaylist.isPresent()) {
                 return new ResponseEntity<>("Playlist is already created", HttpStatus.NOT_FOUND);
             } else {
                 SongPlaylist playlist = new SongPlaylist(playlistDTO.getName(),
@@ -71,15 +63,62 @@ public class SongPlaylistService {
         return new ResponseEntity<>("Create Failed", HttpStatus.NOT_IMPLEMENTED);
     }
 
-    // update
-    public ResponseEntity<String> updatePlaylist (Long id, PlaylistDTO playlistDTO){
-        Optional<User> foundUser = this.userRepository.findById(id);
-        if(foundUser.isPresent()){
+    // create and add
+    public ResponseEntity<String> createPlaylistAndAdd(Long id, PlaylistDTO playlistDTO) {
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(id, 1);
+        if (foundUser.isPresent()) {
+            Optional<SongPlaylist> foundPlaylist = this.songPlaylistRepository.findUserSongPlaylistByName(playlistDTO.getName(), foundUser.get().getId());
+            if (foundPlaylist.isPresent()) {
+                return new ResponseEntity<>("Playlist is already created", HttpStatus.NOT_IMPLEMENTED);
+            } else {
+                SongPlaylist playlist = new SongPlaylist(playlistDTO.getName(),
+                        foundUser.get(),
+                        null,
+                        1);
+                Set<Song> songs = playlist.getSongsinplaylist();
+                Optional<Song> foundSong = this.songRepository.findSongByIdAndStatus(playlistDTO.getSongid(), 1);
+                if (foundSong.isPresent()) {
+                    songs.add(foundSong.get());
+                    playlist.setSongsinplaylist(songs);
+                    this.songPlaylistRepository.save(playlist);
+                    return new ResponseEntity<>("Playlist is created successfully", HttpStatus.OK);
+                }
+                return new ResponseEntity<>("Song not found", HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_IMPLEMENTED);
+    }
+
+
+    // add
+    public ResponseEntity<String> addtoPlaylist(Long id, PlaylistDTO playlistDTO) {
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(id, 1);
+        if(foundUser.isPresent()) {
             Optional<SongPlaylist> foundPlaylist = this.songPlaylistRepository.findUserSongPlaylistByName(playlistDTO.getName(), foundUser.get().getId());
             if(foundPlaylist.isPresent()){
+                Optional<Song> foundSong = this.songRepository.findSongByIdAndStatus(playlistDTO.getSongid(), 1);
+                if(foundSong.isPresent()){
+                    Set<Song> songs = foundPlaylist.get().getSongsinplaylist();
+                    songs.add(foundSong.get());
+                    foundPlaylist.get().setSongsinplaylist(songs);
+                    this.songPlaylistRepository.save(foundPlaylist.get());
+                    return new ResponseEntity<>("Add successfully!", HttpStatus.OK);
+                }
+                return new ResponseEntity<>("Song not found", HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Playlist not found", HttpStatus.NOT_IMPLEMENTED);
+        }
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    // update
+    public ResponseEntity<String> updatePlaylist(Long id, PlaylistDTO playlistDTO) {
+        Optional<User> foundUser = this.userRepository.findById(id);
+        if (foundUser.isPresent()) {
+            Optional<SongPlaylist> foundPlaylist = this.songPlaylistRepository.findUserSongPlaylistByName(playlistDTO.getName(), foundUser.get().getId());
+            if (foundPlaylist.isPresent()) {
                 SongPlaylist playlist = foundPlaylist.get();
                 playlist.setName(playlistDTO.getName());
-                playlist.setSongsinplaylist(songSet(playlistDTO));
                 this.songPlaylistRepository.save(playlist);
                 return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
             } else {
@@ -90,37 +129,72 @@ public class SongPlaylistService {
     }
 
     // delete
-    public ResponseEntity<String> deletePlaylist (String name, Long userid){
+    public ResponseEntity<String> deletePlaylist(String name, Long userid) {
         Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userid, 1);
-        if(foundUser.isPresent()){
+        if (foundUser.isPresent()) {
             Optional<SongPlaylist> foundPlaylist = this.songPlaylistRepository.findUserSongPlaylistByName(name, userid);
-            if(foundPlaylist.isPresent()){
-                SongPlaylist playlist = foundPlaylist.get();
-                playlist.setStatus(0);
-                this.songPlaylistRepository.save(playlist);
-            } else {
-                return new ResponseEntity<>("Playlist does not exist or Playlist was already deleted", HttpStatus.NOT_IMPLEMENTED);
+            if (foundPlaylist.isPresent()) {
+                this.songPlaylistRepository.delete(foundPlaylist.get());
+                return new ResponseEntity<>("Delete Successfully!", HttpStatus.NOT_IMPLEMENTED);
             }
+                return new ResponseEntity<>("Playlist does not exist or Playlist was already deleted", HttpStatus.NOT_IMPLEMENTED);
+        }
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+    }
+
+    // remove
+    public ResponseEntity<String> removeSong(Long id, PlaylistDTO playlistDTO){
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(id, 1);
+        if(foundUser.isPresent()){
+            Optional<SongPlaylist> foundPlaylist = this.songPlaylistRepository.findUserSongPlaylistByName(playlistDTO.getName(), foundUser.get().getId());
+            if(foundPlaylist.isPresent()){
+                Set<Song> songs = foundPlaylist.get().getSongsinplaylist();
+                Optional<Song> foundSong = this.songRepository.findSongByIdAndStatus(playlistDTO.getSongid(), 1);
+                if(foundSong.isPresent()){
+                    songs.remove(foundSong.get());
+                    return new ResponseEntity<>("Remove Successfully!", HttpStatus.OK);
+                }
+                return new ResponseEntity<>("Song not found", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>("Playlist not found", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
     // view
-    public List<PlaylistResponseDTO> viewall (Long userid, String name){
+    public List<PlaylistResponseDTO> viewAll(Long userid, String name) {
         Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userid, 1);
-        if(foundUser.isPresent()){
-            List<SongPlaylist> foundPlaylists = this.songPlaylistRepository.findSongPlaylistsByUserAndNameAndStatus(foundUser.get(), name, 1);
-            if(!foundPlaylists.isEmpty()){
+        if (foundUser.isPresent()) {
+            List<SongPlaylist> foundPlaylists = this.songPlaylistRepository.findSongPlaylistsByUser(foundUser.get());
+            if (!foundPlaylists.isEmpty()) {
                 List<PlaylistResponseDTO> dtos = new ArrayList<>();
                 for (SongPlaylist value : foundPlaylists) {
                     PlaylistResponseDTO dto = new PlaylistResponseDTO(value.getId(),
                             value.getName(),
                             getUser(value.getUser()),
-                            value.getCreatedAt(),
-                            getSongs(value));
+                            value.getCreatedAt());
                     dtos.add(dto);
                 }
                 return dtos;
+            }
+            return null;
+        }
+        return null;
+    }
+
+    // view detail
+    public PlaylistResponseDTO viewDetail(Long userid, String name) {
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userid, 1);
+        if (foundUser.isPresent()) {
+            Optional<SongPlaylist> foundPlaylists = this.songPlaylistRepository.findSongPlaylistByUserAndName(foundUser.get(), name);
+            if (foundPlaylists.isPresent()) {
+                SongPlaylist playlist = foundPlaylists.get();
+                PlaylistResponseDTO dto = new PlaylistResponseDTO(playlist.getId(),
+                        playlist.getName(),
+                        getUser(playlist.getUser()),
+                        playlist.getCreatedAt(),
+                        getSongs(playlist));
+                return dto;
             }
             return null;
         }

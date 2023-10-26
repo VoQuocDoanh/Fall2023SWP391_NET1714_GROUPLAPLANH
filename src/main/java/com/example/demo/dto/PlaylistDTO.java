@@ -12,6 +12,5 @@ import java.util.List;
 @Data
 public class PlaylistDTO {
     private String name;
-    private Long userid;
-    private List<Long> songids;
+    private Long songid;
 }
