@@ -6,6 +6,10 @@
 .back-to-shop{
     margin-top: 20px;
     margin-left: 25px;
+    width: 150px;
+    height: 80px;
+    font-family: sono;
+    font-size: 2.8rem;
 *{
     font-family: Sono;
 }
@@ -92,7 +96,10 @@
    background-color: #000;
    color: #fff;
 }
-
+.button-1{
+    width: 120px;
+    height: 60px;
+}
 
 .mid-detail-left {
     display: flex;
@@ -345,8 +352,7 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    background-color: #06c;
-    outline: 1px solid white;
+
     // position: fixed;
     // top: 647px;
     // left: 20px;
@@ -470,6 +476,8 @@
 
 .comment-all {
     border: #E6E6E6 solid 1px;
+    margin-top: 80px;
+    height: 500px;
 }
 
 .background-image {
@@ -608,3 +616,20 @@
 
 
 
+// post button
+.post-buttonn{
+    height: 60px;
+    border-radius: 14px;
+    padding: 10px;
+    font-weight: bold;
+    border: none;
+    outline: 2px solid grey;
+    background: #06c;
+    color: white;
+    font-size: 2.5rem;
+    display: flex;
+    justify-content: end;
+    margin-left: 700px;
+    margin-top: 20px;
+}
+//comment
