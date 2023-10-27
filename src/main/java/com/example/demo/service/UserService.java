@@ -17,6 +17,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.units.qual.A;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +50,20 @@ public class UserService {
 
     @Autowired
     private GoogleCloudService service;
+
+    @NotNull
+    private ResponseEntity<String> getStringResponseEntity(MultipartFile image, User user) {
+        if(user.getAvatar().isEmpty()) {
+            String path = this.service.uploadFile(image, user.getId(), "avatar", "full");
+            String fileName = this.extractObjectNameFromUrl(path);
+            user.setAvatar(path);
+            user.setObjectName(fileName);
+        } else {
+            this.service.updateFile(image, user.getObjectName());
+        }
+        this.userRepository.save(user);
+        return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
+    }
 
     private String extractObjectNameFromUrl(String fullUrl) {
         if (fullUrl.startsWith("https://storage.googleapis.com/")) {
@@ -177,16 +192,7 @@ public class UserService {
             user.setGender(gender);
             user.setPhoneNumber(userDTO.getPhone());
             user.setAddress(userDTO.getAddress());
-            if(user.getAvatar().isEmpty()) {
-                String path = this.service.uploadFile(image, user.getId(), "avatar", "full");
-                String fileName = this.extractObjectNameFromUrl(path);
-                user.setAvatar(path);
-                user.setObjectName(fileName);
-            } else {
-                this.service.updateFile(image, user.getObjectName());
-            }
-            this.userRepository.save(user);
-            return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
+            return getStringResponseEntity(image, user);
         } else {
             return new ResponseEntity<>("Update Failed", HttpStatus.NOT_IMPLEMENTED);
         }
@@ -206,20 +212,12 @@ public class UserService {
             information.setPrize(userDTO.getPrize());
             information.setProfessional(userDTO.getProfessional());
             information.setYear(userDTO.getYear());
-            if(user.getAvatar().isEmpty()) {
-                String path = this.service.uploadFile(image, user.getId(), "avatar", "full");
-                String fileName = this.extractObjectNameFromUrl(path);
-                user.setAvatar(path);
-                user.setObjectName(fileName);
-            } else {
-                this.service.updateFile(image, user.getObjectName());
-            }
-            this.userRepository.save(user);
-            return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
+            return getStringResponseEntity(image, user);
         } else {
             return new ResponseEntity<>("Update Failed", HttpStatus.NOT_IMPLEMENTED);
         }
     }
+
 
     // Search User - username
     public List<User> searchByUserName(UserDTO userDTO) {

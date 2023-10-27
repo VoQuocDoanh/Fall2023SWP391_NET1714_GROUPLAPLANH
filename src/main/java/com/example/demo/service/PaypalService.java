@@ -32,7 +32,7 @@ public class PaypalService {
         List<Transaction> transactions = new ArrayList<>();
         transactions.add(transaction);
         Payer payer = new Payer();
-        payer.setPaymentMethod("PAYPAL_ACCOUNT");
+        payer.setPaymentMethod("PAYPAL");
         Payment payment = new Payment();
         payment.setIntent("SALE");
         payment.setPayer(payer);
