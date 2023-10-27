@@ -332,7 +332,6 @@ public class BeatService {
             for (Beat i : beatEntity){
                 b.setBeatName(i.getBeatName());
                 b.setPrice(i.getPrice());
-                //    b.setBeatSound(beatEntity.getBeatSoundFull());
                 b.setDescription(b.getDescription());
                 b.setUser(getUser(i.getUserName()));
                 beat.add(b);

@@ -37,7 +37,7 @@ public class ChordCollectionService {
     public List<ChordCollection> findAllColletion(Long id) {
         Optional<User> userEntity = userRepository.findById(id);
         List<ChordCollection> collection = chordCollectionRepository.findAll();
-        if (userEntity == null) {
+        if (userEntity == null || collection.isEmpty()) {
             return null;
         } else {
             List<ChordCollection> collectionEntity = new ArrayList<>();
@@ -58,13 +58,13 @@ public class ChordCollectionService {
         }
     }
 
-    private UserResponeDTO getUser(User user){
-        return new UserResponeDTO(user.getId(),user.getUsername(), user.getFullName(), user.getPhoneNumber(), user.getMail());
+    private UserResponeDTO getUser(User user) {
+        return new UserResponeDTO(user.getId(), user.getUsername(), user.getFullName(), user.getPhoneNumber(), user.getMail());
     }
 
     public ChordCollectionResponseDTO getDetail(Long id) {
         Optional<ChordCollection> foundCollections = chordCollectionRepository.findByCollectionId(id);
-        if (foundCollections.isPresent()){
+        if (foundCollections.isPresent()) {
             ChordCollection collection = foundCollections.get();
             ChordCollectionResponseDTO collectionResponse = new ChordCollectionResponseDTO();
             collectionResponse.setChordCollectionId(collection.getId());
@@ -74,18 +74,18 @@ public class ChordCollectionService {
             collectionResponse.setUsername(getUser(collection.getUserCollection()));
             return collectionResponse;
         }
-        return  null;
+        return null;
 
 
     }
 
-    public List<ChordResponseDTO> getChords(Long id){
+    public List<ChordResponseDTO> getChords(Long id) {
         List<Long> chords = this.chordRepository.findByCollection(id);
         if (chords.isEmpty()) {
             return null;
         } else {
             List<ChordResponseDTO> chordResponseDTOS = new ArrayList<>();
-            for (int i=0;i<chords.size();i++) {
+            for (int i = 0; i < chords.size(); i++) {
                 ChordBasic basic = this.chordRepository.findByChordId(chords.get(i));
                 chordResponseDTOS.add(new ChordResponseDTO(
                         basic.getChordId(),
@@ -105,46 +105,39 @@ public class ChordCollectionService {
         if (user == null) {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         } else {
-            Optional<User> foundUser = Optional.ofNullable(userRepository.findByUsername(user.get().getUsername()));
-            if (foundUser.isEmpty()) {
-                return new ResponseEntity<>("Add failed", HttpStatus.NOT_IMPLEMENTED);
-            } else {
-                if (chordCollectionDTO.getFlag().equals("Create new collection")) {
-                    Optional<ChordCollection> foundName  = chordCollectionRepository.findByUserCollection(user.get(),chordCollectionDTO.getName());
-                    if (foundName.isPresent()){
-                        return new ResponseEntity<>("Collection name is present!", HttpStatus.NOT_IMPLEMENTED);
-                    }
-                    ChordCollection collection = new ChordCollection();
-                    Set<ChordBasic> chords = collection.getChordsofcollections();
-                    for (Long chordId : chordCollectionDTO.getChordId()) {
-                        ChordBasic chord = chordRepository.findByChordId(chordId);
-                        if (chord != null) {
-                            chords.add(chord);
-                        }
-                    }
-                    collection.setName(chordCollectionDTO.getName());
-                    collection.setStatus(0);
-                    collection.setDescription(chordCollectionDTO.getDescription());
-                    collection.setUserCollection(user.get());
-                    collection.setChordsofcollections(chords);
-                    chordCollectionRepository.save(collection);
-
-                } else {
-
-                    Optional<ChordCollection> findCollection = chordCollectionRepository.findByName(chordCollectionDTO.getName());
-                    ChordCollection collection = findCollection.get();
-                    Set<ChordBasic> chords = findCollection.get().getChordsofcollections();
-                    for (Long chordId : chordCollectionDTO.getChordId()) {
-                        ChordBasic chord = chordRepository.findByChordId(chordId);
-                        if (chord != null) {
-                            chords.add(chord);
-                        }
-                    }
-                    collection.setChordsofcollections(chords);
-                    chordCollectionRepository.save(collection);
+            if (chordCollectionDTO.getFlag().equals("Create new collection")) {
+                Optional<ChordCollection> foundName = chordCollectionRepository.findByUserCollection(user.get(), chordCollectionDTO.getName());
+                if (foundName.isPresent()) {
+                    return new ResponseEntity<>("Collection name is present!", HttpStatus.NOT_IMPLEMENTED);
                 }
-                return new ResponseEntity<>("Add successfully", HttpStatus.OK);
+                ChordCollection collection = new ChordCollection();
+                Set<ChordBasic> chords = collection.getChordsofcollections();
+                for (Long chordId : chordCollectionDTO.getChordId()) {
+                    ChordBasic chord = chordRepository.findByChordId(chordId);
+                    if (chord != null) {
+                        chords.add(chord);
+                    }
+                }
+                collection.setName(chordCollectionDTO.getName());
+                collection.setStatus(0);
+                collection.setDescription(chordCollectionDTO.getDescription());
+                collection.setUserCollection(user.get());
+                collection.setChordsofcollections(chords);
+                chordCollectionRepository.save(collection);
+
+            } else {
+                Optional<ChordCollection> findCollection = chordCollectionRepository.findByName(chordCollectionDTO.getName());
+                Set<ChordBasic> chords = findCollection.get().getChordsofcollections();
+                for (Long chordId : chordCollectionDTO.getChordId()) {
+                    ChordBasic chord = chordRepository.findByChordId(chordId);
+                    if (chord != null) {
+                        chords.add(chord);
+                    }
+                }
+                findCollection.get().setChordsofcollections(chords);
+                chordCollectionRepository.save(findCollection.get());
             }
+            return new ResponseEntity<>("Add successfully", HttpStatus.OK);
         }
     }
 

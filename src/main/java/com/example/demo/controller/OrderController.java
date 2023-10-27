@@ -21,9 +21,4 @@ public class OrderController {
         return orderService.orderBeat(orderDTO,id);
     }
 
-    @GetMapping("test/{id}")
-    public List<Order> tets (@PathVariable Long id ){
-        return  orderService.findOrder(id);
-    }
-
 }

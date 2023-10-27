@@ -12,7 +12,7 @@ public interface BeatCommentRepository extends JpaRepository<BeatComment, Long> 
 
     BeatComment findParentCommentById(Long id);
   //  BeatComment findByUserCommentBeat(Long id);
-    List<BeatComment> findByBeatCommentAndParentCommentIsNull(Beat beat);
+    List<BeatComment> findByBeatCommentAndParentCommentIsNullAndStatus(Beat beatComment, int status);
 
     List<BeatComment> findByParentComment(BeatComment comment);
 }
