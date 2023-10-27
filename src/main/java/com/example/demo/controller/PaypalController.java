@@ -57,9 +57,9 @@ public class PaypalController {
     }
 
     @PostMapping("/user/{id}/" + SUCCESS_URL)
-    public ResponseEntity<String> successPayment(@PathVariable Long id, @Valid @RequestBody OrderDTO orderDTO) {
+    public ResponseEntity<String> successPayment(@Valid @PathVariable Long id, @Valid @RequestBody OrderDTO orderDTO) {
         try {
-            Payment payment = paypalService.executePayment(orderDTO.getPaymentId(), orderDTO.getPaymentId());
+            Payment payment = paypalService.executePayment(orderDTO.getPaymentId(), orderDTO.getPayerID());
             if (payment.getState().equals("approved")) {
                 return this.orderService.orderBeat(orderDTO, id);
             }

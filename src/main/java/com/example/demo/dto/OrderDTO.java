@@ -17,11 +17,12 @@ public class OrderDTO {
     private double price;
     private List<Long> beatId;
     private String paymentId;
-    private String PayerID;
+    private String payerID;
 
-    public OrderDTO(Long userId, double price, List<Long> beatId) {
-        this.userId = userId;
-        this.price = price;
-        this.beatId = beatId;
-    }
+//    public OrderDTO(Long userId, double price, List<Long> beatId) {
+//        this.userId = userId;
+//        this.price = price;
+//        this.beatId = beatId;
+//    }
+
 }
