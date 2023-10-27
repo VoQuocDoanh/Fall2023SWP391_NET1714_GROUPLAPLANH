@@ -23,26 +23,36 @@ public class BeatRatingService {
     UserRepository userRepository;
     @Autowired
     BeatRatingRepository beatRatingRepository;
-    public ResponseEntity<String> addRating(Long userID, Long beatID,BeatRatingDTO dto) {
+
+    public ResponseEntity<String> addRating(Long userID, Long beatID, BeatRatingDTO dto) {
         Optional<Beat> beat = beatRepository.findById(beatID);
         Optional<User> user = userRepository.findById(userID);
-        int total =0;
-        BeatRating foundRating = beatRatingRepository.findBeatRatingByBeatRatingAndUserRatingBeat(beat.get(),user.get());
-        if (foundRating!= null) {
+        BeatRating foundRating = beatRatingRepository.findBeatRatingByBeatRatingAndUserRatingBeat(beat.get(), user.get());
+
+        if (foundRating != null) {
             beatRatingRepository.delete(foundRating);
-            List<BeatRating> rating = beatRatingRepository.findAllByBeatRating(beat.get());
             beat.get().setTotalRating(beat.get().getTotalRating() - 1);
-            for (BeatRating i :rating)
-                total = total + i.getRating();
-            beat.get().setRating((double) total /beat.get().getTotalRating());
             beatRepository.save(beat.get());
+            if (beat.get().getTotalRating() != 0) {
+                List<BeatRating> rating = beatRatingRepository.findAllByBeatRating(beat.get());
+                Double newRating = total(rating);
+                beat.get().setRating(newRating);
+                beatRepository.save(beat.get());
+            }
         }
-            BeatRating beatRating = new BeatRating(user.get(),beat.get(), dto.getRate());
-            beat.get().setRating((beat.get().getRating() * beat.get().getTotalRating() + dto.getRate())/(beat.get().getTotalRating()+1));
-            beat.get().setTotalRating(beat.get().getTotalRating() + 1);
-            beatRatingRepository.save(beatRating);
-            beatRepository.save(beat.get());
+        BeatRating beatRating = new BeatRating(user.get(), beat.get(), dto.getRate());
+        beat.get().setRating((double) Math.round(((beat.get().getRating() * beat.get().getTotalRating() + dto.getRate()) / (beat.get().getTotalRating() + 1)) * 10) /10);
+        beat.get().setTotalRating(beat.get().getTotalRating() + 1);
+        beatRatingRepository.save(beatRating);
+        beatRepository.save(beat.get());
         return new ResponseEntity<>("Rating!", HttpStatus.OK);
     }
 
+    private Double total(List<BeatRating> beat) {
+        int tmp = 0;
+        for (BeatRating i : beat) {
+            tmp += i.getRating();
+        }
+        return (double) Math.round( tmp / beat.size() *10)/10;
+    }
 }
