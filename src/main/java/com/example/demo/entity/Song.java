@@ -6,8 +6,6 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,9 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Setter
@@ -38,8 +34,8 @@ public class Song {
     @Column(name = "Date")
     private LocalDateTime createdAt;
 
-    @Column(name = "Author")
-    private String author;
+    @Column(name = "Singer")
+    private String singer;
 
     @Column(name = "Tone")
     private String tone;
@@ -129,9 +125,9 @@ public class Song {
         this.userUploadSong = userUploadSong;
     }
 
-    public Song(String songname, String author, String tone, String description, String vocalRange, String songUrl, User userUploadSong, Set<Genre> genresofsong,Set<ChordBasic> chordsofsong, int totalLike, int view, int rating, int totalUserRating, int cmt,int report,int status) {
+    public Song(String songname, String singer, String tone, String description, String vocalRange, String songUrl, User userUploadSong, Set<Genre> genresofsong, Set<ChordBasic> chordsofsong, int totalLike, int view, int rating, int totalUserRating, int cmt, int report, int status) {
         this.songname = songname;
-        this.author = author;
+        this.singer = singer;
         this.tone = tone;
         this.description = description;
         this.vocalRange = vocalRange;
@@ -154,7 +150,7 @@ public class Song {
                 "Id=" + Id +
                 ", songname='" + songname + '\'' +
                 ", createdAt=" + createdAt +
-                ", author='" + author + '\'' +
+                ", author='" + singer + '\'' +
                 ", tone='" + tone + '\'' +
                 ", description='" + description + '\'' +
                 ", vocalRange='" + vocalRange + '\'' +

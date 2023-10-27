@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 public class SongDTO {
     private String songName;
-    private String author;
+    private String singer;
     private Long userid;
     private String description;
     private String tone;

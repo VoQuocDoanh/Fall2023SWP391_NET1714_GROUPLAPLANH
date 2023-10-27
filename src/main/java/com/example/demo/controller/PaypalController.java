@@ -27,6 +27,8 @@ public class PaypalController {
     public static final String SUCCESS_URL = "success";
     public static final String CANCEL_URL = "cancel";
 
+    public static final String URL = "http://localhost:3000/payment/";
+
     @PostMapping
     public ResponseEntity<String> createPayment(@RequestBody PaymentDTO paymentRequest, HttpSession session) {
         try {
@@ -34,8 +36,8 @@ public class PaypalController {
                     paymentRequest.getTotalprice(),
                     "USD",
                     paymentRequest.getDescription(),
-                    paymentRequest.getUrl() + CANCEL_URL,
-                    paymentRequest.getUrl() + SUCCESS_URL
+                    URL + CANCEL_URL,
+                    URL + SUCCESS_URL
             );
 
             for (Links links : payment.getLinks()) {
@@ -51,7 +53,7 @@ public class PaypalController {
 
     @GetMapping("/user/" + CANCEL_URL)
     public ResponseEntity<String> cancelPayment() {
-        return ResponseEntity.ok("Payment canceled");
+        return ResponseEntity.ok("Payment canceled!");
     }
 
     @PostMapping("/user/{id}/" + SUCCESS_URL)

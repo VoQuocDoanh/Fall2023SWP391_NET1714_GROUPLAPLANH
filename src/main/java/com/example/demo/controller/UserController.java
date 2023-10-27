@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping(path = {"/api/v1/user"})
@@ -27,8 +28,8 @@ public class UserController {
 
     // Update Customer Info
     @PatchMapping("/customer/{id}")
-    public ResponseEntity<String> updateUserInfo(@Valid @RequestBody UserDTO userDTO, @PathVariable Long id){
-        return this.userService.updateUserInfo(userDTO, id);
+    public ResponseEntity<String> updateUserInfo(@Valid @RequestPart("file")MultipartFile image, @Valid @RequestBody UserDTO userDTO, @PathVariable Long id){
+        return this.userService.updateUserInfo(userDTO, id, image);
     }
 
     // Get detail User

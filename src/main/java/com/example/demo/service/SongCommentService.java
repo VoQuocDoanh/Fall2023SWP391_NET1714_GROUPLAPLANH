@@ -25,6 +25,7 @@ public class SongCommentService {
     @Autowired
     private SongCommentRepository songCommentRepository;
 
+    // comment
     public ResponseEntity<String> commentSong(CommentSongDTO dto) {
         Optional<User> foundUser = userRepository.findUserByIdAndStatus(dto.getUserId(), 1);
         if (foundUser.isPresent()) {
@@ -55,6 +56,7 @@ public class SongCommentService {
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
+    // update
     public ResponseEntity<String> updateComment(CommentSongDTO dto, Long id) {
         Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(dto.getUserId(), 1);
         if (foundUser.isPresent()) {
@@ -70,6 +72,7 @@ public class SongCommentService {
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
+    // delete
     public ResponseEntity<String> deleteComment(CommentSongDTO dto, Long id) {
         Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(dto.getUserId(), 1);
         if (foundUser.isPresent()) {
@@ -99,6 +102,7 @@ public class SongCommentService {
         return new ResponseEntity<>("User not found!", HttpStatus.NOT_FOUND);
     }
 
+    // view
     public List<CommentSongResponseDTO> viewComment(Long id) {
         Optional<Song> foundSong = this.songRepository.findSongByIdAndStatus(id, 1);
         if (foundSong.isPresent()) {

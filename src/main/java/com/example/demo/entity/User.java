@@ -60,6 +60,12 @@ public class User implements UserDetails {
     @Column
     private String phoneNumber;
 
+    @Column
+    private String avatar;
+
+    @Column
+    private String objectName;
+
     @Column(name = "Date")
     private LocalDateTime createdAt;
     @PrePersist
@@ -179,18 +185,6 @@ public class User implements UserDetails {
         this.mail = mail;
         this.role = role;
         this.status = status;
-    }
-
-    public User(String username, String password, String fullName, Gender gender, String mail, String address, String phoneNumber, String role, int status) {
-        this.username = username;
-        this.password = password;
-        this.fullName = fullName;
-        this.mail = mail;
-        this.gender = gender;
-        this.role = role;
-        this.status = status;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
     }
 
     public enum Gender {

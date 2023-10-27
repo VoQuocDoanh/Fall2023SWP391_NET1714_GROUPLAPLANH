@@ -39,9 +39,8 @@ public class BeatService {
         if (fullUrl.startsWith("https://storage.googleapis.com/")) {
             int startIndex = "https://storage.googleapis.com/".length();
             return fullUrl.substring(startIndex);
-        } else {
-            return null;
         }
+        return null;
     }
 
     private void setPathAndName(String path, String pathDemo, String fileName, String fileNameDemo, Beat beat){
@@ -182,8 +181,8 @@ public class BeatService {
             String path = this.service.uploadFile(sound, beat.getId(), "audio", "full");
             String pathDemo = this.service.uploadFile(sound, beat.getId(), "audio", "demo");;
 
-            String fileName = extractObjectNameFromUrl(path);
-            String fileNameDemo = extractObjectNameFromUrl(pathDemo);
+            String fileName = this.extractObjectNameFromUrl(path);
+            String fileNameDemo = this.extractObjectNameFromUrl(pathDemo);
 
             setPathAndName(path, pathDemo, fileName, fileNameDemo , beat);
 

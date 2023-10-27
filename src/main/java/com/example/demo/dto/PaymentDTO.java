@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PaymentDTO {
 
-    private String url;
     private double totalprice;
     private String description;
 

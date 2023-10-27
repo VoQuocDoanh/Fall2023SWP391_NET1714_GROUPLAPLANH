@@ -16,6 +16,7 @@ import com.example.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -44,6 +46,17 @@ public class UserService {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private GoogleCloudService service;
+
+    private String extractObjectNameFromUrl(String fullUrl) {
+        if (fullUrl.startsWith("https://storage.googleapis.com/")) {
+            int startIndex = "https://storage.googleapis.com/".length();
+            return fullUrl.substring(startIndex);
+        }
+        return null;
+    }
 
     private boolean isTokenValid(LocalDateTime expiryDate) {
         LocalDateTime currentDateTime = LocalDateTime.now();
@@ -155,8 +168,8 @@ public class UserService {
     }
 
     // Update User Info
-    public ResponseEntity<String> updateUserInfo(UserDTO userDTO, Long id) {
-        Optional<User> foundUser = this.userRepository.findById(id);
+    public ResponseEntity<String> updateUserInfo(UserDTO userDTO, Long id, MultipartFile image) {
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(id, 1);
         if (foundUser.isPresent()) {
             User.Gender gender = User.Gender.valueOf(userDTO.getGender());
             User user = foundUser.get();
@@ -164,6 +177,14 @@ public class UserService {
             user.setGender(gender);
             user.setPhoneNumber(userDTO.getPhone());
             user.setAddress(userDTO.getAddress());
+            if(user.getAvatar().isEmpty()) {
+                String path = this.service.uploadFile(image, user.getId(), "avatar", "full");
+                String fileName = this.extractObjectNameFromUrl(path);
+                user.setAvatar(path);
+                user.setObjectName(fileName);
+            } else {
+                this.service.updateFile(image, user.getObjectName());
+            }
             this.userRepository.save(user);
             return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
         } else {

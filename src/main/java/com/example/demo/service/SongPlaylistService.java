@@ -33,7 +33,7 @@ public class SongPlaylistService {
         for (Song value : playlist.getSongsinplaylist()) {
             SongResponseDTO dto = new SongResponseDTO(value.getId(),
                     value.getSongname(),
-                    value.getAuthor(),
+                    value.getSinger(),
                     value.getCreatedAt(),
                     getUser(value.getUserUploadSong()),
                     value.getTotalLike(),
