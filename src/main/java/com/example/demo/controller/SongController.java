@@ -89,13 +89,13 @@ public class SongController {
     }
 
     // Like Song
-    @PostMapping("/like")
-    public  ResponseEntity<String> likeBeat(@Valid @RequestParam("userid") Long userid, @Valid @RequestParam("songid") Long songid){
+    @GetMapping("/like")
+    public  ResponseEntity<String> likeSong(@Valid @RequestParam("userid") Long userid, @Valid @RequestParam("songid") Long songid){
         return this.songService.likeSong(userid, songid);
     }
 
     // Rate Song
-    @PostMapping("/rate")
+    @GetMapping("/rate")
     public ResponseEntity<String> rateSong (@Valid @RequestParam("userid") Long userid, @Valid @RequestParam("songid") Long songid, @Valid @RequestParam("rating") int rating){
         return this.songService.rateSong(userid, songid, rating);
     }
