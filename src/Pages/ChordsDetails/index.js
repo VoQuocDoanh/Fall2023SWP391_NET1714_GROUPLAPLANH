@@ -9,6 +9,7 @@ import { faChevronLeft, faChevronRight, faPause, faPlay, faPlayCircle, faRedo, f
 import GUITAR from "../../assets/ImageForChords/Guitar";
 import PIANO from "../../assets/ImageForChords/Piano";
 import UKULELE from "../../assets/ImageForChords/Ukulele";
+import Popup from "reactjs-popup";
 
 const cx = classNames.bind(styles);
 
@@ -80,7 +81,7 @@ function ChordsDetails() {
             let list = listType.flat(Infinity).filter((item) => {
                 return item.key === key;
             });
-            if(suffix !== "All") {
+            if (suffix !== "All") {
                 list = list.filter(item => item.suffix === suffix);
             }
             setListChord(list);
@@ -99,7 +100,7 @@ function ChordsDetails() {
             let list = listType.flat(Infinity).filter((item) => {
                 return item.suffix === suffix;
             });
-            if(key !== "All") {
+            if (key !== "All") {
                 list = list.filter(item => item.key === key);
             }
             setListChord(list);
@@ -124,13 +125,13 @@ function ChordsDetails() {
         //         return item.suffix === suffix;
         //     });
         //     setListChord(list);
-        if(key !== "All" && suffix !== "All"){
+        if (key !== "All" && suffix !== "All") {
             let list = listType.flat(Infinity).filter((item) => {
                 return item.key === key && item.suffix === suffix;
             });
             setListChord(list)
-        // }else {
-        //     setListChord(listType.flat(Infinity));
+            // }else {
+            //     setListChord(listType.flat(Infinity));
         }
     }, [instrument])
 
@@ -180,6 +181,19 @@ function ChordsDetails() {
                     return <img key={item.type} src={item.img} alt={item.type} />
                 })}
             </div>
+            <Popup trigger={<button className={cx("button-popup")}> Add to Playlist</button>} position="right center" closeOnDocumentClick on={['hover', 'focus']}>
+                <div className={cx("text-all")}>
+                    <Link to="/myprofile"><div className={cx("link-text")}>My Account</div></Link>
+                    <Link to="/listBeatPurchased"><div className={cx("link-text")}>My Purchased</div></Link>
+                    <Link to="/viewcart"><div className={cx("link-text")}>My Song's Playlist</div></Link>
+                    <select position="left center" style={{ border: "none", marginRight: 20, width: '100%' }}
+                        className={cx("input-text-choose")}
+                    >
+                        <option value="Customer">Create Playlist</option>
+                        <option value="Musician">Musician</option>
+                    </select>
+                </div>
+            </Popup>
 
 
         </div>

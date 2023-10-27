@@ -23,10 +23,11 @@ import ViewDetailSong from "../Pages/ViewDetailSong";
 import ListUser2 from "../Pages/ListUser2";
 import MyProfile from "../Pages/MyProfile";
 import Invoice from "../Pages/Invoice/Invoice";
-import PaymentActivation from "../Pages/PaymentActivation";
 import RegisterActivation from "../Pages/RegisterActivation";
 import ListBeatPurchased from "../Pages/listBeatPurchased";
 import ViewDetailBeatPurchased from "../Pages/viewDetailBeatPurchased";
+import PaymentSuccess from "../Pages/PaymentSuccess";
+import PaymentCancel from "../Pages/PaymentCancel";
 const publicRoutes = [
   {
     path: "/",
@@ -129,10 +130,7 @@ const publicRoutes = [
     path: "/invoice",
     component: Invoice,
   },
-  {
-    path: "/paymentactivation",
-    component: PaymentActivation,
-  },
+
   {
     path: "/registeractivation",
     component: RegisterActivation,
@@ -140,6 +138,18 @@ const publicRoutes = [
   {
     path: "/listbeatpurchased",
     component: ListBeatPurchased,
+  },
+  {
+    path: "/listuser2",
+    component: ListUser2,
+  },
+  {
+    path: "/payment/cancel",
+    component: PaymentCancel,
+  },
+  {
+    path: "/payment/success",
+    component: PaymentSuccess,
   },
 ];
 

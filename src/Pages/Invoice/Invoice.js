@@ -8,10 +8,12 @@ import { Link, useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 function Invoice() {
-    const { cartItems, getTotalCartAmount, checkOut, listBeatContext } = useContext(ShopContext)
+    const { getTotalCartAmount } = useContext(ShopContext)
     const totalAmount = getTotalCartAmount()
     const token = useToken()
     const navigate = useNavigate()
+    let beatInvoice = JSON.parse(sessionStorage.getItem("beatInvoice"))
+    console.log(beatInvoice)
     let fullName = ""
     let mail = ""
     let phoneNumber = ""
@@ -22,7 +24,6 @@ function Invoice() {
     }
 
     const handleCheckout = () =>{
-        checkOut()
         navigate("/listbeat")
     }
 
@@ -70,21 +71,14 @@ function Invoice() {
                         </tr>
                     </thead>
                     <tbody>
-                        {listBeatContext.map((item, index) => {
-                            console.log(listBeatContext)
-                            if (cartItems) {
-                                if (cartItems[item.id] !== 0) {
+                        {beatInvoice.map((item, index) => {
                                     return(
                                     <tr key={index}>
                                         <td>{item.beatName}</td>
                                         <td>POP</td>
                                         <td>Minh Hien</td>
                                         <td>{item.price}$</td>
-                                    </tr>)
-                                }
-                                
-                            }
-                            
+                                    </tr>)                                                                                       
                         })}
                     </tbody>
                 </table>

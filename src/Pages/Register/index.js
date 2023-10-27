@@ -188,7 +188,7 @@ function Register() {
         <Button variant="contained" className={cx("input", "submit")} onClick={handleSubmit}>
           <input
             type="submit"
-            value="Register"
+            value="Sign up"
             className={cx("input-text-register", "input-submit")}
           />
         </Button>

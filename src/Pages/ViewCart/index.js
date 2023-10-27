@@ -205,7 +205,11 @@ const cx = classNames.bind(styles);
 function ViewCart() {
     const { cartItems, getTotalCartAmount, checkOut, listBeatContext } = useContext(ShopContext)
     const totalAmount = getTotalCartAmount()
-    const beatCheckout = []
+    let beatCheckout = []
+    let beatInvoice = []
+    sessionStorage.setItem("beatInvoice", JSON.stringify(beatInvoice))
+    console.log(beatInvoice)
+    console.log(JSON.parse(sessionStorage.getItem("beatInvoice")))
     const data = { beatId: beatCheckout }
     console.log(data)
     const navigate = useNavigate()
@@ -219,6 +223,7 @@ function ViewCart() {
             return
         }
         if(token){
+            sessionStorage.setItem("ListBeatContext",listBeatContext)
         console.log(data)
         await axiosInstance.post(`http://localhost:8080/api/v1/order/user/${jwtDecode(token).sub}`, data)
             .catch((error) => {
@@ -229,6 +234,7 @@ function ViewCart() {
                     navigate("/viewcart")
                 }
             })
+        checkOut()
         navigate("/invoice")}
         else{
             navigate("/login")
@@ -297,6 +303,8 @@ function ViewCart() {
                         if (cartItems) {
                             if (cartItems[item.id] !== 0) {
                                 beatCheckout.push(item.id)
+                                beatInvoice.push(item)
+                                {console.log(beatInvoice)}
                                 return (
                                     <CardItem
                                         id={item.id}

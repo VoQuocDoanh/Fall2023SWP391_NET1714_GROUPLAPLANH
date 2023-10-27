@@ -131,7 +131,7 @@ function Login() {
         <Button variant="contained" className={cx("submit-wrapper")} onClick={handleSubmit}>
           <input
             type="submit"
-            value="Sign up"
+            value="Sign in"
             className={cx("input-submit")}
           />
         </Button>

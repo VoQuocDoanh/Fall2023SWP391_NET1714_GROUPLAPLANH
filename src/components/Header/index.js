@@ -43,8 +43,7 @@ function Header() {
       checkOut()
     }
   }
-  const [page, setPage] = useState("Page");
-  
+  const [page, setPage] = useState("Page");  
   return (
     <div>
       {!token ? <HeaderGuest/>

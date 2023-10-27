@@ -16,7 +16,6 @@ const SideBar = ({listGenres, listMusicianName}) => {
                         <MenuItem> Dashboard </MenuItem>
 
                         <SubMenu label="Genre">
-                            {console.log(listGenres)}
                             {listGenres.map((item) => {
                                 return <MenuItem > {item.name}</MenuItem>
                             })}
