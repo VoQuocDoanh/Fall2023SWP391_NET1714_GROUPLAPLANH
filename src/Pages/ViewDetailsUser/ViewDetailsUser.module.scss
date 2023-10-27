@@ -76,12 +76,12 @@
     border-radius: 20px;
     width: 500px;
     padding: 30px;
-    height: 500px;
+    height: 400px;
 }
 
 //form info user
 .volt8A {
-    height: 1300px;
+    height: 800px;
     width: 900px;
     padding-left: 20px;
     background-color: rgb(245, 245, 245);
@@ -110,6 +110,7 @@
     height: 1px;
     margin-top: 30px;
     margin-left: -50px;
+    user-select: none;
 }
 
 .input-phonenumber {
@@ -244,17 +245,27 @@
     margin-top: 60px;
     display: flex;
     justify-content: start;
-    margin-left: 70px;
+    margin-left: 40px;
+    gap: 30px;
+
 
     .button-save-details {
-        width: 70px;
-        height: 40px;
+        width: 120px;
+        height: 60px;
         border: none;
-        background-color: #06c;
+        background-color: rgb(204, 0, 0);
         color: white;
         font-family: inter;
         border-radius: 5px;
-
+    }
+    .button-save-details2 {
+        width: 120px;
+        height: 60px;
+        border: none;
+        background-color: rgb(39, 214, 39);
+        color: white;
+        font-family: inter;
+        border-radius: 5px;
     }
 
 }
