@@ -257,7 +257,9 @@
         color: white;
         font-family: inter;
         border-radius: 5px;
+        cursor: pointer;
     }
+
     .button-save-details2 {
         width: 120px;
         height: 60px;
@@ -266,8 +268,24 @@
         color: white;
         font-family: inter;
         border-radius: 5px;
+        cursor: pointer;
+        .button-save-details2:hover{
+            background-color: red;
+        }
     }
 
+}
+.button-send {
+    width: 50px;
+    height: 30px;
+    border-radius: 12px;
+    background-color: #06c;
+    cursor: pointer;
+    border: none;
+    color: white;
+    padding: 5px;
+    font-family: Sono;
+    font-weight: 500;
 }
 
 .email-button {
@@ -335,3 +353,28 @@
 }
 
 //line
+.button-save-details {
+    background-position: center;
+    transition: background 0.8s;
+  }
+  .button-save-details:hover {
+    background: rgb(204, 0, 0) radial-gradient(circle, transparent 1%, #d9d9da 1%) center/15000%;
+  }
+  .button-save-details:active {
+    background-color: rgb(204, 0, 0);
+    background-size: 100%;
+    transition: background 0s;
+  }
+  //unban
+  .button-save-details2 {
+    background-position: center;
+    transition: background 0.8s;
+  }
+  .button-save-details2:hover {
+    background: rgb(39, 214, 39) radial-gradient(circle, transparent 1%, #d9d9da 1%) center/15000%;
+  }
+  .button-save-details2:active {
+    background-color: rgb(39, 214, 39);
+    background-size: 100%;
+    transition: background 0s;
+  }

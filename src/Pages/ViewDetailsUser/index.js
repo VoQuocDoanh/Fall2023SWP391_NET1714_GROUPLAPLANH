@@ -6,6 +6,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { faChevronLeft, faChevronRight, faPause, faPlay, faPlayCircle, faRedo, faStepBackward, faStepForward } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "bootstrap";
 import { red } from "@mui/material/colors";
+import Popup from "reactjs-popup";
 const cx = classNames.bind(styles);
 const DATA = [
     {
@@ -44,7 +45,7 @@ function ViewDetailsUser() {
             </div>
             <div className={cx("profile")}>
                 <div className={cx("volt8A")}>
-                    <form style={{marginTop: 20}}>
+                    <form style={{ marginTop: 20 }}>
                         <table className={classNames("profile-2")}>
                             <div className={cx("part0")}>
                                 <td>
@@ -64,7 +65,7 @@ function ViewDetailsUser() {
                                         <label className={cx("text-name")}>Address</label>
                                     </td>
                                     <div className={cx("placeholder-ten")}>
-                                        <input className={cx("input-username")} type="text" placeholder value="User Name"  onChange={handleSearch1} />
+                                        <input className={cx("input-username")} type="text" placeholder value="User Name" onChange={handleSearch1} />
                                     </div>
                                 </td>
                             </div>
@@ -89,14 +90,24 @@ function ViewDetailsUser() {
                                 </div>
                             </div>
                             <div className={cx("part5")}>
-                                <td className={cx("save-button")}>
-                                </td>
-                                <td className={cx("button-type")}>
-                                    <button type="button" className={cx("button-save-details")} aria-disabled="false" >Ban</button>
-                                </td>
-                                <td className={cx("button-type")}>
-                                    <button type="button" className={cx("button-save-details2")} aria-disabled="false" >Unban</button>
-                                </td>
+                                <Popup style={{ width: "120%" }} trigger={<button type="button" className={cx("button-save-details")} aria-disabled="false" >Ban</button>} position="left center">
+                                    <div className={cx("text-all")}>
+                                        <td style={{ fontWeight: 400, fontSize: "1.5rem" }}>Description</td>
+                                        <textarea className={cx("text-des")} style={{ resize: 'none', width: '185px', border: 1, height: 150, }} />
+                                        <td className={cx("button-type")}>
+                                            <button type="button" className={cx("button-send")} aria-disabled="false" >Send</button>
+                                        </td>
+                                    </div>
+                                </Popup>
+                                <Popup style={{ width: "120%" }} trigger={<button type="button" className={cx("button-save-details2")} aria-disabled="false" >Unban</button>} position="right center">
+                                    <div className={cx("text-all")}>
+                                        <td style={{ fontWeight: 400, fontSize: "1.5rem" }}>Description</td>
+                                        <textarea className={cx("text-des")} style={{ resize: 'none', width: '185px', border: 1, height: 150, }} />
+                                        <td className={cx("button-type")}>
+                                            <button type="button" className={cx("button-send")} aria-disabled="false" >Send</button>
+                                        </td>
+                                    </div>
+                                </Popup>
                             </div>
 
                         </table>
@@ -114,7 +125,7 @@ function ViewDetailsUser() {
                                 <td>
                                     User Name
                                 </td>
-                                <td style={{marginLeft: 10}}>    
+                                <td style={{ marginLeft: 10 }}>
                                     Customer
                                 </td>
                             </div>
