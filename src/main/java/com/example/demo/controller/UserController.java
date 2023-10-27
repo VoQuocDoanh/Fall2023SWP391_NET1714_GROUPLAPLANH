@@ -40,7 +40,7 @@ public class UserController {
 
     // Update Musician Info
     @PatchMapping("/musician/{id}")
-    public ResponseEntity<String> updateMusicianInfo(@Valid @RequestBody UserDTO userDTO, @Valid @PathVariable Long id){
-        return this.userService.updateMusicianInfo(userDTO, id);
+    public ResponseEntity<String> updateMusicianInfo(@Valid @RequestPart("file")MultipartFile image, @Valid @RequestBody UserDTO userDTO, @Valid @PathVariable Long id){
+        return this.userService.updateMusicianInfo(userDTO, id, image);
     }
 }

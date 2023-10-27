@@ -193,7 +193,7 @@ public class UserService {
     }
 
     // Update Musician Info
-    public ResponseEntity<String> updateMusicianInfo(UserDTO userDTO, Long id) {
+    public ResponseEntity<String> updateMusicianInfo(UserDTO userDTO, Long id, MultipartFile image) {
         Optional<User> foundUser = this.userRepository.findById(id);
         if (foundUser.isPresent()) {
             User.Gender gender = User.Gender.valueOf(userDTO.getGender());
@@ -206,6 +206,14 @@ public class UserService {
             information.setPrize(userDTO.getPrize());
             information.setProfessional(userDTO.getProfessional());
             information.setYear(userDTO.getYear());
+            if(user.getAvatar().isEmpty()) {
+                String path = this.service.uploadFile(image, user.getId(), "avatar", "full");
+                String fileName = this.extractObjectNameFromUrl(path);
+                user.setAvatar(path);
+                user.setObjectName(fileName);
+            } else {
+                this.service.updateFile(image, user.getObjectName());
+            }
             this.userRepository.save(user);
             return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
         } else {

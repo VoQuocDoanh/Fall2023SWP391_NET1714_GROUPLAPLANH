@@ -48,7 +48,7 @@ public class SongController {
     }
 
     // Search User Song by name
-    @GetMapping("/user/{userid}")
+    @GetMapping("/user/{userid}/name")
     public ResponseEntity<List<SongResponseDTO>> findUserSongbySongName(@Valid @RequestParam("songname") String name, @Valid @PathVariable Long userid){
         return ResponseEntity.ok(this.songService.findUserSongbySongName(name, userid));
     }
