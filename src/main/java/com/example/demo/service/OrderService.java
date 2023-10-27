@@ -33,20 +33,24 @@ public class OrderService {
         List<Beat> beats=new ArrayList<>();
         double totalPrice = 0;
         Optional<User> user=userRepository.findById(Id);
-        for (Long aLong : listBeat) {
-            Beat foundBeat = beatRepository.findBeatById(aLong);
-            if (foundBeat.getStatus() == -1) {
-                return new ResponseEntity<>("Beat bought", HttpStatus.NOT_IMPLEMENTED);
+        if (user.isPresent() && !listBeat.isEmpty()){
+            for (Long beat : listBeat) {
+                Beat foundBeat = beatRepository.findBeatById(beat);
+                if (foundBeat.getStatus() == -1) {
+                    return new ResponseEntity<>("Beat bought", HttpStatus.NOT_IMPLEMENTED);
+                }
+                totalPrice += foundBeat.getPrice();
+                beats.add(foundBeat);
+                foundBeat.setStatus(-1);
             }
-            totalPrice += foundBeat.getPrice();
-            beats.add(foundBeat);
-            foundBeat.setStatus(-1);
+            Double price = totalPrice;
+            Order newOrder=new Order(beats,user.get(),price);
+            orderRepository.save(newOrder);
+            setOrderId(newOrder);
+            return new ResponseEntity<>("Payment Successfullly", HttpStatus.OK);
         }
-        Double price = totalPrice;
-        Order newOrder=new Order(beats,user.get(),price);
-        orderRepository.save(newOrder);
-        setOrderId(newOrder);
-        return new ResponseEntity<>("Payment Successfullly", HttpStatus.OK);
+        return new ResponseEntity<>("Oder failed", HttpStatus.NOT_IMPLEMENTED);
+
     }
 
     private void setOrderId (Order order){

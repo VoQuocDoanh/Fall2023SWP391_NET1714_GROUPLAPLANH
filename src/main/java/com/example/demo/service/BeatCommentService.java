@@ -84,7 +84,7 @@ public class BeatCommentService {
     public List<CommentBeatResponseDTO> viewComment(Long id) {
         Optional<Beat> beatEntity = beatRepository.findById(id);
         if (beatEntity.isPresent()){
-            List<BeatComment> list = commentRepository.findByBeatCommentAndParentCommentIsNull(beatEntity.get());
+            List<BeatComment> list = commentRepository.findByBeatCommentAndParentCommentIsNullAndStatus(beatEntity.get(),1);
             if (!list.isEmpty()){
                 List<CommentBeatResponseDTO> dtoList = new ArrayList<>();
                 for (BeatComment entity: list){

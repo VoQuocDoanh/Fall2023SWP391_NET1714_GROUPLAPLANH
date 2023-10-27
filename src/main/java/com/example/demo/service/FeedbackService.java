@@ -40,7 +40,7 @@ public class FeedbackService {
         } else if (found.isPresent()) {
             return new ResponseEntity<>("Already feedback",HttpStatus.NOT_IMPLEMENTED);
         }
-        return new ResponseEntity<>("Add failed!",HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>("Feedback failed!",HttpStatus.NOT_IMPLEMENTED);
     }
 
 
