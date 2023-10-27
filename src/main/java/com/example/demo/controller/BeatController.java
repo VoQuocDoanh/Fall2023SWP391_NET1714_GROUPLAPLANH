@@ -55,6 +55,12 @@ public class BeatController {
         return ResponseEntity.ok(this.beatService.searchByMusician(name));
     }
 
+    // Search Beat by Genre
+    @GetMapping("/genre/{name}")
+    public ResponseEntity<List<BeatResponseDTO>> searchByGenre(@PathVariable String name) {
+        return ResponseEntity.ok(this.beatService.searchByGenre(name));
+    }
+
     //list beat bought in MS
     @GetMapping ("/musician/bought/{id}")
     public ResponseEntity<List<BeatResponseDTO>> beatSoldOut(@PathVariable Long id){

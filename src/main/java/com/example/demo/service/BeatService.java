@@ -282,6 +282,11 @@ public class BeatService {
         return getBeatResponseDTOS(beats);
     }
 
+    public List<BeatResponseDTO> searchByGenre(String name){
+        List<Beat> beats = this.beatRepository.findBeatsByGenreName(name);
+        return getBeatResponseDTOS(beats);
+    }
+
     public List<String> listAllMusician(){
         List<User> beat = beatRepository.findAllUser();
         List<String> list=new ArrayList<>();

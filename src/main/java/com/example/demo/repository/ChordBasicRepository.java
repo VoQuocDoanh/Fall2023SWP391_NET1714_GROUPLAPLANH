@@ -27,4 +27,6 @@ public interface ChordBasicRepository extends JpaRepository<ChordBasic,Long> {
 
     @Query("SELECT c.image FROM ChordBasic c JOIN c.collections cl WHERE cl.id=:id")
     List<String> findImageByCollection(Long id);
+
+    List<ChordBasic> findChordBasicsByType(String type);
 }
