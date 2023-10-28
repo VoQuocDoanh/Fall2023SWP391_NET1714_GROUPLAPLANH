@@ -34,7 +34,7 @@ function ViewDetailBeatPurchased() {
     const [content, setContent] = useState('');
     const [listBeatComment, setListBeatComment] = useState([]);
     const [checkComment, setCheckComment] = useState(null)
-    const [beatSoundDemo, setBeatSoundDemo] = useState("")
+    const [beatSoundFull, setBeatSoundFull] = useState("")
     let userId = ""
     if (token) {
         userId = jwtDecode(token).sub
@@ -56,6 +56,10 @@ function ViewDetailBeatPurchased() {
     useEffect(() => {
         loadBeatComment()
     }, [checkComment, beatDetail])
+
+    useEffect(() =>{
+        loadSoundFull()
+    },[])
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -99,12 +103,11 @@ function ViewDetailBeatPurchased() {
     const loadSoundFull = async () => {
         await axiosInstance(`http://localhost:8080/api/v1/beat/user/full/${beatId}`)
             .then((res) => {
-                setBeatSoundDemo(atob(res.data.beatSound))
+                setBeatSoundFull(res.data.beatSound)
             })
             .catch((error) => {
                 console.log(error)
             })
-        setPlay(true)
     }
 
     const loadBeatComment = async () => {
@@ -250,10 +253,15 @@ function ViewDetailBeatPurchased() {
                                     <Stack className={cx("rating-form")} spacing={1}>
                                         <Rating className={cx("start-icon")} name="size-large" defaultValue={0} size="large" onChange={handleRating} />
                                     </Stack>
-                                    {!play ?
-                                        <div></div>
-                                        : <audio className={cx("audio")} id="audio" ref={audioRef} controls src={`data:audio/mpeg;base64, ${beatSoundDemo}`}>
-                                        </audio>}
+                                    
+                                        
+                                         <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundFull}>
+                                        </audio>
+                                        
+                                                <Button variant="contained" className={cx('button-1')} style={{marginLeft:170 , marginTop:20}}>
+                                                    <div>View Cart</div>
+                                                </Button>
+                                            
                                     <div>{checkRating}</div>
                                 </div>
                             </div>

@@ -314,7 +314,9 @@ function ViewCart() {
                         {listBeatContext.map((item, index) => {
                             if (cartItems) {
                                 if (cartItems[item.id] !== 0) {
+                                    {console.log(123)}
                                     return (
+                                        
                                         <CardItem
                                             id={item.id}
                                             name={item.beatName}

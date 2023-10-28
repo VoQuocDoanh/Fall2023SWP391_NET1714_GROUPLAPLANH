@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import styles from "./listBeatPurchasedBox.module.scss";
+import styles from "./viewBeatBox.module.scss";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faPlay, faPause, faCheckCircle, faUsersViewfinder, faEye, faStar, faStepBackward, faStepForward } from "@fortawesome/free-solid-svg-icons";
@@ -13,21 +13,10 @@ import axiosInstance from "../../authorization/axiosInstance";
 
 const cx = classNames.bind(styles);
 
-function ListBeatPurchasedBox({ id, name, genre, price, view, like, onClick, handleLike, rating, vocalRange, fullName }) {
+function ViewBeatBox({ id, name, genre, price, view, like, onClick, handleLike, rating, vocalRange, fullName }) {
     const token = useToken()
     const audioRef = useRef()
-    const { addToCart, cartItems } = useContext(ShopContext)
-    const [play, setPlay] = useState(false)
-    const [beatSoundFull, setBeatSoundFull] = useState("")
-    useEffect(() => {
-        loadSoundFull()
-    })
-    const loadSoundFull = async () => {
-        await axiosInstance(`http://localhost:8080/api/v1/beat/user/full/${id}`)
-            .then((res) => {
-                setBeatSoundFull(res.data.beatSound)
-            })
-    }
+    const { addToCart, cartItems } = useContext(ShopContext)    
     return (<div className={cx("list-box")} onClick={onClick}>
         <div className={cx("card-item")}>
             <img className={cx("box-img")} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} alt="anh" />
@@ -55,8 +44,6 @@ function ListBeatPurchasedBox({ id, name, genre, price, view, like, onClick, han
                         <span className={cx("number")}>{rating}</span>
                     </span>
                 </div>
-                <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundFull}>
-                </audio>
             </div>
             {/* Content right  */}
 
@@ -81,4 +68,4 @@ function ListBeatPurchasedBox({ id, name, genre, price, view, like, onClick, han
         </div> */}
     </div>);
 }
-export default ListBeatPurchasedBox;
+export default ViewBeatBox;

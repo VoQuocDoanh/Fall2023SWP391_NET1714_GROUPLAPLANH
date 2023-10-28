@@ -328,21 +328,11 @@ function ViewDetailBeat() {
                                         <Button variant="contained" className={cx('button-1')} onClick={() => addToCart(beatId)}>
                                             <div>Add to cart</div>
                                         </Button>
-                                        <Link to={"/viewCart"}>
-                                            <Button style={{marginLeft:40}} variant="contained" className={cx('button-1')}>
-                                                <div>View Cart</div>
-                                            </Button>
-                                        </Link>
                                     </div>
                                         : <div className={cx('mid-button')}>
                                             <Link to={"/login"}>
                                                 <Button variant="contained" className={cx('button-1')}>
                                                     <div>Add to cart</div>
-                                                </Button>
-                                            </Link>
-                                            <Link to={"/login"}>
-                                                <Button variant="contained" className={cx('button-1')}>
-                                                    <div>View Cart</div>
                                                 </Button>
                                             </Link>
                                         </div>
