@@ -53,6 +53,15 @@ public class UserResponeDTO {
         this.phone = phoneNumber;
         this.mail = mail;
     }
+    public UserResponeDTO(Long id, String username, String fullName, String gender, LocalDateTime crateAt , String phoneNumber,String mail) {
+        this.id = id;
+        this.username = username;
+        this.fullName = fullName;
+        this.gender = gender;
+        this.crateAt = crateAt;
+        this.phone = phoneNumber;
+        this.mail = mail;
+    }
 
     public UserResponeDTO(Long id, String username, String fullName, String phoneNumber, String mail) {
         this.id = id;

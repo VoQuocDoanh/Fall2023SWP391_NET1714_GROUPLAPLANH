@@ -143,6 +143,9 @@ public class UserService {
             dto.setUsername(user.getUsername());
             dto.setFullName(user.getFullName());
             dto.setGender(user.getGender().toString());
+                    dto.setCrateAt(user.getCreatedAt());
+                    dto.setPhone(user.getPhoneNumber());
+                    dto.setMail(user.getMail());
             if (user.getRole().equals("MS")){
                 MusicianInformation information = user.getInformation();
                 dto.setProfessional(information.getProfessional());
