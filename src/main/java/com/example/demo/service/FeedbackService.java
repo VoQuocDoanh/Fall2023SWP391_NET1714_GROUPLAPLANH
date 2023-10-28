@@ -57,7 +57,13 @@ public class FeedbackService {
             feedback.add(feedbackRepository.findByBeatFeedback(i));
         }
         int pagecount = pageable.getPageNumber();
-        return new PaginationResponseDTO(feedback,pagecount);
+        int max = 0;
+        if (feedback.size() % 10 != 0) {
+            max = feedback.size() / 10 + 1;
+        } else {
+            max = feedback.size() / 10;
+        }
+        return new PaginationResponseDTO(feedback,pagecount,max);
 
     }
 

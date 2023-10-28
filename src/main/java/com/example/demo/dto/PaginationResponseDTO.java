@@ -14,4 +14,5 @@ import java.util.List;
 public class PaginationResponseDTO {
     private List<?> dtoList;
     private int pageCount;
+    private int max;
 }

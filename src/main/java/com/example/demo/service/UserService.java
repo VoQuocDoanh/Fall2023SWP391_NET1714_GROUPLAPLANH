@@ -54,7 +54,7 @@ public class UserService {
 
     @NotNull
     private ResponseEntity<String> getStringResponseEntity(MultipartFile image, User user) {
-        if(user.getAvatar().isEmpty()) {
+        if (user.getAvatar().isEmpty()) {
             String path = this.service.uploadFile(image, user.getId(), "avatar", "full");
             String fileName = this.extractObjectNameFromUrl(path);
             user.setAvatar(path);
@@ -147,7 +147,7 @@ public class UserService {
             dto.setCreateAt(user.getCreatedAt());
             dto.setPhone(user.getPhoneNumber());
             dto.setMail(user.getMail());
-            if (user.getRole().equals("MS")){
+            if (user.getRole().equals("MS")) {
                 MusicianInformation information = user.getInformation();
                 dto.setProfessional(information.getProfessional());
                 dto.setYear(information.getYear());
@@ -232,34 +232,39 @@ public class UserService {
 
     // Get All User
     public PaginationResponseDTO getAllUsers(int page) {
-        List<UserResponeDTO> userResponeDTOList =new ArrayList<>();
-        Pageable pageable = PageRequest.of(page-1,10);
+        List<UserResponeDTO> userResponeDTOList = new ArrayList<>();
+        Pageable pageable = PageRequest.of(page - 1, 10);
         Page<User> userList = userRepository.findAllByOrderByStatusDesc(pageable);
         UserResponeDTO dto;
-            for (User user : userList.getContent()){
-                dto = new UserResponeDTO(
-                        user.getId(),
-                        user.getUsername(),
-                        user.getFullName(),
-                        user.getGender().toString(),
-                        user.getRole(),
-                        user.getMail(),
-                        user.getStatus(),
-                        user.getCreatedAt(),
-                        user.getPhoneNumber());
-                    if (user.getRole().equals("MS")){
-                        MusicianInformation information = user.getInformation();
-                        dto.setProfessional(information.getProfessional());
-                        dto.setYear(information.getYear());
-                        dto.setPrize(information.getPrize());
-                    }
-                userResponeDTOList.add(dto);
+        for (User user : userList.getContent()) {
+            dto = new UserResponeDTO(
+                    user.getId(),
+                    user.getUsername(),
+                    user.getFullName(),
+                    user.getGender().toString(),
+                    user.getRole(),
+                    user.getMail(),
+                    user.getStatus(),
+                    user.getCreatedAt(),
+                    user.getPhoneNumber());
+            if (user.getRole().equals("MS")) {
+                MusicianInformation information = user.getInformation();
+                dto.setProfessional(information.getProfessional());
+                dto.setYear(information.getYear());
+                dto.setPrize(information.getPrize());
             }
-            int pageCount =  pageable.getPageNumber();
-            return new PaginationResponseDTO(userResponeDTOList,pageCount);
+            userResponeDTOList.add(dto);
+        }
+        int pageCount = pageable.getPageNumber();
+        int max = 0;
+        if (userResponeDTOList.size() % 10 != 0) {
+            max = userResponeDTOList.size() / 10 + 1;
+        } else {
+            max = userResponeDTOList.size() / 10;
+        }
+        return new PaginationResponseDTO(userResponeDTOList, pageCount, max);
 
     }
-
 
 
 }
