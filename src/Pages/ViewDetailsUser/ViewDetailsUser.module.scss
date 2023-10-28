@@ -76,12 +76,12 @@
     border-radius: 20px;
     width: 500px;
     padding: 30px;
-    height: 500px;
+    height: 400px;
 }
 
 //form info user
 .volt8A {
-    height: 1300px;
+    height: 800px;
     width: 900px;
     padding-left: 20px;
     background-color: rgb(245, 245, 245);
@@ -110,6 +110,7 @@
     height: 1px;
     margin-top: 30px;
     margin-left: -50px;
+    user-select: none;
 }
 
 .input-phonenumber {
@@ -244,19 +245,47 @@
     margin-top: 60px;
     display: flex;
     justify-content: start;
-    margin-left: 70px;
+    margin-left: 40px;
+    gap: 30px;
+
 
     .button-save-details {
-        width: 70px;
-        height: 40px;
+        width: 120px;
+        height: 60px;
         border: none;
-        background-color: #06c;
+        background-color: rgb(204, 0, 0);
         color: white;
         font-family: inter;
         border-radius: 5px;
-
+        cursor: pointer;
     }
 
+    .button-save-details2 {
+        width: 120px;
+        height: 60px;
+        border: none;
+        background-color: rgb(39, 214, 39);
+        color: white;
+        font-family: inter;
+        border-radius: 5px;
+        cursor: pointer;
+        .button-save-details2:hover{
+            background-color: red;
+        }
+    }
+
+}
+.button-send {
+    width: 50px;
+    height: 30px;
+    border-radius: 12px;
+    background-color: #06c;
+    cursor: pointer;
+    border: none;
+    color: white;
+    padding: 5px;
+    font-family: Sono;
+    font-weight: 500;
 }
 
 .email-button {
@@ -324,3 +353,28 @@
 }
 
 //line
+.button-save-details {
+    background-position: center;
+    transition: background 0.8s;
+  }
+  .button-save-details:hover {
+    background: rgb(204, 0, 0) radial-gradient(circle, transparent 1%, #d9d9da 1%) center/15000%;
+  }
+  .button-save-details:active {
+    background-color: rgb(204, 0, 0);
+    background-size: 100%;
+    transition: background 0s;
+  }
+  //unban
+  .button-save-details2 {
+    background-position: center;
+    transition: background 0.8s;
+  }
+  .button-save-details2:hover {
+    background: rgb(39, 214, 39) radial-gradient(circle, transparent 1%, #d9d9da 1%) center/15000%;
+  }
+  .button-save-details2:active {
+    background-color: rgb(39, 214, 39);
+    background-size: 100%;
+    transition: background 0s;
+  }

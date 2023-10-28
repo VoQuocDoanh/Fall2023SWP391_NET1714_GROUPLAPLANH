@@ -22,10 +22,27 @@ function Invoice() {
         mail = jwtDecode(token).mail
         phoneNumber = jwtDecode(token).phoneNumber
     }
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const paymentId = searchParams.get("paymentId")
+  const PayerID = searchParams.get("PayerID")
+  console.log(paymentId)
+  console.log(PayerID)
+  const handleActivation = async () => {
+    await axios.post(`http://localhost:8080/api/v1/paypal/user/${jwtDecode(token).sub}/success`, {paymentId: paymentId, payerID: PayerID, beatId: JSON.parse(sessionStorage.getItem("beatCheckout"))})
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
-    const handleCheckout = () =>{
-        navigate("/listbeat")
-    }
+  useEffect(() =>{
+    handleActivation()
+  },[])
+
+    
 
     return (
         <div className={cx('Invoice')}>
@@ -35,7 +52,7 @@ function Invoice() {
             </div>
 
             <footer className={cx("before-body")}>
-                    <div className={cx("before-body-1", "card-action")} onClick={() => handleCheckout()}>RETURN TO SHOP</div>
+                    <Link to={"/listbeat"}><div className={cx("before-body-1", "card-action")}>RETURN TO SHOP</div></Link>
                     {/* <div className={cx("card-update", "card-action")}>UPDATE CART</div> */}
                 </footer>
             <div className={cx('body')}>

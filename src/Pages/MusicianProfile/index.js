@@ -5,10 +5,6 @@ import { Link } from "react-router-dom";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { faChevronLeft, faChevronRight, faPause, faPlay, faPlayCircle, faRedo, faStepBackward, faStepForward } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "bootstrap";
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
-import { Checkbox, Row, Tag } from "antd";
-import { Box } from "@mui/material";
 const cx = classNames.bind(styles);
 const DATA = [
     {
@@ -16,92 +12,57 @@ const DATA = [
         name: "abc",
     },
 ]
-function MusicianProfile({ name, prioriry }) {
+function MusicianProfile() {
     const [search, setSearch] = useState("");
     const [list, setList] = useState(DATA);
+    const [play, setPlay] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
-    const [ten, setTen] = useState("");
-    const [tenuser, setTenuser] = useState("");
     const [genre, setGenre] = useState("");
-    const [profession, setProfession] = useState("");
+    const [ten, setTen] = useState("");
+    const [prize, setPrize] = useState("");
+    const [year, setYear] = useState("");
     const handleSearch = (e) => {
         setSearch(e.target.value);
     }
-    const handleSearch2 = (e) => {
+    const handleSearch1 = (e) => {
         setTen(e.target.value);
     }
-
-    const handleSearch1 = (e) => {
-        setTenuser(e.target.value);
-    }
-    const handleSearch5 = (e) => {
+    const handleSearch2 = (e) => {
         setGenre(e.target.value);
     }
-    const handleSearch6 = (e) => {
-        setProfession(e.target.value);
+    const handleSearch3 = (e) => {
+        setYear(e.target.value);
+    }
+    const handleSearch4 = (e) => {
+        setPrize(e.target.value);
     }
 
-    // Check box
-    const [checked, setChecked] = useState(false);
-    const [maleChecked, setMaleChecked] = useState(false);
-    const [femaleChecked, setFemaleChecked] = useState(false);
 
-    const toggleCheckbox2 = () => {
-        setFemaleChecked(!femaleChecked);
-    };
-    const toggleCheckbox1 = () => {
-        setMaleChecked(!maleChecked);
-    };
-    const toggleCheckbox = () => {
-        setChecked(!checked);
-    };
-
-    //Input
     useEffect(() => {
         const data = DATA.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
         setList(data);
     }, [search])
     useEffect(() => {
-        const data = DATA.filter((item) => item.name.toLowerCase().includes(tenuser.toLowerCase()));
-        setList(data);
-    }, [tenuser])
-    useEffect(() => {
         const data = DATA.filter((item) => item.name.toLowerCase().includes(ten.toLowerCase()));
         setList(data);
     }, [ten])
-    useEffect(() => {
-        const data = DATA.filter((item) => item.name.toLowerCase().includes(ten.toLowerCase()));
-        setList(data);
-    }, [profession])
     return (
         <div>
             <div>
                 <h2 className={cx("title-myprofile")}>
-                    Musician
+                    My Profile
                 </h2>
             </div>
             <div className={cx("profile")}>
                 <div className={cx("volt8A")}>
-                    <form>
+                    <form style={{marginTop: 20}}>
                         <table className={classNames("profile-2")}>
                             <div className={cx("part0")}>
-                                <td >
-                                    <label className={cx("login-text")}>Full Name</label>
-                                </td>
                                 <td>
                                     <div className={cx("text-username0")}>
-                                        <div>
-                                            <input className={cx("input-username0")} type="text" placeholder value={search} onChange={handleSearch} />
-                                        </div>
-                                    </div>
-                                </td>
-                            </div>
-                            <div className={cx("part0")}>
-                                <td >
-                                    <label className={cx("login-text")}>Address</label>
-                                </td>
-                                <td>
-                                    <div className={cx("text-username0")}>
+                                        <td >
+                                            <label className={cx("login-text")}>Full Name</label>
+                                        </td>
                                         <div>
                                             <input className={cx("input-username0")} type="text" placeholder value={search} onChange={handleSearch} />
                                         </div>
@@ -109,103 +70,114 @@ function MusicianProfile({ name, prioriry }) {
                                 </td>
                             </div>
                             <div className={cx("part1")}>
-                                <td>
-                                    <label className={cx("text-name")}>Professional</label>
-                                </td>
                                 <td className={cx("")}>
+                                    <td>
+                                        <label className={cx("text-name")}>Address</label>
+                                    </td>
                                     <div className={cx("placeholder-ten")}>
-                                        <input className={cx("input-username")} type="text" placeholder value={ten} onChange={handleSearch2} />
-                                    </div>
-                                </td>
-                            </div>
-                            <div className={cx("part6")}>
-                                <td >
-                                    <label className={cx("Genre")}>Prize</label>
-                                </td>
-                                <td>
-                                    <div className={cx("text-username6")}>
-                                        <div>
-                                            <input className={cx("input-username6")} type="text" placeholder value={genre} onChange={handleSearch5} />
-                                        </div>
-                                    </div>
-                                </td>
-                            </div>
-                            <div className={cx("part6")}>
-                                <td >
-                                    <label className={cx("Genre")}>Year of Operation</label>
-                                </td>
-                                <td>
-                                    <div className={cx("text-username6")}>
-                                        <div>
-                                            <input className={cx("input-username7")} type="text" placeholder value={profession} onChange={handleSearch6} />
-                                        </div>
+                                        <input className={cx("input-username")} type="text" placeholder value={ten} onChange={handleSearch1} />
                                     </div>
                                 </td>
                             </div>
                             <div className={cx("part2")}>
                                 <td>
-                                    <div className={cx("email-txet0")}>
+                                    <div className={cx("email-text")}>
                                         Email:
                                     </div>
-                                </td>
-                                <td>
-                                    <div className={cx("email-text")}>
-                                        do**********@fpt.edu.vn
+                                    <div className={cx("email-change")}>
+                                        do******@fpt.edu.vn
                                     </div>
+                                    <button className={cx("email-button")}>Change</button>
                                 </td>
-                                <button className={cx("email-button")}>Change</button>
+
                             </div>
                             <div className={cx("part3")}>
                                 <td className={cx("phone-number")}>
                                     Phone number
                                 </td>
-                                <td className={cx("button-phone")}>
-                                    <div className={cx("button-details")}>
-                                        <div className="space"></div>
-                                        <button className={cx("add-phonenumber")}>Add</button>
-                                    </div>
-                                </td>
+                                <div className={cx("placeholder-ten")}>
+                                    <input className={cx("input-phonenumber")} type="text" placeholder value={ten} onChange={handleSearch1} />
+                                </div>
                             </div>
-                            <div className={cx("part4")}>
-                                <td className={cx("Sex")}>
+                            <div className={cx("part3")}>
+                                <td className={cx("phone-number")}>
+                                    Genre
+                                </td>
+                                <div className={cx("placeholder-ten")}>
+                                    <input className={cx("input-phonenumber")} type="text" placeholder value={genre} onChange={handleSearch2} />
+                                </div>
+                            </div>
+                            <div className={cx("part3")}>
+                                <td className={cx("phone-number")}>
+                                    Year of operation
+                                </td>
+                                <div className={cx("placeholder-ten")}>
+                                    <input className={cx("input-phonenumber")} type="text" placeholder value={year} onChange={handleSearch3} />
+                                </div>
+                            </div>
+                            <div className={cx("part3")}>
+                                <td className={cx("phone-number")}>
+                                    Prize
+                                </td>
+                                <div className={cx("placeholder-ten")}>
+                                    <input className={cx("input-phonenumber")} type="text" placeholder value={prize} onChange={handleSearch4} />
+                                </div>
+                            </div>
+                            <div className={cx("part4")} style={{marginLeft: 65}}>
+                                <td className={cx("sex")}>
                                     Sex
                                 </td>
                                 <td>
                                     <div className={cx("sex-button")}>
                                         <div className={cx("stardus-radio-group")}>
-                                            <Row
-                                                justify='space-between'
-                                                style={{
-                                                    marginBottom: 3,
-                                                    ...(maleChecked ? { textDecoration: 'none' } : {}),
-                                                }}
-                                            >
-                                                <Checkbox maleChecked={maleChecked} onChange={toggleCheckbox1}>
-                                                    {name} Male
-                                                </Checkbox>
-                                            </Row>
-                                            <Row
-                                                justify='space-between'
-                                                style={{
-                                                    marginBottom: 3,
-                                                    ...(femaleChecked ? { textDecoration: 'none' } : {}),
-                                                }}
-                                            >
-                                                <Checkbox femaleChecked={femaleChecked} onChange={toggleCheckbox2}>
-                                                    {name} Female
-                                                </Checkbox>
-                                            </Row>
-                                            <Row
-                                                justify='space-between'
-                                                style={{
-                                                    marginBottom: 3,
-                                                    ...(checked ? { textDecoration: 'none' } : {}),
-                                                }}
-                                            >
-                                                <Checkbox checked={checked} onChange={toggleCheckbox}>
-                                                    {name} Other
-                                                </Checkbox>
-                                            </Row>
+                                            <div className={cx("footer")}>
+                                                <div className={cx("footer-left")}>
+                                                    <input
+                                                        type="radio"
+                                                        id="remember"
+                                                        name="rememeber"
+                                                        value="check"
+                                                        checked={isChecked}
+                                                        onChange={() => setIsChecked(!isChecked)}
+                                                        className={cx("input-check")}
+                                                    />
+                                                    <label htmlFor="remember" className={cx("text")}>
+                                                        Male
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div className={cx("footer")}>
+                                                <div className={cx("footer-left")}>
+                                                    <input
+                                                        type="radio"
+                                                        id="remember"
+                                                        name="rememeber"
+                                                        value="check"
+                                                        checked={isChecked}
+                                                        onChange={() => setIsChecked(!isChecked)}
+                                                        className={cx("input-check")}
+                                                    />
+                                                    <label htmlFor="remember" className={cx("text")}>
+                                                        Female
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div className={cx("footer")}>
+                                                <div className={cx("footer-left")}>
+                                                    <input
+                                                        type="radio"
+                                                        id="remember"
+                                                        name="rememeber"
+                                                        value="check"
+                                                        checked={isChecked}
+                                                        onChange={() => setIsChecked(!isChecked)}
+                                                        className={cx("input-check")}
+                                                    />
+                                                    <label htmlFor="remember" className={cx("text")}>
+                                                        Other
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </td>
@@ -214,7 +186,7 @@ function MusicianProfile({ name, prioriry }) {
                                 <td className={cx("save-button")}>
                                 </td>
                                 <td className={cx("button-type")}>
-                                    <button type="button" className={cx("button-save-details")} aria-disabled="false" >Save</button>
+                                    <button type="button" className={cx("button-save-details")} aria-disabled="false" >Edit</button>
                                 </td>
                             </div>
 
@@ -228,11 +200,18 @@ function MusicianProfile({ name, prioriry }) {
                             <div className={cx("img-user-div3")}>
                                 <img className={cx("box-img")} alt="" />
                             </div>
-                            <input className={cx("img-click")} type="file" accept=".jpg,.jpeg,.png" />
+                            {/* <input className={cx("img-click")} type="file" accept=".jpg,.jpeg,.png" /> */}
+                            <div className={cx("info-user")}>
+                                <td>
+                                    User Name
+                                </td>
+                                <td style={{marginLeft: 10}}>    
+                                    Musician
+                                </td>
+                            </div>
+                            <input className={cx("img-click")} style={{marginLeft: -30}} type="file" accept=".jpg,.jpeg,.png" />
                         </div>
-
                     </div>
-
                 </div>
             </div>
         </div>

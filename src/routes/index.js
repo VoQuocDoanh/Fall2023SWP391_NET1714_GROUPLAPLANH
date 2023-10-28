@@ -28,6 +28,8 @@ import ListBeatPurchased from "../Pages/listBeatPurchased";
 import ViewDetailBeatPurchased from "../Pages/viewDetailBeatPurchased";
 import PaymentSuccess from "../Pages/PaymentSuccess";
 import PaymentCancel from "../Pages/PaymentCancel";
+import ViewDetailsUser from "../Pages/ViewDetailsUser";
+import ViewDetailsMusician from "../Pages/ViewDetailsMusician";
 const publicRoutes = [
   {
     path: "/",
@@ -154,6 +156,14 @@ const publicRoutes = [
   {
     path: "/listuser2",
     component: ListUser2,
+  },
+  {
+    path: "/ViewDetailsUser",
+    component: ViewDetailsUser,
+  },
+  {
+    path: "/ViewDetailsMusician",
+    component: ViewDetailsMusician,
   },
 ];
 
