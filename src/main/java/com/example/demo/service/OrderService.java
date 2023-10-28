@@ -30,7 +30,7 @@ public class OrderService {
 
     public ResponseEntity<String> orderBeat(OrderDTO orderDTO, Long Id) {
         List<Long> listBeat = orderDTO.getBeatId();
-        List<Beat> beats=new ArrayList<>();
+        List<Beat> beats= new ArrayList<>();
         double totalPrice = 0;
         Optional<User> user=userRepository.findById(Id);
         if (user.isPresent() && !listBeat.isEmpty()){
@@ -50,7 +50,6 @@ public class OrderService {
             return new ResponseEntity<>("Payment Successfullly", HttpStatus.OK);
         }
         return new ResponseEntity<>("Oder failed", HttpStatus.NOT_IMPLEMENTED);
-
     }
 
     private void setOrderId (Order order){

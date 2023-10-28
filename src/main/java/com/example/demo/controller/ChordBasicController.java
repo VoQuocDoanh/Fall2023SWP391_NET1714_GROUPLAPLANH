@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.ChordBasicResponseDTO;
 import com.example.demo.dto.ChordDTO;
+import com.example.demo.dto.ChordResponseDTO;
 import com.example.demo.entity.ChordBasic;
 import com.example.demo.repository.ChordBasicRepository;
 import com.example.demo.service.ChordBasicService;
@@ -43,5 +44,10 @@ public class ChordBasicController {
     @PostMapping("")
     public ResponseEntity<String> uploadChord(@RequestPart("file") MultipartFile image,@Valid @RequestPart("json") ChordDTO chordDTO){
         return this.chordBasicService.uploadChord(image, chordDTO);
+    }
+
+    @GetMapping("/guitar")
+    public ResponseEntity<List<ChordResponseDTO>> getGuitarChord(){
+        return ResponseEntity.ok(this.chordBasicService.getGuitarChord());
     }
 }

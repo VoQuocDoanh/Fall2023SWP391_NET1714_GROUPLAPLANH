@@ -346,16 +346,22 @@ public class SongService {
                     this.songRatingRepository.delete(foundRating.get());
                     song.setTotalUserRating(song.getTotalUserRating() - 1);
                     List<SongRating> songRatings = this.songRatingRepository.findAllBySongRating(song);
-                    int total = 0;
-                    for (SongRating value : songRatings) {
-                        total += value.getRating();
+                    if(!songRatings.isEmpty()) {
+                        int total = 0;
+                        for (SongRating value : songRatings) {
+                            total += value.getRating();
+                        }
+                        double result = (double) total / song.getTotalUserRating();
+                        double round = Math.round(result * 10.0) / 10.0;
+                        song.setRating(round);
+                        this.songRepository.save(song);
                     }
-                    song.setRating((double) total / song.getTotalUserRating());
-                    this.songRepository.save(song);
                 }
                 song.setTotalUserRating(song.getTotalUserRating() + 1);
                 SongRating songRating = new SongRating(foundUser.get(), song, rating);
-                song.setRating((song.getRating() * song.getTotalUserRating() + rating) / (song.getTotalUserRating() + 1));
+                double result = (song.getRating() * song.getTotalUserRating() + rating) / (song.getTotalUserRating() + 1);
+                double round = Math.round(result * 10.0) / 10.0;
+                song.setRating(round);
                 this.songRatingRepository.save(songRating);
                 this.songRepository.save(song);
                 return new ResponseEntity<>("Rating Successfully", HttpStatus.OK);

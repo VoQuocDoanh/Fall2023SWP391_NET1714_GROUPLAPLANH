@@ -16,6 +16,8 @@ public class OrderDTO {
     private Long userId;
     private double price;
     private List<Long> beatId;
+    private String paymentId;
+    private String payerID;
 
     public OrderDTO(Long userId, double price, List<Long> beatId) {
         this.userId = userId;

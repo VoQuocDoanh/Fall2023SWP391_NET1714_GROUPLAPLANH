@@ -17,6 +17,12 @@ public class ChordResponseDTO {
     private String description;
     private String type;
 
+    public ChordResponseDTO(Long id, String chordName, String image) {
+        this.id = id;
+        this.chordName = chordName;
+        this.image = image;
+    }
+
     public ChordResponseDTO(Long id, String chordName, String image, String key, String suffix, String type, String description) {
         this.id = id;
         this.chordName = chordName;

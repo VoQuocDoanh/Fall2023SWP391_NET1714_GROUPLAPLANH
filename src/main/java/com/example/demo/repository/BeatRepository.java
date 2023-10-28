@@ -48,4 +48,7 @@ public interface BeatRepository extends JpaRepository<Beat, Long> {
 
     @Query("select b from Beat b where b.userName.fullName like %:name% and b.status = 1 order by b.Id")
     List<Beat> findBeatByMusician (String name);
+
+    @Query("select b from Beat b join b.genresofbeat bg where bg.name = :genreName and b.status = 1 order by b.Id asc")
+    List<Beat> findBeatsByGenreName(String genreName);
 }

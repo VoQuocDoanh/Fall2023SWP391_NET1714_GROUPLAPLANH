@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.ChordBasicResponseDTO;
 import com.example.demo.dto.ChordDTO;
+import com.example.demo.dto.ChordResponseDTO;
 import com.example.demo.entity.ChordBasic;
 import com.example.demo.repository.ChordBasicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,5 +61,20 @@ public class ChordBasicService {
         } else {
         return new ResponseEntity<>("Add ko được rồi, check lại database", HttpStatus.NOT_IMPLEMENTED);
         }
+    }
+
+    public List<ChordResponseDTO> getGuitarChord(){
+        List<ChordBasic> basics = this.chordBasicRepository.findChordBasicsByType("Guitar");
+        if(!basics.isEmpty()){
+            List<ChordResponseDTO> dtos = new ArrayList<>();
+            for(ChordBasic value : basics){
+                ChordResponseDTO dto = new ChordResponseDTO(value.getChordId(),
+                        value.getChordName(),
+                        value.getImage());
+                dtos.add(dto);
+            }
+            return dtos;
+        }
+        return null;
     }
 }
