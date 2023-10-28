@@ -147,7 +147,7 @@ public class BeatService {
     }
 
     public PaginationResponseDTO findAllBeat(int page){
-        Pageable pageable = PageRequest.of(page-1,2);
+        Pageable pageable = PageRequest.of(page-1,8);
         Page<Beat> beats = this.beatRepository.findAllBeat(pageable);
         List<BeatResponseDTO> responseDTOS = new ArrayList<>();
         if (beats.isEmpty()) {

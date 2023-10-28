@@ -49,7 +49,7 @@ public class FeedbackService {
 
     public PaginationResponseDTO viewFeedback(Long id, int page) {
         Optional<User> foundUser = userRepository.findById(id);
-        Pageable pageable = PageRequest.of(page-1,2);
+        Pageable pageable = PageRequest.of(page-1,10);
 
         Page<Beat> beatList = beatRepository.findAllBeatSoldOut(foundUser.get().getId(),pageable);
         List<Feedback> feedback =new ArrayList<>();
