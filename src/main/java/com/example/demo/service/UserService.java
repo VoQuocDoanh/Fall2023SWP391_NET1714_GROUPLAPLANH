@@ -241,6 +241,8 @@ public class UserService {
                         user.getGender().toString(),
                         user.getRole(),
                         user.getMail(),
+                        user.getStatus(),
+                        user.getCreatedAt(),
                         user.getPhoneNumber());
                     if (user.getRole().equals("MS")){
                         MusicianInformation information = user.getInformation();
