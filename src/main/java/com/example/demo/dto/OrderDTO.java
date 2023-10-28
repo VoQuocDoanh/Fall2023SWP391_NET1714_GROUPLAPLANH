@@ -22,4 +22,14 @@ public class OrderDTO {
         this.price = price;
         this.beatId = beatId;
     }
+
+    @Override
+    public String toString() {
+        return "OrderDTO{" +
+                "Id=" + Id +
+                ", userId=" + userId +
+                ", price=" + price +
+                ", beatId=" + beatId +
+                '}';
+    }
 }

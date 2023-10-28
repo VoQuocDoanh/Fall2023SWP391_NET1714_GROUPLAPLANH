@@ -320,7 +320,6 @@ public class BeatService {
     public List<BeatResponseDTO> listBeatPurchased(Long id) {
        List<Order> order = orderService.findOrder(id);
         List<BeatResponseDTO> beat = new ArrayList<>();
-        BeatResponseDTO b = new BeatResponseDTO();
         if (order.isEmpty()){
             return null;
         }
@@ -330,9 +329,11 @@ public class BeatService {
                 return null;
             }
             for (Beat i : beatEntity){
+                BeatResponseDTO b = new BeatResponseDTO();
+                b.setId(i.getId());
                 b.setBeatName(i.getBeatName());
                 b.setPrice(i.getPrice());
-                b.setDescription(b.getDescription());
+                b.setDescription(i.getDescription());
                 b.setUser(getUser(i.getUserName()));
                 beat.add(b);
             }
