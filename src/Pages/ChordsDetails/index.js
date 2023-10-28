@@ -184,7 +184,7 @@ function ChordsDetails() {
                         </div>
                     </Popup>
                 </nav>
-                <div className={cx("line")}>
+                <div className={cx("line" )}>
                 </div>
             </div>
 
@@ -192,7 +192,7 @@ function ChordsDetails() {
                 {listChord.map((item) => {
                     return <img className={cx("detail-img")} style={{ width: 250, height: 260, objectFit: 'fill', marginLeft: 700 }} key={item.type} src={item.img} alt={item.type} />
                 })}
-                <p className={cx("img__description")}>This image looks super neat.<p style={{ marginTop: 35 }}>Description About Chords</p></p>
+                <p className={cx("img__description")}>This image looks super neat<p style={{ marginTop: 35 }}>Description About Chords</p></p>
             </div>
         </div>
 
