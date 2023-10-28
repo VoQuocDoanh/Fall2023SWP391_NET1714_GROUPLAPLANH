@@ -16,13 +16,13 @@ function ListSong() {
                 <div className={cx('loaded-content')}> {/* cột trái*/}
                     <div className={cx('panel')}> {/* body (tổng của 1 khung)*/}
                         <div className={cx('panel-title')}>
-                            <h4>Thông tin cá nhân</h4>
+                            <h4>Personal information</h4>
                         </div>
                         <div className={cx('register-login')}>
-                            <Link to="/login"><strong>Đăng nhập </strong></Link>
-                            <span>hoặc</span>
-                            <Link to="/register"><strong> Đăng ký </strong></Link>
-                            <span>để đánh dấu bài hát yêu thích và tạo playlist</span>
+                            <Link to="/login"><b>LOGIN </b></Link>
+                            <span>or</span>
+                            <Link to="/register"><b> REGISTER </b></Link>
+                            <span>to mark favorite songs and create playlists</span>
                         </div>
                         <div className={cx('click-button')}>
                             <Button variant="contained">
@@ -33,44 +33,44 @@ function ListSong() {
                                     </svg>
                                 </div>
                                 <div className={cx('text-button')}>
-                                    <span>Đăng bài hát</span>
+                                    <span>Post songs</span>
                                 </div>
                             </Button>
                         </div>
                     </div>
                     <div className={cx('panel')}>
                         <div className={cx('panel-title')}>
-                            <h4>Điệu bài hát</h4>
+                            <h4>Song melody</h4>
                         </div>
                         <div className={cx('rhythm-list')}>
-                            <div className={cx('rhythm-item')}>Điệu Ballad (20070 bài)</div>
-                            <div className={cx('rhythm-item')}>Điệu Blues (3088 bài)</div>
-                            <div className={cx('rhythm-item')}>Điệu Disco (1693 bài)</div>
-                            <div className={cx('rhythm-item')}>Điệu Slow (1522 bài)</div>
-                            <div className={cx('rhythm-item')}>Điệu Bollero (1267 bài)</div>
-                            <div className={cx('rhythm-item')}>Điệu Slow Rock (1242 bài)</div>
-                            <div className={cx('rhythm-item')}>Điệu Valse (747 bài)</div>
-                            <div className={cx('rhythm-item')}>Điệu Fox (700 bài)</div>
-                            <div className={cx('rhythm-item')}>Điệu Boston (440 bài)</div>
-                            <div className={cx('rhythm-item')}>Điệu Rock (432 bài)</div>
-                            <div className={cx('rhythm-item')}>Điệu Chachacha (366 bài)</div>
-                            <div className={cx('rhythm-item')}>Điệu Bossa Nova (360 bài)</div>
-                            <div className={cx('rhythm-item')}>Điệu Pop (360 bài)</div>
-                            <div className={cx('rhythm-item')}>Điệu Rhumba (213 bài)</div>
-                            <div className={cx('rhythm-item')}>Điệu Tango (162 bài)</div>
+                            <div className={cx('rhythm-item')}>Ballad (20070 bài)</div>
+                            <div className={cx('rhythm-item')}>Blues (3088 bài)</div>
+                            <div className={cx('rhythm-item')}>Disco (1693 bài)</div>
+                            <div className={cx('rhythm-item')}>Slow (1522 bài)</div>
+                            <div className={cx('rhythm-item')}>Bollero (1267 bài)</div>
+                            <div className={cx('rhythm-item')}>Slow Rock (1242 bài)</div>
+                            <div className={cx('rhythm-item')}>Valse (747 bài)</div>
+                            <div className={cx('rhythm-item')}>Fox (700 bài)</div>
+                            <div className={cx('rhythm-item')}>Boston (440 bài)</div>
+                            <div className={cx('rhythm-item')}>Rock (432 bài)</div>
+                            <div className={cx('rhythm-item')}>Chachacha (366 bài)</div>
+                            <div className={cx('rhythm-item')}>Bossa Nova (360 bài)</div>
+                            <div className={cx('rhythm-item')}>Pop (360 bài)</div>
+                            <div className={cx('rhythm-item')}>Rhumba (213 bài)</div>
+                            <div className={cx('rhythm-item')}>Tango (162 bài)</div>
                         </div>
                     </div>
                     <div>
                         <div className={cx('panel-title')}>
-                            <h4>Yêu cầu mới</h4>
+                            <h4>New request</h4>
                         </div>
                         <div className={cx('song-list')}>
                             <div className={cx('song-list-small')}>
-                                <h4>Cắt đôi nối sầu</h4>
+                                <h4>Cheri Cheri Lady</h4>
                             </div>
                             <div className={cx('song-info')}>
                                 <div className={cx('song-time')}>
-                                    <span>khoảng 5 tiếng trước</span>
+                                    <span>about 5 hours ago</span>
                                 </div>
                                 <div className={cx('song-vote')}>
                                     <span>2</span>
@@ -80,11 +80,11 @@ function ListSong() {
                                 </div>
                             </div>
                             <div className={cx('song-list-small')}>
-                                <h4>Cắt đôi nối sầu</h4>
+                                <h4>Flowers</h4>
                             </div>
                             <div className={cx('song-info')}>
                                 <div className={cx('song-time')}>
-                                    <span>khoảng 5 tiếng trước</span>
+                                    <span>about 5 hours ago</span>
                                 </div>
                                 <div className={cx('song-vote')}>
                                     <span>2</span>
@@ -94,11 +94,11 @@ function ListSong() {
                                 </div>
                             </div>
                             <div className={cx('song-list-small')}>
-                                <h4>Cắt đôi nối sầu</h4>
+                                <h4>Havana</h4>
                             </div>
                             <div className={cx('song-info')}>
                                 <div className={cx('song-time')}>
-                                    <span>khoảng 5 tiếng trước</span>
+                                    <span>about 5 hours ago</span>
                                 </div>
                                 <div className={cx('song-vote')}>
                                     <span>2</span>
@@ -108,11 +108,11 @@ function ListSong() {
                                 </div>
                             </div>
                             <div className={cx('song-list-small')}>
-                                <h4>Cắt đôi nối sầu</h4>
+                                <h4>We Don't Talk Anymore</h4>
                             </div>
                             <div className={cx('song-info')}>
                                 <div className={cx('song-time')}>
-                                    <span>khoảng 5 tiếng trước</span>
+                                    <span>about 5 hours ago</span>
                                 </div>
                                 <div className={cx('song-vote')}>
                                     <span>2</span>
@@ -122,11 +122,11 @@ function ListSong() {
                                 </div>
                             </div>
                             <div className={cx('song-list-small')}>
-                                <h4>Cắt đôi nối sầu</h4>
+                                <h4>I Do</h4>
                             </div>
                             <div className={cx('song-info')}>
                                 <div className={cx('song-time')}>
-                                    <span>khoảng 5 tiếng trước</span>
+                                    <span>about 5 hours ago</span>
                                 </div>
                                 <div className={cx('song-vote')}>
                                     <span>2</span>
@@ -141,7 +141,7 @@ function ListSong() {
                 <div className={cx('loaded-content')}>  {/* body (tổng giữa)*/}
                     <div className={cx('panel')}> {/* tổng 1 khung */}
                         <div className={cx('panel-title')}>
-                            <h4>Hot nhất hôm nay</h4>
+                            <h4>Hottest today</h4>
                         </div>
                         <div className={cx('hot-today')}> {/* tổng 1 khung nhỏ*/}
                             <div className={cx('a')}>
@@ -153,10 +153,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>1. Trước khi em tồn tại</span>
+                                        <span>1. Shape of you</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Ed Sheeran</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -167,10 +167,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>2. Trước khi em tồn tại</span>
+                                        <span>2. Believer</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Imagine Dragons</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -181,10 +181,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>3. Trước khi em tồn tại</span>
+                                        <span>3. Despacito</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Luis Fonsi, Daddy</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -195,10 +195,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>4. Trước khi em tồn tại</span>
+                                        <span>4. Bad Things</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Machine Gun Kelly</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -209,10 +209,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>5. Trước khi em tồn tại</span>
+                                        <span>5. Rockabye</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Sean Paul&Anne-mMrie</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -223,10 +223,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>6. Trước khi em tồn tại</span>
+                                        <span>6. Havana</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Camila Cabello</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -237,10 +237,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>7. Trước khi em tồn tại</span>
+                                        <span>7. Thunder</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Imagine Dragons</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -251,10 +251,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>8. Trước khi em tồn tại</span>
+                                        <span>8. Don't Wanna Know</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Maroon 5</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -265,10 +265,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>9. Trước khi em tồn tại</span>
+                                        <span>9. Something Just Like This</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>The Chainsmokers</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -279,10 +279,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>10. Trước khi em tồn tại</span>
+                                        <span>10. Perfect</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Ed Sheeran</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -293,10 +293,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>11. Trước khi em tồn tại</span>
+                                        <span>11. That's What I Like</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Bruno Mars</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -307,10 +307,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>12. Trước khi em tồn tại</span>
+                                        <span>12. Say You Won't Let Go</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>James Arthur</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -321,10 +321,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>13. Trước khi em tồn tại</span>
+                                        <span>13. There's Nothing Holdin'Me Back</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Shawn Mendes</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -335,10 +335,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>14. Trước khi em tồn tại</span>
+                                        <span>14. Too Good At Goodbyes</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Sam Smith</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -349,10 +349,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>15. Trước khi em tồn tại</span>
+                                        <span>15. Passionfruit</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Drake</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -363,10 +363,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>16. Trước khi em tồn tại</span>
+                                        <span>16. Look What you Made Me Do</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Taylor Swift</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -377,10 +377,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>17. Trước khi em tồn tại</span>
+                                        <span>17. Goosebumps</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Travis Scott</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -391,10 +391,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>18. Trước khi em tồn tại</span>
+                                        <span>18. Humble.</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Kendrick Lamar</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -405,10 +405,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>19. Trước khi em tồn tại</span>
+                                        <span>19. Love On The Brain</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Rihanna</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -419,10 +419,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>20. Trước khi em tồn tại</span>
+                                        <span>20. Unforgettable</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>French Montana</span>
                                     </div>
                                 </div>
                             </div>
@@ -432,7 +432,7 @@ function ListSong() {
                 <div className={cx('loaded-content')}> {/* body (tổng phải)*/}
                     <div className={cx('panel')}>
                         <div className={cx('panel-title')}>
-                            <h4>Mới nổi</h4>
+                            <h4>Emerging</h4>
                         </div>
                         <div className={cx('hot-today')}>
                             <div className={cx('hot-today-one')}>
@@ -444,10 +444,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>1. Trước khi em tồn tại</span>
+                                        <span>1. Redbone</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Childish Gambino</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -458,10 +458,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>1. Trước khi em tồn tại</span>
+                                        <span>1. Sign Of the Times</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Harry Styles</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -472,10 +472,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>1. Trước khi em tồn tại</span>
+                                        <span>1. Attention</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Charlie Puth</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -486,10 +486,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>1. Trước khi em tồn tại</span>
+                                        <span>1. Whatever It Takes</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Imagine Dragons</span>
                                     </div>
                                 </div>
                                 <div className={cx('hot-today-list')}>
@@ -500,10 +500,10 @@ function ListSong() {
                                         <span>4198</span>
                                     </div>
                                     <div className={cx('hot-today-songs')}>
-                                        <span>1. Trước khi em tồn tại</span>
+                                        <span>1. Ready For It?</span>
                                     </div>
                                     <div className={cx('hot-today-singers')}>
-                                        <span>Vũ Đinh Trọng Thắng</span>
+                                        <span>Taylor Swift</span>
                                     </div>
                                 </div>
                             </div>
@@ -511,7 +511,7 @@ function ListSong() {
                     </div>
                     <div className={cx('panel')}>
                         <div className={cx('panel-title')}>
-                            <h4>Hợp âm mới</h4>
+                            <h4>New chords</h4>
                         </div>
                         <div className={cx('emerging')}>
                             <div className={cx('song-title')}>

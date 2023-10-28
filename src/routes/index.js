@@ -25,6 +25,7 @@ import MyProfile from "../Pages/MyProfile";
 import Invoice from "../Pages/Invoice/Invoice";
 import PaymentActivation from "../Pages/PaymentActivation";
 import RegisterActivation from "../Pages/RegisterActivation";
+import ListOfSong from "../Pages/ListOfSong";
 const publicRoutes = [
   {
     path: "/",
@@ -131,6 +132,10 @@ const publicRoutes = [
     path: "/registeractivation",
     component: RegisterActivation,
   },  
+  {
+    path: "/listofsong",
+    component: ListOfSong,
+  }, 
 ];
 
 const privateRoute = [];
