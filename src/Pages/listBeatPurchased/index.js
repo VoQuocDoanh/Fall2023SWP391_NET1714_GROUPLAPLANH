@@ -13,6 +13,7 @@ import Sidebar from "../../components/SideBar";
 import useToken from "../../authorization/useToken";
 import jwtDecode from "jwt-decode";
 import ListBeatPurchasedBox from "../../components/listBeatPurchasedBox";
+import PaginationControlled from "../../components/Pagination";
 
 const cx = classNames.bind(styles);
 
@@ -170,11 +171,15 @@ function ListBeatPurchased() {
                 })}
             </div> */}
                 {list.length !== 0 ?
+                <div>
                     <div className={cx("listbeat")}>
                         {list.map((item) => {
                             return <ListBeatPurchasedBox id={item.id} name={item.beatName} genre={item.genre} price={item.price} view={(item.view / 2).toFixed()} like={item.totalLike} handleLike={() => handleLike(item.id)} rating={item.rating} vocalRange={item.vocalRange} fullName={item.user.fullName} />
                         })}
-                    </div> : <div className={cx("sold-out")} style={{zindex: '1',marginLeft:800,height:600}}> You are not buying any beats<div> Visiting our website to buy the beats </div> </div>}
+                    </div>
+                    <PaginationControlled style={{display: "flex", justifycontent: "end"}}/>
+                    </div>
+                     : <div className={cx("sold-out")} style={{zindex: '1',marginLeft:800,height:600}}> You are not buying any beats<div> Visiting our website to buy the beats </div> </div>}
 
                 {/* <div className={cx("audio")}>
 
