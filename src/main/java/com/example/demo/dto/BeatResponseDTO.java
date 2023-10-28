@@ -30,6 +30,7 @@ public class BeatResponseDTO {
     private int totalRating;
     private Double rating;
     private String description;
+    private int status;
 
     private String prize;
     private int year;

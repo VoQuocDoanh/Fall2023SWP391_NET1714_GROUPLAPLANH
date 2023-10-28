@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.PaginationResponseDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserResponeDTO;
 import com.example.demo.entity.User;
@@ -24,9 +25,9 @@ public class AdminController {
     }
 
     //List all User in Admin
-    @GetMapping
-    public ResponseEntity<List<UserResponeDTO>> getAllUsers() {
-        return ResponseEntity.ok(this.userService.getAllUsers());
+    @GetMapping("{page}/10")
+    public ResponseEntity<PaginationResponseDTO> getAllUsers(@PathVariable int page) {
+        return ResponseEntity.ok(this.userService.getAllUsers(page));
     }
 
     //Get detail User

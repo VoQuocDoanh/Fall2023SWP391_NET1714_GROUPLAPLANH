@@ -5,6 +5,7 @@
 
 package com.example.demo.service;
 
+import com.example.demo.dto.PaginationResponseDTO;
 import com.example.demo.dto.RegisterDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserResponeDTO;
@@ -16,10 +17,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.apache.commons.lang3.RandomStringUtils;
 
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -226,14 +231,12 @@ public class UserService {
     }
 
     // Get All User
-    public List<UserResponeDTO> getAllUsers() {
-        List<User> userList = this.userRepository.findByOrderByStatusDesc();
+    public PaginationResponseDTO getAllUsers(int page) {
         List<UserResponeDTO> userResponeDTOList =new ArrayList<>();
+        Pageable pageable = PageRequest.of(page-1,10);
+        Page<User> userList = userRepository.findAllByOrderByStatusDesc(pageable);
         UserResponeDTO dto;
-        if (userList.isEmpty()) {
-            return null;
-        } else {
-            for (User user : userList){
+            for (User user : userList.getContent()){
                 dto = new UserResponeDTO(
                         user.getId(),
                         user.getUsername(),
@@ -252,8 +255,9 @@ public class UserService {
                     }
                 userResponeDTOList.add(dto);
             }
-            return userResponeDTOList;
-        }
+            int pageCount =  pageable.getPageNumber();
+            return new PaginationResponseDTO(userResponeDTOList,pageCount);
+
     }
 
 

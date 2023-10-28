@@ -7,11 +7,13 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.BeatDTO;
 import com.example.demo.dto.BeatResponseDTO;
+import com.example.demo.dto.PaginationResponseDTO;
 import com.example.demo.service.BeatService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,9 +28,9 @@ public class BeatController {
     private BeatService beatService;
 
     // List own Beats in MS
-    @GetMapping("/user/{id}/all")
-    public ResponseEntity<List<BeatResponseDTO>> findAllOwnBeat(@PathVariable Long id) {
-        return ResponseEntity.ok(this.beatService.findAllOwnBeat(id));
+    @GetMapping("/user/{id}/all/{page}")
+    public ResponseEntity<PaginationResponseDTO> findAllOwnBeat(@PathVariable Long id, @PathVariable int page) {
+        return ResponseEntity.ok(this.beatService.findAllOwnBeat(id,page));
     }
 
     // List all Beats in US
@@ -62,9 +64,9 @@ public class BeatController {
     }
 
     //list beat bought in MS
-    @GetMapping ("/musician/bought/{id}")
-    public ResponseEntity<List<BeatResponseDTO>> beatSoldOut(@PathVariable Long id){
-        return ResponseEntity.ok(beatService.beatSoldOut(id));
+    @GetMapping ("/musician/bought/{id}/{page}")
+    public ResponseEntity<PaginationResponseDTO> beatSoldOut(@PathVariable Long id, @PathVariable int page){
+        return ResponseEntity.ok(beatService.listBeatSoldOut(id,page));
     }
 
     //income in MS
