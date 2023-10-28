@@ -169,12 +169,12 @@ function ListBeatPurchased() {
                     return <ListBeatBox key={index} name={item.name} type={item.type} price={item.price} member={item.member} play={play} setPlay={setPlay} />
                 })}
             </div> */}
-                {list.length > 0 ?
+                {list.length !== 0 ?
                     <div className={cx("listbeat")}>
                         {list.map((item) => {
                             return <ListBeatPurchasedBox id={item.id} name={item.beatName} genre={item.genre} price={item.price} view={(item.view / 2).toFixed()} like={item.totalLike} handleLike={() => handleLike(item.id)} rating={item.rating} vocalRange={item.vocalRange} fullName={item.user.fullName} />
                         })}
-                    </div> : <div className={cx("sold-out")}> 404 Not Found!<div> Hết Beat Rồi Bạn Ơi!.... </div> </div>}
+                    </div> : <div className={cx("sold-out")} style={{zindex: '1',marginLeft:800,height:600}}> You are not buying any beats<div> Visiting our website to buy the beats </div> </div>}
 
                 {/* <div className={cx("audio")}>
 

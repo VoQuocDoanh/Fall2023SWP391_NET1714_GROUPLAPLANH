@@ -16,7 +16,7 @@ export default function PaginationControlled() {
   return (
     <div className={cx("paginatios")}>
         <Stack className={cx("pagination-part")} spacing={2}>
-          <Pagination className={cx("paging")} count={10} page={page} onChange={handleChange} size="medium" variant="outlined" color="secondary" showFirstButton showLastButton/>
+          <Pagination className={cx("paging")} count={10} page={page} onChange={handleChange} size="large" variant="outlined" color="standard" showFirstButton showLastButton/>
         </Stack>
     </div>
   );

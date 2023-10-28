@@ -8,7 +8,7 @@
 .main {
     top: 0;
     left: 0;
-    height: 1189px;
+    height: 1100px;
     width: 100%;
     z-index: -1;
     opacity: 2;
@@ -107,6 +107,7 @@ video {
     display: flex;
     justify-content: left;
     align-items: center;
+    text-wrap: nowrap;
 
     .text {
         margin-left: 133px;

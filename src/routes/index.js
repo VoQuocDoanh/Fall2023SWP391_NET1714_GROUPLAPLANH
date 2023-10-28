@@ -22,7 +22,6 @@ import AdminProfile from "../Pages/AdminProfile";
 import ViewDetailSong from "../Pages/ViewDetailSong";
 import ListUser2 from "../Pages/ListUser2";
 import MyProfile from "../Pages/MyProfile";
-import Invoice from "../Pages/Invoice/Invoice";
 import RegisterActivation from "../Pages/RegisterActivation";
 import ListBeatPurchased from "../Pages/listBeatPurchased";
 import ViewDetailBeatPurchased from "../Pages/viewDetailBeatPurchased";
@@ -128,11 +127,7 @@ const publicRoutes = [
     path: "/myprofile",
     component: MyProfile,
   },
-  {
-    path: "/invoice",
-    component: Invoice,
-  },
-
+  
   {
     path: "/registeractivation",
     component: RegisterActivation,

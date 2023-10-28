@@ -178,7 +178,7 @@ function ChordsDetails() {
 
             <div className={cx("list-chords")}>
                 {listChord.map((item) => {
-                    return <img key={item.type} src={item.img} alt={item.type} />
+                    return <img style={{width: 250, height:260, objectFit: 'fill', marginLeft: 700}} key={item.type} src={item.img} alt={item.type} />
                 })}
             </div>
             <Popup trigger={<button className={cx("button-popup")}> Add to Playlist</button>} position="right center" closeOnDocumentClick on={['hover', 'focus']}>
