@@ -19,12 +19,14 @@ function ListBeatPurchasedBox({ id, name, genre, price, view, like, onClick, han
     const { addToCart, cartItems } = useContext(ShopContext)
     const [play, setPlay] = useState(false)
     const [beatSoundDemo, setBeatSoundDemo] = useState("")
-    const loadSoundFull = async() => {
+    useEffect(() => {
+        loadSoundFull()
+    })
+    const loadSoundFull = async () => {
         await axiosInstance(`http://localhost:8080/api/v1/beat/user/full/${id}`)
-        .then((res) =>{
-            setBeatSoundDemo(atob(res.data.beatSound))
-        })
-        setPlay(true)
+            .then((res) => {
+                setBeatSoundDemo(res.data.beatSound)
+            })
     }
     return (<div className={cx("list-box")} onClick={onClick}>
         <div className={cx("card-item")}>
@@ -53,13 +55,11 @@ function ListBeatPurchasedBox({ id, name, genre, price, view, like, onClick, han
                         <span className={cx("number")}>{rating}</span>
                     </span>
                 </div>
-                {!play ?
-                    <Button onClick={() => loadSoundFull()}>listen to Beat</Button>
-                    : <audio className={cx("audio")} id="audio" ref={audioRef} controls src={`data:audio/mpeg;base64, ${beatSoundDemo}`}>
-                    </audio>}
+                <audio className={cx("audio")} id="audio" ref={audioRef} controls src={"https://storage.googleapis.com/mychordproject/audio/6-audio"}>
+                </audio>
             </div>
             {/* Content right  */}
-            
+
         </div>
         {/* <div className={cx("control")}>
             <div className={cx("btn", "btn-prev")}>

@@ -65,7 +65,7 @@ function PaymentCancel() {
         </svg>
       </div>
       <div className={cx("text")}>
-        Registration Successfully
+        Cancel Payment Successfully
       </div>
       <div className={cx("text")}>
         Redirect to Home Page...

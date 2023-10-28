@@ -6,7 +6,7 @@ import { Sidebar } from "react-pro-sidebar";
 const cx = classNames.bind(styles);
 const SideBar = ({listGenres, listMusicianName}) => {
     return (
-        <div style={{ height: "100%" }}>
+        <div style={{ height: "100%", zIndex:'0' }}>
             <div className={cx("aside-1")} style={{ height: "100%" }}>
                 <Sidebar className={cx("sidebar")}>
                     <Menu className={cx("menu-item")}>

@@ -57,6 +57,10 @@ function ViewDetailBeat() {
         loadBeatComment()
     }, [checkComment, beatDetail])
 
+    useEffect(() => {
+        loadSoundDemo()
+    })
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -83,28 +87,27 @@ function ViewDetailBeat() {
         </svg>)
     }
 
-    const handleLikeClick = (id) =>{
+    const handleLikeClick = (id) => {
         handleConvertLike()
         handleLike(id)
     }
 
-        const handleConvertLike = async(id) => {
-            setCheckLike(!checkLike)
-            console.log(checkLike)
-        }
+    const handleConvertLike = async (id) => {
+        setCheckLike(!checkLike)
+        console.log(checkLike)
+    }
 
-        
-    
+
+
 
     const loadSoundDemo = async () => {
         await axiosInstance(`http://localhost:8080/api/v1/beat/user/demo/${beatId}`)
             .then((res) => {
-                setBeatSoundDemo(atob(res.data.beatSound))
+                setBeatSoundDemo((res.data.beatSound))
             })
             .catch((error) => {
                 console.log(error)
             })
-        setPlay(true)
     }
 
     const loadBeatComment = async () => {
@@ -137,9 +140,9 @@ function ViewDetailBeat() {
         } else {
             await axiosInstance.post(`http://localhost:8080/api/v1/beat/like/${jwtDecode(token).sub}/${id}`)
                 .then((res) => {
-                    if(res.data.includes("Ok")){
+                    if (res.data.includes("Ok")) {
                         setCheckLike(true)
-                    }else{
+                    } else {
                         setCheckLike(false)
                     }
                 })
@@ -255,11 +258,9 @@ function ViewDetailBeat() {
                                     <Stack className={cx("rating-form")} spacing={1}>
                                         <Rating className={cx("start-icon")} name="size-large" defaultValue={0} size="large" onChange={handleRating} />
                                     </Stack>
-                                    {!play ?
-                                        <div></div>
-                                        : <audio className={cx("audio")} id="audio" ref={audioRef} controls src={"https://storage.googleapis.com/mychordproject/audio/9-audio-demo"}>
-                                        </audio>}
-                                    <div>{checkRating}</div>
+                                    <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundDemo}>
+                                    </audio>
+                                    <div className={cx("check-rating")}>{checkRating}</div>
                                 </div>
                             </div>
 

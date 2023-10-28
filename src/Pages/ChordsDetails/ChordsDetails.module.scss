@@ -32,6 +32,7 @@
   animation: textclip 2s linear infinite;
   display: inline-block;
       font-size: 100px;
+      border-bottom:  1px solid var(--gray-100, #e4e7e9);
 }
 
 @keyframes textclip {

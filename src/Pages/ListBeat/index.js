@@ -136,7 +136,7 @@ function ListBeat() {
                 })
         }
     }
-
+    console.log(list)
     if (list !== null) {
         return (
             <div className={cx("list-header")}>
@@ -162,18 +162,19 @@ function ListBeat() {
                     </div>
 
                 </div>
+                {list.length !== 0 ?
+                    <div className={cx("listbeat")}>
+                        {list.map((item) => {
+                            return <ListBeatBox id={item.id} name={item.beatName} genre={item.genre} price={item.price} view={(item.view / 2).toFixed()} like={item.totalLike} handleLike={() => handleLike(item.id)} rating={item.rating} vocalRange={item.vocalRange} fullName={item.user.fullName} />
+                        })}
+                    </div> : <div className={cx("sold-out")} style={{zindex: '1',marginLeft:800}}> All Beat are sold out!<div> Thank you for your visiting on our website </div> </div>}
 
                 {/* <div className={cx("list-beat")}>
                 {list.map((item, index) => {
                     return <ListBeatBox key={index} name={item.name} type={item.type} price={item.price} member={item.member} play={play} setPlay={setPlay} />
                 })}
             </div> */}
-                {list.length > 0 ?
-                    <div className={cx("listbeat")}>
-                        {list.map((item) => {
-                            return <ListBeatBox id={item.id} name={item.beatName} genre={item.genre} price={item.price} view={(item.view / 2).toFixed()} like={item.totalLike} handleLike={() => handleLike(item.id)} rating={item.rating} vocalRange={item.vocalRange} fullName={item.user.fullName} />
-                        })}
-                    </div> : <div className={cx("sold-out")}> 404 Not Found!<div> Hết Beat Rồi Bạn Ơi!.... </div> </div>}
+                
 
                 {/* <div className={cx("audio")}>
 

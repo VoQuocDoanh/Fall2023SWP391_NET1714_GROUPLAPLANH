@@ -52,9 +52,9 @@ export default function ListUser2() {
                         <TableRow>
                             <TableCell style={{ fontSize: '20px', fontWeight: '500' }}>ID</TableCell>
                             <TableCell style={{ fontSize: '20px', fontWeight: '500' }} align="right">Name&nbsp;</TableCell>
-                            <TableCell style={{ fontSize: '20px', fontWeight: '500' }} align="right">BeatSound&nbsp;</TableCell>
                             <TableCell style={{ fontSize: '20px', fontWeight: '500' }} align="right">Date create&nbsp;</TableCell>
-                            <TableCell style={{ fontSize: '20px', fontWeight: '500' }} align="right">Role&nbsp;</TableCell>
+                            <TableCell style={{ fontSize: '20px', fontWeight: '500' }} align="right">Email&nbsp;</TableCell>
+                            <TableCell style={{ fontSize: '20px', fontWeight: '500' }} align="right">Status&nbsp;</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -67,8 +67,8 @@ export default function ListUser2() {
                                     {row.id}
                                 </TableCell>
                                 <TableCell style={{ fontSize: "17px" }} align="right">{row.name}</TableCell>
-                                <TableCell style={{ fontSize: '17px' }} align="right">{row.beatsound}</TableCell>
                                 <TableCell style={{ fontSize: '17px' }} align="right">{row.datecrate}</TableCell>
+                                <TableCell style={{ fontSize: '17px' }} align="right"></TableCell>
                                 <TableCell style={{ fontSize: '17px' }} align="right">{row.status}</TableCell>
                             </TableRow>
                         ))}

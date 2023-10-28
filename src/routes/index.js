@@ -151,6 +151,10 @@ const publicRoutes = [
     path: "/payment/success",
     component: PaymentSuccess,
   },
+  {
+    path: "/listuser2",
+    component: ListUser2,
+  },
 ];
 
 const privateRoute = [];

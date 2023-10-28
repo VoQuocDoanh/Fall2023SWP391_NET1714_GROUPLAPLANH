@@ -16,15 +16,17 @@ const cx = classNames.bind(styles);
 function ListBeatBox({ id, name, genre, price, view, like, onClick, handleLike, rating, vocalRange, fullName }) {
     const token = useToken()
     const audioRef = useRef()
-    const { addToCart, cartItems } = useContext(ShopContext)
+    const { addToCart } = useContext(ShopContext)
     const [play, setPlay] = useState(false)
     const [beatSoundDemo, setBeatSoundDemo] = useState("")
-    const loadSoundDemo = async() => {
+    useEffect(() => {
+        loadSoundDemo()
+    })
+    const loadSoundDemo = async () => {
         await axiosInstance(`http://localhost:8080/api/v1/beat/user/demo/${id}`)
-        .then((res) =>{
-            setBeatSoundDemo(atob(res.data.beatSound))
-        })
-        setPlay(true)
+            .then((res) => {
+                setBeatSoundDemo(res.data.beatSound)
+            })
     }
     return (<div className={cx("list-box")} onClick={onClick}>
         <div className={cx("card-item")}>
@@ -53,10 +55,8 @@ function ListBeatBox({ id, name, genre, price, view, like, onClick, handleLike, 
                         <span className={cx("number")}>{rating}</span>
                     </span>
                 </div>
-                {!play ?
-                    <Button onClick={() => loadSoundDemo()}>listen to Beat</Button>
-                    : <audio className={cx("audio")} id="audio" ref={audioRef} controls src={`data:audio/mpeg;base64, ${beatSoundDemo}`}>
-                    </audio>}
+                <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundDemo}>
+                </audio>
             </div>
             {/* Content right  */}
             <div className={cx("content-right")}>
