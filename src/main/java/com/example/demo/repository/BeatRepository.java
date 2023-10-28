@@ -31,14 +31,14 @@ public interface BeatRepository extends JpaRepository<Beat, Long> {
     @Query("SELECT b.userName from Beat b ")
     List<User> findAllUser();
 
-    List<Beat> findBeatByOrderBeat(Order id);
+    Page<Beat> findBeatByOrderBeat(Order id, Pageable pageable);
 
     @Query("SELECT b.Id FROM Beat b join b.userSet u where u.Id =:id")
     List<Long> findUserLiked(Long id);
 
 
     @Query("SELECT b FROM Beat b WHERE b.status = 1")
-    List<Beat> findAllBeat();
+    Page<Beat> findAllBeat(Pageable pageable);
 
     @Query("SELECT b FROM Beat b join b.userName u where b.status = -1 and u.Id = :id")
     Page<Beat> findAllBeatSoldOut(Long id, Pageable pageable);

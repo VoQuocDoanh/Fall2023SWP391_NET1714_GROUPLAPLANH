@@ -146,8 +146,9 @@ public class BeatService {
         return dtos;
     }
 
-    public List<BeatResponseDTO> findAllBeat(){
-        List<Beat> beats = this.beatRepository.findAllBeat();
+    public PaginationResponseDTO findAllBeat(int page){
+        Pageable pageable = PageRequest.of(page-1,2);
+        Page<Beat> beats = this.beatRepository.findAllBeat(pageable);
         List<BeatResponseDTO> responseDTOS = new ArrayList<>();
         if (beats.isEmpty()) {
             return null;
@@ -155,13 +156,14 @@ public class BeatService {
             for (Beat i : beats){
                 responseDTOS.add(getDetailBeatResponseDTO(i));
             }
-            return new ArrayList<>(responseDTOS);
+            int pagecount = pageable.getPageNumber();
+            return new PaginationResponseDTO(responseDTOS,pagecount);
         }
     }
 
     public PaginationResponseDTO findAllOwnBeat(Long id,int page) {
         Optional<User> foundUser = this.userRepository.findById(id);
-        Pageable pageable = PageRequest.of(page-1,2);
+        Pageable pageable = PageRequest.of(page-1,8);
         List<BeatResponseDTO> responseDTOS = new ArrayList<>();
         if(foundUser.isPresent()){
             Page<Beat> beats = this.beatRepository.findUserBeatByUsername(foundUser.get().getId(), pageable);
@@ -307,7 +309,7 @@ public class BeatService {
     }
 
     public PaginationResponseDTO listBeatSoldOut(Long id, int page) {
-        Pageable pageable = PageRequest.of(page-1,10);
+        Pageable pageable = PageRequest.of(page-1,8);
         Page<Beat> beats = beatRepository.findAllBeatSoldOut(id,pageable);
         List<BeatResponseDTO> beatResponseDTOS = new ArrayList<>();
         for (Beat i : beats){
@@ -346,14 +348,15 @@ public class BeatService {
         return new ResponseEntity<>(totalPrice,HttpStatus.OK);
     }
 
-    public List<BeatResponseDTO> listBeatPurchased(Long id) {
+    public PaginationResponseDTO listBeatPurchased(Long id, int page) {
        List<Order> order = orderService.findOrder(id);
+        Pageable pageable = PageRequest.of(page-1,8);
         List<BeatResponseDTO> beat = new ArrayList<>();
         if (order.isEmpty()){
             return null;
         }
         for (Order o:order){
-            List<Beat> beatEntity = (beatRepository.findBeatByOrderBeat(o));
+            Page<Beat> beatEntity = (beatRepository.findBeatByOrderBeat(o,pageable));
             if (beatEntity.isEmpty()){
                 return null;
             }
@@ -368,7 +371,8 @@ public class BeatService {
             }
 
         }
-        return beat;
+        int pagecount = pageable.getPageNumber();
+        return new PaginationResponseDTO(beat,pagecount);
     }
 
     public BeatResponseDTO getBeatPurchasedDetail(Long id) {

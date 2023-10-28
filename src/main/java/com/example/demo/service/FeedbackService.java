@@ -11,6 +11,9 @@ import com.example.demo.repository.UserRepository;
 import jakarta.annotation.Nullable;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -44,15 +47,17 @@ public class FeedbackService {
     }
 
 
-    public List<FeedbackResponseDTO> viewFeedback(Long id) {
+    public PaginationResponseDTO viewFeedback(Long id, int page) {
         Optional<User> foundUser = userRepository.findById(id);
-        List<Beat> beatList = beatRepository.findBeatSoldOut(foundUser.get().getId());
+        Pageable pageable = PageRequest.of(page-1,2);
+
+        Page<Beat> beatList = beatRepository.findAllBeatSoldOut(foundUser.get().getId(),pageable);
         List<Feedback> feedback =new ArrayList<>();
         for (Beat i : beatList){
             feedback.add(feedbackRepository.findByBeatFeedback(i));
         }
-
-        return getFeedbackResponseDTO(feedback);
+        int pagecount = pageable.getPageNumber();
+        return new PaginationResponseDTO(feedback,pagecount);
 
     }
 

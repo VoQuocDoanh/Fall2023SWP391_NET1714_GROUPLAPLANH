@@ -34,9 +34,9 @@ public class BeatController {
     }
 
     // List all Beats in US
-    @GetMapping("")
-    public ResponseEntity<List<BeatResponseDTO>> findAllBeat() {
-        return ResponseEntity.ok(this.beatService.findAllBeat());
+    @GetMapping("/all/{page}")
+    public ResponseEntity<PaginationResponseDTO> findAllBeat(@PathVariable int page) {
+        return ResponseEntity.ok(this.beatService.findAllBeat(page));
     }
 
     // Get detail Beat US and MS
@@ -101,9 +101,9 @@ public class BeatController {
     }
 
     //list beat that user bought
-    @GetMapping ("user/{id}")
-    public ResponseEntity<List<BeatResponseDTO>> beatPurchased (@PathVariable Long id){
-        return ResponseEntity.ok( this.beatService.listBeatPurchased(id));
+    @GetMapping ("user/{id}/{page}")
+    public ResponseEntity<PaginationResponseDTO> beatPurchased (@PathVariable Long id,@PathVariable int page){
+        return ResponseEntity.ok( this.beatService.listBeatPurchased(id,page));
     }
 
     @GetMapping("user/beat/{id}")
