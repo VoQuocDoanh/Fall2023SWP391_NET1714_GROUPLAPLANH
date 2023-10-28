@@ -171,31 +171,29 @@ function ChordsDetails() {
                             })}
                         </select>
                     </div>
+                    <Popup trigger={<button className={cx("button-popup")} style={{padding: 10}} > Add to Playlist</button>} position="right center" closeOnDocumentClick on={['hover', 'focus']}>
+                        <div className={cx("text-all")}>
+                            <Link to="/myprofile"><div className={cx("link-text")}>My Account</div></Link>
+                            <Link to="/listBeatPurchased"><div className={cx("link-text")}>My Purchased</div></Link>
+                            <Link to="/viewcart"><div className={cx("link-text")}>My Song's Playlist</div></Link>
+                            <Popup trigger={<button style={{ background: 'none' }} className={cx("button-popup")}> Add to Playlist +</button>} position="right center" closeOnDocumentClick on={['hover', 'focus']}>
+                                <div className={cx("text-all")}>
+                                    <input type="text" id="name" name="name" required minlength="4" maxlength="20" size="20" />
+                                </div>
+                            </Popup>
+                        </div>
+                    </Popup>
                 </nav>
                 <div className={cx("line")}>
                 </div>
             </div>
 
-            <div className={cx("list-chords")}>
+            <div className={cx("list-chords")} style={{}}>
                 {listChord.map((item) => {
-                    return <img style={{width: 250, height:260, objectFit: 'fill', marginLeft: 700}} key={item.type} src={item.img} alt={item.type} />
+                    return <img className={cx("detail-img")} style={{ width: 250, height: 260, objectFit: 'fill', marginLeft: 700 }} key={item.type} src={item.img} alt={item.type} />
                 })}
+                <p className={cx("img__description")}>This image looks super neat.<p style={{ marginTop: 35 }}>Description About Chords</p></p>
             </div>
-            <Popup trigger={<button className={cx("button-popup")}> Add to Playlist</button>} position="right center" closeOnDocumentClick on={['hover', 'focus']}>
-                <div className={cx("text-all")}>
-                    <Link to="/myprofile"><div className={cx("link-text")}>My Account</div></Link>
-                    <Link to="/listBeatPurchased"><div className={cx("link-text")}>My Purchased</div></Link>
-                    <Link to="/viewcart"><div className={cx("link-text")}>My Song's Playlist</div></Link>
-                    <select position="left center" style={{ border: "none", marginRight: 20, width: '100%' }}
-                        className={cx("input-text-choose")}
-                    >
-                        <option value="Customer">Create Playlist</option>
-                        <option value="Musician">Musician</option>
-                    </select>
-                </div>
-            </Popup>
-
-
         </div>
 
     );
