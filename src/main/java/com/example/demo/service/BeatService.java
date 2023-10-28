@@ -179,7 +179,7 @@ public class BeatService {
             this.beatRepository.save(beat);
 
             String path = this.service.uploadFile(sound, beat.getId(), "audio", "full");
-            String pathDemo = this.service.uploadFile(sound, beat.getId(), "audio", "demo");;
+            String pathDemo = this.service.uploadFile(sound2, beat.getId(), "audio", "demo");;
 
             String fileName = this.extractObjectNameFromUrl(path);
             String fileNameDemo = this.extractObjectNameFromUrl(pathDemo);
@@ -362,6 +362,20 @@ public class BeatService {
             return responseDTO;
         }
         return null;
+    }
+
+    public BeatResponseDTO getDemoBeat(Long id){
+        BeatResponseDTO responseDTO = new BeatResponseDTO();
+        Optional<Beat> beat = beatRepository.findById(id);
+        beatRepository.save(beat.get());
+        responseDTO.setBeatSound(beat.get().getBeatSoundDemo());
+        return responseDTO;
+    }
+    public BeatResponseDTO getFullBeat(Long id){
+        BeatResponseDTO responseDTO = new BeatResponseDTO();
+        Optional<Beat> beat = beatRepository.findById(id);
+        responseDTO.setBeatSound(beat.get().getBeatSoundFull());
+        return responseDTO;
     }
 
 }

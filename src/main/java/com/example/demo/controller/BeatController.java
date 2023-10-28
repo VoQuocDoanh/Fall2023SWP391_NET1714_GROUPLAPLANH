@@ -109,15 +109,15 @@ public class BeatController {
         return ResponseEntity.ok(this.beatService.getBeatPurchasedDetail(id));
     }
 
-//    @GetMapping("user/demo/{id}")
-//    public BeatResponseDTO getDemoSound(@PathVariable Long id){
-//        return beatService.getDemoBeat(id);
-//    }
-//
-//    @GetMapping("user/full/{id}")
-//    public BeatResponseDTO getFullSound(@PathVariable Long id){
-//        return beatService.getFullBeat(id);
-//    }
+    @GetMapping("user/demo/{id}")
+    public BeatResponseDTO getDemoSound(@PathVariable Long id){
+        return beatService.getDemoBeat(id);
+    }
+
+    @GetMapping("user/full/{id}")
+    public BeatResponseDTO getFullSound(@PathVariable Long id){
+        return beatService.getFullBeat(id);
+    }
 
     @GetMapping("musician/full")
     public List<String> getName(){
