@@ -27,7 +27,7 @@ function OwlCarousel() {
     }
   };
   return (
-    <OwlCarouselComponent
+    <OwlCarouselComponent style={{zIndex:'0'}}
       id="customer-testimonoals"
       className="owl-carousel owl-theme"
       {...options}
@@ -42,7 +42,7 @@ function OwlCarousel() {
       <div className="item">
         <img className="img" src={require("../../assets/images/Slide/lottie.jpg")} alt='' />
       </div>
-      <div className="item">
+      <div className="item"> 
         <img className="img" src={require("../../assets/images/Slide/istockphoto-1293058709-612x612.jpg")} alt='' />
       </div>
       <div className="item">

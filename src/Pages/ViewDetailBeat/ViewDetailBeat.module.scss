@@ -1,7 +1,15 @@
 @import url('https://fonts.cdnfonts.com/css/sono');
+.first-container{
+    margin-top: 50px;
+}
+
 .back-to-shop{
     margin-top: 20px;
     margin-left: 25px;
+    width: 150px;
+    height: 80px;
+    font-family: sono;
+    font-size: 2.8rem;
 *{
     font-family: Sono;
 }
@@ -88,7 +96,10 @@
    background-color: #000;
    color: #fff;
 }
-
+.button-1{
+    width: 120px;
+    height: 60px;
+}
 
 .mid-detail-left {
     display: flex;
@@ -341,8 +352,7 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    background-color: #06c;
-    outline: 1px solid white;
+
     // position: fixed;
     // top: 647px;
     // left: 20px;
@@ -453,6 +463,11 @@
    }
 }
 
+.check-rating{
+    text-align: center;
+    margin-top: 50px;
+}
+
 .comment {
     margin-left: 25px;
     margin-top: 30px;
@@ -466,6 +481,8 @@
 
 .comment-all {
     border: #E6E6E6 solid 1px;
+    margin-top: 80px;
+    height: 500px;
 }
 
 .background-image {
@@ -521,4 +538,103 @@
     justify-content: center;
 }
 
+//Like Button
+.container-like {
+  height: 300px;
+  width: 300px;
+  margin-top: -200px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  button {
+    margin-right: 200px;
+    margin-top: 180px;
+    cursor: pointer;
+    height: 60px;
+    min-width: 60px;
+    padding: 0;
+    border-radius: 100%;
+    outline: none;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s;
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+    &:hover {
+          transform: scale(1.1);
+      }
+  }
+  
+  @keyframes take-off-favorite {
+    0% {
+          transform: scale(1);
+      }
+    20% {
+          transform: scale(0.9);
+      }
+      40% {
+          transform: scale(1.1);
+      }
+      100% {
+          transform: scale(1);
+      }
+  }
+  
+  #favorite-stroke {
+      animation: 300ms add-favorite forwards;
+      & > svg {
+          stroke: white;
+      }
+  }
+  
+  #favorite-filled {
+    animation: 300ms take-off-favorite forwards ease-in-out;
+  }
+  
+  @keyframes add-favorite {
+    0% {
+          transform: scale(1);
+      }
+      20% {
+          transform: scale(0.9);
+          fill: white;
+      }
+      40% {
+          transform: scale(1.1);
+      fill: white;
+      }
+      100% {
+          transform: scale(1);
+          fill: white;
+      }
+  }
+  
+}
 
+.new-icon-like{
+    width: 30px;
+}
+
+
+
+
+
+
+// post button
+.post-buttonn{
+    height: 60px;
+    border-radius: 14px;
+    padding: 10px;
+    font-weight: bold;
+    border: none;
+    outline: 2px solid grey;
+    background: #06c;
+    color: white;
+    font-size: 2.5rem;
+    display: flex;
+    justify-content: end;
+    margin-left: 700px;
+    margin-top: 20px;
+}
+//comment

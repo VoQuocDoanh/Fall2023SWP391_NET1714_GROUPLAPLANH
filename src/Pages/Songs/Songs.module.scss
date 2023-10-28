@@ -22,6 +22,8 @@
   animation: textclip 2s linear infinite;
   display: inline-block;
       font-size: 100px;
+      border-bottom:  1px solid var(--gray-100, #e4e7e9)
+
 }
 
 @keyframes textclip {
@@ -31,6 +33,10 @@
 }
 .list-songs{
     margin-top: 60px;
+}
+
+.list-songs-details{
+    display: flex;
 }
 
 .hot-today-item-song{
@@ -266,7 +272,6 @@ text-transform: uppercase;
 
 .Add-Songs{
     width: 100%;
-    border-top: 1px solid var(--gray-100, #e4e7e9);
     display: flex;
     padding: 24px;
     justify-content: space-between;

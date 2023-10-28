@@ -69,8 +69,7 @@ function ViewBeatsAll() {
                     </div>
                 </div>
             </div>
-            <SideBar></SideBar>
-        </div>
+        </div>  
     );
 }
 

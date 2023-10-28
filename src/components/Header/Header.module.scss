@@ -1,10 +1,12 @@
 @import url('https://fonts.cdnfonts.com/css/sono');
 @import url('https://fonts.cdnfonts.com/css/poppins');
 @import url('https://fonts.cdnfonts.com/css/inter');
-.img-header{
+
+.img-header {
   width: 250px;
   height: 150px;
 }
+
 .header-wrapper {
   // padding-top: 68px;
   display: flex;
@@ -20,7 +22,12 @@
   // position: fixed;
   // top: 100px;
   // width: 100%;
-  
+  position: fixed;
+  top: 100px;
+  left: 0;
+  width: 100%;
+  z-index: 2 ;
+
 }
 
 .header-left {
@@ -38,7 +45,8 @@
     user-select: none;
     font-size: 3.5rem;
   }
-  img{
+
+  img {
     width: 150px;
   }
 
@@ -46,6 +54,20 @@
     margin-left: 50px;
     align-items: center;
   }
+}
+
+.img-shopping-cart{
+  width: 50px;
+  height: 50px;
+}
+
+.cart-number{
+  color: white;
+    font-size: 1.5rem;
+    padding: 3px;
+    margin-bottom: 50px;
+    border-radius: 10px;
+    outline: 2px solid white;
 }
 
 .header-right {
@@ -72,9 +94,10 @@
       border: none;
 
     }
-    .nav-item:hover{
-     text-decoration: underline;
-     color:#0066CC;
+
+    .nav-item:hover {
+      text-decoration: underline;
+      color: #0066CC;
     }
   }
 
@@ -87,7 +110,8 @@
     outline: 3px solid #fff;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25),
       0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      border-color: white;
+    border-color: white;
+
     .login {
       padding: 9px 30px;
       font-size: 2.5rem;
@@ -101,16 +125,17 @@
   }
 }
 
-.username{
-  gap:20px
+.username {
+  gap: 20px
 }
+
 .pop-up {
   width: 120px;
   background-color: none;
   font-family: 'poppins';
   column-gap: 20px;
   font-size: 20px;
-  
+
 }
 
 .button-popup {
@@ -130,15 +155,18 @@
   color: black;
   font-size: 17px;
 }
-.text-all{
+
+.text-all {
   border-radius: 5px;
   font-family: poppins;
   font-weight: 400;
-  .link-text{
+
+  .link-text {
     font-size: 17px;
   }
 }
-.button-page{
+
+.button-page {
   background: none;
   border: none;
   font-size: 25px;

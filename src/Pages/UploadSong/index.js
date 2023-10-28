@@ -50,7 +50,6 @@ function UploadSong() {
     useEffect(() => {
         let tmp = description.match(regValue.current);
         if (Array.isArray(tmp)) {
-            setListTone(tmp);
             const a = tmp.map((item) => {
                 let check = tone.includes(item);
                 if (check) return "da hop le";
@@ -65,14 +64,15 @@ function UploadSong() {
             .then((res) => {
                 navigate("/songs")
             })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     const handleAddToList = () => {
         const values = inputGenres.split(','); // Split the input string by comma
         setGenres([...genres, ...values]);
-        setInputGenres(''); // Clear the input field
-        console.log(genres)
-      };
+    };
 
     /* 
         [
@@ -102,7 +102,7 @@ function UploadSong() {
                     }
                 } else {
                     let tone = listTone.some((x) => x.name_tone === item);
-                    if(!tone) {
+                    if (!tone) {
                         setListTone(prev => [...prev, {
                             name_tone: item,
                             img: null,
@@ -115,23 +115,23 @@ function UploadSong() {
     }, [description])
 
     console.log(listTone)
-
     return (
         <div className={cx('page-content')}> {/* trang tổng */}
+            {console.log(songInput)}
             <div className={cx('container-16')}>
-                <h1>Đăng bài hát mới</h1>
+                <h1>Upload new song</h1>
                 <div className={cx('grid-9')}> {/* trang tổng gổm 2 div trái phải*/}
                     <div className={cx('page-content-left')}> {/* trang tổng bên trái*/}
-                        <h2><b>Tên bài hát:</b></h2>
+                        <h2><b>Song name: </b></h2>
                         <input
                             type="text"
-                            placeholder="Ví dụ: Cắt đôi nỗi sầu"
+                            placeholder="Ex: Silent Night"
                             value={songName}
                             className={cx('input-song-name')}
                             onChange={(event) => setSongName(event.target.value)}
                         />
-                        <h2><b>Lời bài hát và hợp âm:</b></h2>
-                        <div className={cx('toolbox')} style={{ width: '80%' }}>
+                        <h2><b>Lyrics and chords: </b></h2>
+                        {/* <div className={cx('toolbox')} style={{ width: '80%' }}>
                             <div className={cx('pull-left')}>
                                 <div className={cx('button-submit')}>
                                     <Button className={cx('button')}>
@@ -198,24 +198,24 @@ function UploadSong() {
                                     <span>Xem trước</span>
                                 </Button>
                             </div>
-                        </div>
+                        </div> */}
                         <div className={cx('song-lyric')}>
                             <textarea style={{ width: '80%', resize: 'none' }} className={cx("textarea-box")} value={description} id="ABC" name="ABC" rows="20" cols="174" onChange={e => setDescription(e.target.value)}></textarea>
                         </div>
                         <div className={cx('toolbox-bottom')} style={{ width: '80%' }}>
-                            <span>Hợp âm:</span>
+                            <span>Chords: </span>
                         </div>
-                        <h2><b>Hợp âm sử dụng:</b></h2>
+                        <h2><b>Chords used:</b></h2>
                         <div style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap" }} className={cx("list-tone")}>
                             {listTone.map((item, index) => <span key={index} style={{ fontSize: 20 }}>
                                 <div className={cx("tone-item")}>
                                     <h5 className={cx("name-tone")}>{item.name_tone}</h5>
-                                    {item.img ? <img src={item.img} alt={item.name_tone} /> : <span>Hop am chua ho tro</span>}
+                                    {item.check === true ? <img src={item.img} alt={item.name_tone} /> : <span>Chord is not supported</span>}
                                 </div>
                             </span>)}
                         </div>
                         <div className={cx('blue-header')}>
-                            <h4>Xem trước</h4>
+                            <h4>Preview</h4>
                         </div>
                         <div className={cx('review-panel')} style={{ width: '80%' }}>
                             <hr />
@@ -223,63 +223,63 @@ function UploadSong() {
                         </div>
                         <div className={cx('grid-5-alpha')} style={{ width: '80%' }}>
                             <div className={cx('song-authors')}>
-                                <h2><b>Tác giả:</b></h2>
+                                <h2><b>Author:</b></h2>
                                 <input
                                     type="text"
-                                    placeholder="Ví dụ: Trịnh Công Sơn"
+                                    placeholder="Ex: Michael Buble"
                                     value={author}
                                     className={cx('input-song-name')}
                                     onChange={(event) => setAuthor(event.target.value)}
                                 />
                             </div>
                             <div className={cx('song-genres')}>
-                                <h2><b>Thể loại:</b></h2>
+                                <h2><b>Genres:</b></h2>
                                 <input
                                     type=""
-                                    placeholder="Ví dụ: Nhạc trẻ"
+                                    placeholder="Ex: Pop"
                                     value={inputGenres}
                                     className={cx('input-song-name')}
                                     onChange={(event) => setInputGenres(event.target.value)}
                                 />
+                                <br></br>
                                 <button onClick={handleAddToList}>Add to list genre</button>
+                            </div>
+                            <div className={cx('tone-info')}>
+                                <h2><b>Tone:</b></h2>
+                                <input
+                                    type="text"
+                                    placeholder="Ex: Am"
+                                    value={tone}
+                                    className={cx('input-song-name')}
+                                    onChange={(event) => setTone(event.target.value)}
+                                />
                             </div>
                         </div>
                         <div className={cx('blue-header')} style={{ width: '80%' }}>
-                            <h4>Thông tin ca sĩ</h4>
                         </div>
                         <div className={cx('grid-3-alpha')} style={{ width: '80%' }}>
                             <div className={cx('singer-info')}>
                                 <h2><b>Vocal Range:</b></h2>
                                 <input
                                     type="text"
-                                    placeholder="Ví dụ: C3 to D6"
+                                    placeholder="Ex: C3 to D6"
                                     value={vocalRange}
                                     className={cx('input-song-name')}
                                     onChange={(event) => setVocalRange(event.target.value)}
-                                />
-                            </div>
-                            <div className={cx('tone-info')}>
-                                <h2><b>Tông:</b></h2>
-                                <input
-                                    type="text"
-                                    placeholder="Ví dụ: Am"
-                                    value={tone}
-                                    className={cx('input-song-name')}
-                                    onChange={(event) => setTone(event.target.value)}
                                 />
                             </div>
                             <div className={cx('link-music')}>
                                 <h2><b>Link:</b></h2>
                                 <input
                                     type="text"
-                                    placeholder="Ví dụ: http://mp3.zing.vn/..."
+                                    placeholder="Ex: http://mp3.zing.vn/..."
                                     value={songUrl}
                                     className={cx('input-song-name')}
                                     onChange={(event) => setSongUrl(event.target.value)}
                                 />
                             </div>
                         </div>
-                        <div className={cx('add-singer')} style={{ width: '80%' }}>
+                        <div className={cx('add-singer')} style={{ width: '80%' }} onClick={() => handleUploadSong()}>
                             <footer className={cx("Add-Songs")} >
                                 <Link to="/UploadSong" className={cx("Add-Songs-body", "card-action")}>Add new song</Link>
                             </footer>
@@ -290,22 +290,23 @@ function UploadSong() {
                         <div className={cx('white-box')}>
                             <div className={cx('white-box-final')}>
                                 <div className={cx('white-box-text')}>
-                                    <h3><b>Để bài đăng của bạn được duyệt nhanh hơn</b></h3>
-                                    <h4>Bạn có thể tham khảo nhưng đề xuất bên dưới</h4>
+                                    <h3><b>Get your post approved faster</b></h3>
+                                    <h4>You can refer to the suggestions below</h4>
                                 </div>
                                 <div className={cx('check-failed-pass')}>
                                     <div className={cx('icon-times-left')}>
                                         {description === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                             <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>}
-                                        {description !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                            <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>}
+
                                     </div>
                                     <div className={cx('text-failed')}>
                                         <div>
-                                            {description === "" && <span>Lời và hợp âm đầy đủ 0/0 dòng hợp âm</span>}
-                                            {description !== "" && <span style={{ color: "green" }}>Lời và hợp âm đầy đủ, 1/1 dòng hợp âm</span>}
+                                            {description === "" && <span>Existed lyrics and chords</span>}
+                                            {description !== "" && <span style={{ color: "green" }}>Existed lyrics and chords </span>}
+                                            {description !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>}
                                         </div>
                                     </div>
                                 </div>
@@ -314,13 +315,15 @@ function UploadSong() {
                                         {songName === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                             <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>}
-                                        {songName !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                            <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>}
+
                                     </div>
                                     <div className={cx('text-failed')}>
                                         <div>
-                                            <span>Có tên bài hát</span>
+                                            {songName === "" && <span>Existed 1 Song name</span>}
+                                            {songName !== "" && <span style={{ color: "green" }}>Existed 1 Song name </span>}
+                                            {songName !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>}
                                         </div>
                                     </div>
                                 </div>
@@ -329,16 +332,16 @@ function UploadSong() {
                                         {songUrl === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                             <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>}
-                                        {songUrl !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                            <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>}
+
                                     </div>
                                     <div className={cx('text-failed')}>
+
                                         <div>
-                                            <span>Có link nhạc</span>
-                                        </div>
-                                        <div>
-                                            <span>Bạn chỉ có thể đăng bài nếu có link nhạc</span>
+                                            {songUrl === "" && <span>Existed 1 Song Url</span>}
+                                            {songUrl !== "" && <span style={{ color: "green" }}>Existed 1 Song Url </span>}
+                                            {songUrl !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>}
                                         </div>
                                     </div>
                                 </div>
@@ -347,17 +350,15 @@ function UploadSong() {
                                         {author === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                             <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>}
-                                        {author !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                            <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>}
+
                                     </div>
                                     <div className={cx('text-failed')}>
                                         <div>
-                                            <span>Thông tin tác giả đầy đủ</span>
-                                        </div>
-                                        <div>
-                                            {author === "" && <span>Đã nhập 0 tác giả</span>}
-                                            {author !== "" && <span style={{ color: "green" }}> Đã nhập 1 tác giả</span>}
+                                            {author === "" && <span>Existed 1 Author</span>}
+                                            {author !== "" && <span style={{ color: "green" }}> Existed 1 Author </span>}
+                                            {author !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>}
                                         </div>
                                     </div>
                                 </div>
@@ -366,17 +367,15 @@ function UploadSong() {
                                         {tone === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                             <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>}
-                                        {tone !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                            <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>}
+
                                     </div>
                                     <div className={cx('text-failed')}>
                                         <div>
-                                            <span>Tông của bài hát</span>
-                                        </div>
-                                        <div>
-                                            {tone === "" && <span>Da nhap 0 nhac si tac gia</span>}
-                                            {tone !== "" && <span style={{ color: "green" }}> 1/1 ca sĩ đã có tông</span>}
+                                            {tone === "" && <span>Existed 1 Tone</span>}
+                                            {tone !== "" && <span style={{ color: "green" }}> Existed 1 Tone </span>}
+                                            {tone !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>}
                                         </div>
                                     </div>
                                 </div>
@@ -385,23 +384,38 @@ function UploadSong() {
                                         {inputGenres === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                             <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>}
-                                        {inputGenres !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                            <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>}
+
                                     </div>
                                     <div className={cx('text-failed')}>
                                         <div>
-                                            <span>Thể loại</span>
+                                            {inputGenres === "" && <span>Existed 1 Genres</span>}
+                                            {inputGenres !== "" && <span style={{ color: "green" }}>Existed 1 Genres </span>}
+                                            {inputGenres !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>}
                                         </div>
+                                    </div>
+                                </div>
+                                <div className={cx('check-failed-pass')}>
+                                    <div className={cx('icon-times-left')}>
+                                        {vocalRange === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                            <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>}
+
+                                    </div>
+                                    <div className={cx('text-failed')}>
                                         <div>
-                                            {inputGenres === "" && <span>Giúp phân loại bài hát</span>}
-                                            {inputGenres !== "" && <span style={{ color: "green" }}>Giúp phân loại bài hát</span>}
+                                            {vocalRange === "" && <span>Existed 1 Vocal Range</span>}
+                                            {vocalRange !== "" && <span style={{ color: "green" }}>Existed 1 Vocal Range </span>}
+                                            {vocalRange !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>}
                                         </div>
                                     </div>
                                 </div>
                                 <div className={cx('white-box-text')}>
-                                    <h6>Sau khi đăng bài bạn vẫn có thể bổ sung/chỉnh sửa lại thông tin bài hát. Bạn lưu ý theo dõi bài đăng của mình nếu Admin có phản hồi về bài đăng của bạn.</h6>
-                                    <h6>Xin cảm ơn bạn đã đóng góp!</h6>
+                                    <h6>After posting, you can still add/edit song information. Please note to monitor your post if Admin has feedback on your post.</h6>
+                                    <h6>Thank you for your contribution!</h6>
                                 </div>
                             </div>
                         </div>

@@ -205,32 +205,50 @@ const cx = classNames.bind(styles);
 function ViewCart() {
     const { cartItems, getTotalCartAmount, checkOut, listBeatContext } = useContext(ShopContext)
     const totalAmount = getTotalCartAmount()
-    const beatCheckout = []
-    const data = { beatId: beatCheckout }
-    console.log(data)
+    let beatCheckout = []
+    let beatInvoice = []
+    beatCheckout = listBeatContext
+        .filter(item => cartItems && cartItems[item.id] !== 0)
+        .map(item => {
+            // You can also add item to beatInvoice here
+            beatInvoice.push(item);
+            return item.id;
+        });
+    beatInvoice = listBeatContext
+        .filter(item => cartItems && cartItems[item.id] !== 0)
+        .map(item => {
+            // You can also add item to beatInvoice here
+            beatInvoice.push(item);
+            return item;
+        });
+        localStorage.setItem("totalAmount", JSON.stringify(totalAmount))
+    localStorage.setItem("beatCheckout", JSON.stringify(beatCheckout))
+    localStorage.setItem("beatInvoice", JSON.stringify(beatInvoice))
+    console.log(JSON.parse(localStorage.getItem("beatInvoice")))
     const navigate = useNavigate()
     const token = useToken()
-    console.log(token)
     const [checkoutMessage, setCheckoutMessage] = useState()
-    console.log(checkoutMessage)
     const handleCheckout = async () => {
         if (beatCheckout.length === 0) {
             setCheckoutMessage("You have not chosen anything to buy")
             return
         }
-        if(token){
-        console.log(data)
-        await axiosInstance.post(`http://localhost:8080/api/v1/Order/user/${jwtDecode(token).sub}`, data)
-            .catch((error) => {
-                if (error.message.includes("Network")) {
-                    navigate("/login")
-                } else if (error.message.includes("501")) {
-                    console.log("Beat Bought")
-                    navigate("/viewcart")
-                }
-            })
-        navigate("/invoice")}
-        else{
+        if (token) {
+            await axiosInstance.post(`http://localhost:8080/api/v1/paypal`, { totalprice: totalAmount, description: "Payment Success" })
+                .then((res) => {
+                    console.log(res.data)
+                    window.location.href = res.data
+                })
+                .catch((error) => {
+                    if (error.message.includes("Network")) {
+                        navigate("/login")
+                    } else if (error.message.includes("501")) {
+                        console.log("Beat Bought")
+                        navigate("/viewcart")
+                    }
+                })
+        }
+        else {
             navigate("/login")
         }
 
@@ -290,28 +308,29 @@ function ViewCart() {
                 </div>
 
                 {listBeatContext ?
-                <div className={cx("list-card")}>
-                    
-                     
-                    {listBeatContext.map((item, index) => {
-                        if (cartItems) {
-                            if (cartItems[item.id] !== 0) {
-                                beatCheckout.push(item.id)
-                                return (
-                                    <CardItem
-                                        id={item.id}
-                                        name={item.beatName}
-                                        author="Minh Hien"
-                                        genre="POP"
-                                        price={item.price}
-                                        beatId={item.id}
-                                    />
-                                );
+                    <div className={cx("list-card")}>
+
+
+                        {listBeatContext.map((item, index) => {
+                            if (cartItems) {
+                                if (cartItems[item.id] !== 0) {
+                                    {console.log(123)}
+                                    return (
+                                        
+                                        <CardItem
+                                            id={item.id}
+                                            name={item.beatName}
+                                            author={item.user.fullName}
+                                            genre={item.genres}
+                                            price={item.price}
+                                            beatId={item.id}
+                                        />
+                                    );
+                                }
                             }
-                        }
-                    })}
-                    </div>: <div></div>}
-                
+                        })}
+                    </div> : <div></div>}
+
                 {/* Footer */}
                 <footer className={cx("card-footer")}>
                     <Link to="/listbeat" className={cx("card-return", "card-action")}>RETURN TO SHOP</Link>
@@ -376,9 +395,7 @@ function ViewCart() {
                 </div>
             </section>
         </section>
-
     );
-    
 }
 
 export default ViewCart;

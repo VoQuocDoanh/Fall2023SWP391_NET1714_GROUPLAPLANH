@@ -6,6 +6,9 @@ export const ShopContext = createContext(null);
 function ShopContextProvider({children}) {
     const [listBeatContext, setListBeatContext] = useState([]);
     const [viewBeatFirstTime, setViewBeatFirstTime] = useState(0);
+    const [countCart, setCountCart] = useState(0);
+
+    
     const getDefaultCart = () => {
         if(listBeatContext === null){
             return;
@@ -42,12 +45,16 @@ function ShopContextProvider({children}) {
     }
     const addToCart = (itemId) => {
         setCartItems((prev) => ({...prev, [itemId]: 1}));
+        if(cartItems[itemId] !== 1)
+        setCountCart(countCart + 1)
     }
     const removeFromCart = (itemId) => {
         setCartItems((prev) => ({...prev, [itemId]: 0}));
+        setCountCart(countCart - 1)
     }
     const checkOut = () => {
         setCartItems(getDefaultCart());
+        setCountCart(0)
     }
 
     const contextValue = {
@@ -61,7 +68,9 @@ function ShopContextProvider({children}) {
         setDefaultCart,
         viewBeatFirstTime,
         setViewBeatFirstTime,
+        countCart,
     };
+    console.log(cartItems)
   return (
     <ShopContext.Provider value={contextValue}>
         {children}

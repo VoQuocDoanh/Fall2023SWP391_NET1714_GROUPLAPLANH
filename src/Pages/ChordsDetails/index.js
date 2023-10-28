@@ -9,12 +9,13 @@ import { faChevronLeft, faChevronRight, faPause, faPlay, faPlayCircle, faRedo, f
 import GUITAR from "../../assets/ImageForChords/Guitar";
 import PIANO from "../../assets/ImageForChords/Piano";
 import UKULELE from "../../assets/ImageForChords/Ukulele";
+import Popup from "reactjs-popup";
 
 const cx = classNames.bind(styles);
 
-const KEY = ["All", "C", "D", "E", "F", "G", "A", "B"];
-const SUFFIX = ["All", "major", "minor", "7", "m7", "maj7"];
-const INSTRUMENT = ["All", "Ukulele", "Guitar", "Piano"];
+const KEY = ["C", "D", "E", "F", "G", "A", "B"];
+const SUFFIX = ["major", "minor", "7", "m7", "maj7"];
+const INSTRUMENT = ["Ukulele", "Guitar", "Piano"];
 
 
 const DATA = [
@@ -24,21 +25,11 @@ const DATA = [
     },
     {
         type: "Piano",
-        value: [
-            {
-                type: "Piano",
-                img: "https://i0.wp.com/pianohome.vn/wp-content/uploads/2020/10/16-scaled.jpeg",
-            }
-        ],
+        value: PIANO,
     },
     {
         type: "Ukulele",
-        value: [
-            {
-                type: "Ukulele",
-                img: "https://upload.wikimedia.org/wikipedia/commons/5/56/Ukulele1_HiRes.jpg",
-            }
-        ],
+        value: UKULELE,
     },
     {
         type: "All",
@@ -58,7 +49,7 @@ function ChordsDetails() {
 
     const [key, setKey] = useState(KEY[0]);
     const [suffix, setSuffix] = useState(SUFFIX[0]);
-    const [instrument, setInstrument] = useState(INSTRUMENT[0]);
+    const [instrument, setInstrument] = useState(INSTRUMENT[1]);
     const [listChord, setListChord] = useState([]);
 
     const handleKeyChange = (e) => {
@@ -73,13 +64,13 @@ function ChordsDetails() {
         setInstrument(e.target.value);
     }
 
-    useEffect(() => {
-        let listFilter = DATA.filter((list) => list.type === instrument);
-        let listType = listFilter[0].value.map((item) => {
-            return item;
-        })
-        setListChord(listType.flat(Infinity));
-    }, [])
+    // useEffect(() => {
+    //     let listFilter = DATA.filter((list) => list.type === instrument);
+    //     let listType = listFilter[0].value.map((item) => {
+    //         return item;
+    //     })
+    //     setListChord(listType.flat(Infinity));
+    // }, [])
 
     useEffect(() => {
         let listFilter = DATA.filter((list) => list.type === instrument);
@@ -90,13 +81,14 @@ function ChordsDetails() {
             let list = listType.flat(Infinity).filter((item) => {
                 return item.key === key;
             });
-            if(suffix !== "All") {
+            if (suffix !== "All") {
                 list = list.filter(item => item.suffix === suffix);
             }
             setListChord(list);
-        } else {
-            setListChord(listType.flat(Infinity))
         }
+        // } else {
+        //     setListChord(listType.flat(Infinity))
+        // }
     }, [key])
 
     useEffect(() => {
@@ -108,13 +100,14 @@ function ChordsDetails() {
             let list = listType.flat(Infinity).filter((item) => {
                 return item.suffix === suffix;
             });
-            if(key !== "All") {
+            if (key !== "All") {
                 list = list.filter(item => item.key === key);
             }
             setListChord(list);
-        } else {
-            setListChord(listType.flat(Infinity))
         }
+        // } else {
+        //     setListChord(listType.flat(Infinity))
+        // }
     }, [suffix])
 
     useEffect(() => {
@@ -122,23 +115,23 @@ function ChordsDetails() {
         let listType = listFilter[0].value.map((item) => {
             return item;
         })
-        if(key !== "All" && suffix == "All") {
-            let list = listType.flat(Infinity).filter((item) => {
-                return item.key === key;
-            });
-            setListChord(list);
-        } else if(key === "All" && suffix !== "All") {
-            let list = listType.flat(Infinity).filter((item) => {
-                return item.suffix === suffix;
-            });
-            setListChord(list);
-        }else if(key !== "All" && suffix !== "All"){
+        // if(key !== "All" && suffix == "All") {
+        //     let list = listType.flat(Infinity).filter((item) => {
+        //         return item.key === key;
+        //     });
+        //     setListChord(list);
+        // } else if(key === "All" && suffix !== "All") {
+        //     let list = listType.flat(Infinity).filter((item) => {
+        //         return item.suffix === suffix;
+        //     });
+        //     setListChord(list);
+        if (key !== "All" && suffix !== "All") {
             let list = listType.flat(Infinity).filter((item) => {
                 return item.key === key && item.suffix === suffix;
             });
             setListChord(list)
-        // }else {
-        //     setListChord(listType.flat(Infinity));
+            // }else {
+            //     setListChord(listType.flat(Infinity));
         }
     }, [instrument])
 
@@ -178,18 +171,29 @@ function ChordsDetails() {
                             })}
                         </select>
                     </div>
+                    <Popup trigger={<button className={cx("button-popup")} style={{padding: 10}} > Add to Playlist</button>} position="right center" closeOnDocumentClick on={['hover', 'focus']}>
+                        <div className={cx("text-all")}>
+                            <Link to="/myprofile"><div className={cx("link-text")}>My Account</div></Link>
+                            <Link to="/listBeatPurchased"><div className={cx("link-text")}>My Purchased</div></Link>
+                            <Link to="/viewcart"><div className={cx("link-text")}>My Song's Playlist</div></Link>
+                            <Popup trigger={<button style={{ background: 'none' }} className={cx("button-popup")}> Add to Playlist +</button>} position="right center" closeOnDocumentClick on={['hover', 'focus']}>
+                                <div className={cx("text-all")}>
+                                    <input type="text" id="name" name="name" required minlength="4" maxlength="20" size="20" />
+                                </div>
+                            </Popup>
+                        </div>
+                    </Popup>
                 </nav>
-                <div className={cx("line")}>
+                <div className={cx("line" )}>
                 </div>
             </div>
 
-            <div className={cx("list-chords")}>
+            <div className={cx("list-chords")} style={{}}>
                 {listChord.map((item) => {
-                    return <img key={item.type} src={item.img} alt={item.type} />
+                    return <img className={cx("detail-img")} style={{ width: 250, height: 260, objectFit: 'fill', marginLeft: 700 }} key={item.type} src={item.img} alt={item.type} />
                 })}
+                <p className={cx("img__description")}>This image looks super neat<p style={{ marginTop: 35 }}>Description About Chords</p></p>
             </div>
-
-
         </div>
 
     );

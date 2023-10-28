@@ -8,7 +8,7 @@
 .main {
     top: 0;
     left: 0;
-    height: 1189px;
+    height: 1100px;
     width: 100%;
     z-index: -1;
     opacity: 2;
@@ -43,13 +43,14 @@ video {
 
         .title {
             color: white;
-            font-size: 64px;
+            font-size: 10rem;
             font-family: Sono;
             font-weight: 400;
             text-transform: uppercase;
             line-height: 76.80px;
             word-wrap: break-word;
             font-weight: 700;
+            
         }
 
         .slogan {
@@ -83,7 +84,6 @@ video {
                 color: white;
                 font-size: 20px;
                 font-family: Inter;
-
                 line-height: 26px;
                 word-wrap: break-word;
                 padding: 30px;
@@ -107,6 +107,7 @@ video {
     display: flex;
     justify-content: left;
     align-items: center;
+    text-wrap: nowrap;
 
     .text {
         margin-left: 133px;

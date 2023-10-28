@@ -5,32 +5,30 @@
 @import url('https://fonts.cdnfonts.com/css/sono');
 @import url('https://fonts.cdnfonts.com/css/inter');
 
-* {
-    font-family: inter;
-}
-
 .profile {
     display: flex;
     justify-content: center;
-    gap: 120px;
+    gap: 50px;
     margin-top: 130px;
-    background-color: rgb(248, 248, 248);
     padding: 20px;
     width: 70%;
-    height: 780px;
-    margin-left: 290px;
+    margin-left: 250px;
 }
 
 .line {
+    //     width: 60%;
     background: #ececec;
-    height: 350px;
-    border-radius: 30px;
-    border: 0.2px black solid;
+    //     border-radius: 30px;
+    border: 0.5px black solid;
+    // margin-bottom: 60px;
+    //     margin-left: 360px;
+    //     margin-top :60px;
+    height: 300px;
 }
 
 .title-myprofile {
     text-transform: uppercase;
-    margin-left: 720px;
+    margin-left: 610px;
     background-image: linear-gradient(-225deg,
             #231557 0%,
             #44107a 29%,
@@ -57,8 +55,8 @@
 
 // image
 .box-img {
-    width: 180px;
-    height: 180px;
+    width: 240px;
+    height: 240px;
     border-radius: 50%;
     gap: 60px;
     object-fit: cover;
@@ -66,17 +64,30 @@
     background-size: cover;
     background-repeat: no-repeat;
     cursor: pointer;
+    margin-left: 95px;
     background-image: url(../../assets/images/Trending/beautiful-girl-sitting-down-playing-the-piano.webp);
 
 }
 
+.img-user-div2 {
+    padding: 20px;
+    background-color: rgb(241, 241, 241);
+    margin-right: 60px;
+    border-radius: 20px;
+    width: 500px;
+    padding: 30px;
+    height: 500px;
+}
 
 //form info user
 .volt8A {
-    width: 600px;
-    height: 570px;
-    padding: 10px;
+    height: 1300px;
+    width: 900px;
     padding-left: 20px;
+    background-color: rgb(245, 245, 245);
+    padding: 30px;
+    flex-shrink: 0;
+    border-radius: 20px;
 
 }
 
@@ -90,26 +101,40 @@
 }
 
 .input-username {
-    width: 380px;
-    height: 40px;
-    outline: 1px solid grey;
-    padding: 10px;
+    padding: 22px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid rgb(65, 65, 65);
+    width: 700px;
+    height: 1px;
+    margin-top: 30px;
+    margin-left: -50px;
+}
+
+.input-phonenumber {
+    padding: 22px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid rgb(65, 65, 65);
+    width: 700px;
+    height: 1px;
+    margin-top: 30px;
+    margin-left: 70px;
+
 }
 
 .input-username0 {
-    width: 380px;
-    height: 40px;
-    outline: 1px solid grey;
-    padding: 10px;
-}
-
-.input-username7 {
-    width: 380px;
-    height: 40px;
-    outline: 1px solid grey;
-    padding: 10px;
-    margin-left: -30px;
-    margin-top: -10px;
+    padding: 22px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid rgb(65, 65, 65);
+    width: 700px;
+    margin-top: 30px;
+    height: 1px;
+    flex-shrink: 0;
 }
 
 .text-username {
@@ -130,6 +155,7 @@
 
 .login-text {
     font-family: inter;
+    margin-left: 4px;
 }
 
 .part4 {
@@ -137,6 +163,8 @@
 
     .stardus-radio-group {
         justify-content: center;
+        gap: 80px;
+        margin-top: 40px;
     }
 
 }
@@ -159,27 +187,28 @@
 
 .part4 {
     margin-top: 40px;
-    margin-left: -0px;
-}
+    margin-left: -4px;
 
-.part3 {
-    margin-top: 40px;
-    margin-left: -2px;
-
-    .add-phonenumber {
-        margin-left: 48px;
-        border: none;
-        text-decoration: underline;
-        color: #06c;
+    .sex {
+        font-family: inter;
+        margin-left: 6px;
     }
 }
 
-.phone-number {
+
+.part3 {
+    margin-top: 40px;
+
+}
+
+.part3>td {
     font-family: inter;
+    padding-left: 70px;
 }
 
 .text-name {
     font-family: inter;
+    margin-left: 71px;
 }
 
 .stardus-radio-group {
@@ -192,17 +221,30 @@
     margin-bottom: 40px;
 }
 
-.part2 {
+.part2>td {
     margin-top: 40px;
     display: flex;
     justify-content: center;
-    margin-left: -140px;
+    margin-left: -360px;
+    margin-top: 100px;
+    display: flex;
+}
+
+.email-change {
+    margin-left: 50px;
+}
+
+.email-text {
+    margin-left: 105px;
+    font-family: inter;
+
 }
 
 .part5 {
     margin-top: 60px;
     display: flex;
-    justify-content: center;
+    justify-content: start;
+    margin-left: 70px;
 
     .button-save-details {
         width: 70px;
@@ -212,22 +254,6 @@
         color: white;
         font-family: inter;
         border-radius: 5px;
-        cursor: pointer;
-    }
-
-}
-
-.part6 {
-    .text-username6 {
-        margin-left: 92px;
-        margin-top: 60px;
-
-        .input-username6 {
-            width: 380px;
-            height: 40px;
-            outline: 1px solid grey;
-            padding: 10px;
-        }
 
     }
 
@@ -241,10 +267,6 @@
     color: #06c;
 }
 
-.email-text {
-    margin-left: 60px;
-}
-
 // male female 
 .footer {
     display: inline-flex;
@@ -253,11 +275,12 @@
 
     .footer-left {
         display: inline-flex;
-        align-items: center;
+        flex-direction: column;
+        align-items: flex-start;
 
         .input-check {
-            width: 18px;
-            height: 18px;
+            width: 24px;
+            height: 24px;
             border-radius: 60%;
             border: 2px solid rgba(0, 0, 0, .26);
             display: flex;
@@ -286,10 +309,18 @@
 .img-click {
     display: flex;
     justify-content: center;
-    margin-left: 40px;
-    margin-top: 20px;
+    margin-left: 170px;
+    margin-top: 40px;
     background-color: none;
+}
 
+.info-user {
+    display: grid;
+    justify-content: center;
+    margin-top: 30px;
+    font-size: 2.5rem;
+    font-family: 'Sono';
+    font-weight: 400;
 }
 
 //line

@@ -25,16 +25,16 @@ function ViewDetailBeat() {
     const token = useToken();
     const navigate = useNavigate();
     const [list, setList] = useState([]);
-    const [checkLike, setCheckLike] = useState(null)
+    const [checkLike, setCheckLike] = useState(false)
     const [checkRating, setCheckRating] = useState("")
     const [data, setData] = useState(null)
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
-
     const [isCommenting, setIsCommenting] = useState(false);
     const [content, setContent] = useState('');
     const [listBeatComment, setListBeatComment] = useState([]);
     const [checkComment, setCheckComment] = useState(null)
+    const [beatSoundDemo, setBeatSoundDemo] = useState("")
     let userId = ""
     if (token) {
         userId = jwtDecode(token).sub
@@ -42,6 +42,25 @@ function ViewDetailBeat() {
     // Comment Parent
     const [parentId, setParentId] = useState("0")
     const commentParent = { beatId, userId, parentId, content }
+
+    useEffect(() => {
+        loadDetailBeat()
+
+    }, [beatId])
+
+
+    useEffect(() => {
+        loadMusicianBeat()
+    }, [beatDetail])
+
+    useEffect(() => {
+        loadBeatComment()
+    }, [checkComment, beatDetail])
+
+    useEffect(() => {
+        loadSoundDemo()
+    })
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -62,19 +81,34 @@ function ViewDetailBeat() {
         setContent('');
     };
 
-    useEffect(() => {
-        loadDetailBeat()
+    const Heart = ({ id }) => {
+        return (<svg className={cx("new-icon-like")} id={id} width="155" height="130" viewBox="0 0 150 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M112.577 6.51645L112.588 6.51678L112.598 6.51707C124.83 6.85668 134.648 13.4871 139.798 25.162C147.658 42.9826 142.048 60.4882 131.657 75.7368C121.27 90.9784 106.855 102.747 99.8285 107.966C92.3832 113.495 84.0338 118.699 75 123.419C65.9653 118.698 57.6161 113.496 50.1717 107.966L50.1715 107.966C43.1455 102.747 28.7296 90.9784 18.3433 75.7368C7.95214 60.4882 2.34207 42.9826 10.2021 25.162L10.2022 25.1617C15.3515 13.4855 25.1696 6.85669 37.4015 6.51709L37.4155 6.51667C49.4687 6.15616 62.0214 12.1853 69.9783 21.8669L75 27.9771L80.0217 21.8669C87.982 12.1812 100.536 6.14284 112.577 6.51645Z" stroke="white" strokeWidth="13" />
+        </svg>)
+    }
 
-    }, [beatId, checkLike, checkRating])
+    const handleLikeClick = (id) => {
+        handleConvertLike()
+        handleLike(id)
+    }
+
+    const handleConvertLike = async (id) => {
+        setCheckLike(!checkLike)
+        console.log(checkLike)
+    }
 
 
-    useEffect(() => {
-        loadMusicianBeat()
-    }, [beatDetail])
 
-    useEffect(() => {
-        loadBeatComment()
-    }, [checkComment])
+
+    const loadSoundDemo = async () => {
+        await axiosInstance(`http://localhost:8080/api/v1/beat/user/demo/${beatId}`)
+            .then((res) => {
+                setBeatSoundDemo((res.data.beatSound))
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
 
     const loadBeatComment = async () => {
         await axiosInstance.get(`http://localhost:8080/api/v1/comment/beat/${beatId}`)
@@ -95,6 +129,9 @@ function ViewDetailBeat() {
             .catch((error) => {
                 console.log(error)
             })
+        setPlay(false)
+        setCheckRating("")
+        setCheckLike(false)
     }
 
     const handleLike = async (id) => {
@@ -103,7 +140,11 @@ function ViewDetailBeat() {
         } else {
             await axiosInstance.post(`http://localhost:8080/api/v1/beat/like/${jwtDecode(token).sub}/${id}`)
                 .then((res) => {
-                    setCheckLike(res.data)
+                    if (res.data.includes("Ok")) {
+                        setCheckLike(true)
+                    } else {
+                        setCheckLike(false)
+                    }
                 })
                 .catch((error) => {
                     console.log(error)
@@ -112,7 +153,7 @@ function ViewDetailBeat() {
     }
 
     const loadMusicianBeat = async () => {
-        
+
         if (beatDetail === null) {
             return
         }
@@ -120,6 +161,7 @@ function ViewDetailBeat() {
         await axiosInstance.get(`http://localhost:8080/api/v1/beat/user/${beatDetail.user.id}/all`)
             .then((res) => {
                 setListMusicianBeat(res.data)
+
             })
             .catch(error => {
                 console.log(error)
@@ -130,7 +172,7 @@ function ViewDetailBeat() {
         if (!token) {
             navigate("/login")
         } else {
-            await axiosInstance.post(`http://localhost:8080/api/v1/beat/ratingStar/${jwtDecode(token).sub}/${beatId}`, { rating: e.target.value })
+            await axiosInstance.post(`http://localhost:8080/api/v1/rate/beat/rating/${jwtDecode(token).sub}/${beatId}`, { rate: e.target.value })
                 .then((res) => {
                     setCheckRating("Rating Successfully")
                 })
@@ -148,13 +190,13 @@ function ViewDetailBeat() {
     const handlePostCommentParent = async (e) => {
         console.log(content)
         console.log(commentParent)
-        await axiosInstance.post("http://localhost:8080/api/v1/comment/beat/addComment",commentParent)
-        .then((res) => {
-            setCheckComment(res.data)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+        await axiosInstance.post("http://localhost:8080/api/v1/comment/beat/addComment", commentParent)
+            .then((res) => {
+                setCheckComment(res.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     if (listMusicianBeat !== null) {
@@ -165,10 +207,10 @@ function ViewDetailBeat() {
 
         return (
 
-            <div>
+            <div className={cx("first-container")}>
                 <Link to={"/listbeat"}>
                     <Button variant="contained" className={cx("back-to-shop")}>
-                        <div>Back to Shop</div>
+                        <div style={{fontSize: 15}}>Back to Shop</div>
                     </Button>
                 </Link>
                 {/* <div className={cx("text-header")}>
@@ -193,13 +235,14 @@ function ViewDetailBeat() {
                                         <img className={cx('image')} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} />
                                         <div className={cx('middle-image')}>
                                             {/* <div className={cx('text')}>Click</div> */}
-                                            <Button variant="contained" className={cx('button-1')}>
+                                            <Button variant="contained" className={cx('button-1')} onClick={() => loadSoundDemo()}>
                                                 <div>Click</div>
                                             </Button>
                                         </div>
                                     </div>
 
                                     <div className={cx('information')}>
+                                        {console.log(beatDetail)}
                                         <h1><b>{beatDetail.beatName}</b></h1>
                                         <h4> {beatDetail.user.fullName} &#x2022; 2023 </h4>
 
@@ -215,7 +258,9 @@ function ViewDetailBeat() {
                                     <Stack className={cx("rating-form")} spacing={1}>
                                         <Rating className={cx("start-icon")} name="size-large" defaultValue={0} size="large" onChange={handleRating} />
                                     </Stack>
-                                    <div>{checkRating}</div>
+                                    <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundDemo}>
+                                    </audio>
+                                    <div className={cx("check-rating")}>{checkRating}</div>
                                 </div>
                             </div>
 
@@ -224,18 +269,16 @@ function ViewDetailBeat() {
                                 <div className={cx('info-musician')}>
                                     <span>&#x2022; Name: {beatDetail.user.fullName} </span>
                                     <span>&#x2022; Contact: {beatDetail.user.mail}</span>
-                                    <span>&#x2022; Profession: Singer, Musician</span>
-                                    <span>&#x2022; Years of operation: 2018–present</span>
+                                    <span>&#x2022; Profession: {beatDetail.professional}</span>
+                                    <span>&#x2022; Years of operation: {beatDetail.year} years</span>
                                     <span>&#x2022; Number of beats: {listMusicianBeat.length} </span>
-                                    <span>&#x2022; Prize: Zing MP3 - Best of 2022, Green Wave 2022, Golden Apricot Award...</span>
+                                    <span>&#x2022; Prize: {beatDetail.prize}</span>
                                 </div>
                                 <h3><b>Beat information</b></h3>
-                                <div className={cx('icon-like')} onClick={() => handleLike(beatDetail.id)}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 45 45" fill="none">
-                                        <path d="M36 20.88C36 18.99 34.47 18 32.4 18H26.37C26.82 16.38 27 14.85 27 13.5C27 8.27995 25.56 7.19995 24.3 7.19995C23.49 7.19995 22.86 7.28995 22.05 7.73995C21.78 7.91995 21.69 8.09995 21.6 8.36995L20.7 13.23C19.71 15.75 17.28 18 15.3 19.53V32.4C16.02 32.4 16.74 32.76 17.64 33.21C18.63 33.66 19.62 34.2 20.7 34.2H29.25C31.05 34.2 32.4 32.76 32.4 31.5C32.4 31.23 32.4001 31.0499 32.3101 30.8699C33.3901 30.4199 34.2 29.52 34.2 28.35C34.2 27.81 34.1101 27.36 33.9301 26.91C34.6501 26.46 35.2801 25.65 35.2801 24.75C35.2801 24.21 35.01 23.67 34.74 23.22C35.46 22.68 36 21.78 36 20.88ZM34.1101 20.88C34.1101 22.05 32.9401 22.14 32.7601 22.68C32.5801 23.31 33.4801 23.49 33.4801 24.57C33.4801 25.65 32.13 25.65 31.95 26.28C31.77 27 32.4 27.18 32.4 28.26V28.44C32.22 29.34 30.87 29.4299 30.6 29.7899C30.33 30.2399 30.6 30.42 30.6 31.41C30.6 31.95 29.97 32.31 29.25 32.31H20.7C19.98 32.31 19.26 31.95 18.36 31.5C17.64 31.14 16.92 30.78 16.2 30.6V21.15C18.45 19.44 21.33 16.92 22.41 13.77V13.59L23.22 9.08995C23.58 8.99995 23.85 8.99995 24.3 8.99995C24.48 8.99995 25.2 10.08 25.2 13.5C25.2 14.85 24.93 16.29 24.48 18H24.3C23.76 18 23.4 18.36 23.4 18.9C23.4 19.44 23.76 19.8 24.3 19.8H32.4C33.3 19.8 34.1101 20.25 34.1101 20.88Z" fill="#699BF7" />
-                                        <path d="M14.4 34.2H8.99995C8.00995 34.2 7.19995 33.39 7.19995 32.4V19.8C7.19995 18.81 8.00995 18 8.99995 18H14.4C15.39 18 16.2 18.81 16.2 19.8V32.4C16.2 33.39 15.39 34.2 14.4 34.2ZM8.99995 19.8V32.4H14.4V19.8H8.99995Z" fill="#699BF7" />
-                                    </svg>
-                                    <span>{beatDetail.totalLike}</span>
+                                <div className={cx("container-like")}>
+                                    <button onClick={() => handleLikeClick(beatDetail.id)}>
+                                        <Heart id={checkLike ? cx('favorite-stroke') : cx('favorite-filled')} />
+                                    </button>
                                 </div>
                                 {/* <div className={cx('list-of-beats')}>
                                 <div className={cx('cart')}>
@@ -285,21 +328,11 @@ function ViewDetailBeat() {
                                         <Button variant="contained" className={cx('button-1')} onClick={() => addToCart(beatId)}>
                                             <div>Add to cart</div>
                                         </Button>
-                                        <Link to={"/viewCart"}>
-                                            <Button variant="contained" className={cx('button-1')}>
-                                                <div>View Cart</div>
-                                            </Button>
-                                        </Link>
                                     </div>
                                         : <div className={cx('mid-button')}>
                                             <Link to={"/login"}>
                                                 <Button variant="contained" className={cx('button-1')}>
                                                     <div>Add to cart</div>
-                                                </Button>
-                                            </Link>
-                                            <Link to={"/login"}>
-                                                <Button variant="contained" className={cx('button-1')}>
-                                                    <div>View Cart</div>
                                                 </Button>
                                             </Link>
                                         </div>
@@ -334,18 +367,6 @@ function ViewDetailBeat() {
                                                 <h4 className={cx("musician-beat")}><b><Link to={`/viewdetailbeat/${item.id}`}>{item.beatName}</Link></b></h4>
                                                 <span className={cx("musician-name")}>{item.user.fullName}</span>
                                             </div>
-                                            <div className={cx('icon')}>
-                                                <div className={cx('icon-mic')}>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 45 45" fill="none">
-                                                        <path d=" M29.5313 3.16407C27.7667 3.16287 26.0225 3.54157 24.4172 4.27443C22.8119 5.0073 21.3833 6.07714 20.2282 7.41126C19.0732 8.74538 18.219 10.3125 17.7235 12.0062C17.228 13.6998 17.1029 15.4803 17.3567 17.2266L5.05203 34.0066C4.702 34.4795 4.53404 35.0626 4.57891 35.6492C4.62378 36.2357 4.87848 36.7865 5.29636 37.2006L7.81003 39.7143C8.2243 40.1318 8.77503 40.3863 9.36151 40.4311C9.94799 40.476 10.531 40.3083 11.004 39.9586L27.7841 27.6539C29.4542 27.8884 31.1548 27.777 32.7801 27.3266C34.4054 26.8763 35.9208 26.0967 37.2322 25.0361C38.5436 23.9755 39.6229 22.6567 40.4032 21.1615C41.1835 19.6663 41.6481 18.0267 41.7681 16.3444C41.8881 14.6621 41.661 12.9731 41.1009 11.3823C40.5408 9.79143 39.6596 8.33272 38.5121 7.09673C37.3646 5.86073 35.9752 4.87383 34.4303 4.19731C32.8854 3.52079 31.2179 3.1691 29.5313 3.16407ZM39.7266 15.4688C39.7288 17.8082 38.9214 20.0764 37.4415 21.8883L23.1136 7.5586C24.6081 6.34334 26.4166 5.57675 28.3292 5.34776C30.2418 5.11877 32.1801 5.43676 33.9193 6.26486C35.6584 7.09295 37.1272 8.39719 38.1551 10.0263C39.183 11.6554 39.7279 13.5425 39.7266 15.4688ZM9.75593 38.2482C9.68814 38.298 9.60475 38.3218 9.5209 38.3154C9.43704 38.3089 9.35828 38.2726 9.2989 38.2131L6.78699 35.7012C6.72743 35.6418 6.69113 35.563 6.68468 35.4792C6.67823 35.3953 6.70206 35.3119 6.75183 35.2441L18.0405 19.8527C18.6615 21.4692 19.6152 22.9371 20.8398 24.1614C22.0644 25.3856 23.5325 26.339 25.1491 26.9596L9.75593 38.2482ZM19.336 15.4688C19.3351 13.1295 20.1423 10.8617 21.6212 9.04922L35.9526 23.3789C34.4571 24.5916 32.6487 25.356 30.7368 25.5836C28.8249 25.8113 26.8876 25.4929 25.1491 24.6653C23.4107 23.8378 21.9421 22.5348 20.9133 20.9073C19.8846 19.2797 19.3377 17.3942 19.336 15.4688ZM19.0284 25.9717C19.1265 26.0696 19.2042 26.186 19.2573 26.314C19.3104 26.442 19.3377 26.5793 19.3377 26.7179C19.3377 26.8565 19.3104 26.9937 19.2573 27.1218C19.2042 27.2498 19.1265 27.3661 19.0284 27.4641L17.6221 28.8703C17.5242 28.9683 17.4078 29.046 17.2798 29.0991C17.1518 29.1521 17.0145 29.1794 16.876 29.1794C16.7374 29.1794 16.6001 29.1521 16.4721 29.0991C16.3441 29.046 16.2278 28.9683 16.1298 28.8703C16.0318 28.7723 15.954 28.656 15.901 28.528C15.848 28.3999 15.8207 28.2627 15.8207 28.1241C15.8207 27.9855 15.848 27.8483 15.901 27.7203C15.954 27.5923 16.0318 27.4759 16.1298 27.3779L17.536 25.9717C17.6339 25.8732 17.7502 25.7951 17.8784 25.7417C18.0065 25.6883 18.1439 25.6608 18.2827 25.6606C18.4215 25.6604 18.559 25.6877 18.6873 25.7408C18.8155 25.7938 18.9321 25.8717 19.0302 25.9699L19.0284 25.9717Z" fill="#699BF7" />
-                                                    </svg>
-                                                </div>
-                                                <div className={cx('icon-heart')}>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 45 45" fill="none">
-                                                        <path d="M32.5446 0C28.3962 0 24.7641 2.08174 22.5 5.60054C20.2359 2.08174 16.6038 0 12.4554 0C9.15313 0.00434338 5.98723 1.53707 3.6522 4.26191C1.31717 6.98675 0.00372202 10.6812 0 14.5347C0 30.9448 20.8507 44.2276 21.7386 44.7762C21.9726 44.9231 22.2343 45 22.5 45C22.7657 45 23.0273 44.9231 23.2614 44.7762C24.1493 44.2276 45 30.9448 45 14.5347C44.9963 10.6812 43.6828 6.98675 41.3478 4.26191C39.0128 1.53707 35.8469 0.00434338 32.5446 0ZM22.5 40.9784C18.8317 38.4841 3.21429 27.1212 3.21429 14.5347C3.21747 11.6758 4.19211 8.93504 5.92446 6.9135C7.6568 4.89195 10.0055 3.75461 12.4554 3.75088C16.3627 3.75088 19.6433 6.17958 21.0134 10.0805C21.1345 10.4245 21.3405 10.7187 21.6052 10.9257C21.8699 11.1328 22.1813 11.2433 22.5 11.2433C22.8187 11.2433 23.1301 11.1328 23.3948 10.9257C23.6595 10.7187 23.8655 10.4245 23.9866 10.0805C25.3567 6.17255 28.6373 3.75088 32.5446 3.75088C34.9945 3.75461 37.3432 4.89195 39.0755 6.9135C40.8079 8.93504 41.7825 11.6758 41.7857 14.5347C41.7857 27.1025 26.1643 38.4817 22.5 40.9784Z" fill="#699BF7" />
-                                                    </svg>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>)
                             })}
@@ -359,8 +380,9 @@ function ViewDetailBeat() {
                 {/* Comment */}
 
                 <div className={cx('comment-all')}>
+                    <h2 style={{marginLeft:25, fontSize:38}}>Comment</h2>
                     <div className={cx('comment')}>
-                        <textarea id="ABC" name="ABC" rows="2" cols="174" placeholder=' Comment...' onChange={handleComment} ></textarea>
+                        <textarea style={{resize: 'none', height: 300, padding: 10, borderRadius: 12}} id="ABC" name="ABC" rows="2" cols="174" placeholder=' Comment...' onChange={handleComment} ></textarea>
                         {!token ?
                             <Link to={"/login"}>
                                 <div className={cx('post-button')}>
@@ -368,11 +390,11 @@ function ViewDetailBeat() {
                                 </div>
                             </Link>
                             : <div className={cx('post-button')} onClick={() => handlePostCommentParent()}>
-                                <button>Post a comment</button>
+                                <button className={cx("post-buttonn")} style={{height: 60, borderRadius:14,padding: 10}}>Post a comment</button>
                             </div>
                         }
-                        <div>
-                            <select name="comment" id="comment">
+                        <div className={cx("select-comment")} style={{marginTop: -50}} >
+                            <select style={{height: 40, padding: 10, borderRadius:5 }}  name="comment" id="comment">
                                 <option value="Latest comments">Latest comments</option>
                                 <option value="Oldest comment">Oldest comment</option>
                             </select>
@@ -532,7 +554,7 @@ function ViewDetailBeat() {
         );
     }
     else {
-        return <h1>Loading Page...</h1>
+        return <h1 className={cx('first-container')}>Loading Page...</h1>
     }
 }
 export default ViewDetailBeat;

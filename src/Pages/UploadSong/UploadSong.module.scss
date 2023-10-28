@@ -13,6 +13,7 @@
 }
 
 .container-16 {
+    margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
     width: 1850px;
@@ -25,7 +26,7 @@
 // }
 
 .input-song-name {
-    width: 80%;
+    width: 300px;
     line-height: 32px;
     box-shadow: 1px 1px 5px #E6E6E6 inset;
 }
@@ -49,6 +50,13 @@
     padding: 20px;
     
 
+}
+
+//All details of Song
+.song-genres{
+}
+.link-music{
+    margin-right: 555px;
 }
 
 .button-submit {
@@ -129,6 +137,7 @@
 
 
 .white-box {
+    margin-left: 10rem;
     margin: 10px 0;
     background-color: #fff;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
@@ -137,12 +146,14 @@
 .white-box-final {
     padding: 20px;
     width: 500px;
-    margin-left: 10px;
+    margin-left: 250px;
     position: fixed;
     left: 1320px;
     background: fixed;
-    box-shadow: 1px 1px ;
+    box-shadow: 1px 1px 3px 3px ;
     border-radius: 20px;
+    background-color: rgb(209, 204, 204);
+    color:black
 }
 
 .check-failed-pass {
@@ -152,6 +163,7 @@
 
 .icon-times-left {
     margin-right: 5px;
+    margin-top: 6px;
 }
 
 .text-failed {
@@ -171,7 +183,7 @@
     padding: 24px;
     justify-content: space-between;
     align-items: center;
-    margin-left: 460px;
+    margin-left: 1200px;
 }
 .Add-Songs-body{
     display: inline-block;
@@ -185,3 +197,4 @@
       color: #2da5f3;
       user-select: none;
 }
+

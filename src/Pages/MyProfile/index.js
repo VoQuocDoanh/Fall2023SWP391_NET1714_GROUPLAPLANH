@@ -21,6 +21,9 @@ function MyProfile() {
     const handleSearch = (e) => {
         setSearch(e.target.value);
     }
+    const handleSearch1 = (e) => {
+        setTen(e.target.value);
+    }
 
 
     useEffect(() => {
@@ -33,21 +36,21 @@ function MyProfile() {
     }, [ten])
     return (
         <div>
-             <div>
+            <div>
                 <h2 className={cx("title-myprofile")}>
                     My Profile
                 </h2>
             </div>
             <div className={cx("profile")}>
                 <div className={cx("volt8A")}>
-                    <form>
+                    <form style={{ marginTop: 20 }}>
                         <table className={classNames("profile-2")}>
-                        <div className={cx("part0")}>
-                                <td >
-                                    <label className={cx("login-text")}>Full Name</label>
-                                </td>
+                            <div className={cx("part0")}>
                                 <td>
                                     <div className={cx("text-username0")}>
+                                        <td >
+                                            <label className={cx("login-text")}>Full Name</label>
+                                        </td>
                                         <div>
                                             <input className={cx("input-username0")} type="text" placeholder value={search} onChange={handleSearch} />
                                         </div>
@@ -55,36 +58,37 @@ function MyProfile() {
                                 </td>
                             </div>
                             <div className={cx("part1")}>
-                                <td>
-                                    <label className={cx("text-name")}>Address</label>
-                                </td>
                                 <td className={cx("")}>
+                                    <td>
+                                        <label className={cx("text-name")}>Address</label>
+                                    </td>
                                     <div className={cx("placeholder-ten")}>
-                                        <input className={cx("input-username")} type="text" placeholder value={ten} onChange={handleSearch} />
+                                        <input className={cx("input-username")} type="text" placeholder value={ten} onChange={handleSearch1} />
                                     </div>
                                 </td>
                             </div>
                             <div className={cx("part2")}>
                                 <td>
                                     <div className={cx("email-text")}>
-                                        Email:    do**********@fpt.edu.vn
+                                        Email:
                                     </div>
+                                    <div className={cx("email-change")}>
+                                        do******@fpt.edu.vn
+                                    </div>
+                                    <button className={cx("email-button")}>Change</button>
                                 </td>
-                                <button className={cx("email-button")}>Change</button>
+
                             </div>
                             <div className={cx("part3")}>
                                 <td className={cx("phone-number")}>
                                     Phone number
                                 </td>
-                                <td className={cx("button-phone")}>
-                                    <div className={cx("button-details")}>
-                                        <div className="space"></div>
-                                        <button className={cx("add-phonenumber")}>Add</button>
-                                    </div>
-                                </td>
+                                <div className={cx("placeholder-ten")}>
+                                    <input className={cx("input-phonenumber")} type="text" placeholder value={ten} onChange={handleSearch1} />
+                                </div>
                             </div>
-                            <div className={cx("part4")}>
-                                <td className={cx("Sex")}>
+                            <div className={cx("part4")} style={{ marginLeft: 65 }}>
+                                <td className={cx("sex")}>
                                     Sex
                                 </td>
                                 <td>
@@ -93,7 +97,7 @@ function MyProfile() {
                                             <div className={cx("footer")}>
                                                 <div className={cx("footer-left")}>
                                                     <input
-                                                        type="checkbox"
+                                                        type="radio"
                                                         id="remember"
                                                         name="rememeber"
                                                         value="check"
@@ -109,7 +113,7 @@ function MyProfile() {
                                             <div className={cx("footer")}>
                                                 <div className={cx("footer-left")}>
                                                     <input
-                                                        type="checkbox"
+                                                        type="radio"
                                                         id="remember"
                                                         name="rememeber"
                                                         value="check"
@@ -125,7 +129,7 @@ function MyProfile() {
                                             <div className={cx("footer")}>
                                                 <div className={cx("footer-left")}>
                                                     <input
-                                                        type="checkbox"
+                                                        type="radio"
                                                         id="remember"
                                                         name="rememeber"
                                                         value="check"
@@ -146,25 +150,31 @@ function MyProfile() {
                                 <td className={cx("save-button")}>
                                 </td>
                                 <td className={cx("button-type")}>
-                                    <button type="button" className={cx("button-save-details")} aria-disabled="false" >Save</button>
+                                    <button type="button" className={cx("button-save-details")} aria-disabled="false" >Edit</button>
                                 </td>
                             </div>
-    
+
                         </table>
                     </form>
                 </div>
-                <div className={cx("line")}/>
+                <div className={cx("line")} />
                 <div className={cx("img-user-div")}>
                     <div className={cx("img-user-div1")}>
                         <div className={cx("img-user-div2")}>
                             <div className={cx("img-user-div3")}>
                                 <img className={cx("box-img")} alt="" />
                             </div>
-                            <input className={cx("img-click")} type="file" accept=".jpg,.jpeg,.png"  />
+                            <div className={cx("info-user")}>
+                                <td>
+                                    User Name
+                                </td>
+                                <td style={{ marginLeft: 10 }}>
+                                    Customer
+                                </td>
+                            </div>
+                            <input className={cx("img-click")} style={{marginLeft: -30}} type="file" accept=".jpg,.jpeg,.png" />
                         </div>
-    
                     </div>
-    
                 </div>
             </div>
         </div>

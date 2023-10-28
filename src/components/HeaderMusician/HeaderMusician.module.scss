@@ -1,11 +1,12 @@
 @import url('https://fonts.cdnfonts.com/css/sono');
 @import url('https://fonts.cdnfonts.com/css/poppins');
-.img-header{
+@import url('https://fonts.cdnfonts.com/css/inter');
+
+.img-header {
   width: 250px;
   height: 150px;
-  margin-right: -80px;
-  margin-left: -25px;
 }
+
 .header-wrapper {
   // padding-top: 68px;
   display: flex;
@@ -17,11 +18,18 @@
   padding-left: 20px;
   padding-right: 20px;
   margin-top: -100px;
-  
+  margin-left: -5px;
+  // position: fixed;
+  // top: 100px;
+  // width: 100%;
+  position: fixed;
+  top: 100px;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+
 }
-a:hover{
-  background-color: blue;
-}
+
 .header-left {
   display: flex;
   align-items: center;
@@ -32,12 +40,13 @@ a:hover{
 
   .logo {
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    font-size: 4.5rem;
+    font-size: 4rem;
+    font-weight: 400;
     user-select: none;
-    font-family: Sono;
-    font-weight: 700;
+    font-size: 3.5rem;
   }
-  img{
+
+  img {
     width: 150px;
   }
 
@@ -47,10 +56,25 @@ a:hover{
   }
 }
 
+.img-shopping-cart{
+  width: 50px;
+  height: 50px;
+}
+
+.cart-number{
+  color: white;
+    font-size: 1.5rem;
+    padding: 3px;
+    margin-bottom: 50px;
+    border-radius: 10px;
+    outline: 2px solid white;
+}
+
 .header-right {
   display: flex;
   align-items: center;
   gap: 42px;
+  margin-right: 50px;
 
   .navigation {
     display: flex;
@@ -70,9 +94,10 @@ a:hover{
       border: none;
 
     }
-    .nav-item:hover{
-     text-decoration: underline;
-     color:#0066CC;
+
+    .nav-item:hover {
+      text-decoration: underline;
+      color: #0066CC;
     }
   }
 
@@ -85,7 +110,8 @@ a:hover{
     outline: 3px solid #fff;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25),
       0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      border-color: white;
+    border-color: white;
+
     .login {
       padding: 9px 30px;
       font-size: 2.5rem;
@@ -99,16 +125,17 @@ a:hover{
   }
 }
 
-.username{
-  gap:20px
+.username {
+  gap: 20px
 }
+
 .pop-up {
   width: 120px;
   background-color: none;
   font-family: 'poppins';
   column-gap: 20px;
   font-size: 20px;
-  
+
 }
 
 .button-popup {
@@ -125,13 +152,34 @@ a:hover{
   font-family: 'poppins';
   justify-content: center;
   padding: 6px;
-  color: white;
-
+  color: black;
   font-size: 17px;
 }
-.text-all{
-  margin-left: -30px;
-  background-color: #06c;
+
+.text-all {
   border-radius: 5px;
+  font-family: poppins;
+  font-weight: 400;
+
+  .link-text {
+    font-size: 17px;
+  }
+}
+
+.button-page {
+  background: none;
+  border: none;
+  font-size: 25px;
+  font-family: inter;
+  font-weight: 400;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+  background-color: transparent;
+  color: white;
+  border: none;
+
 
 }

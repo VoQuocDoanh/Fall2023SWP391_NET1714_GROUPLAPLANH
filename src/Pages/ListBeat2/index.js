@@ -1,4 +1,3 @@
-
 import classNames from "classnames/bind";
 import styles from "./ListBeat2.module.scss";
 import { Button } from "@mui/material";

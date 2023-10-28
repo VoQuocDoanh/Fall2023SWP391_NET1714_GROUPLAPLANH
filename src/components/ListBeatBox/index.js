@@ -5,17 +5,29 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faPlay, faPause, faCheckCircle, faUsersViewfinder, faEye, faStar, faStepBackward, faStepForward } from "@fortawesome/free-solid-svg-icons";
 import { faHeart, faThumbsUp } from "@fortawesome/free-regular-svg-icons";
 import { Button, colors } from "@mui/material";
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ShopContext } from "../../context/shop-context";
 import useToken from "../../authorization/useToken";
+import axiosInstance from "../../authorization/axiosInstance";
 
 
 const cx = classNames.bind(styles);
 
-function ListBeatBox({ id, name, genre, price, view, like, play, setPlay, onClick, handleLike, rating, vocalRange, fullName }) {
+function ListBeatBox({ id, name, genre, price, view, like, onClick, handleLike, rating, vocalRange, fullName }) {
     const token = useToken()
     const audioRef = useRef()
-    const { addToCart, cartItems } = useContext(ShopContext)
+    const { addToCart } = useContext(ShopContext)
+    const [play, setPlay] = useState(false)
+    const [beatSoundDemo, setBeatSoundDemo] = useState("")
+    useEffect(() => {
+        loadSoundDemo()
+    })
+    const loadSoundDemo = async () => {
+        await axiosInstance(`http://localhost:8080/api/v1/beat/user/demo/${id}`)
+            .then((res) => {
+                setBeatSoundDemo(res.data.beatSound)
+            })
+    }
     return (<div className={cx("list-box")} onClick={onClick}>
         <div className={cx("card-item")}>
             <img className={cx("box-img")} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} alt="anh" />
@@ -35,7 +47,7 @@ function ListBeatBox({ id, name, genre, price, view, like, play, setPlay, onClic
                         <span className={cx("number")}>{view}</span>
                     </div>
                     <span className={cx("like")}>
-                        <FontAwesomeIcon icon={faThumbsUp} onClick={() => handleLike(id)} />
+                        <FontAwesomeIcon icon={faHeart} onClick={() => handleLike(id)} />
                         <span className={cx("number")}>{like}</span>
                     </span>
                     <span className={cx("rating")}>
@@ -43,6 +55,8 @@ function ListBeatBox({ id, name, genre, price, view, like, play, setPlay, onClic
                         <span className={cx("number")}>{rating}</span>
                     </span>
                 </div>
+                <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundDemo}>
+                </audio>
             </div>
             {/* Content right  */}
             <div className={cx("content-right")}>
@@ -53,7 +67,7 @@ function ListBeatBox({ id, name, genre, price, view, like, play, setPlay, onClic
 
             </div>
         </div>
-        <div className={cx("control")}>
+        {/* <div className={cx("control")}>
             <div className={cx("btn", "btn-prev")}>
                 <i className="fas fa-step-backward"></i>
                 <FontAwesomeIcon icon={faStepBackward} />
@@ -70,9 +84,7 @@ function ListBeatBox({ id, name, genre, price, view, like, play, setPlay, onClic
                 <FontAwesomeIcon icon={faStepForward} />
             </div>
 
-        </div>
-        <audio id="audio" ref={audioRef} controls src={require("../../assets/audio/Good_Times.mp3")}>
-                </audio>
+        </div> */}
     </div>);
 }
 export default ListBeatBox
