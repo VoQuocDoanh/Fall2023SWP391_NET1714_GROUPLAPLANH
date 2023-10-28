@@ -36,9 +36,9 @@ public class AdminController {
     }
 
     //Ban user
-    @PutMapping({"/{id}"})
-    public ResponseEntity<String> banUser(@Valid @RequestBody User newUser, @PathVariable Long id) {
-        return this.userService.banUser(newUser, id);
+    @PostMapping({"/{id}"})
+    public ResponseEntity<String> banUser(@Valid @RequestBody UserDTO userDTO, @Valid @PathVariable Long id) {
+        return this.userService.banUser(userDTO, id);
     }
 
     //Search user by name

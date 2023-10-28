@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,7 +19,7 @@ public class UserResponeDTO {
     private String phone;
     private String mail;
     private int status;
-    private LocalDateTime crateAt;
+    private LocalDateTime createAt;
 
     private String professional;
     private String prize;
@@ -42,23 +41,23 @@ public class UserResponeDTO {
         this.fullName = fullName;
     }
 
-    public UserResponeDTO(Long id, String username, String fullName, String gender, String role, String mail,int status,LocalDateTime crateAt , String phoneNumber) {
+    public UserResponeDTO(Long id, String username, String fullName, String gender, String role, String mail, int status, LocalDateTime createAt, String phoneNumber) {
         this.id = id;
         this.username = username;
         this.fullName = fullName;
         this.gender = gender;
         this.role = role;
-        this.crateAt = crateAt;
+        this.createAt = createAt;
         this.status = status;
         this.phone = phoneNumber;
         this.mail = mail;
     }
-    public UserResponeDTO(Long id, String username, String fullName, String gender, LocalDateTime crateAt , String phoneNumber,String mail) {
+    public UserResponeDTO(Long id, String username, String fullName, String gender, LocalDateTime createAt, String phoneNumber, String mail) {
         this.id = id;
         this.username = username;
         this.fullName = fullName;
         this.gender = gender;
-        this.crateAt = crateAt;
+        this.createAt = createAt;
         this.phone = phoneNumber;
         this.mail = mail;
     }

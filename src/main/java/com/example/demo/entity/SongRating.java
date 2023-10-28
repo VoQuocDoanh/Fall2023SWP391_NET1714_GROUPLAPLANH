@@ -34,16 +34,16 @@ public class SongRating {
     @ManyToOne
     @JsonIgnore
     @JoinColumn (name = "songId")
-    private Song songRating;
+    private Song songOfRating;
 
     @ManyToOne
     @JsonIgnore
     @JoinColumn (name = "userId")
-    private User rateByUsers;
+    private User rateByUser;
 
-    public SongRating(User rateByUsers, Song songRating,int rating) {
+    public SongRating(User rateByUser, Song songOfRating, int rating) {
         this.rating = rating;
-        this.songRating = songRating;
-        this.rateByUsers = rateByUsers;
+        this.songOfRating = songOfRating;
+        this.rateByUser = rateByUser;
     }
 }

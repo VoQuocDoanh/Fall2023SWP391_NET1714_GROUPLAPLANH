@@ -12,7 +12,9 @@ import java.util.Optional;
 
 @Repository
 public interface SongRatingRepository extends JpaRepository<SongRating, Long> {
-    Optional<SongRating> findSongRatingBySongRatingAndRateByUsers(Song song, User user);
 
-    List<SongRating> findAllBySongRating(Song song);
+
+    Optional<SongRating> findSongRatingBySongOfRatingAndRateByUser(Song song, User user);
+
+    List<SongRating> findAllBySongOfRating(Song song);
 }

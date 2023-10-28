@@ -103,7 +103,7 @@ public class Song {
     @ManyToMany(mappedBy = "songsinplaylist",cascade = {CascadeType.ALL})
     private Set<SongPlaylist> playlists = new HashSet<>();
 
-    @OneToMany (mappedBy = "songRating")
+    @OneToMany (mappedBy = "songOfRating")
     @JsonIgnore
     private Set<SongRating> songRatings;
 
@@ -142,23 +142,5 @@ public class Song {
         this.totalUserRating = totalUserRating;
         this.cmt = cmt;
         this.report = report;
-    }
-
-    @Override
-    public String toString() {
-        return "Song{" +
-                "Id=" + Id +
-                ", songname='" + songname + '\'' +
-                ", createdAt=" + createdAt +
-                ", author='" + singer + '\'' +
-                ", tone='" + tone + '\'' +
-                ", description='" + description + '\'' +
-                ", vocalRange='" + vocalRange + '\'' +
-                ", songUrl='" + songUrl + '\'' +
-                ", status=" + status +
-                ", userUploadSong=" + userUploadSong +
-                ", genres=" + genresofsong +
-                ", chordsofsong=" + chordsofsong +
-                '}';
     }
 }

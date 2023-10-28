@@ -341,11 +341,12 @@ public class SongService {
             Optional<Song> foundSong = this.songRepository.findSongByIdAndStatus(songid, 1);
             if (foundSong.isPresent()) {
                 Song song = foundSong.get();
-                Optional<SongRating> foundRating = this.songRatingRepository.findSongRatingBySongRatingAndRateByUsers(song, foundUser.get());
+                Optional<SongRating> foundRating = this.songRatingRepository.findSongRatingBySongOfRatingAndRateByUser(song, foundUser.get());
                 if (foundRating.isPresent()) {
                     this.songRatingRepository.delete(foundRating.get());
                     song.setTotalUserRating(song.getTotalUserRating() - 1);
-                    List<SongRating> songRatings = this.songRatingRepository.findAllBySongRating(song);
+                    this.songRepository.save(song);
+                    List<SongRating> songRatings = this.songRatingRepository.findAllBySongOfRating(song);
                     if(!songRatings.isEmpty()) {
                         int total = 0;
                         for (SongRating value : songRatings) {
@@ -357,10 +358,11 @@ public class SongService {
                         this.songRepository.save(song);
                     }
                 }
-                song.setTotalUserRating(song.getTotalUserRating() + 1);
+
                 SongRating songRating = new SongRating(foundUser.get(), song, rating);
                 double result = (song.getRating() * song.getTotalUserRating() + rating) / (song.getTotalUserRating() + 1);
                 double round = Math.round(result * 10.0) / 10.0;
+                song.setTotalUserRating(song.getTotalUserRating() + 1);
                 song.setRating(round);
                 this.songRatingRepository.save(songRating);
                 this.songRepository.save(song);

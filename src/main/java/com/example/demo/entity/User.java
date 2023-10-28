@@ -114,7 +114,7 @@ public class User implements UserDetails {
     )
     private Set<Song> likedSongs = new HashSet<>();
 
-    @OneToMany(mappedBy = "rateByUsers")
+    @OneToMany(mappedBy = "rateByUser")
     @JsonIgnore
     private Set<SongRating> rateSongs;
 

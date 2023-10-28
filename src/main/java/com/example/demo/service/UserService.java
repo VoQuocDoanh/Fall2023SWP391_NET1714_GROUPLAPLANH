@@ -8,15 +8,12 @@ package com.example.demo.service;
 import com.example.demo.dto.RegisterDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserResponeDTO;
-import com.example.demo.entity.ActivationToken;
 import com.example.demo.entity.MusicianInformation;
 import com.example.demo.entity.User;
-import com.example.demo.repository.ActivationTokenRepository;
 import com.example.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.A;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +28,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Transactional
 @RequiredArgsConstructor
@@ -143,9 +139,9 @@ public class UserService {
             dto.setUsername(user.getUsername());
             dto.setFullName(user.getFullName());
             dto.setGender(user.getGender().toString());
-                    dto.setCrateAt(user.getCreatedAt());
-                    dto.setPhone(user.getPhoneNumber());
-                    dto.setMail(user.getMail());
+            dto.setCreateAt(user.getCreatedAt());
+            dto.setPhone(user.getPhoneNumber());
+            dto.setMail(user.getMail());
             if (user.getRole().equals("MS")){
                 MusicianInformation information = user.getInformation();
                 dto.setProfessional(information.getProfessional());
@@ -158,15 +154,16 @@ public class UserService {
     }
 
     // Banned User
-    public ResponseEntity<String> banUser(User newUser, Long id) {
-        Optional<User> foundUser = this.userRepository.findById(id);
+    public ResponseEntity<String> banUser(UserDTO userDTO, Long id) {
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(id, 1);
         if (foundUser.isPresent()) {
             User user = foundUser.get();
-            user.setStatus(newUser.getStatus());
+            user.setStatus(0);
             this.userRepository.save(user);
+            this.emailService.sendEmailForBan(user.getMail(), "YOU GOT BANNED", userDTO.getContent());
             return new ResponseEntity<>("Ban Successfully", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Ban Failed", HttpStatus.NOT_IMPLEMENTED);
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
     }
 

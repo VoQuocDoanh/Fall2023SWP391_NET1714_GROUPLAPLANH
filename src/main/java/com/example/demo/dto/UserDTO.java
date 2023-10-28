@@ -35,7 +35,8 @@ public class UserDTO {
     private String prize;
     private int year;
 
-
+    // Content
+    private String content;
     public String toString() {
         return "UserDTO{userName='" + this.username + "'}";
     }

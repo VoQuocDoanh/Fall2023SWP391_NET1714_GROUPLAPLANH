@@ -19,7 +19,26 @@ public class EmailService {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            String htmlContent = "<a href='" + text + "'>Click to ACTIVE Your Account</a>";
+            String htmlContent =
+                    "<h1><a href='" + text + "'>Click to ACTIVE Your Account</a></h1></br>" +
+                    "<p>Have a nice day</p>";
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(htmlContent, true);
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendEmailForBan(String to, String subject, String text) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            String htmlContent =
+                    "<h1>You have been banned from the YourChords website</h1></br>" +
+                    "<p>Lý do:" + text + "</p></br>" +
+                    "<p>Thanks for joining my website</p>";
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(htmlContent, true);
