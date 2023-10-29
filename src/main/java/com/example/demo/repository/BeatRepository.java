@@ -27,11 +27,16 @@ public interface BeatRepository extends JpaRepository<Beat, Long> {
     @Query("select b from Beat b where b.userName.Id = :id and b.userName.status = 1 and b.status = 1 or b.status = 0 order by b.Id")
     Page<Beat> findUserBeatByUsername(Long id, Pageable pageable);
 
+    @Query("select b from Beat b where b.userName.Id = :id and b.userName.status = 1 and b.status = 1 or b.status = 0 order by b.Id")
+    List<Beat> listUserBeatByUsername(Long id);
+
     List<Beat> findByOrderByStatusDesc();
     @Query("SELECT b.userName from Beat b ")
     List<User> findAllUser();
 
     Page<Beat> findBeatByOrderBeat(Order id, Pageable pageable);
+
+    List<Beat> findBeatByOrderBeat(Order id);
 
     @Query("SELECT b.Id FROM Beat b join b.userSet u where u.Id =:id")
     List<Long> findUserLiked(Long id);
@@ -40,8 +45,15 @@ public interface BeatRepository extends JpaRepository<Beat, Long> {
     @Query("SELECT b FROM Beat b WHERE b.status = 1")
     Page<Beat> findAllBeat(Pageable pageable);
 
+
+    @Query("SELECT b FROM Beat b WHERE b.status = 1")
+    List<Beat> findAllListBeat();
     @Query("SELECT b FROM Beat b join b.userName u where b.status = -1 and u.Id = :id")
     Page<Beat> findAllBeatSoldOut(Long id, Pageable pageable);
+
+    @Query("SELECT b FROM Beat b join b.userName u where b.status = -1 and u.Id = :id")
+    List<Beat> listAllBeatSoldOut(Long id);
+
 
     @Query("SELECT b FROM Beat b join b.userName u where b.status = -1 and u.Id = :id")
     List<Beat> findBeatSoldOut(Long id);

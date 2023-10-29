@@ -52,16 +52,17 @@ public class FeedbackService {
         Pageable pageable = PageRequest.of(page-1,10);
 
         Page<Beat> beatList = beatRepository.findAllBeatSoldOut(foundUser.get().getId(),pageable);
+        List<Beat> b = beatRepository.listAllBeatSoldOut(foundUser.get().getId());
         List<Feedback> feedback =new ArrayList<>();
         for (Beat i : beatList){
             feedback.add(feedbackRepository.findByBeatFeedback(i));
         }
         int pagecount = pageable.getPageNumber();
         int max = 0;
-        if (feedback.size() % 10 != 0) {
-            max = feedback.size() / 10 + 1;
+        if (b.size() % 10 != 0) {
+            max = b.size() / 10 + 1;
         } else {
-            max = feedback.size() / 10;
+            max = b.size() / 10;
         }
         return new PaginationResponseDTO(feedback,pagecount,max);
 

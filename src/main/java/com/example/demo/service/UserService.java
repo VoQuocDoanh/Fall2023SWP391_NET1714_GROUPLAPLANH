@@ -235,6 +235,7 @@ public class UserService {
         List<UserResponeDTO> userResponeDTOList = new ArrayList<>();
         Pageable pageable = PageRequest.of(page - 1, 10);
         Page<User> userList = userRepository.findAllByOrderByStatusDesc(pageable);
+        List<User> u = userRepository.findAllByOrderByStatusDesc();
         UserResponeDTO dto;
         for (User user : userList.getContent()) {
             dto = new UserResponeDTO(
@@ -257,10 +258,10 @@ public class UserService {
         }
         int pageCount = pageable.getPageNumber();
         int max = 0;
-        if (userResponeDTOList.size() % 10 != 0) {
-            max = userResponeDTOList.size() / 10 + 1;
+        if (u.size() % 10 != 0) {
+            max = u.size() / 10 + 1;
         } else {
-            max = userResponeDTOList.size() / 10;
+            max = u.size() / 10;
         }
         return new PaginationResponseDTO(userResponeDTOList, pageCount, max);
 
