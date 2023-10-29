@@ -24,11 +24,12 @@ import ListUser2 from "../Pages/ListUser2";
 import MyProfile from "../Pages/MyProfile";
 import RegisterActivation from "../Pages/RegisterActivation";
 import ListBeatPurchased from "../Pages/listBeatPurchased";
-import ViewDetailBeatPurchased from "../Pages/viewDetailBeatPurchased";
+import ViewDetailBeatPurchased from "../Pages/ViewDetailBeatPurchased";
 import PaymentSuccess from "../Pages/PaymentSuccess";
 import PaymentCancel from "../Pages/PaymentCancel";
 import ViewDetailsUser from "../Pages/ViewDetailsUser";
 import ViewDetailsMusician from "../Pages/ViewDetailsMusician";
+import ViewDetailBeatMusician from "../Pages/ViewDetailBeatMusician";
 const publicRoutes = [
   {
     path: "/",
@@ -82,6 +83,10 @@ const publicRoutes = [
   {
     path: "/viewdetailbeatpurchased/:beatId",
     component: ViewDetailBeatPurchased,
+  },
+  {
+    path: "/viewdetailbeatmusician/:beatId",
+    component: ViewDetailBeatMusician,
   },
   {
     path: "/listbeat2",

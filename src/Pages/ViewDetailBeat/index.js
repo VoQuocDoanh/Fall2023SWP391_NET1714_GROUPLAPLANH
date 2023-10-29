@@ -59,7 +59,7 @@ function ViewDetailBeat() {
 
     useEffect(() => {
         loadSoundDemo()
-    })
+    },[])
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -158,7 +158,7 @@ function ViewDetailBeat() {
             return
         }
 
-        await axiosInstance.get(`http://localhost:8080/api/v1/beat/user/${beatDetail.user.id}/all`)
+        await axiosInstance.get(`http://localhost:8080/api/v1/beat/musician/${beatDetail.user.fullName}`)
             .then((res) => {
                 setListMusicianBeat(res.data)
 

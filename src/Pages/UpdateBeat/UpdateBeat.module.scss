@@ -2,6 +2,16 @@
 *{
   font-family: Sono;
 }
+.main {
+  top: 0;
+  left: 0;
+  height: 2500px;
+  width: 100%;
+  z-index: -1;
+  opacity: 2;
+  position: absolute;
+}
+
 .login-wrapper {
     padding: 150px 254px;
     text-align: center;
@@ -30,10 +40,9 @@
       border-bottom: 1px solid #fff;
     }
   }
-  .form-heading{
-    font-weight: 500
-  }
-  
+.form-heading{
+  font-weight: 500;
+}
   .form {
     margin-top: 56px;
     display: flex;
@@ -60,6 +69,7 @@
     font-weight: 400;
     line-height: 1.6;
     background-color: inherit;
+    color: white;
   
     &::placeholder {
       color: var(--white);
@@ -68,11 +78,13 @@
   
   .submit {
     border: 2px solid #e5e5e5;
-    background: #1976d2;
+    background: #06c;
     padding-left: 0 !important;
   
     .input-submit {
       margin: 0 auto;
+      color: white;
+      font-family: Poppins;
     }
   }
   
@@ -99,11 +111,4 @@
       font-weight: 400;
       user-select: none;
     }
-  }
-  .input-text{
-    color: white;
-  }
-  .status-option{
-    color: black;
-    font-weight: 400;
   }

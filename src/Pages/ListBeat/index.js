@@ -13,7 +13,7 @@ import axiosInstance from "../../authorization/axiosInstance";
 import Sidebar from "../../components/SideBar";
 import useToken from "../../authorization/useToken";
 import jwtDecode from "jwt-decode";
-import PaginationControlled from "../../components/Pagination";
+import Pagination from "../../components/Pagination";
 
 const cx = classNames.bind(styles);
 
@@ -31,6 +31,8 @@ function ListBeat() {
     // const audioRef = useRef();
     const token = useToken();
     const [checkLike, setCheckLike] = useState();
+    const [page, setPage] = useState(1)
+    const [pages, setPages] = useState(1)
     // 
     const handleSearch = (e) => {
         setSearch(e.target.value);
@@ -82,10 +84,12 @@ function ListBeat() {
 
 
     const loadBeats = async () => {
-        await axiosInstance.get("http://localhost:8080/api/v1/beat")
+        await axiosInstance.get(`http://localhost:8080/api/v1/beat/all/${page}`)
             .then(res => {
-                setList(res.data)
-                setListBeatContext(res.data)
+                setList(res.data.dtoList)
+                setListBeatContext(res.data.dtoList)
+                setPages(res.data.max)
+                console.log(pages)
                 if (viewBeatFirstTime === 0) {
                     setViewBeatFirstTime(1)
                 }
@@ -114,14 +118,14 @@ function ListBeat() {
             })
     }
 
-    const loadMusicianName = async() =>{
+    const loadMusicianName = async () => {
         await axiosInstance.get("http://localhost:8080/api/v1/beat/musician/full")
-        .then((res) => {
-            setListMusicianName(res.data)
-        })
-        .catch((error) =>{
-            console.log(error)
-        })
+            .then((res) => {
+                setListMusicianName(res.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     const handleLike = async (id) => {
@@ -142,7 +146,7 @@ function ListBeat() {
         return (
             <div className={cx("list-header")}>
                 {listGenres && listMusicianName ?
-                    <Sidebar  listGenres={listGenres} listMusicianName = {listMusicianName}></Sidebar>
+                    <Sidebar listGenres={listGenres} listMusicianName={listMusicianName}></Sidebar>
                     : <div></div>}
                 <div className={cx("text-header")}>
                     <h1 className={cx("text-welcome")}>
@@ -164,24 +168,26 @@ function ListBeat() {
 
                 </div>
                 {list.length !== 0 ?
-                <div>
-                    <div className={cx("listbeat")}>
-                        {list.map((item) => {
-                            return <ListBeatBox id={item.id} name={item.beatName} genre={item.genre} price={item.price} view={(item.view / 2).toFixed()} like={item.totalLike} handleLike={() => handleLike(item.id)} rating={item.rating} vocalRange={item.vocalRange} fullName={item.user.fullName} />
-                        })}
-                        
-                    </div>
-                    <PaginationControlled style={{display: "flex", justifycontent: "end"}}/>
+                    <div>
+                        <div className={cx("listbeat")}>
+                            {list.map((item) => {
+                                return <ListBeatBox id={item.id} name={item.beatName} genre={item.genre} price={item.price} view={(item.view / 2).toFixed()} like={item.totalLike} handleLike={() => handleLike(item.id)} rating={item.rating} vocalRange={item.vocalRange} fullName={item.user.fullName} />
+                            })}
+
+                        </div>
+                        <div className={cx("pagination")}>
+                            <Pagination pages={pages} page={page} setPage={setPage} />
+                        </div>
                     </div>
 
-                     : <div className={cx("sold-out")} style={{zindex: '1',marginLeft:800}}> All Beat are sold out!<div> Thank you for your visiting on our website </div> </div>}
+                    : <div className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800 }}> All Beat are sold out!<div> Thank you for your visiting on our website </div> </div>}
 
                 {/* <div className={cx("list-beat")}>
                 {list.map((item, index) => {
                     return <ListBeatBox key={index} name={item.name} type={item.type} price={item.price} member={item.member} play={play} setPlay={setPlay} />
                 })}
             </div> */}
-                
+
 
                 {/* <div className={cx("audio")}>
 

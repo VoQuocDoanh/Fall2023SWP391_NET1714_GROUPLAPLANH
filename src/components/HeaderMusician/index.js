@@ -53,16 +53,10 @@ function HeaderMusician() {
       <img className={cx("img-header")} src={require("../../assets/images/Other/Logo.png")} />
       <div className={cx("header-right")}>
         <div className={cx("navigation")}>
-          <div className={cx("nav-item")}>Home</div>
-          <div className={cx("nav-item")}>User</div>
+          <Link to={"/"}><div className={cx("nav-item")}>Home</div></Link>
+          <Link to="/musicianprofile"><div className={cx("nav-item")}>User</div></Link>
           <div>
-            <Popup trigger={<button className={cx("button-page")}>Pages</button>} position="bottom centers" closeOnDocumentClick on={['hover', 'focus']}>
-              <div className={cx("text-all")}>
-                <Link to="/listbeat"><div className={cx("link-text")}>View Beat</div></Link>
-                <Link to="/chordsdetails"><div className={cx("link-text")}>View Chords</div></Link>
-                <Link to="/songs"><div className={cx("link-text")}> View Songs</div></Link>
-              </div>
-            </Popup>
+                <Link to="/viewbeat"><div className={cx("nav-item")}>Beat</div></Link>        
           </div>
           <div className={cx("nav-item")}>Contact</div>
           <div className={cx("nav-item")}>
@@ -76,6 +70,7 @@ function HeaderMusician() {
               <Link to="/musicianprofile"><div className={cx("link-text")}>My Account</div></Link>
               <Link to="/viewbeat"><div className={cx("link-text")}>View Beat</div></Link>
               <Link to={"/uploadbeat"}><div className={cx("link-text")}> Upload Beat</div></Link>
+              <Link to={"/uploadbeat"}><div className={cx("link-text")}> Beat Sold Out</div></Link>
               <Link to="/"><div className={cx("link-text")} onClick={handleLogout}> Logout</div></Link>
             </div>
           </Popup>

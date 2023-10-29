@@ -53,8 +53,8 @@ function HeaderCustomer() {
       <img className={cx("img-header")} src={require("../../assets/images/Other/Logo.png")} />
       <div className={cx("header-right")}>
         <div className={cx("navigation")}>
-          <div className={cx("nav-item")}>Home</div>
-          <div className={cx("nav-item")}>User</div>
+        <Link to={"/"}><div className={cx("nav-item")}>Home</div></Link>
+        <Link to="/myprofile"><div className={cx("nav-item")}>User</div></Link>
           <div>
             <Popup trigger={<button className={cx("button-page")}>Pages</button>} position="bottom centers" closeOnDocumentClick on={['hover', 'focus']}>
               <div className={cx("text-all")}>
@@ -95,6 +95,7 @@ function HeaderCustomer() {
                 <Link to="/myprofile"><div className={cx("link-text")}>My Account</div></Link>
                 <Link to="/listBeatPurchased"><div className={cx("link-text")}>My Purchased</div></Link>
                 <Link to="/viewcart"><div className={cx("link-text")}>My Song's Playlist</div></Link>
+                <Link to="/"><div className={cx("link-text")} onClick={handleLogout}> Add new Song</div></Link>
                 <Link to="/"><div className={cx("link-text")} onClick={handleLogout}> Log out</div></Link>
               </div>
             </Popup>

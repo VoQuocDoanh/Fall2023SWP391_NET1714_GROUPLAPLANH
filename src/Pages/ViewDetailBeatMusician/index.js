@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import styles from "./ViewDetailBeatPurchased.module.scss";
+import styles from "./ViewDetailBeatMusician.module.scss";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Avatar, Box, Button, IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
 import axiosInstance from '../../authorization/axiosInstance';
@@ -15,13 +15,14 @@ import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 const cx = classNames.bind(styles);
 
-function ViewDetailBeatPurchased() {
+function ViewDetailBeatMusician() {
     const { beatId } = useParams();
     const [beatDetail, setBeatDetail] = useState(null)
     const audioRef = useRef();
     const token = useToken();
     const navigate = useNavigate();
     const [beatSoundFull, setBeatSoundFull] = useState("")
+    const [beatSoundDemo, setBeatSoundDemo] = useState("")
     const [checkFeedBack, setCheckFeedBack] = useState(null)
     let userId = ""
     if (token) {
@@ -37,10 +38,24 @@ function ViewDetailBeatPurchased() {
         loadSoundFull()
     }, [])
 
+    useEffect(() => {
+        loadSoundDemo()
+    }, [])
+
     const loadSoundFull = async () => {
         await axiosInstance(`http://localhost:8080/api/v1/beat/user/full/${beatId}`)
             .then((res) => {
                 setBeatSoundFull(res.data.beatSound)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    const loadSoundDemo = async () => {
+        await axiosInstance(`http://localhost:8080/api/v1/beat/user/demo/${beatId}`)
+            .then((res) => {
+                setBeatSoundDemo((res.data.beatSound))
             })
             .catch((error) => {
                 console.log(error)
@@ -109,7 +124,9 @@ function ViewDetailBeatPurchased() {
                                 <div>Message</div>
                             </Button>
                         </div> */}
-                                    <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundFull}>
+                                    <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundDemo}>
+                                    </audio>
+                                    <audio style={{ marginTop: 50 }} className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundFull}>
                                     </audio>
                                 </div>
                             </div>
@@ -163,7 +180,12 @@ function ViewDetailBeatPurchased() {
                                         <span>&#x2022; Release date: {day}/{month}/{year}</span>
                                         <div style={{ textAlign: "center", marginTop: 20 }}>
                                             <Button variant="contained" className={cx('button-1')} onClick={() => loadSoundFull()}>
-                                                <div>Feedback</div>
+                                                <div>Sell</div>
+                                            </Button>
+                                        </div>
+                                        <div style={{ textAlign: "center", marginTop: 20 }}>
+                                            <Button variant="contained" className={cx('button-1')} onClick={() => loadSoundFull()}>
+                                                <div>UnSell</div>
                                             </Button>
                                         </div>
                                         <div>
@@ -218,4 +240,4 @@ function ViewDetailBeatPurchased() {
         return <h1 className={cx('first-container')}>Loading Page...</h1>
     }
 }
-export default ViewDetailBeatPurchased;
+export default ViewDetailBeatMusician;

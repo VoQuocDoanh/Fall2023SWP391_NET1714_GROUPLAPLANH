@@ -1,23 +1,34 @@
+import React, { useEffect, useState } from 'react';
 
-import React from "react";
-import classNames from "classnames/bind";
-import Typography from '@mui/material/Typography';
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
-import styles from "./Pagination.module.scss";
+import classNames from "classnames/bind"
 
-const cx = classNames.bind(styles);
-export default function PaginationControlled() {
-  const [page, setPage] = React.useState(1);
-  const handleChange = (event, value) => {
-    setPage(value);
-  };
+import styles from "./Pagination.module.scss"
 
+const cx = classNames.bind(styles)
+// Example items, to simulate fetching from another resources.
+function Pagination({pages, page, setPage}) {
+  // Here we use item offsets; we could also use page offsets
+  // following the API or data you're working with.
+  let list = []
+  for(let i = 0; i < pages ; i++){
+    list.push(i + 1)
+  }
+  console.log(page)
   return (
-    <div className={cx("paginatios")}>
-        <Stack className={cx("pagination-part")} spacing={2}>
-          <Pagination className={cx("paging")} count={10} page={page} onChange={handleChange} size="large" variant="outlined" color="standard" showFirstButton showLastButton/>
-        </Stack>
+    <div style={{marginTop:50}}>
+      {page > 1 ? 
+        <span onClick={() => setPage(page - 1)}><button>Previous</button></span>
+        : <span>Previous </span>
+      }
+    
+      {list.map((item) => {
+        return <span onClick={() => setPage(item)}>{item}</span>
+      })}
+      {page < list.length ? 
+        <span onClick={() => setPage(page + 1)}><button>Next</button></span>
+        : <span> Next</span>
+      }
     </div>
   );
 }
+export default Pagination;

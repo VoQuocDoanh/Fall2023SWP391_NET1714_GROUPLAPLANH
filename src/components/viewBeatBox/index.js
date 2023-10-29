@@ -13,10 +13,10 @@ import axiosInstance from "../../authorization/axiosInstance";
 
 const cx = classNames.bind(styles);
 
-function ViewBeatBox({ id, name, genre, price, view, like, onClick, handleLike, rating, vocalRange, fullName }) {
+function ViewBeatBox({ id, name, genre, price, view, like, onClick, handleLike, rating, vocalRange, fullName, status }) {
     const token = useToken()
     const audioRef = useRef()
-    const { addToCart, cartItems } = useContext(ShopContext)    
+    const { addToCart, cartItems } = useContext(ShopContext)
     return (<div className={cx("list-box")} onClick={onClick}>
         <div className={cx("card-item")}>
             <img className={cx("box-img")} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} alt="anh" />
@@ -24,7 +24,7 @@ function ViewBeatBox({ id, name, genre, price, view, like, onClick, handleLike, 
         <div className={cx("content")}>
             {/* Content left */}
             <div className={cx("content-left")}>
-                <h2 className={cx("name-beat")}> <Link to={`/viewdetailbeatpurchased/${id}`}>{name}</Link> <FontAwesomeIcon className={cx("check")} icon={faCheckCircle} /></h2>
+                <h2 className={cx("name-beat")}> <Link to={`/viewdetailbeatmusician/${id}`}>{name}</Link> <FontAwesomeIcon className={cx("check")} icon={faCheckCircle} /></h2>
                 <span className={cx("type-beat")}>{fullName}</span> <br />
                 <span className={cx("type-beat")}>{vocalRange}</span>
 
@@ -44,6 +44,12 @@ function ViewBeatBox({ id, name, genre, price, view, like, onClick, handleLike, 
                         <span className={cx("number")}>{rating}</span>
                     </span>
                 </div>
+                {status === 1 ?
+                    <div style={{ background: "green", padding: 10, height: 45, color: 'white', fontSize: '1.8rem', borderRadius: 18, marginBottom: 20, marginRight: 110 }}>Active</div>
+                    :
+                    <div style={{ background: "red", padding: 10, height: 45, color: 'white', fontSize: '1.8rem', borderRadius: 18, marginBottom: 20, marginRight: 110 }}>UnSell</div>
+                }
+
             </div>
             {/* Content right  */}
 

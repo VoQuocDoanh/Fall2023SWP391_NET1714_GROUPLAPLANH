@@ -171,15 +171,13 @@ function UploadBeat() {
           </svg>
        
         
-        <select
-          className={cx("input-text")}
-          onChange={e => setGenre(e.target.value)}
-          defaultValue={genre}
-        >
-          
-          <option value="Pop">POP</option>
-          <option value="Ballad">BALLAD</option>
-        </select>
+          <input
+            type="Text"
+            placeholder="Genres"
+            className={cx("input-text")}
+            value={genre}
+            onChange={(e) => setGenre(e.target.value)}
+          />
       </div>
 
       {/*Description*/}

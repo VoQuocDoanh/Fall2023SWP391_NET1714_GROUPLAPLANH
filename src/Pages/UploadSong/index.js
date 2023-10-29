@@ -242,7 +242,7 @@ function UploadSong() {
                                     onChange={(event) => setInputGenres(event.target.value)}
                                 />
                                 <br></br>
-                                <button onClick={handleAddToList}>Add to list genre</button>
+                                {/* <button onClick={handleAddToList}>Add to list genre</button> */}
                             </div>
                             <div className={cx('tone-info')}>
                                 <h2><b>Tone:</b></h2>

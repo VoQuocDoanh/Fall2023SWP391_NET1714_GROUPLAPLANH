@@ -6,7 +6,7 @@ import styles from "./ListUser.module.scss";
 import BasicPagination from "../../components/Pagination";
 import PaginationControlled from "../../components/Pagination";
 import ReactPaginate from 'react-paginate';
-import { Pagination } from "@mui/material";
+import Pagination from "../../components/Pagination";
 
 
 const cx = classNames.bind(styles);
@@ -59,6 +59,10 @@ const DATA = [
 ];
 
 function ListUser() {
+
+    const [page, setPage] = useState(1)
+    const [pages, setPages] = useState(1)
+
     const handleDelete = (id) => {
         console.log(id);
     };
@@ -183,7 +187,9 @@ function ListUser() {
                         </td>
                     </div>
                 </tbody>
-                <PaginationControlled></PaginationControlled>
+                <div className={cx("pagination")}>
+                <Pagination  pages={pages} page={page} setPage={setPage} />
+                </div>
             </div>
         </div>
     );
