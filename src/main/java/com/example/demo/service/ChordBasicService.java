@@ -69,7 +69,7 @@ public class ChordBasicService {
             List<ChordResponseDTO> dtos = new ArrayList<>();
             for(ChordBasic value : basics){
                 ChordResponseDTO dto = new ChordResponseDTO(value.getChordId(),
-                        value.getChordName(),
+                        "[" + value.getChordName() + "]",
                         value.getImage());
                 dtos.add(dto);
             }

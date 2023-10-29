@@ -101,7 +101,8 @@ public class BeatService {
                         value.getTotalLike(),
                         value.getVocalRange(),
                         value.getTotalRating(),
-                        value.getRating());
+                        value.getRating(),
+                        value.getStatus());
                 beatResponseDTOS.add(dto);
             }
             return beatResponseDTOS;
