@@ -29,6 +29,7 @@ import PaymentSuccess from "../Pages/PaymentSuccess";
 import PaymentCancel from "../Pages/PaymentCancel";
 import ViewDetailsUser from "../Pages/ViewDetailsUser";
 import ViewDetailsMusician from "../Pages/ViewDetailsMusician";
+import ViewDetailUser2 from "../Pages/ViewDetailsUser";
 const publicRoutes = [
   {
     path: "/",

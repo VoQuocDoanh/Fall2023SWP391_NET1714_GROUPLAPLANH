@@ -186,10 +186,58 @@
   transition: all 0.5s ease-in-out;
   opacity: 1;
 }
+
 // add to playlist
-.button-popup{
+.button-popup-add {
   height: 80%;
-  margin-top: 30px;
+  margin-top: 15px;
   border-radius: 5px;
-  
+  color: white;
+  border-radius: 10px;
+
+}
+
+.button-send {
+  width: 80%;
+  height: 40px;
+  margin-left: 105px;
+  border-radius: 12px;
+  background-color: #06c;
+  cursor: pointer;
+  border: none;
+  color: white;
+  padding: 5px;
+  font-family: Sono;
+  font-weight: 500;
+  margin-top: 20px;
+}
+
+.text-des {
+  border: 1px
+}
+
+.img-user {
+  width: 50px;
+  height: 50px;
+  margin-right: 20px;
+  border-radius: 60%;
+}
+
+//button option
+.button-option-md {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+  padding: 10px;
+  width: 66%;
+  margin-left: 65px;
+  border-radius: 20px;
+  .button-option{
+    height: 40px;
+    width: 70px;
+    color: white;
+    background-color: #06c;
+    border-radius: 8px ;
+  }
 }
