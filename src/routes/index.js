@@ -30,6 +30,8 @@ import PaymentCancel from "../Pages/PaymentCancel";
 import ViewDetailsUser from "../Pages/ViewDetailsUser";
 import ViewDetailsMusician from "../Pages/ViewDetailsMusician";
 import ViewDetailUser2 from "../Pages/ViewDetailsUser";
+import DetailUser from "../Pages/DetailUser";
+import FeedbackMusician from "../Pages/FeedbackMusician";
 const publicRoutes = [
   {
     path: "/",
@@ -160,6 +162,14 @@ const publicRoutes = [
   {
     path: "/ViewDetailsMusician",
     component: ViewDetailsMusician,
+  },
+  {
+    path: "/DetailUser",
+    component: DetailUser,
+  },
+  {
+    path: "/FeedbackMusician",
+    component: FeedbackMusician,
   },
 ];
 
