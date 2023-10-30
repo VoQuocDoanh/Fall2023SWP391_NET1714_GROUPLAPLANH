@@ -30,9 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Transactional
 @RequiredArgsConstructor
@@ -268,9 +266,7 @@ public class UserService {
 
     // View all name of musician
     public List<String> viewallnamemusician (){
-        List<String> names = this.userRepository.findAllNameOfMusician().stream()
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+        List<String> names = this.userRepository.findAllNameOfMusician();
         if(!names.isEmpty()){
             return names;
         }
