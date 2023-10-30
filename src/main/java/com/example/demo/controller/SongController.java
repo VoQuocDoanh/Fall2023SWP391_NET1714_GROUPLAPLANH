@@ -25,19 +25,19 @@ public class SongController {
 
     // Upload Song
     @PostMapping("/user")
-    public ResponseEntity<String> uploadSong (@Valid @RequestBody SongDTO songDTO){
+    public ResponseEntity<String> uploadSong (@RequestBody SongDTO songDTO){
         return this.songService.uploadSong(songDTO);
     }
 
     // Update Song
     @PatchMapping("/user/{userid}")
-    public ResponseEntity<String> updateSong (@Valid @RequestParam("songid") Long songid , @Valid @RequestBody SongDTO songDTO, @Valid @PathVariable Long userid){
+    public ResponseEntity<String> updateSong (@RequestParam("songid") Long songid , @RequestBody SongDTO songDTO, @PathVariable Long userid){
         return this.songService.updateSong(songDTO, userid, songid);
     }
 
     // Delete Song
     @DeleteMapping("/user/{userid}")
-    public ResponseEntity<String> deleteSong (@Valid @RequestParam("songid") Long songid, @Valid @PathVariable Long userid){
+    public ResponseEntity<String> deleteSong (@RequestParam("songid") Long songid, @PathVariable Long userid){
         return this.songService.deleteSong(songid, userid);
     }
 
@@ -49,13 +49,13 @@ public class SongController {
 
     // Search User Song by name
     @GetMapping("/user/{userid}/name")
-    public ResponseEntity<List<SongResponseDTO>> findUserSongbySongName(@Valid @RequestParam("songname") String name, @Valid @PathVariable Long userid){
+    public ResponseEntity<List<SongResponseDTO>> findUserSongbySongName(@RequestParam("songname") String name, @PathVariable Long userid){
         return ResponseEntity.ok(this.songService.findUserSongbySongName(name, userid));
     }
 
     // Search User Song by genre
     @GetMapping("/user/{userid}/genre")
-    public ResponseEntity<List<SongResponseDTO>> findUserSongByGenreName(@Valid @RequestParam("genrename") String genreName, @Valid @PathVariable Long userid){
+    public ResponseEntity<List<SongResponseDTO>> findUserSongByGenreName(@RequestParam("genrename") String genreName, @Valid @PathVariable Long userid){
         return ResponseEntity.ok(this.songService.findUserSongByGenre(genreName, userid));
     }
 
@@ -67,36 +67,36 @@ public class SongController {
 
     // Get detail Song
     @GetMapping("/{songid}")
-    public ResponseEntity<SongResponseDTO> getDetailsSong (@Valid @PathVariable Long songid){
+    public ResponseEntity<SongResponseDTO> getDetailsSong (@PathVariable Long songid){
         return ResponseEntity.ok(this.songService.getDetailSong(songid));
     }
 
     // Search Song by genre
     @GetMapping("/genre")
-    public ResponseEntity<List<SongResponseDTO>> findSongByGenre(@Valid @RequestParam("genrename") String genreName){
+    public ResponseEntity<List<SongResponseDTO>> findSongByGenre(@RequestParam("genrename") String genreName){
         return ResponseEntity.ok(this.songService.findSongByGenre(genreName));
     }
 
     // Search Song by name
     @GetMapping("/name")
-    public ResponseEntity<List<SongResponseDTO>> findSongByName(@Valid @RequestParam("songname") String songname){
+    public ResponseEntity<List<SongResponseDTO>> findSongByName(@RequestParam("songname") String songname){
         return ResponseEntity.ok(this.songService.findSongByName(songname));
     }
 
     @GetMapping("/userupload")
-    public ResponseEntity<List<SongResponseDTO>> findSongByUserUploadName(@Valid @RequestParam("fullname") String username){
+    public ResponseEntity<List<SongResponseDTO>> findSongByUserUploadName(@RequestParam("fullname") String username){
         return ResponseEntity.ok(this.songService.findSongByUserName(username));
     }
 
     // Like Song
     @GetMapping("/like")
-    public  ResponseEntity<String> likeSong(@Valid @RequestParam("userid") Long userid, @Valid @RequestParam("songid") Long songid){
+    public  ResponseEntity<String> likeSong(@RequestParam("userid") Long userid, @RequestParam("songid") Long songid){
         return this.songService.likeSong(userid, songid);
     }
 
     // Rate Song
     @GetMapping("/rate")
-    public ResponseEntity<String> rateSong (@Valid @RequestParam("userid") Long userid, @Valid @RequestParam("songid") Long songid, @Valid @RequestParam("rating") int rating){
+    public ResponseEntity<String> rateSong (@RequestParam("userid") Long userid, @RequestParam("songid") Long songid, @RequestParam("rating") int rating){
         return this.songService.rateSong(userid, songid, rating);
     }
 }

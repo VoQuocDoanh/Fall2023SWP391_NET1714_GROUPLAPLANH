@@ -15,6 +15,7 @@ import com.example.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,9 +23,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.apache.commons.lang3.RandomStringUtils;
-
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -54,13 +52,17 @@ public class UserService {
 
     @NotNull
     private ResponseEntity<String> getStringResponseEntity(MultipartFile image, User user) {
-        if (user.getAvatar().isEmpty()) {
-            String path = this.service.uploadFile(image, user.getId(), "avatar", "full");
-            String fileName = this.extractObjectNameFromUrl(path);
-            user.setAvatar(path);
-            user.setObjectName(fileName);
-        } else {
-            this.service.updateFile(image, user.getObjectName());
+        if(image != null) {
+            if (user.getAvatar().isEmpty()) {
+                String path = this.service.uploadFile(image, user.getId(), "avatar", "full");
+                String fileName = this.extractObjectNameFromUrl(path);
+                user.setAvatar(path);
+                user.setObjectName(fileName);
+            } else {
+                this.service.updateFile(image, user.getObjectName());
+            }
+            this.userRepository.save(user);
+            return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
         }
         this.userRepository.save(user);
         return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
@@ -85,10 +87,10 @@ public class UserService {
         if (foundUser.isEmpty()) {
             Optional<String> mail = this.userRepository.findUserMail(registerDTO.getEmail());
             if (mail.isEmpty()) {
-                try {
                     String token = RandomStringUtils.randomAlphanumeric(64);
                     User user = new User(registerDTO.getUserName(),
                             this.passwordEncoder.encode(registerDTO.getPassword()),
+                            registerDTO.getFullName(),
                             registerDTO.getEmail(),
                             registerDTO.getRole(),
                             1);
@@ -104,14 +106,11 @@ public class UserService {
                         this.userRepository.save(user);
                     }
                     return new ResponseEntity<>("Signup Successfully", HttpStatus.OK);
-                } catch (IllegalArgumentException e) {
-                    return new ResponseEntity<>("Invalid Gender Value", HttpStatus.BAD_REQUEST);
                 }
-            }
             return new ResponseEntity<>("Email is already signed up", HttpStatus.NOT_IMPLEMENTED);
-        }
+            }
         return new ResponseEntity<>("Username is already signed up", HttpStatus.NOT_IMPLEMENTED);
-    }
+        }
 
     // Active Account
     public ResponseEntity<String> activateUserAccount(String token) {
@@ -159,22 +158,21 @@ public class UserService {
     }
 
     // Banned User
-    public ResponseEntity<String> banUser(UserDTO userDTO, Long id) {
-        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(id, 1);
+    public ResponseEntity<String> banUser(UserDTO userDTO) {
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userDTO.getId(), 1);
         if (foundUser.isPresent()) {
             User user = foundUser.get();
             user.setStatus(0);
             this.userRepository.save(user);
             this.emailService.sendEmailForBan(user.getMail(), "YOU GOT BANNED", userDTO.getContent());
             return new ResponseEntity<>("Ban Successfully", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
     // Update Admin Info
-    public ResponseEntity<String> updateAdminInfo(UserDTO userDTO, Long id) {
-        Optional<User> foundUser = this.userRepository.findById(id);
+    public ResponseEntity<String> updateAdminInfo(UserDTO userDTO) {
+        Optional<User> foundUser = this.userRepository.findById(userDTO.getId());
         if (foundUser.isPresent()) {
             User.Gender gender = User.Gender.valueOf(userDTO.getGender());
             User user = foundUser.get();
@@ -188,8 +186,8 @@ public class UserService {
     }
 
     // Update User Info
-    public ResponseEntity<String> updateUserInfo(UserDTO userDTO, Long id, MultipartFile image) {
-        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(id, 1);
+    public ResponseEntity<String> updateUserInfo(UserDTO userDTO, MultipartFile image) {
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userDTO.getId(), 1);
         if (foundUser.isPresent()) {
             User.Gender gender = User.Gender.valueOf(userDTO.getGender());
             User user = foundUser.get();
@@ -204,8 +202,8 @@ public class UserService {
     }
 
     // Update Musician Info
-    public ResponseEntity<String> updateMusicianInfo(UserDTO userDTO, Long id, MultipartFile image) {
-        Optional<User> foundUser = this.userRepository.findById(id);
+    public ResponseEntity<String> updateMusicianInfo(UserDTO userDTO, MultipartFile image) {
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userDTO.getId(), 1);
         if (foundUser.isPresent()) {
             User.Gender gender = User.Gender.valueOf(userDTO.getGender());
             User user = foundUser.get();
@@ -225,8 +223,8 @@ public class UserService {
 
 
     // Search User - username
-    public List<User> searchByUserName(UserDTO userDTO) {
-        List<User> userEntity = this.userRepository.searchByUserName(userDTO.getUsername());
+    public List<User> searchByUserName(String name) {
+        List<User> userEntity = this.userRepository.searchByUserName(name);
         return userEntity.isEmpty() ? null : userEntity;
     }
 

@@ -19,7 +19,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
@@ -221,8 +220,12 @@ public class BeatService {
         if (foundBeat.isPresent()) {
             Beat beat = foundBeat.get();
             beat.setBeatName(newBeat.getBeatName());
-            service.updateFile(sound, beat.getObjectName());
-            service.updateFile(sound2, beat.getObjectNameDemo());
+            if(sound != null) {
+                service.updateFile(sound, beat.getObjectName());
+            }
+            if(sound2 != null) {
+                service.updateFile(sound2, beat.getObjectNameDemo());
+            }
             beat.setPrice(newBeat.getPrice());
             beat.setGenresofbeat(genreSet(newBeat));
             beat.setVocalRange(newBeat.getVocalRange());

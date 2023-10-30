@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.dto.CommentSongDTO;
 import com.example.demo.dto.CommentSongResponseDTO;
 import com.example.demo.service.SongCommentService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,22 +17,22 @@ public class SongCommentController {
     private SongCommentService songCommentService;
 
     @PostMapping
-    public ResponseEntity<String> comment (@Valid @RequestBody CommentSongDTO dto){
+    public ResponseEntity<String> comment (@RequestBody CommentSongDTO dto){
         return this.songCommentService.commentSong(dto);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<String> updateComment (@Valid @PathVariable Long id, @Valid @RequestBody CommentSongDTO dto){
+    public ResponseEntity<String> updateComment (@PathVariable Long id, @RequestBody CommentSongDTO dto){
         return this.songCommentService.updateComment(dto, id);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteComment (@Valid @PathVariable Long id,@Valid @RequestBody CommentSongDTO dto){
+    public ResponseEntity<String> deleteComment (@PathVariable Long id,@RequestBody CommentSongDTO dto){
         return this.songCommentService.deleteComment(dto, id);
     }
 
     @GetMapping("/song/{id}")
-    public ResponseEntity<List<CommentSongResponseDTO>> viewComment (@Valid @PathVariable Long songid){
-        return ResponseEntity.ok(this.songCommentService.viewComment(songid));
+    public ResponseEntity<List<CommentSongResponseDTO>> viewComment (@PathVariable Long id){
+        return ResponseEntity.ok(this.songCommentService.viewComment(id));
     }
 }

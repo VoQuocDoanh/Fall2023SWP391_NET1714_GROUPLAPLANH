@@ -8,6 +8,8 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class SongDTO {
+
+
     private String songName;
     private String singer;
     private Long userid;
@@ -16,5 +18,4 @@ public class SongDTO {
     private String vocalRange;
     private String songUrl;
     private List<String> genres;
-    private List<String> chords;
 }
