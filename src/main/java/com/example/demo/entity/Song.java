@@ -40,7 +40,7 @@ public class Song {
     @Column(name = "Tone")
     private String tone;
 
-    @Column(name = "Description",columnDefinition = "LONGTEXT")
+    @Column(name = "Description",columnDefinition = "LONGTEXT", length = Integer.MAX_VALUE)
     private String description;
 
     @Column(name = "VocalRange")
