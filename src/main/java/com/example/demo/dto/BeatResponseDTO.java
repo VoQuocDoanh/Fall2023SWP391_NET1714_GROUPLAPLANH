@@ -52,6 +52,12 @@ public class BeatResponseDTO {
         this.status=status;
 
     }
+
+    public BeatResponseDTO(String beatName, UserResponeDTO user, Double price) {
+        this.beatName = beatName;
+        this.user = user;
+        this.price = price;
+    }
     public BeatResponseDTO(Long id, String beatName, UserResponeDTO user, Double price, LocalDateTime creatAt, List<GenreResponseDTO> genres, int view, int totalLike, String vocalRange,int totalRating, Double rating) {
         this.id = id;
         this.beatName = beatName;
