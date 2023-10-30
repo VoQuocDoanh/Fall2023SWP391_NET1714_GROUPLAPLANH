@@ -25,7 +25,7 @@ import java.util.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Customer")
+@Table(name = "User")
 public class User implements UserDetails {
 
     @Id
