@@ -81,7 +81,7 @@ public class BeatController {
 
     //Update beat in MS
     @PatchMapping({"/{id}"})
-    public ResponseEntity<String> updateBeat(@RequestPart("file1")MultipartFile sound, @RequestPart("file2")MultipartFile sound2, @Validated(BeatValidation.UpdateBeat.class) @RequestPart("json") BeatDTO newBeat, @PathVariable Long id) {
+    public ResponseEntity<String> updateBeat(@RequestPart(value = "file1", required = false)MultipartFile sound, @RequestPart(value = "file2", required = false)MultipartFile sound2, @Validated(BeatValidation.UpdateBeat.class) @RequestPart("json") BeatDTO newBeat, @PathVariable Long id) {
             return this.beatService.updateBeat(sound, sound2, newBeat, id);
     }
 
