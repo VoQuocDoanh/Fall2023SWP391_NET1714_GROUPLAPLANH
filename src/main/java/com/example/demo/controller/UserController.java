@@ -53,14 +53,13 @@ public class UserController {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)  // Nếu validate fail thì trả về 400
-    public Map<String, String> handleBindException(MethodArgumentNotValidException ex) {
-
+    public ResponseEntity<Map<String, String>> handleBindException(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((objectError -> {
             String fieldName = ((FieldError) objectError).getField();
             String errorMsg = objectError.getDefaultMessage();
             errors.put(fieldName, errorMsg);
         }));
-        return errors;
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 }
