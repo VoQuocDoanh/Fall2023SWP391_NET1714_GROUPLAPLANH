@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.PlaylistDTO;
 import com.example.demo.dto.PlaylistResponseDTO;
+
 import com.example.demo.service.SongPlaylistService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,9 @@ public class SongPlaylistController {
     private SongPlaylistService songPlaylistService;
 
     // create Playlist
-    @PostMapping("/user/{id}/new")
-    public ResponseEntity<String> createPlaylist (@Valid @PathVariable Long id, @Valid @RequestBody PlaylistDTO playlistDTO){
-        return this.songPlaylistService.createPlaylist(id, playlistDTO);
+    @GetMapping("/user/{id}/new")
+    public ResponseEntity<String> createPlaylist (@Valid @PathVariable Long id, @Valid @RequestParam("name") String name){
+        return this.songPlaylistService.createPlaylist(id, name);
     }
 
     // create and add
@@ -54,9 +55,9 @@ public class SongPlaylistController {
     }
 
     // view
-    @GetMapping("/user/{userid}/{name}")
-    public ResponseEntity<List<PlaylistResponseDTO>> viewAll (@Valid @PathVariable Long userid, @Valid @PathVariable String name){
-        return ResponseEntity.ok(this.songPlaylistService.viewAll(userid, name));
+    @GetMapping("/user/{userid}")
+    public ResponseEntity<List<PlaylistResponseDTO>> viewAll (@Valid @PathVariable Long userid){
+        return ResponseEntity.ok(this.songPlaylistService.viewAll(userid));
     }
 
     // view detail

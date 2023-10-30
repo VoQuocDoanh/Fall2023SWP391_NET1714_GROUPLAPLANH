@@ -166,7 +166,7 @@ public class BeatService {
         }
     }
 
-    public ResponseEntity<String> insertBeat(MultipartFile sound, MultipartFile sound2, BeatDTO beatDTO) {
+    public ResponseEntity<String> insertBeat(MultipartFile full, MultipartFile demo, BeatDTO beatDTO) {
         Optional<User> foundUser = Optional.ofNullable(this.userRepository.findByUsername(beatDTO.getUsername()));
         if (foundUser.isPresent()) {
             Beat beat = new Beat(beatDTO.getBeatName(),
@@ -178,8 +178,8 @@ public class BeatService {
                     0, 0, 1, 0, 0, 0);
             this.beatRepository.save(beat);
 
-            String path = this.service.uploadFile(sound, beat.getId(), "audio", "full");
-            String pathDemo = this.service.uploadFile(sound2, beat.getId(), "audio", "demo");;
+            String path = this.service.uploadFile(full, beat.getId(), "audio", "full");
+            String pathDemo = this.service.uploadFile(demo, beat.getId(), "audio", "demo");;
 
             String fileName = this.extractObjectNameFromUrl(path);
             String fileNameDemo = this.extractObjectNameFromUrl(pathDemo);

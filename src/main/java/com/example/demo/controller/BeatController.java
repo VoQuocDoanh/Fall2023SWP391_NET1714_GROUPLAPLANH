@@ -75,8 +75,8 @@ public class BeatController {
 
     //Add Beat in MS
     @PostMapping({""})
-    public ResponseEntity<String> uploadBeat(@Valid @RequestPart("file1")MultipartFile sound,@Valid @RequestPart("file2")MultipartFile sound2, @Valid @RequestPart("json") BeatDTO beatDTO) {
-        return this.beatService.insertBeat(sound, sound2, beatDTO);
+    public ResponseEntity<String> uploadBeat(@Valid @RequestPart("file1")MultipartFile full,@Valid @RequestPart("file2")MultipartFile demo, @Valid @RequestPart("json") BeatDTO beatDTO) {
+        return this.beatService.insertBeat(full, demo, beatDTO);
     }
 
     //Update beat in MS
