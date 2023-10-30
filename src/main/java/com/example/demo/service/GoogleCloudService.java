@@ -61,13 +61,16 @@ public class GoogleCloudService {
 
     public void updateFile(MultipartFile file, String objectName){
         try {
-            Blob blob = storage.get(bucketName, objectName);
             BlobId blobId = BlobId.of(bucketName, objectName);
-            BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-                    .setContentType(file.getContentType())
-                    .setAcl(Collections.singletonList(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER)))
-                    .build();
-            storage.create(blobInfo, file.getBytes());
+            boolean deleted = storage.delete(blobId);
+
+            if(deleted) {
+                BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+                        .setContentType(file.getContentType())
+                        .setAcl(Collections.singletonList(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER)))
+                        .build();
+                storage.create(blobInfo, file.getBytes());
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
