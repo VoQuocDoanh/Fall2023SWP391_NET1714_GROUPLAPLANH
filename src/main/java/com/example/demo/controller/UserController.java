@@ -36,7 +36,7 @@ public class UserController {
 
     // Update Customer Info
     @PatchMapping("/customer")
-    public ResponseEntity<String> updateUserInfo(@RequestPart("file")MultipartFile image, @Validated(UpdateValidation.Customer.class) @RequestPart("json") UserDTO userDTO){
+    public ResponseEntity<String> updateUserInfo(@RequestPart(value = "file", required = false)MultipartFile image, @Validated(UpdateValidation.Customer.class) @RequestPart("json") UserDTO userDTO){
         return this.userService.updateUserInfo(userDTO, image);
     }
 

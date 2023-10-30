@@ -16,7 +16,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -50,9 +49,9 @@ public class UserService {
     @Autowired
     private GoogleCloudService service;
 
-    @NotNull
+
     private ResponseEntity<String> getStringResponseEntity(MultipartFile image, User user) {
-        if(image != null) {
+        if(image != null && !image.isEmpty()) {
             if (user.getAvatar() == null) {
                 String path = this.service.uploadFile(image, user.getId(), "avatar", "full");
                 String fileName = this.extractObjectNameFromUrl(path);
@@ -65,7 +64,7 @@ public class UserService {
             return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
         }
         this.userRepository.save(user);
-        return new ResponseEntity<>("Update Successfully123", HttpStatus.OK);
+        return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
     }
 
     private String extractObjectNameFromUrl(String fullUrl) {
