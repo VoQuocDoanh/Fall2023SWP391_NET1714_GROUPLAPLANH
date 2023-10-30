@@ -36,12 +36,12 @@ public class FeedbackService {
         Optional<User> foundUser = userRepository.findById(dto.getUserId());
         Optional<Beat> foundBeat = beatRepository.findById(dto.getBeatId());
         Optional<Feedback> found = feedbackRepository.findByBeatFeedbackAndUserFeedback(foundBeat.get(),foundUser.get());
-        if (foundBeat.isPresent() && foundUser.isPresent()){
+        if (found.isPresent()) {
+            return new ResponseEntity<>("Already feedback",HttpStatus.NOT_IMPLEMENTED);
+        } else if (foundBeat.isPresent() && foundUser.isPresent() ){
             Feedback feedback = new Feedback( dto.getContent(), foundUser.get(),foundBeat.get(),1);
             feedbackRepository.save(feedback);
             return new ResponseEntity<>("Feedback!",HttpStatus.OK);
-        } else if (found.isPresent()) {
-            return new ResponseEntity<>("Already feedback",HttpStatus.NOT_IMPLEMENTED);
         }
         return new ResponseEntity<>("Feedback failed!",HttpStatus.NOT_IMPLEMENTED);
     }
@@ -50,13 +50,14 @@ public class FeedbackService {
     public PaginationResponseDTO viewFeedback(Long id, int page) {
         Optional<User> foundUser = userRepository.findById(id);
         Pageable pageable = PageRequest.of(page-1,10);
-
         Page<Beat> beatList = beatRepository.findAllBeatSoldOut(foundUser.get().getId(),pageable);
         List<Beat> b = beatRepository.listAllBeatSoldOut(foundUser.get().getId());
         List<Feedback> feedback =new ArrayList<>();
+        List<FeedbackResponseDTO> dto = new ArrayList<>();
         for (Beat i : beatList){
             feedback.add(feedbackRepository.findByBeatFeedback(i));
         }
+        dto = getFeedbackResponseDTO(feedback);
         int pagecount = pageable.getPageNumber();
         int max = 0;
         if (b.size() % 10 != 0) {
@@ -64,7 +65,7 @@ public class FeedbackService {
         } else {
             max = b.size() / 10;
         }
-        return new PaginationResponseDTO(feedback,pagecount,max);
+        return new PaginationResponseDTO(dto,pagecount,max);
 
     }
 
