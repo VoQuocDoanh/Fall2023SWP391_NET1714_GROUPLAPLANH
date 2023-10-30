@@ -28,19 +28,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
     String findUserName(Long id);
     @Query("select u.mail from User u where u.mail = :mail")
     Optional<String> findUserMail(String mail);
-
     @Query("SELECT u FROM User u WHERE u.username = :username")
     User findByUsernameDesc(String username);
-
     @Query("SELECT u FROM User u WHERE u.username = :username")
     User findByUsername(String username);
-
     @Query("SELECT u FROM User u WHERE u.fullName like %:fullName%")
     List<User> findByfullName(String fullName);
-
     @Query("SELECT u FROM User u WHERE u.username like %:username%")
     List<User> searchByUserName(String username);
     @Query("select a.user from ActivationToken a where a.token = :token")
     User findByActivationToken(String token);
-
+    @Query("select u.fullName from User u where u.role = 'MS'")
+    List<String> findAllNameOfMusician();
 }

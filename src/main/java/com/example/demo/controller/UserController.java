@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -49,6 +50,11 @@ public class UserController {
     @PatchMapping("/musician")
     public ResponseEntity<String> updateMusicianInfo(@RequestPart("file")MultipartFile image, @Validated(UpdateValidation.Musician.class) @RequestPart("json") UserDTO userDTO){
         return this.userService.updateMusicianInfo(userDTO, image);
+    }
+
+    @GetMapping("/musician/name")
+    public ResponseEntity<List<String>> viewAllMusicianName(){
+        return ResponseEntity.ok(this.userService.viewallnamemusician());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

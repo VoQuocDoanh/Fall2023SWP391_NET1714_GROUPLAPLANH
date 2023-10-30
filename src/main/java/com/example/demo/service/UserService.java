@@ -262,8 +262,15 @@ public class UserService {
             max = u.size() / 10;
         }
         return new PaginationResponseDTO(userResponeDTOList, pageCount, max);
-
     }
 
+    // View all name of musician
+    public List<String> viewallnamemusician (){
+        List<String> names = this.userRepository.findAllNameOfMusician();
+        if(!names.isEmpty()){
+            return names;
+        }
+        return null;
+    }
 
 }
