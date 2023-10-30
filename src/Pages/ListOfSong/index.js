@@ -1,0 +1,136 @@
+import React, { useState } from 'react';
+import styles from "./ListOfSong.module.scss";
+import classNames from "classnames/bind";
+const cx = classNames.bind(styles);
+
+function ListOfSong() {
+    const songs = [
+        { number: 1, name: 'Song 1', artist: 'Artist 1' },
+        { number: 2, name: 'Song 2', artist: 'Artist 2' },
+        // Add more songs as needed
+        { number: 2, name: 'Song 2', artist: 'Artist 2' },
+        { number: 2, name: 'Song 2', artist: 'Artist 2' },
+        { number: 2, name: 'Song 2', artist: 'Artist 2' },
+        { number: 2, name: 'Song 2', artist: 'Artist 2' },
+        { number: 2, name: 'Song 3', artist: 'Artist 2' },
+        { number: 2, name: 'Song 2', artist: 'Artist 2' },
+        { number: 2, name: 'Song 5', artist: 'Artist 2' },
+        { number: 2, name: 'Song 2', artist: 'Artist 2' },
+        { number: 2, name: 'Song 2', artist: 'Artist 2' },
+        { number: 2, name: 'Song 2', artist: 'Artist 2' },
+        { number: 2, name: 'Song 2', artist: 'Artist 2' },
+        { number: 2, name: 'Song 2', artist: 'Artist 2' },
+        { number: 2, name: 'Song 2', artist: 'Artist 2' },
+    ];
+
+    const itemsPerPage = 10;
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const totalPages = Math.ceil(songs.length / itemsPerPage);
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentSongs = songs.slice(startIndex, endIndex);
+
+    return (
+        <div className={cx('listofsong')}>
+            <div className={cx('text-header')}>
+                <h1>List Of Song</h1>
+            </div>
+            <div className={cx('line')}></div>
+            <div className={cx('body')}>
+                <div className={cx('body-left')}>
+                    <div className={cx('header-bodyleft')}>
+                        <h2>Genre</h2>
+                    </div>
+                    <div className={cx('option')}>
+                        <div>
+                            <label className={cx('container')}>
+                                <input className={cx('custom-radio')} type="radio" name="radio" />
+                                <span className={cx('checkmark')}>One</span>
+                            </label>
+                            <label className={cx('container')}>
+                                <input className={cx('custom-radio')} type="radio" name="radio" />
+                                <span className={cx('checkmark')}>One</span>
+                            </label>
+                            <label className={cx('container')}>
+                                <input className={cx('custom-radio')} type="radio" name="radio" />
+                                <span className={cx('checkmark')}>One</span>
+                            </label>
+                            <label className={cx('container')}>
+                                <input className={cx('custom-radio')} type="radio" name="radio" />
+                                <span className={cx('checkmark')}>One</span>
+                            </label>
+                            <label className={cx('container')}>
+                                <input className={cx('custom-radio')} type="radio" name="radio" />
+                                <span className={cx('checkmark')}>One</span>
+                            </label>
+                            <label className={cx('container')}>
+                                <input className={cx('custom-radio')} type="radio" name="radio" />
+                                <span className={cx('checkmark')}>One</span>
+                            </label>
+                            <label className={cx('container')}>
+                                <input className={cx('custom-radio')} type="radio" name="radio" />
+                                <span className={cx('checkmark')}>One</span>
+                            </label>
+                            <label className={cx('container')}>
+                                <input className={cx('custom-radio')} type="radio" name="radio" />
+                                <span className={cx('checkmark')}>One</span>
+                            </label>
+                            <label className={cx('container')}>
+                                <input className={cx('custom-radio')} type="radio" name="radio" />
+                                <span className={cx('checkmark')}>One</span>
+                            </label>
+                        </div>
+                        {/* Add more labels as needed */}
+                    </div>
+                </div>
+                <div className={cx('body-right')}>
+                    <div className={cx('scroll-container')}>
+                        {currentSongs.map((song, index) => (
+                            <div className={cx('song')} key={index}>
+                                <div className={cx('number-song')}>
+                                    <span>{song.number}</span>
+                                </div>
+                                <div className={cx('song-name')}>
+                                    <span>{song.name}</span>
+                                    <span>{song.artist}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className={cx('pagination')}>
+                        <button onClick={handlePrevPage} disabled={currentPage === 1}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M4 10L13 19L14.4 17.5L7 10L14.4 2.5L13 1L4 10Z" fill="black" />
+                            </svg>
+                        </button>
+                        <span>{`Page ${currentPage} of ${totalPages}`}</span>
+                        <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M7.00001 1L5.60001 2.5L13 10L5.60001 17.5L7.00001 19L16 10L7.00001 1Z" fill="black" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    );
+}
+
+export default ListOfSong;

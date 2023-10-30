@@ -2,7 +2,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./UploadBeat.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import axios from "axios";
 import videoBg from '../../assets/video/video (2160p).mp4'
@@ -10,6 +10,7 @@ import ValidationUpload from "../../Validation/ValidationUpload";
 import useToken from "../../authorization/useToken";
 import jwtDecode from "jwt-decode";
 import Popup from "reactjs-popup";
+import axiosInstance from "../../authorization/axiosInstance";
 const cx = classNames.bind(styles);
 function UploadBeat() {
 
@@ -18,40 +19,79 @@ function UploadBeat() {
   // const [orderID, setOrderID] = useState("");
   // const [username, setUserName] = useState("");
   const token = useToken();
-  const username = jwtDecode(token).username
+  let username = null
+  if(token){
+    username = jwtDecode(token).username
+  }
   const [genre, setGenre] = useState("");
   const [description, setDescription] = useState("");
   const [uploadMessage, setUploadMessage] = useState('')
   const [beatSoundDemo, setBeatSoundDemo] = useState(null)
   const [beatSoundFull, setBeatSoundFull] = useState(null)
   const [vocalRange, setVocalRange] = useState(null)
+  const [listGenres, setListGenres] = useState(null)
 
   const beat = { beatName, price, username, genre, description, vocalRange }
   const navigate = useNavigate();
+  const formData = new FormData();
 
-  const handleUpload = async (e) => {
+  useEffect(() => {
+    loadGenres()
+  }, [])
 
-    if (!beatName || !price || !username || !genre || !price || !vocalRange) {
-      <Popup>Please fill in all fields!</Popup>
+  const handleUpload = async () => {
+    if(!token){
+      navigate("/login")
+  }
+    if (!beatName || !price || !username || !genre || !price || !vocalRange || !beatSoundDemo || !beatSoundFull) {
+      alert("Please fill in all fields!")
+      return;
+    } else if (price < 0) {
+      alert("Price must be equal or higher than 0!")
       return;
     }
-    e.preventDefault()
-
-    try {
-      setUploadMessage()
-      const res = await axios.post("http://localhost:8080/api/v1/beat", beat);
+    
+    formData.append("json",JSON.stringify(beat))
+    formData.append('file1',"123");
+    formData.append('file2',beatSoundDemo)
+    setUploadMessage()
+    console.log(beat)
+    console.log(beatSoundDemo)
+    console.log(beatSoundFull)
+    formData.forEach((value, key) => {
+      console.log(key, value);
+    });
+    await axiosInstance.post("http://localhost:8080/api/v1/beat", formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+      .then((res) => {
+        console.log(res.data)
         navigate("/viewbeat");
-    } catch (error) {
-      console.log(error)
-      setUploadMessage("Username does not exist")
-    }
+      })
+      .catch((error) => {
+        console.log(error)
+        setUploadMessage("Username does not exist")
+      })
   }
+
+  const loadGenres = async () => {
+    await axiosInstance.get("http://localhost:8080/api/v1/genre")
+      .then((res) => {
+        setListGenres(res.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+  if(listGenres !== null){
   return (
     <div className={cx("login-wrapper")}>
       <div className={cx("main")}>
-                <div className={cx("overlay")}></div>
-              <video src={videoBg} autoPlay loop muted ></video>
-            </div>
+        <div className={cx("overlay")}></div>
+        <video src={videoBg} autoPlay loop muted ></video>
+      </div>
       <h1 className={cx("form-heading")}>Upload Beat</h1>
       {/* Form */}
       <div className={cx("form")}>
@@ -169,19 +209,23 @@ function UploadBeat() {
           >
             <path d="M14.5834 26.25C15.7986 26.25 16.8316 25.8246 17.6823 24.9739C18.533 24.1232 18.9584 23.0902 18.9584 21.875V11.6666H23.3334V8.74996H16.7709V18.0833C16.4306 17.8888 16.0781 17.743 15.7136 17.6458C15.349 17.5486 14.9722 17.5 14.5834 17.5C13.3681 17.5 12.3351 17.9253 11.4844 18.776C10.6337 19.6267 10.2084 20.6597 10.2084 21.875C10.2084 23.0902 10.6337 24.1232 11.4844 24.9739C12.3351 25.8246 13.3681 26.25 14.5834 26.25ZM17.5 32.0833C15.4827 32.0833 13.5868 31.7002 11.8125 30.9341C10.0382 30.168 8.49481 29.1292 7.18231 27.8177C5.86981 26.5052 4.83099 24.9618 4.06585 23.1875C3.30071 21.4132 2.91766 19.5173 2.91669 17.5C2.91669 15.4826 3.29974 13.5868 4.06585 11.8125C4.83197 10.0382 5.87078 8.49475 7.18231 7.18225C8.49481 5.86975 10.0382 4.83093 11.8125 4.06579C13.5868 3.30065 15.4827 2.9176 17.5 2.91663C19.5174 2.91663 21.4132 3.29968 23.1875 4.06579C24.9618 4.8319 26.5052 5.87072 27.8177 7.18225C29.1302 8.49475 30.1695 10.0382 30.9356 11.8125C31.7018 13.5868 32.0843 15.4826 32.0834 17.5C32.0834 19.5173 31.7003 21.4132 30.9342 23.1875C30.1681 24.9618 29.1293 26.5052 27.8177 27.8177C26.5052 29.1302 24.9618 30.1695 23.1875 30.9356C21.4132 31.7017 19.5174 32.0843 17.5 32.0833ZM17.5 29.1666C20.757 29.1666 23.5156 28.0364 25.7761 25.776C28.0365 23.5156 29.1667 20.7569 29.1667 17.5C29.1667 14.243 28.0365 11.4843 25.7761 9.22392C23.5156 6.9635 20.757 5.83329 17.5 5.83329C14.2431 5.83329 11.4844 6.9635 9.22398 9.22392C6.96356 11.4843 5.83335 14.243 5.83335 17.5C5.83335 20.7569 6.96356 23.5156 9.22398 25.776C11.4844 28.0364 14.2431 29.1666 17.5 29.1666Z" fill="white" />
           </svg>
-       
-        
-          <input
+
+          <Popup trigger={<input
             type="Text"
             placeholder="Genres"
             className={cx("input-text")}
             value={genre}
             onChange={(e) => setGenre(e.target.value)}
-          />
-      </div>
+          />} position="right center">
+            {listGenres.map((item) => {
+              return <div >{item.name}</div>
+            })}
+          </Popup>
 
-      {/*Description*/}
-      <div className={cx("input")}>
+        </div>
+
+        {/*Description*/}
+        <div className={cx("input")}>
           <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
             <g clipPath="url(#clip0_928_135)">
               <path d="M33.7501 0H25.4167C24.8409 0 24.1051 0.41125 23.7109 0.951563L22.6026 2.41719C22.5248 2.52031 22.4814 2.65977 22.4819 2.80489C22.4822 2.87675 22.4932 2.94783 22.5144 3.01408C22.5356 3.08034 22.5666 3.14046 22.6055 3.19102C22.6444 3.24157 22.6905 3.28158 22.7412 3.30875C22.7919 3.33592 22.8461 3.34972 22.9009 3.34937C23.0114 3.34865 23.1173 3.29031 23.1951 3.18719L24.3067 1.715C24.5442 1.39016 25.0734 1.09375 25.4167 1.09375H33.7501C33.8606 1.09375 33.9666 1.15137 34.0447 1.25393C34.1228 1.35648 34.1667 1.49558 34.1667 1.64062V12.6317C34.1667 13.0812 33.9409 13.7758 33.6884 14.0941L21.9542 29.3759C21.8709 29.4761 21.7617 29.5309 21.6488 29.5293C21.5358 29.5277 21.4275 29.4697 21.3459 29.3672L19.1392 26.4698C19.0607 26.3702 18.9554 26.3151 18.8462 26.3164C18.7369 26.3176 18.6324 26.3751 18.5551 26.4765C18.4779 26.5779 18.4341 26.7151 18.4331 26.8585C18.4322 27.0018 18.4742 27.14 18.5501 27.2431L20.7567 30.1405C20.9936 30.4461 21.3117 30.6189 21.6439 30.6224C21.976 30.6258 22.2962 30.4597 22.5367 30.1591L34.2717 14.8761C34.6867 14.3533 35.0001 13.3875 35.0001 12.6317V1.64062C35.0001 0.736094 34.4392 0 33.7501 0Z" fill="white" />
@@ -204,7 +248,7 @@ function UploadBeat() {
         </div>
 
         {/*Tone*/}
-      <div className={cx("input")}>
+        <div className={cx("input")}>
           <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
             <g clipPath="url(#clip0_928_135)">
               <path d="M33.7501 0H25.4167C24.8409 0 24.1051 0.41125 23.7109 0.951563L22.6026 2.41719C22.5248 2.52031 22.4814 2.65977 22.4819 2.80489C22.4822 2.87675 22.4932 2.94783 22.5144 3.01408C22.5356 3.08034 22.5666 3.14046 22.6055 3.19102C22.6444 3.24157 22.6905 3.28158 22.7412 3.30875C22.7919 3.33592 22.8461 3.34972 22.9009 3.34937C23.0114 3.34865 23.1173 3.29031 23.1951 3.18719L24.3067 1.715C24.5442 1.39016 25.0734 1.09375 25.4167 1.09375H33.7501C33.8606 1.09375 33.9666 1.15137 34.0447 1.25393C34.1228 1.35648 34.1667 1.49558 34.1667 1.64062V12.6317C34.1667 13.0812 33.9409 13.7758 33.6884 14.0941L21.9542 29.3759C21.8709 29.4761 21.7617 29.5309 21.6488 29.5293C21.5358 29.5277 21.4275 29.4697 21.3459 29.3672L19.1392 26.4698C19.0607 26.3702 18.9554 26.3151 18.8462 26.3164C18.7369 26.3176 18.6324 26.3751 18.5551 26.4765C18.4779 26.5779 18.4341 26.7151 18.4331 26.8585C18.4322 27.0018 18.4742 27.14 18.5501 27.2431L20.7567 30.1405C20.9936 30.4461 21.3117 30.6189 21.6439 30.6224C21.976 30.6258 22.2962 30.4597 22.5367 30.1591L34.2717 14.8761C34.6867 14.3533 35.0001 13.3875 35.0001 12.6317V1.64062C35.0001 0.736094 34.4392 0 33.7501 0Z" fill="white" />
@@ -222,7 +266,7 @@ function UploadBeat() {
             placeholder="Tone"
             className={cx("input-text")}
             value={vocalRange}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) => setVocalRange(e.target.value)}
           />
         </div>
 
@@ -256,16 +300,16 @@ function UploadBeat() {
           />
         </div>
 
-      <Button variant="contained"className={cx("input", "submit")} onClick={handleUpload} >
-        <input
-          type="submit"
-          value="Upload"
-          className={cx("input-text", "input-submit")}
-        />
-      </Button>
-    </div>
-      {/* Footer */ }
-  {/* <div className={cx("footer")}>
+        <Button variant="contained" className={cx("input", "submit")} onClick={handleUpload} >
+          <input
+            type="submit"
+            value="Upload"
+            className={cx("input-text", "input-submit")}
+          />
+        </Button>
+      </div>
+      {/* Footer */}
+      {/* <div className={cx("footer")}>
         <div className={cx("footer-left")}>
           <input
             type="checkbox"
@@ -283,7 +327,10 @@ function UploadBeat() {
         <div className={cx("footer-right", "text")}>Forgot password ?</div>
       </div> */}
     </div >
-  );
+  );}
+  else{
+    return <div></div>
+  }
 }
 
 export default UploadBeat;

@@ -20,6 +20,7 @@ function ViewDetailsUser() {
     const [play, setPlay] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [ten, setTen] = useState("");
+    const contentStyle = { background: 'white', width: 460, height: 370, borderRadius: 20 };
     const handleSearch = (e) => {
         setSearch(e.target.value);
     }
@@ -90,21 +91,29 @@ function ViewDetailsUser() {
                                 </div>
                             </div>
                             <div className={cx("part5")}>
-                                <Popup style={{ width: "120%" }} trigger={<button type="button" className={cx("button-save-details")} aria-disabled="false" >Ban</button>} position="left center">
-                                    <div className={cx("text-all")}>
-                                        <td style={{ fontWeight: 400, fontSize: "1.5rem" }}>Description</td>
-                                        <textarea className={cx("text-des")} style={{ resize: 'none', width: '185px', border: 1, height: 150, }} />
+                                <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<button type="button" className={cx("button-save-details")} aria-disabled="false" >Ban</button>}  {...{ contentStyle }} position="top center">
+                                    <div className={cx("text-all")} style={{ padding: 10 }}>
+                                        <div style={{ display: 'grid' }}>
+                                            <td style={{ fontWeight: 'bold', fontSize: "2.2rem", marginLeft: 120, color: 'red' }}>Reason For Ban</td>
+                                            <td style={{ paddingTop: 15, paddingLeft: 30 }}>
+                                                <img className={cx("img-user")} src={"https://bootdey.com/img/Content/avatar/avatar4.png"} />
+                                                <a href="#" style={{ fontWeight: 'bold' }}>Mila Kunis</a>
+                                            </td>
+                                        </div>
+                                        <textarea className={cx("text-des")} style={{ resize: 'none', width: '385px', border: 1, height: 150, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12 }} />
                                         <td className={cx("button-type")}>
                                             <button type="button" className={cx("button-send")} aria-disabled="false" >Send</button>
                                         </td>
                                     </div>
                                 </Popup>
-                                <Popup style={{ width: "120%" }} trigger={<button type="button" className={cx("button-save-details2")} aria-disabled="false" >Unban</button>} position="right center">
-                                    <div className={cx("text-all")}>
-                                        <td style={{ fontWeight: 400, fontSize: "1.5rem" }}>Description</td>
-                                        <textarea className={cx("text-des")} style={{ resize: 'none', width: '185px', border: 1, height: 150, }} />
+                                <Popup style={{ width: "120%" }} trigger={<button type="button" className={cx("button-save-details2")} aria-disabled="false" >Unban</button>}   {...{ contentStyle }} position="top center">
+                                    <div className={cx("text-all")} style={{ padding: 10 }}>
+                                        <div style={{ display: 'grid' }}>
+                                            <td style={{ fontWeight: 'bold', fontSize: "2.9rem", marginLeft: 0, color: 'red', textAlign: 'center', marginTop: 40 }}>Notice!</td>
+                                            <td style={{ fontWeight: '500', fontSize: "2.5rem", marginLeft: 0, color: 'black', textAlign: 'center', marginTop: 60 }}>Are you sure you want to unban this user?</td>
+                                        </div>
                                         <td className={cx("button-type")}>
-                                            <button type="button" className={cx("button-send")} aria-disabled="false" >Send</button>
+                                            <button type="button" className={cx("button-send-2")} aria-disabled="false" >Accept</button>
                                         </td>
                                     </div>
                                 </Popup>

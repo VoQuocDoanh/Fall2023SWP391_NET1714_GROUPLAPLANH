@@ -67,7 +67,7 @@ function HeaderMusician() {
         <div className={cx("pop-up")}>
           <Popup trigger={<button className={cx("button-popup")}>Hi, {name}</button>} position="bottom left center">
             <div className={cx("text-all")}>
-              <Link to="/musicianprofile"><div className={cx("link-text")}>My Account</div></Link>
+              <Link to="/musicianprofile"><div className={cx("link-text")}>Account</div></Link>
               <Link to="/viewbeat"><div className={cx("link-text")}>View Beat</div></Link>
               <Link to={"/uploadbeat"}><div className={cx("link-text")}> Upload Beat</div></Link>
               <Link to={"/uploadbeat"}><div className={cx("link-text")}> Beat Sold Out</div></Link>

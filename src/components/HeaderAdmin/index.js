@@ -73,7 +73,7 @@ function HeaderAdmin() {
         <div className={cx("pop-up")}>
           <Popup trigger={<button className={cx("button-popup")}>Hi, {name}</button>} position="bottom left center">
             <div className={cx("text-all")}>
-              <Link to="/adminprofile"><div className={cx("link-text")}>My Account</div></Link>
+              <Link to="/adminprofile"><div className={cx("link-text")}>Account</div></Link>
               <Link to="/listuser"><div className={cx("link-text")}>View User</div></Link>
               <Link to="/"><div className={cx("link-text")} onClick={handleLogout}> Log out</div></Link>
             </div>

@@ -12,6 +12,7 @@ import jwtDecode from "jwt-decode";
 import IMG_A7 from "../../assets/ImageForChords/Guitar/A/A7.png";
 import IMG_C7 from "../../assets/ImageForChords/Guitar/C/C7.png";
 import IMG_D7 from "../../assets/ImageForChords/Guitar/D/D7.png";
+import Popup from "reactjs-popup";
 
 const cx = classNames.bind(styles);
 
@@ -30,19 +31,21 @@ const TONE = [
 function UploadSong() {
     const [vocalRange, setVocalRange] = useState("");
     const [inputGenres, setInputGenres] = useState("");
-    const [genres, setGenres] = useState([]);
-    const [author, setAuthor] = useState("");
+    let genres = []
+    const [singer, setSinger] = useState("");
     const [tone, setTone] = useState("");
     const [songUrl, setSongUrl] = useState("");
     const [songName, setSongName] = useState("");
     const [description, setDescription] = useState("");
+    const [listGenres, setListGenres] = useState(null)
+    const [listChords, setListChords] = useState(null)
     const token = useToken()
     let userid = "";
     if (token) {
         userid = jwtDecode(token).sub
     }
     const [listTone, setListTone] = useState([]);
-    const songInput = { description, songName, userid, author, tone, songUrl, description, genres, vocalRange }
+    const songInput = { description, songName, userid, singer, tone, songUrl, genres, vocalRange }
     const regValue = useRef(/\[[^\]]{0,6}\]/g);
     const navigate = useNavigate()
 
@@ -59,8 +62,29 @@ function UploadSong() {
         }
     }, [description])
 
+    useEffect(() => {
+        loadGenres()
+    }, [])
+    useEffect(() => {
+        loadChords()
+    }, [])
+
     const handleUploadSong = async () => {
-        await axiosInstance.post("http://localhost:8080/api/v1/song", songInput)
+        if(!token){
+            navigate("/login")
+        }
+        console.log(inputGenres)
+        const values = inputGenres.split(',');
+        console.log(values[0])
+        for(let i = 0; i < values.length; i++){
+            genres.push(values[i])
+        }
+        console.log(genres)
+        if(description ==="" || songName ==="" || userid ==="" || singer ==="" || tone ==="" || songUrl ==="" || genres[0] === "" || vocalRange ==="") {
+            alert("Please fill in all fields!")
+            return;
+        }
+        await axiosInstance.post("http://localhost:8080/api/v1/song/user", songInput)
             .then((res) => {
                 navigate("/songs")
             })
@@ -69,10 +93,25 @@ function UploadSong() {
             })
     }
 
-    const handleAddToList = () => {
-        const values = inputGenres.split(','); // Split the input string by comma
-        setGenres([...genres, ...values]);
-    };
+    const loadGenres = async () => {
+        await axiosInstance.get("http://localhost:8080/api/v1/genre")
+            .then((res) => {
+                setListGenres(res.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    const loadChords = async () => {
+        await axiosInstance.get("http://localhost:8080/chord/guitar")
+        .then((res) =>{
+            setListChords(res.data)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
 
     /* 
         [
@@ -90,13 +129,13 @@ function UploadSong() {
         let tmp = description.match(regValue.current); // Text .....
         if (Array.isArray(tmp)) {
             const a = tmp.filter((item) => {
-                let index_tone = TONE.findIndex((x) => x.name_tone === item);
+                let index_tone = listChords.findIndex((x) => x.chordName === item);
                 if (index_tone >= 0) {
                     let tone = listTone.some((x) => x.name_tone === item);
                     if (!tone) {
                         setListTone(prev => [...prev, {
-                            name_tone: TONE[index_tone].name_tone,
-                            img: TONE[index_tone].img,
+                            name_tone: listChords[index_tone].chordName,
+                            img: listChords[index_tone].image,
                             check: true,
                         }])
                     }
@@ -115,6 +154,7 @@ function UploadSong() {
     }, [description])
 
     console.log(listTone)
+    if(listGenres !== null){
     return (
         <div className={cx('page-content')}> {/* trang tổng */}
             {console.log(songInput)}
@@ -222,25 +262,30 @@ function UploadSong() {
                             <MarkdownPreview inputProps={{ maxLength: 1200 }} markdown={description} />
                         </div>
                         <div className={cx('grid-5-alpha')} style={{ width: '80%' }}>
-                            <div className={cx('song-authors')}>
-                                <h2><b>Author:</b></h2>
+                            <div className={cx('song-singers')}>
+                                <h2><b>Singer:</b></h2>
                                 <input
                                     type="text"
                                     placeholder="Ex: Michael Buble"
-                                    value={author}
+                                    value={singer}
                                     className={cx('input-song-name')}
-                                    onChange={(event) => setAuthor(event.target.value)}
+                                    onChange={(event) => setSinger(event.target.value)}
                                 />
                             </div>
                             <div className={cx('song-genres')}>
                                 <h2><b>Genres:</b></h2>
-                                <input
+                                <Popup trigger={<input
                                     type=""
                                     placeholder="Ex: Pop"
                                     value={inputGenres}
                                     className={cx('input-song-name')}
                                     onChange={(event) => setInputGenres(event.target.value)}
-                                />
+                                />} position="right center">
+                                    {listGenres.map((item) =>{
+                                        return <div >{item.name}</div>
+                                        })}
+                                </Popup>
+                                
                                 <br></br>
                                 {/* <button onClick={handleAddToList}>Add to list genre</button> */}
                             </div>
@@ -290,7 +335,7 @@ function UploadSong() {
                         <div className={cx('white-box')}>
                             <div className={cx('white-box-final')}>
                                 <div className={cx('white-box-text')}>
-                                    <h3><b>Get your post approved faster</b></h3>
+                                    <h3><b>Get your post correctness</b></h3>
                                     <h4>You can refer to the suggestions below</h4>
                                 </div>
                                 <div className={cx('check-failed-pass')}>
@@ -347,16 +392,16 @@ function UploadSong() {
                                 </div>
                                 <div className={cx('check-failed-pass')}>
                                     <div className={cx('icon-times-left')}>
-                                        {author === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                        {singer === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                             <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>}
 
                                     </div>
                                     <div className={cx('text-failed')}>
                                         <div>
-                                            {author === "" && <span>Existed 1 Author</span>}
-                                            {author !== "" && <span style={{ color: "green" }}> Existed 1 Author </span>}
-                                            {author !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                            {singer === "" && <span>Existed 1 Singer</span>}
+                                            {singer !== "" && <span style={{ color: "green" }}> Existed 1 Singer </span>}
+                                            {singer !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                                 <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                             </svg>}
                                         </div>
@@ -423,7 +468,10 @@ function UploadSong() {
                 </div>
             </div>
         </div>
-    )
+    )}
+    else{
+        return (<div></div>)
+    }
 }
 
 export default UploadSong;

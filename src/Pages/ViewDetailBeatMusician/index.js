@@ -24,6 +24,7 @@ function ViewDetailBeatMusician() {
     const [beatSoundFull, setBeatSoundFull] = useState("")
     const [beatSoundDemo, setBeatSoundDemo] = useState("")
     const [checkFeedBack, setCheckFeedBack] = useState(null)
+    const [checkSell, setCheckSell] = useState(true)
     let userId = ""
     if (token) {
         userId = jwtDecode(token).sub
@@ -71,6 +72,16 @@ function ViewDetailBeatMusician() {
             .catch((error) => {
                 console.log(error)
             })
+    }
+
+    const unSellBeat = async () => {
+        await axiosInstance.delete(`http://localhost:8080/api/v1/beat/${beatId}`)
+        .then((res) =>{
+            setCheckSell(false)
+        })
+        .catch((error) =>{
+            console.log(error)
+        })
     }
 
     if (beatDetail !== null) {
@@ -176,16 +187,26 @@ function ViewDetailBeatMusician() {
                                         <span>&#x2022; Price: ${beatDetail.price}</span>
                                         <span>&#x2022; Views: {(beatDetail.view / 2).toFixed()}</span>
                                         <span>&#x2022; Tone: {beatDetail.vocalRange}</span>
-                                        <span>&#x2022; Total Rating: {(beatDetail.totalRating)}</span>
                                         <span>&#x2022; Release date: {day}/{month}/{year}</span>
+                                        <span>&#x2022; Total Rating: {(beatDetail.totalRating)}</span>
+                                        <span>&#x2022; Rating: {(beatDetail.rating)}</span>
+                                        <span>&#x2022; Total Like: {(beatDetail.totalLike)}</span>
+                                        {beatDetail.status === 1 ?
+                                        <div style={{ textAlign: "center", marginTop: 20 }}>
+                                        <Button variant="contained" className={cx('button-1')} onClick={() => loadSoundFull()}>
+                                            <div>UnSell</div>
+                                        </Button>
+                                        </div>
+                                        :
                                         <div style={{ textAlign: "center", marginTop: 20 }}>
                                             <Button variant="contained" className={cx('button-1')} onClick={() => loadSoundFull()}>
                                                 <div>Sell</div>
                                             </Button>
                                         </div>
+                                        }
                                         <div style={{ textAlign: "center", marginTop: 20 }}>
                                             <Button variant="contained" className={cx('button-1')} onClick={() => loadSoundFull()}>
-                                                <div>UnSell</div>
+                                                <div>Update</div>
                                             </Button>
                                         </div>
                                         <div>
