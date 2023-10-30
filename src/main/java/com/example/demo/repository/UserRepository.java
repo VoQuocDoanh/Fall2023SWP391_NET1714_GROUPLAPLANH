@@ -6,6 +6,8 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -19,7 +21,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findUserByUsername(String username);
     Optional<User> findUserByIdAndStatus(Long id, int status);
     Optional<User> findUserByUsernameAndStatus(String username, int status);
-    List<User> findByOrderByStatusDesc();
+    Page<User> findAllByOrderByStatusDesc(Pageable pageable);
+    List<User> findAllByOrderByStatusDesc();
 
     @Query("SELECT u.fullName from User u where u.Id =:id")
     String findUserName(Long id);

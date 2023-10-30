@@ -5,6 +5,7 @@
 
 package com.example.demo.service;
 
+import com.example.demo.dto.PaginationResponseDTO;
 import com.example.demo.dto.RegisterDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserResponeDTO;
@@ -16,10 +17,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.apache.commons.lang3.RandomStringUtils;
 
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,7 +54,7 @@ public class UserService {
 
     @NotNull
     private ResponseEntity<String> getStringResponseEntity(MultipartFile image, User user) {
-        if(user.getAvatar().isEmpty()) {
+        if (user.getAvatar().isEmpty()) {
             String path = this.service.uploadFile(image, user.getId(), "avatar", "full");
             String fileName = this.extractObjectNameFromUrl(path);
             user.setAvatar(path);
@@ -142,7 +147,7 @@ public class UserService {
             dto.setCreateAt(user.getCreatedAt());
             dto.setPhone(user.getPhoneNumber());
             dto.setMail(user.getMail());
-            if (user.getRole().equals("MS")){
+            if (user.getRole().equals("MS")) {
                 MusicianInformation information = user.getInformation();
                 dto.setProfessional(information.getProfessional());
                 dto.setYear(information.getYear());
@@ -226,36 +231,41 @@ public class UserService {
     }
 
     // Get All User
-    public List<UserResponeDTO> getAllUsers() {
-        List<User> userList = this.userRepository.findByOrderByStatusDesc();
-        List<UserResponeDTO> userResponeDTOList =new ArrayList<>();
+    public PaginationResponseDTO getAllUsers(int page) {
+        List<UserResponeDTO> userResponeDTOList = new ArrayList<>();
+        Pageable pageable = PageRequest.of(page - 1, 10);
+        Page<User> userList = userRepository.findAllByOrderByStatusDesc(pageable);
+        List<User> u = userRepository.findAllByOrderByStatusDesc();
         UserResponeDTO dto;
-        if (userList.isEmpty()) {
-            return null;
-        } else {
-            for (User user : userList){
-                dto = new UserResponeDTO(
-                        user.getId(),
-                        user.getUsername(),
-                        user.getFullName(),
-                        user.getGender().toString(),
-                        user.getRole(),
-                        user.getMail(),
-                        user.getStatus(),
-                        user.getCreatedAt(),
-                        user.getPhoneNumber());
-                    if (user.getRole().equals("MS")){
-                        MusicianInformation information = user.getInformation();
-                        dto.setProfessional(information.getProfessional());
-                        dto.setYear(information.getYear());
-                        dto.setPrize(information.getPrize());
-                    }
-                userResponeDTOList.add(dto);
+        for (User user : userList.getContent()) {
+            dto = new UserResponeDTO(
+                    user.getId(),
+                    user.getUsername(),
+                    user.getFullName(),
+                    user.getGender().toString(),
+                    user.getRole(),
+                    user.getMail(),
+                    user.getStatus(),
+                    user.getCreatedAt(),
+                    user.getPhoneNumber());
+            if (user.getRole().equals("MS")) {
+                MusicianInformation information = user.getInformation();
+                dto.setProfessional(information.getProfessional());
+                dto.setYear(information.getYear());
+                dto.setPrize(information.getPrize());
             }
-            return userResponeDTOList;
+            userResponeDTOList.add(dto);
         }
-    }
+        int pageCount = pageable.getPageNumber();
+        int max = 0;
+        if (u.size() % 10 != 0) {
+            max = u.size() / 10 + 1;
+        } else {
+            max = u.size() / 10;
+        }
+        return new PaginationResponseDTO(userResponeDTOList, pageCount, max);
 
+    }
 
 
 }

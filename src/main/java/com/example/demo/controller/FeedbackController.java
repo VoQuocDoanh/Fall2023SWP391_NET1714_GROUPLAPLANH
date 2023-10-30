@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.Feedback;
 import com.example.demo.dto.FeedbackDTO;
 import com.example.demo.dto.FeedbackResponseDTO;
+import com.example.demo.dto.PaginationResponseDTO;
 import com.example.demo.service.FeedbackService;
 import com.example.demo.service.SongService;
 import lombok.AllArgsConstructor;
@@ -18,9 +19,9 @@ public class FeedbackController {
     @Autowired
     private FeedbackService feedbackService;
 
-    @GetMapping("/{id}")
-    public List<FeedbackResponseDTO> viewFeedback(@PathVariable Long id){
-        return feedbackService.viewFeedback(id);
+    @GetMapping("/{id}/{page}")
+    public PaginationResponseDTO viewFeedback(@PathVariable Long id, @PathVariable int page){
+        return feedbackService.viewFeedback(id,page);
     }
 
     @PostMapping("")

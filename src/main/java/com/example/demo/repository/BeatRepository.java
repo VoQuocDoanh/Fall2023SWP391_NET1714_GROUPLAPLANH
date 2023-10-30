@@ -8,6 +8,8 @@ package com.example.demo.repository;
 import com.example.demo.entity.Beat;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -23,11 +25,16 @@ public interface BeatRepository extends JpaRepository<Beat, Long> {
     Optional<Beat> findNameByBeatName(String beatName);
 
     @Query("select b from Beat b where b.userName.Id = :id and b.userName.status = 1 and b.status = 1 or b.status = 0 order by b.Id")
-    List<Beat> findUserBeatByUsername(Long id);
+    Page<Beat> findUserBeatByUsername(Long id, Pageable pageable);
+
+    @Query("select b from Beat b where b.userName.Id = :id and b.userName.status = 1 and b.status = 1 or b.status = 0 order by b.Id")
+    List<Beat> listUserBeatByUsername(Long id);
 
     List<Beat> findByOrderByStatusDesc();
     @Query("SELECT b.userName from Beat b ")
     List<User> findAllUser();
+
+    Page<Beat> findBeatByOrderBeat(Order id, Pageable pageable);
 
     List<Beat> findBeatByOrderBeat(Order id);
 
@@ -36,7 +43,17 @@ public interface BeatRepository extends JpaRepository<Beat, Long> {
 
 
     @Query("SELECT b FROM Beat b WHERE b.status = 1")
-    List<Beat> findAllBeat();
+    Page<Beat> findAllBeat(Pageable pageable);
+
+
+    @Query("SELECT b FROM Beat b WHERE b.status = 1")
+    List<Beat> findAllListBeat();
+    @Query("SELECT b FROM Beat b join b.userName u where b.status = -1 and u.Id = :id")
+    Page<Beat> findAllBeatSoldOut(Long id, Pageable pageable);
+
+    @Query("SELECT b FROM Beat b join b.userName u where b.status = -1 and u.Id = :id")
+    List<Beat> listAllBeatSoldOut(Long id);
+
 
     @Query("SELECT b FROM Beat b join b.userName u where b.status = -1 and u.Id = :id")
     List<Beat> findBeatSoldOut(Long id);
