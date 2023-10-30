@@ -121,7 +121,8 @@ public class BeatService {
                 beat.getTotalLike(),
                 beat.getVocalRange(),
                 beat.getTotalRating(),
-                beat.getRating());
+                beat.getRating(),
+                beat.getStatus());
         return dto;
     }
 
@@ -140,7 +141,8 @@ public class BeatService {
                     value.getTotalLike(),
                     value.getVocalRange(),
                     value.getTotalRating(),
-                    value.getRating());
+                    value.getRating(),
+                    value.getStatus());
             dtos.add(dto);
         }
         return dtos;

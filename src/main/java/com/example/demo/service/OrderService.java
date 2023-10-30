@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.BeatResponseDTO;
 import com.example.demo.dto.OrderDTO;
+import com.example.demo.dto.OrderResponseDTO;
+import com.example.demo.dto.UserResponeDTO;
 import com.example.demo.entity.Beat;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.User;
@@ -69,7 +72,44 @@ public class OrderService {
         return  orderEntity;
     }
 
+    private UserResponeDTO getUser(User user)
+    {
+        return new UserResponeDTO(user.getId(), user.getFullName());
+    }
+    private BeatResponseDTO getBeat(Beat beat){
+        return new BeatResponseDTO(beat.getBeatName(),
+                getUser(beat.getUserName()),
+                beat.getPrice());
+    }
 
+
+    public List<OrderResponseDTO> getAllOrder(Long id) {
+        Optional<User> foundUser = userRepository.findById(id);
+        List<OrderResponseDTO> dtos = new ArrayList<>();
+        List<BeatResponseDTO> beatResponseDTOS = new ArrayList<>();
+        if (foundUser.isPresent()){
+            List<Order> orders = orderRepository.findOrderByUserID(foundUser.get().getId());
+            for (Order o : orders){
+                OrderResponseDTO responseDTO = new OrderResponseDTO(
+                        o.getOrderId(),
+                        getUser(o.getUserOrder()),
+                        o.getPrice()
+                );
+                for (Beat b : o.getBeats()){
+                    BeatResponseDTO beat = new BeatResponseDTO(
+                            b.getBeatName(),
+                            getUser(b.getUserName()),
+                            b.getPrice()
+                    );
+                    beatResponseDTOS.add(beat);
+                }
+                responseDTO.setBeatId(beatResponseDTOS);
+                dtos.add(responseDTO);
+            }
+            return dtos;
+        }
+        return null;
+    }
 
 
 

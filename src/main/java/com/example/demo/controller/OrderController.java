@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.OrderDTO;
+import com.example.demo.dto.OrderResponseDTO;
 import com.example.demo.entity.Order;
 import com.example.demo.service.OrderService;
 import jakarta.validation.Valid;
@@ -19,6 +20,11 @@ public class OrderController {
     @PostMapping("/user/{id}")
     public ResponseEntity<String> orderBeat(@Valid @RequestBody OrderDTO orderDTO, @PathVariable Long id){
         return orderService.orderBeat(orderDTO,id);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<List<OrderResponseDTO>> getAllOrder(@PathVariable Long id){
+        return ResponseEntity.ok(orderService.getAllOrder(id));
     }
 
 }
