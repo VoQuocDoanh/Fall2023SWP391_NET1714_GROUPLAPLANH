@@ -88,7 +88,7 @@ public class SongService {
         while (matcher.find()) {
             scanned.add(matcher.group(1));
         }
-        if (scanned.isEmpty()) {
+        if (!scanned.isEmpty()) {
             Set<ChordBasic> chords = new HashSet<>();
             for (String value : scanned) {
                 List<ChordBasic> basics = this.chordBasicRepository.findByChordName(value);

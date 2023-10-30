@@ -45,14 +45,14 @@ public class SongPlaylistService {
     }
 
     // create
-    public ResponseEntity<String> createPlaylist(Long id, PlaylistDTO playlistDTO) {
+    public ResponseEntity<String> createPlaylist(Long id, String name) {
         Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(id, 1);
         if (foundUser.isPresent()) {
-            Optional<SongPlaylist> foundPlaylist = this.songPlaylistRepository.findUserSongPlaylistByName(playlistDTO.getName(), foundUser.get().getId());
+            Optional<SongPlaylist> foundPlaylist = this.songPlaylistRepository.findUserSongPlaylistByName(name, foundUser.get().getId());
             if (foundPlaylist.isPresent()) {
                 return new ResponseEntity<>("Playlist is already created", HttpStatus.NOT_FOUND);
             } else {
-                SongPlaylist playlist = new SongPlaylist(playlistDTO.getName(),
+                SongPlaylist playlist = new SongPlaylist(name,
                         foundUser.get(),
                         null,
                         1);
@@ -113,7 +113,7 @@ public class SongPlaylistService {
 
     // update
     public ResponseEntity<String> updatePlaylist(Long id, PlaylistDTO playlistDTO) {
-        Optional<User> foundUser = this.userRepository.findById(id);
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(id, 1);
         if (foundUser.isPresent()) {
             Optional<SongPlaylist> foundPlaylist = this.songPlaylistRepository.findUserSongPlaylistByName(playlistDTO.getName(), foundUser.get().getId());
             if (foundPlaylist.isPresent()) {
@@ -152,6 +152,8 @@ public class SongPlaylistService {
                 Optional<Song> foundSong = this.songRepository.findSongByIdAndStatus(playlistDTO.getSongid(), 1);
                 if(foundSong.isPresent()){
                     songs.remove(foundSong.get());
+                    foundPlaylist.get().setSongsinplaylist(songs);
+                    this.songPlaylistRepository.save(foundPlaylist.get());
                     return new ResponseEntity<>("Remove Successfully!", HttpStatus.OK);
                 }
                 return new ResponseEntity<>("Song not found", HttpStatus.NOT_FOUND);
@@ -162,7 +164,7 @@ public class SongPlaylistService {
     }
 
     // view
-    public List<PlaylistResponseDTO> viewAll(Long userid, String name) {
+    public List<PlaylistResponseDTO> viewAll(Long userid) {
         Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userid, 1);
         if (foundUser.isPresent()) {
             List<SongPlaylist> foundPlaylists = this.songPlaylistRepository.findSongPlaylistsByUser(foundUser.get());
