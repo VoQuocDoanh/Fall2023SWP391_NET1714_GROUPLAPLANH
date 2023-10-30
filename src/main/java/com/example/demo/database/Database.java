@@ -25,13 +25,13 @@ public class Database {
             @Override
             public void run(String... args) throws Exception {
 
-//                User admin = new User("admin", this.passwordEncoder.encode("1"), "toi la admin", "12323123", null,1);
+//                Customer admin = new Customer("admin", this.passwordEncoder.encode("1"), "toi la admin", "12323123", null,1);
 //                admin.setRole("AD");
 //
-//                User musician = new User("music", this.passwordEncoder.encode("1"), "toi la musician", "12323123", null,1);
+//                Customer musician = new Customer("music", this.passwordEncoder.encode("1"), "toi la musician", "12323123", null,1);
 //                musician.setRole("MS");
 //
-//                User customer = new User("user", this.passwordEncoder.encode("1"), "toi la user", User.Gender.MALE , "12323123@gmail.com", null,null,"US",1);
+//                Customer customer = new Customer("user", this.passwordEncoder.encode("1"), "toi la user", Customer.Gender.MALE , "12323123@gmail.com", null,null,"US",1);
 //                customer.setRole("US");
 //                userRepository.save(customer);
 

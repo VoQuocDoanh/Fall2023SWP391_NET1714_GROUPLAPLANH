@@ -166,7 +166,7 @@ public class SongService {
             this.songRepository.save(song);
             return new ResponseEntity<>("Upload Successfully", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
         }
     }
 
@@ -188,7 +188,7 @@ public class SongService {
             }
             return new ResponseEntity<>("Update Failed", HttpStatus.NOT_IMPLEMENTED);
         }
-        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
     }
 
     // delete
@@ -370,7 +370,7 @@ public class SongService {
             }
             return new ResponseEntity<>("Song does not exist or Song was deleted", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
     }
 }
 

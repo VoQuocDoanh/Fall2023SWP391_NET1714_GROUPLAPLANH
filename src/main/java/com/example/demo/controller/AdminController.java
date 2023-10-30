@@ -31,13 +31,13 @@ public class AdminController {
         return this.userService.updateAdminInfo(userDTO);
     }
 
-    //List all User in Admin
+    //List all Customer in Admin
     @GetMapping("{page}/10")
     public ResponseEntity<PaginationResponseDTO> getAllUsers(@PathVariable int page) {
         return ResponseEntity.ok(this.userService.getAllUsers(page));
     }
 
-    //Get detail User
+    //Get detail Customer
     @GetMapping(path = {"/{id}"})
     public ResponseEntity<User> getDetailUser_Admin(@Valid @PathVariable Long id) {
         return ResponseEntity.ok(this.userService.getDetailUser_Admin(id));

@@ -86,7 +86,7 @@ public class SongPlaylistService {
                 return new ResponseEntity<>("Song not found", HttpStatus.OK);
             }
         }
-        return new ResponseEntity<>("User not found", HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>("Customer not found", HttpStatus.NOT_IMPLEMENTED);
     }
 
 
@@ -108,7 +108,7 @@ public class SongPlaylistService {
             }
             return new ResponseEntity<>("Playlist not found", HttpStatus.NOT_IMPLEMENTED);
         }
-        return new ResponseEntity<>("User not found", HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>("Customer not found", HttpStatus.NOT_IMPLEMENTED);
     }
 
     // update
@@ -125,7 +125,7 @@ public class SongPlaylistService {
                 return new ResponseEntity<>("Playlist does not exist", HttpStatus.NOT_IMPLEMENTED);
             }
         }
-        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
     }
 
     // delete
@@ -139,7 +139,7 @@ public class SongPlaylistService {
             }
                 return new ResponseEntity<>("Playlist does not exist or Playlist was already deleted", HttpStatus.NOT_IMPLEMENTED);
         }
-        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
     }
 
     // remove
@@ -160,7 +160,7 @@ public class SongPlaylistService {
             }
             return new ResponseEntity<>("Playlist not found", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
     }
 
     // view

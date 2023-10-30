@@ -16,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface SongRepository extends JpaRepository<Song, Long> {
 
-    // User Song
+    // Customer Song
     @Query("select s from Song s where s.userUploadSong.Id = :id and s.status = 1")
     List<Song> findUserSongByUserUploadSong(Long id);
     @Query("select s from Song s where s.songname like %:songName% and s.status = 1 and s.userUploadSong.Id = :id")

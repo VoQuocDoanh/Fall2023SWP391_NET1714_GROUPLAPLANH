@@ -21,7 +21,7 @@ public class JwtTokenProvider {
 
     public AuthenRespone authenticate(AuthenRequest authenRequest) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenRequest.getUsername(), authenRequest.getPassword()));
-        User user = userRepository.findUserByUsernameAndStatus(authenRequest.getUsername(), 1).orElseThrow(() -> new UsernameNotFoundException("User not found or User is banned"));
+        User user = userRepository.findUserByUsernameAndStatus(authenRequest.getUsername(), 1).orElseThrow(() -> new UsernameNotFoundException("Customer not found or Customer is banned"));
         var jwtToken = jwtService.generateToken(user);
 //        var refreshToken = jwtService.refreshToken(user);
 

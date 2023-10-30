@@ -7,9 +7,9 @@ import lombok.Data;
 @Data
 public class RegisterDTO {
 
-    @NotNull(message = "User Name must be not null")
-    @NotBlank(message = "User Name must be not blank")
-    @Size(min = 6, message = "User Name must be at least 6 characters")
+    @NotNull(message = "Customer Name must be not null")
+    @NotBlank(message = "Customer Name must be not blank")
+    @Size(min = 6, message = "Customer Name must be at least 6 characters")
     private String userName;
 
     @NotNull(message = "Full Name must be not null")

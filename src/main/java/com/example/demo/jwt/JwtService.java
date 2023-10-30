@@ -29,7 +29,7 @@ public class JwtService {
                 .sign(algorithm);
     }
 
-//    public String refreshToken(User user) {
+//    public String refreshToken(Customer user) {
 //        Algorithm algorithm = Algorithm.HMAC256(secretKey.getBytes());
 //        return JWT.create()
 //                .withSubject(user.getUsername())

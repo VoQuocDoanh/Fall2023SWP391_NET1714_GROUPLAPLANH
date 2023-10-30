@@ -53,7 +53,7 @@ public class SongCommentService {
                 return new ResponseEntity<>("Comment Successfully", HttpStatus.OK);
             }
         }
-        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
     }
 
     // update
@@ -69,7 +69,7 @@ public class SongCommentService {
             }
             return new ResponseEntity<>("Comment has been deleted!", HttpStatus.NOT_IMPLEMENTED);
         }
-        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
     }
 
     // delete
@@ -99,7 +99,7 @@ public class SongCommentService {
             }
             return new ResponseEntity<>("Song not found!", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>("User not found!", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Customer not found!", HttpStatus.NOT_FOUND);
     }
 
     // view

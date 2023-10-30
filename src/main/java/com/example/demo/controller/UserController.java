@@ -35,11 +35,11 @@ public class UserController {
 
     // Update Customer Info
     @PatchMapping("/customer")
-    public ResponseEntity<String> updateUserInfo(@RequestPart("file")MultipartFile image, @Validated(UpdateValidation.User.class) @RequestPart("json") UserDTO userDTO){
+    public ResponseEntity<String> updateUserInfo(@RequestPart("file")MultipartFile image, @Validated(UpdateValidation.Customer.class) @RequestPart("json") UserDTO userDTO){
         return this.userService.updateUserInfo(userDTO, image);
     }
 
-    // Get detail User
+    // Get detail Customer
     @GetMapping("/{id}")
     public ResponseEntity<UserResponeDTO> getDetailUser_User(@PathVariable Long id){
         return ResponseEntity.ok(this.userService.getDetailUser_User(id));

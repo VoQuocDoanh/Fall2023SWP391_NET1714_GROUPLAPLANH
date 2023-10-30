@@ -20,7 +20,7 @@ public class AuthenticationConfig {
     private final UserRepository userRepository;
     @Bean
     public UserDetailsService userDetailsService(){
-        return username -> userRepository.findUserByUsernameAndStatus(username, 1).orElseThrow(() -> new UsernameNotFoundException("User not found or User is banned"));
+        return username -> userRepository.findUserByUsernameAndStatus(username, 1).orElseThrow(() -> new UsernameNotFoundException("Customer not found or Customer is banned"));
     }
 
     @Bean

@@ -62,21 +62,12 @@ public class GoogleCloudService {
     public void updateFile(MultipartFile file, String objectName){
         try {
             Blob blob = storage.get(bucketName, objectName);
-            if(blob.exists()){
-                BlobId blobId = BlobId.of(bucketName, objectName);
-                BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-                        .setContentType(file.getContentType())
-                        .setAcl(Collections.singletonList(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER)))
-                        .build();
-                storage.create(blobInfo, file.getBytes());
-            } else {
-                BlobId blobId = BlobId.of(bucketName, objectName);
-                BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-                        .setContentType(file.getContentType())
-                        .setAcl(Collections.singletonList(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER)))
-                        .build();
-                storage.create(blobInfo, file.getBytes());
-            }
+            BlobId blobId = BlobId.of(bucketName, objectName);
+            BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+                    .setContentType(file.getContentType())
+                    .setAcl(Collections.singletonList(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER)))
+                    .build();
+            storage.create(blobInfo, file.getBytes());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

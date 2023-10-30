@@ -53,7 +53,7 @@ public class UserService {
     @NotNull
     private ResponseEntity<String> getStringResponseEntity(MultipartFile image, User user) {
         if(image != null) {
-            if (user.getAvatar().isEmpty()) {
+            if (user.getAvatar() == null) {
                 String path = this.service.uploadFile(image, user.getId(), "avatar", "full");
                 String fileName = this.extractObjectNameFromUrl(path);
                 user.setAvatar(path);
@@ -65,7 +65,7 @@ public class UserService {
             return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
         }
         this.userRepository.save(user);
-        return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
+        return new ResponseEntity<>("Update Successfully123", HttpStatus.OK);
     }
 
     private String extractObjectNameFromUrl(String fullUrl) {
@@ -133,7 +133,7 @@ public class UserService {
         return null;
     }
 
-    // User Detail
+    // Customer Detail
     public UserResponeDTO getDetailUser_User(Long id) {
         Optional<User> foundUser = this.userRepository.findById(id);
         if (foundUser.isPresent()) {
@@ -157,7 +157,7 @@ public class UserService {
         return null;
     }
 
-    // Banned User
+    // Banned Customer
     public ResponseEntity<String> banUser(UserDTO userDTO) {
         Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userDTO.getId(), 1);
         if (foundUser.isPresent()) {
@@ -167,7 +167,7 @@ public class UserService {
             this.emailService.sendEmailForBan(user.getMail(), "YOU GOT BANNED", userDTO.getContent());
             return new ResponseEntity<>("Ban Successfully", HttpStatus.OK);
         }
-        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
     }
 
     // Update Admin Info
@@ -185,7 +185,7 @@ public class UserService {
         }
     }
 
-    // Update User Info
+    // Update Customer Info
     public ResponseEntity<String> updateUserInfo(UserDTO userDTO, MultipartFile image) {
         Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userDTO.getId(), 1);
         if (foundUser.isPresent()) {
@@ -222,13 +222,13 @@ public class UserService {
     }
 
 
-    // Search User - username
+    // Search Customer - username
     public List<User> searchByUserName(String name) {
         List<User> userEntity = this.userRepository.searchByUserName(name);
         return userEntity.isEmpty() ? null : userEntity;
     }
 
-    // Get All User
+    // Get All Customer
     public PaginationResponseDTO getAllUsers(int page) {
         List<UserResponeDTO> userResponeDTOList = new ArrayList<>();
         Pageable pageable = PageRequest.of(page - 1, 10);

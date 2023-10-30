@@ -4,7 +4,7 @@ public class UpdateValidation {
 
     public interface Admin{}
 
-    public interface User{}
+    public interface Customer {}
 
     public interface Musician{}
 }

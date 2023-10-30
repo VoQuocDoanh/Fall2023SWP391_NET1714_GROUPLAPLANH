@@ -25,7 +25,7 @@ import java.util.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "User")
+@Table(name = "Customer")
 public class User implements UserDetails {
 
     @Id
@@ -176,7 +176,7 @@ public class User implements UserDetails {
 
 
     public String toString() {
-        return "User{Id=" + this.Id + ", username='" + this.username + "', pass='" + this.password + "', fullName='" + this.fullName + "', mail='" + this.mail + "', roleID='" + this.role + "', status=" + this.status + ", address='" + this.address + "', phoneNumber='" + this.phoneNumber + "'}";
+        return "Customer{Id=" + this.Id + ", username='" + this.username + "', pass='" + this.password + "', fullName='" + this.fullName + "', mail='" + this.mail + "', roleID='" + this.role + "', status=" + this.status + ", address='" + this.address + "', phoneNumber='" + this.phoneNumber + "'}";
     }
 
     public User(String username, String password, String fullName, String mail, String role, int status) {

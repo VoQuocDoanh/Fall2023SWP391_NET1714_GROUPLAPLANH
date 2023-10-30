@@ -41,19 +41,19 @@ public class SongController {
         return this.songService.deleteSong(songid, userid);
     }
 
-    // List all User Song
+    // List all Customer Song
     @GetMapping("/user/{userid}")
     public ResponseEntity<List<SongResponseDTO>> findAllUserSong(@Valid @PathVariable Long userid){
         return ResponseEntity.ok(this.songService.findAllUserSong(userid));
     }
 
-    // Search User Song by name
+    // Search Customer Song by name
     @GetMapping("/user/{userid}/name")
     public ResponseEntity<List<SongResponseDTO>> findUserSongbySongName(@RequestParam("songname") String name, @PathVariable Long userid){
         return ResponseEntity.ok(this.songService.findUserSongbySongName(name, userid));
     }
 
-    // Search User Song by genre
+    // Search Customer Song by genre
     @GetMapping("/user/{userid}/genre")
     public ResponseEntity<List<SongResponseDTO>> findUserSongByGenreName(@RequestParam("genrename") String genreName, @Valid @PathVariable Long userid){
         return ResponseEntity.ok(this.songService.findUserSongByGenre(genreName, userid));

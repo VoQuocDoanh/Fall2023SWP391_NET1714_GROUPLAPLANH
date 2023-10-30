@@ -46,7 +46,7 @@ public class SongReportService {
             }
             return new ResponseEntity<>("Song not found!", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>("User not found!", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Customer not found!", HttpStatus.NOT_FOUND);
     }
 
     public List<ReportResponseDTO> viewReport (Long id){

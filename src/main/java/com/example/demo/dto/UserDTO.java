@@ -21,24 +21,22 @@ public class UserDTO {
 
     private Long id;
 
-    private String username;
-
 //    @NotBlank (message = "Password must be not null")
 //    @Size(min = 5, message = "Password must be at least 5 characters")
 //    @Password(message = "Invalid password")
 //    private String password;
 
-    @Pattern(regexp = "(^$|[0-9]{10})", message = "Phone Number must be 10 or 11 characters", groups = {UpdateValidation.Admin.class, UpdateValidation.User.class, UpdateValidation.Musician.class})
+    @Pattern(regexp = "(^$|[0-9]{10})", message = "Phone Number must be 10 or 11 characters", groups = {UpdateValidation.Admin.class, UpdateValidation.Customer.class, UpdateValidation.Musician.class})
     private String phone;
 
     private String gender;
 
-    @NotNull(message = "Full Name must be not null", groups = {UpdateValidation.Admin.class, UpdateValidation.User.class, UpdateValidation.Musician.class})
-    @NotBlank(message = "Full Name must be not blank", groups = {UpdateValidation.Admin.class, UpdateValidation.User.class, UpdateValidation.Musician.class})
+    @NotNull(message = "Full Name must be not null", groups = {UpdateValidation.Admin.class, UpdateValidation.Customer.class, UpdateValidation.Musician.class})
+    @NotBlank(message = "Full Name must be not blank", groups = {UpdateValidation.Admin.class, UpdateValidation.Customer.class, UpdateValidation.Musician.class})
     private String fullName;
 
-    @NotNull(message = "Address must be not null", groups = {UpdateValidation.User.class, UpdateValidation.Musician.class})
-    @NotBlank(message = "Address must be not blank", groups = {UpdateValidation.User.class, UpdateValidation.Musician.class})
+    @NotNull(message = "Address must be not null", groups = {UpdateValidation.Customer.class, UpdateValidation.Musician.class})
+    @NotBlank(message = "Address must be not blank", groups = {UpdateValidation.Customer.class, UpdateValidation.Musician.class})
     private String address;
 
     private String role;
@@ -59,7 +57,4 @@ public class UserDTO {
 
     // Content
     private String content;
-    public String toString() {
-        return "UserDTO{userName='" + this.username + "'}";
-    }
 }
