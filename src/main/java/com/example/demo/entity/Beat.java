@@ -37,10 +37,10 @@ public class Beat {
     @Column
     private int status;
 
-    @Column
+    @Column(length = Integer.MAX_VALUE)
     private String beatSoundDemo;
 
-    @Column
+    @Column(length = Integer.MAX_VALUE)
     private String beatSoundFull;
 
 
@@ -65,10 +65,10 @@ public class Beat {
     @Column
     private String vocalRange;
 
-    @Column
+    @Column(length = Integer.MAX_VALUE)
     private String objectName;
 
-    @Column
+    @Column(length = Integer.MAX_VALUE)
     private String objectNameDemo;
 
     @ManyToOne

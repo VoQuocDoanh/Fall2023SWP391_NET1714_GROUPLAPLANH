@@ -60,10 +60,10 @@ public class User implements UserDetails {
     @Column
     private String phoneNumber;
 
-    @Column
+    @Column(length = Integer.MAX_VALUE)
     private String avatar;
 
-    @Column
+    @Column(length = Integer.MAX_VALUE)
     private String objectName;
 
     @Column(name = "Date")

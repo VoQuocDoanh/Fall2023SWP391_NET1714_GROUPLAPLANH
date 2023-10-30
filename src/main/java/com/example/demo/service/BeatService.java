@@ -203,8 +203,8 @@ public class BeatService {
                     0, 0, 1, 0, 0, 0);
             this.beatRepository.save(beat);
 
-            String path = this.service.uploadFile(full, beat.getId(), "audio", "full");
-            String pathDemo = this.service.uploadFile(demo, beat.getId(), "audio", "demo");;
+            String path = this.service.uploadFile(full, beat.getId(), "audio", "full", beat.getObjectName());
+            String pathDemo = this.service.uploadFile(demo, beat.getId(), "audio", "demo", beat.getObjectNameDemo());;
 
             String fileName = this.extractObjectNameFromUrl(path);
             String fileNameDemo = this.extractObjectNameFromUrl(pathDemo);
@@ -217,24 +217,28 @@ public class BeatService {
         }
     }
 
-    public ResponseEntity<String> updateBeat(MultipartFile sound, MultipartFile sound2,BeatDTO newBeat, Long id) {
-        Optional<Beat> foundBeat = this.beatRepository.findById(id);
-        if (foundBeat.isPresent()) {
-            Beat beat = foundBeat.get();
-            beat.setBeatName(newBeat.getBeatName());
-            if(sound != null) {
-                service.updateFile(sound, beat.getObjectName());
+    public ResponseEntity<String> updateBeat(MultipartFile sound, MultipartFile sound2, BeatDTO newBeat, Long id) {
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(newBeat.getUserId(), 1);
+        if(foundUser.isPresent()) {
+            Optional<Beat> foundBeat = this.beatRepository.findById(id);
+            if (foundBeat.isPresent()) {
+                Beat beat = foundBeat.get();
+                beat.setBeatName(newBeat.getBeatName());
+                if (sound != null) {
+                    service.uploadFile(sound, foundUser.get().getId(), "audio", "full", beat.getObjectName());
+                }
+                if (sound2 != null) {
+                    service.uploadFile(sound2, foundUser.get().getId(), "audio", "demo", beat.getObjectNameDemo());
+                }
+                beat.setPrice(newBeat.getPrice());
+                beat.setGenresofbeat(genreSet(newBeat));
+                beat.setVocalRange(newBeat.getVocalRange());
+                this.beatRepository.save(beat);
+                return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
             }
-            if(sound2 != null) {
-                service.updateFile(sound2, beat.getObjectNameDemo());
-            }
-            beat.setPrice(newBeat.getPrice());
-            beat.setGenresofbeat(genreSet(newBeat));
-            beat.setVocalRange(newBeat.getVocalRange());
-            this.beatRepository.save(beat);
-            return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
+            return new ResponseEntity<>("Beat not found", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>("Update Failed", HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
 

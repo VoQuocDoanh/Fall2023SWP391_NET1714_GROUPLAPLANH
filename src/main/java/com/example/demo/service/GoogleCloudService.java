@@ -1,17 +1,15 @@
 package com.example.demo.service;
 
-import com.google.api.gax.paging.Page;
 import com.google.cloud.storage.*;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 @Service
 public class GoogleCloudService {
@@ -22,55 +20,41 @@ public class GoogleCloudService {
     @Autowired
     Storage storage;
 
-    private String generateCode(Long id, String type, String demo) {
-        if(demo.equals("full")) {
+    private String generateCode(MultipartFile file, Long id, String type, String demo) {
+        if (!file.isEmpty()) {
             String input = id + "-" + type;
-            return URLEncoder.encode(input, StandardCharsets.UTF_8);
+            byte[] extension = Base64.encodeBase64(input.getBytes());
+            String uniqueFilename = System.currentTimeMillis() + "_" + Math.abs(file.hashCode()) + Arrays.toString(extension);
+            if (demo.equals("full")) {
+                return uniqueFilename;
+            }
+            return "demo" + uniqueFilename;
         }
-        String input = id + "-" + type + "-" + demo;
-        return URLEncoder.encode(input, StandardCharsets.UTF_8);
+        return null;
     }
 
-    public List<String> listOfFiles() {
-
-        List<String> list = new ArrayList<>();
-        Page<Blob> blobs = storage.list(bucketName);
-        for (Blob blob : blobs.iterateAll()) {
-            list.add(blob.getName());
-        }
-        return list;
-    }
-
-    public String uploadFile(MultipartFile file, Long id, String typeFile, String demo) {
-        try {
-        //set up enviroment
-        String fileName = generateCode(id, typeFile, demo);
+    public String uploadFile(MultipartFile file, Long id, String typeFile, String demo , String objectName) {
+        String fileName = generateCode(file, id, typeFile, demo);
         String path = typeFile + "/";
-        //upload to bucket
         BlobId blobId = BlobId.of(bucketName, path + fileName);
-        BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-                .setContentType(file.getContentType())
-                .setAcl(Collections.singletonList(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER)))
-                .build();
+
+        try {
+            if (objectName != null) {
+                Blob existingBlob = storage.get(bucketName, objectName);
+                if (existingBlob != null) {
+                    boolean deleted = existingBlob.delete();
+                    if (!deleted) {
+                        throw new RuntimeException("File cannot be deleted!");
+                    }
+                }
+            }
+            BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+                    .setContentType(file.getContentType())
+                    .setAcl(Collections.singletonList(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER)))
+                    .build();
+
             Blob blob = storage.create(blobInfo, file.getBytes());
             return "https://storage.googleapis.com/" + bucketName + "/" + path + fileName;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void updateFile(MultipartFile file, String objectName){
-        try {
-            BlobId blobId = BlobId.of(bucketName, objectName);
-            boolean deleted = storage.delete(blobId);
-
-            if(deleted) {
-                BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-                        .setContentType(file.getContentType())
-                        .setAcl(Collections.singletonList(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER)))
-                        .build();
-                storage.create(blobInfo, file.getBytes());
-            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

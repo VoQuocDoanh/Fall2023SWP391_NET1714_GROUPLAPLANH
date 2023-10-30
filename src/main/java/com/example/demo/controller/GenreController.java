@@ -2,8 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.GenreDTO;
 import com.example.demo.dto.GenreResponseDTO;
-import com.example.demo.entity.Genre;
 import com.example.demo.service.GenreService;
+import com.example.demo.service.GoogleCloudService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,8 @@ public class GenreController {
 
     @Autowired
     private GenreService genreService;
-
+@Autowired
+    GoogleCloudService service;
 
     // List all genres
     @GetMapping("")

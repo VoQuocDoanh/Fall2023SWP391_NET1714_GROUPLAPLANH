@@ -52,14 +52,7 @@ public class UserService {
 
     private ResponseEntity<String> getStringResponseEntity(MultipartFile image, User user) {
         if(image != null && !image.isEmpty()) {
-            if (user.getAvatar() == null) {
-                String path = this.service.uploadFile(image, user.getId(), "avatar", "full");
-                String fileName = this.extractObjectNameFromUrl(path);
-                user.setAvatar(path);
-                user.setObjectName(fileName);
-            } else {
-                this.service.updateFile(image, user.getObjectName());
-            }
+            if (uploadFile(image, user)) return new ResponseEntity<>("Update Failed!", HttpStatus.NOT_IMPLEMENTED);
             this.userRepository.save(user);
             return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
         }
@@ -67,9 +60,20 @@ public class UserService {
         return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
     }
 
+    private boolean uploadFile(MultipartFile image, User user) {
+        String path = this.service.uploadFile(image, user.getId(), "avatar", "full", user.getObjectName());
+        if(path == null){
+            return true;
+        }
+        String fileName = this.extractObjectNameFromUrl(path);
+        user.setAvatar(path);
+        user.setObjectName(fileName);
+        return false;
+    }
+
     private String extractObjectNameFromUrl(String fullUrl) {
-        if (fullUrl.startsWith("https://storage.googleapis.com/")) {
-            int startIndex = "https://storage.googleapis.com/".length();
+        if (fullUrl.startsWith("https://storage.googleapis.com/mychordproject/")) {
+            int startIndex = "https://storage.googleapis.com/mychordproject/".length();
             return fullUrl.substring(startIndex);
         }
         return null;

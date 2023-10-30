@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.ChordBasicResponseDTO;
 import com.example.demo.dto.ChordDTO;
 import com.example.demo.dto.ChordResponseDTO;
 import com.example.demo.entity.ChordBasic;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -54,7 +52,7 @@ public class ChordBasicService {
                     chordDTO.getScript(),
                     chordDTO.getType());
             this.chordBasicRepository.save(basic);
-            String path = this.service.uploadFile(image, basic.getChordId(), "image", "full");
+            String path = this.service.uploadFile(image, basic.getChordId(), "image", "full", null);
             basic.setImage(path);
             this.chordBasicRepository.save(basic);
         return new ResponseEntity<>("Add được rồi đó Hiển", HttpStatus.OK);
