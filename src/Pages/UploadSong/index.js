@@ -200,7 +200,7 @@ function UploadSong() {
                             </div>
                         </div> */}
                         <div className={cx('song-lyric')}>
-                            <textarea style={{ width: '80%', resize: 'none' }} className={cx("textarea-box")} value={description} id="ABC" name="ABC" rows="20" cols="174" onChange={e => setDescription(e.target.value)}></textarea>
+                            <textarea style={{ width: '80%', resize: 'none', padding: 15 }} className={cx("textarea-box")} value={description} id="ABC" name="ABC" rows="20" cols="174" onChange={e => setDescription(e.target.value)}></textarea>
                         </div>
                         <div className={cx('toolbox-bottom')} style={{ width: '80%' }}>
                             <span>Chords: </span>
