@@ -38,9 +38,6 @@ public class SongService {
     @Autowired
     private SongRatingRepository songRatingRepository;
 
-    private UserResponeDTO getUser(User user) {
-        return new UserResponeDTO(user.getId(), user.getFullName());
-    }
 
     private List<GenreResponseDTO> getGenres(Long id) {
         List<String> genres = this.genreRepository.findBySongs(id);
@@ -120,7 +117,7 @@ public class SongService {
                     value.getSongname(),
                     value.getSinger(),
                     value.getCreatedAt(),
-                    new UserResponeDTO(foundUser.getFullName()),
+                    foundUser.getId(),
                     value.getTotalLike(),
                     value.getView(),
                     value.getRating());
@@ -138,7 +135,8 @@ public class SongService {
                         value.getSongname(),
                         value.getSinger(),
                         value.getCreatedAt(),
-                        getUser(value.getUserUploadSong()),
+                        value.getUserUploadSong().getId(),
+                        value.getUserUploadSong().getFullName(),
                         value.getTotalLike(),
                         value.getView(),
                         value.getRating());
@@ -166,7 +164,7 @@ public class SongService {
             this.songRepository.save(song);
             return new ResponseEntity<>("Upload Successfully", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
     }
 
@@ -188,7 +186,7 @@ public class SongService {
             }
             return new ResponseEntity<>("Update Failed", HttpStatus.NOT_IMPLEMENTED);
         }
-        return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
     // delete
@@ -231,26 +229,6 @@ public class SongService {
         }
     }
 
-    // view user song by genre
-    public List<SongResponseDTO> findUserSongByGenre(String genrename, Long id) {
-        Set<SongResponseDTO> songResponseDTOS = new HashSet<>();
-        List<Song> songs = this.songRepository.findUserSongByGenreName(genrename, id);
-        for (Song song : songs) {
-            SongResponseDTO dto = new SongResponseDTO(song.getId(),
-                    song.getSongname(),
-                    song.getSinger(),
-                    song.getCreatedAt(),
-                    getUser(song.getUserUploadSong()),
-                    song.getTotalLike(),
-                    song.getView(),
-                    song.getRating());
-            songResponseDTOS.add(dto);
-        }
-        List<SongResponseDTO> sortList = new ArrayList<>(songResponseDTOS);
-        sortList.sort(Comparator.comparing(SongResponseDTO::getId));
-        return sortList.isEmpty() ? sortList : null;
-    }
-
     // view detail song
     public SongResponseDTO getDetailSong(Long id) {
         Optional<Song> foundSong = this.songRepository.findSongByIdAndStatus(id, 1);
@@ -265,7 +243,8 @@ public class SongService {
             dto.setDescription(s.getDescription());
             dto.setVocalRange(s.getVocalRange());
             dto.setSongUrl(s.getSongUrl());
-            dto.setUser(getUser(s.getUserUploadSong()));
+            dto.setUserid(s.getUserUploadSong().getId());
+            dto.setUserfullname(s.getUserUploadSong().getFullName());
             dto.setCreateAt(s.getCreatedAt());
             dto.setGenres(getGenres(s.getId()));
             dto.setChords(getChords(s.getId()));
@@ -371,7 +350,7 @@ public class SongService {
             }
             return new ResponseEntity<>("Song does not exist or Song was deleted", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 }
 

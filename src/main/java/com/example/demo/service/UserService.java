@@ -136,7 +136,7 @@ public class UserService {
         return null;
     }
 
-    // Customer Detail
+    // User Detail
     public UserResponeDTO getDetailUser_User(Long id) {
         Optional<User> foundUser = this.userRepository.findById(id);
         if (foundUser.isPresent()) {
@@ -160,7 +160,7 @@ public class UserService {
         return null;
     }
 
-    // Banned Customer
+    // Banned User
     public ResponseEntity<String> banUser(UserDTO userDTO) {
         Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userDTO.getId(), 1);
         if (foundUser.isPresent()) {
@@ -170,7 +170,7 @@ public class UserService {
             this.emailService.sendEmailForBan(user.getMail(), "YOU GOT BANNED", userDTO.getContent());
             return new ResponseEntity<>("Ban Successfully", HttpStatus.OK);
         }
-        return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
     // Update Admin Info
@@ -188,7 +188,7 @@ public class UserService {
         }
     }
 
-    // Update Customer Info
+    // Update User Info
     public ResponseEntity<String> updateUserInfo(UserDTO userDTO, MultipartFile image) {
         Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userDTO.getId(), 1);
         if (foundUser.isPresent()) {
@@ -225,13 +225,13 @@ public class UserService {
     }
 
 
-    // Search Customer - username
+    // Search User - username
     public List<User> searchByUserName(String name) {
         List<User> userEntity = this.userRepository.searchByUserName(name);
         return userEntity.isEmpty() ? null : userEntity;
     }
 
-    // Get All Customer
+    // Get All User
     public PaginationResponseDTO getAllUsers(int page) {
         List<UserResponeDTO> userResponeDTOList = new ArrayList<>();
         Pageable pageable = PageRequest.of(page - 1, 10);

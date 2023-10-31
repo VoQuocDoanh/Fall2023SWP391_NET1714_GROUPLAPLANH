@@ -9,7 +9,6 @@ import com.example.demo.repository.SongReportRepository;
 import com.example.demo.repository.SongRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -46,7 +45,7 @@ public class SongReportService {
             }
             return new ResponseEntity<>("Song not found!", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>("Customer not found!", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("User not found!", HttpStatus.NOT_FOUND);
     }
 
     public List<ReportResponseDTO> viewReport (Long id){

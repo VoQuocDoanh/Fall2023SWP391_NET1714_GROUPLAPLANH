@@ -10,7 +10,6 @@ import com.example.demo.entity.User;
 import com.example.demo.repository.ChordBasicRepository;
 import com.example.demo.repository.ChordCollectionRepository;
 import com.example.demo.repository.UserRepository;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +41,7 @@ public class ChordCollectionService {
         } else {
             List<ChordCollection> collectionEntity = new ArrayList<>();
             for (ChordCollection chordCollection : collection) {
-                //userCollection is username in Customer Entity
+                //userCollection is username in User Entity
                 User t = chordCollection.getUserCollection();
                 if (t != null && t.getId().equals(userEntity.get().getId())) {
                     ChordCollection ownCollection = new ChordCollection(
@@ -103,7 +102,7 @@ public class ChordCollectionService {
     public ResponseEntity<String> addToCollection(ChordCollectionDTO chordCollectionDTO) {
         Optional<User> user = userRepository.findById(chordCollectionDTO.getUserId());
         if (user == null) {
-            return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         } else {
             if (chordCollectionDTO.getFlag().equals("Create new collection")) {
                 Optional<ChordCollection> foundName = chordCollectionRepository.findByUserCollection(user.get(), chordCollectionDTO.getName());
@@ -145,7 +144,7 @@ public class ChordCollectionService {
     public ResponseEntity<String> removeChord(ChordCollectionDTO chordCollectionDTO) {
         User user = userRepository.findByUsername(chordCollectionDTO.getUsername());
         if (user == null) {
-            return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         } else {
             Optional<ChordCollection> findCollection = chordCollectionRepository.findByName(chordCollectionDTO.getName());
             ChordCollection collection = findCollection.get();
@@ -167,7 +166,7 @@ public class ChordCollectionService {
     public ResponseEntity<String> deleteCollection(ChordCollectionDTO chordCollectionDTO) {
         User user = userRepository.findByUsername(chordCollectionDTO.getUsername());
         if (user == null) {
-            return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         } else {
             Optional<ChordCollection> findCollection = chordCollectionRepository.findByName(chordCollectionDTO.getName());
             Set<ChordBasic> chords = findCollection.get().getChordsofcollections();

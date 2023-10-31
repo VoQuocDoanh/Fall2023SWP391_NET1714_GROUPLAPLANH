@@ -1,11 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.BeatDTO;
 import com.example.demo.dto.GenreDTO;
 import com.example.demo.dto.GenreResponseDTO;
-import com.example.demo.entity.Beat;
 import com.example.demo.entity.Genre;
-import com.example.demo.entity.User;
 import com.example.demo.repository.GenreRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

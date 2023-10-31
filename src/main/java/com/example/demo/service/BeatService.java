@@ -213,7 +213,7 @@ public class BeatService {
 
             return new ResponseEntity<>("Insert Successfully", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
     }
 

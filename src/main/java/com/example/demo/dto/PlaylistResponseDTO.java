@@ -13,11 +13,11 @@ import java.util.List;
 public class PlaylistResponseDTO {
     private Long id;
     private String name;
-    private UserResponeDTO userid;
+    private Long userid;
     private LocalDateTime createAt;
     private List<SongResponseDTO> songs;
 
-    public PlaylistResponseDTO(Long id, String name, UserResponeDTO userid, LocalDateTime createAt) {
+    public PlaylistResponseDTO(Long id, String name, Long userid, LocalDateTime createAt) {
         this.id = id;
         this.name = name;
         this.userid = userid;

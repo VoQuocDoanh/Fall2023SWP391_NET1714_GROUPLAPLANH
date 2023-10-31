@@ -8,7 +8,6 @@ package com.example.demo.controller;
 import com.example.demo.dto.SongDTO;
 import com.example.demo.dto.SongResponseDTO;
 import com.example.demo.service.SongService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,22 +40,16 @@ public class SongController {
         return this.songService.deleteSong(songid, userid);
     }
 
-    // List all Customer Song
+    // List all User Song
     @GetMapping("/user/{userid}")
-    public ResponseEntity<List<SongResponseDTO>> findAllUserSong(@Valid @PathVariable Long userid){
+    public ResponseEntity<List<SongResponseDTO>> findAllUserSong(@PathVariable Long userid){
         return ResponseEntity.ok(this.songService.findAllUserSong(userid));
     }
 
-    // Search Customer Song by name
+    // Search User Song by name
     @GetMapping("/user/{userid}/name")
     public ResponseEntity<List<SongResponseDTO>> findUserSongbySongName(@RequestParam("songname") String name, @PathVariable Long userid){
         return ResponseEntity.ok(this.songService.findUserSongbySongName(name, userid));
-    }
-
-    // Search Customer Song by genre
-    @GetMapping("/user/{userid}/genre")
-    public ResponseEntity<List<SongResponseDTO>> findUserSongByGenreName(@RequestParam("genrename") String genreName, @Valid @PathVariable Long userid){
-        return ResponseEntity.ok(this.songService.findUserSongByGenre(genreName, userid));
     }
 
     // List all Song

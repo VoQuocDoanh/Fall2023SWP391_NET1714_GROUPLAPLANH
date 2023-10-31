@@ -24,10 +24,6 @@ public class SongPlaylistService {
     @Autowired
     private SongPlaylistRepository songPlaylistRepository;
 
-    private UserResponeDTO getUser(User user) {
-        return new UserResponeDTO(user.getId(), user.getFullName());
-    }
-
     private List<SongResponseDTO> getSongs(SongPlaylist playlist) {
         List<SongResponseDTO> dtos = new ArrayList<>();
         for (Song value : playlist.getSongsinplaylist()) {
@@ -35,7 +31,8 @@ public class SongPlaylistService {
                     value.getSongname(),
                     value.getSinger(),
                     value.getCreatedAt(),
-                    getUser(value.getUserUploadSong()),
+                    value.getUserUploadSong().getId(),
+                    value.getUserUploadSong().getFullName(),
                     value.getTotalLike(),
                     value.getView(),
                     value.getRating());
@@ -108,7 +105,7 @@ public class SongPlaylistService {
             }
             return new ResponseEntity<>("Playlist not found", HttpStatus.NOT_IMPLEMENTED);
         }
-        return new ResponseEntity<>("Customer not found", HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_IMPLEMENTED);
     }
 
     // update
@@ -125,7 +122,7 @@ public class SongPlaylistService {
                 return new ResponseEntity<>("Playlist does not exist", HttpStatus.NOT_IMPLEMENTED);
             }
         }
-        return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
     // delete
@@ -139,7 +136,7 @@ public class SongPlaylistService {
             }
                 return new ResponseEntity<>("Playlist does not exist or Playlist was already deleted", HttpStatus.NOT_IMPLEMENTED);
         }
-        return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
     // remove
@@ -160,7 +157,7 @@ public class SongPlaylistService {
             }
             return new ResponseEntity<>("Playlist not found", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
     // view
@@ -173,7 +170,7 @@ public class SongPlaylistService {
                 for (SongPlaylist value : foundPlaylists) {
                     PlaylistResponseDTO dto = new PlaylistResponseDTO(value.getId(),
                             value.getName(),
-                            getUser(value.getUser()),
+                            value.getUser().getId(),
                             value.getCreatedAt());
                     dtos.add(dto);
                 }
@@ -191,12 +188,11 @@ public class SongPlaylistService {
             Optional<SongPlaylist> foundPlaylists = this.songPlaylistRepository.findSongPlaylistByUserAndName(foundUser.get(), name);
             if (foundPlaylists.isPresent()) {
                 SongPlaylist playlist = foundPlaylists.get();
-                PlaylistResponseDTO dto = new PlaylistResponseDTO(playlist.getId(),
+                return new PlaylistResponseDTO(playlist.getId(),
                         playlist.getName(),
-                        getUser(playlist.getUser()),
+                        playlist.getUser().getId(),
                         playlist.getCreatedAt(),
                         getSongs(playlist));
-                return dto;
             }
             return null;
         }
