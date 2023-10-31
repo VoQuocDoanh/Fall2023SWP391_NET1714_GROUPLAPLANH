@@ -75,7 +75,7 @@ public class SongPlaylistService {
                         foundUser.get(),
                         null,
                         1);
-                Set<Song> songs = playlist.getSongsinplaylist();
+                Set<Song> songs = new HashSet<>();
                 Optional<Song> foundSong = this.songRepository.findSongByIdAndStatus(playlistDTO.getSongid(), 1);
                 if (foundSong.isPresent()) {
                     songs.add(foundSong.get());
