@@ -111,6 +111,7 @@ public class SongCommentService {
                             null,
                             value.getContent(),
                             value.getCommentByUsers().getId(),
+                            value.getCommentByUsers().getUsername(),
                             value.getSongOfComment().getId(),
                             value.getCreatedAt(),
                             getSubComment(value)
@@ -134,6 +135,7 @@ public class SongCommentService {
                         value.getParentComment().getId(),
                         value.getContent(),
                         value.getCommentByUsers().getId(),
+                        value.getCommentByUsers().getUsername(),
                         value.getSongOfComment().getId(),
                         value.getCreatedAt(),
                         getSubComment(value));

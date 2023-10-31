@@ -15,6 +15,7 @@ public class CommentSongResponseDTO {
     private Long parentId;
     private String content;
     private Long userId;
+    private String username;
     private Long songId;
     private LocalDateTime localDateTime;
     private List<CommentSongResponseDTO> subComment;
