@@ -1,9 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from "./ListOfSong.module.scss";
 import classNames from "classnames/bind";
+import axiosInstance from '../../authorization/axiosInstance';
 const cx = classNames.bind(styles);
 
 function ListOfSong() {
+    const [listSongs, setListSongs] = useState(null)
+    const [listGenres, setListGenres] = useState(null)
+
+    useEffect(() => {
+        loadGenres()
+    }, [])
+    useEffect(() => {
+        loadSongs()
+    }, [])
+
+    const loadSongs = async () => {
+        await axiosInstance.get("http://localhost:8080/api/v1/song")
+            .then((res) => {
+                setListSongs(res.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+    const loadGenres = async () => {
+        await axiosInstance.get("http://localhost:8080/api/v1/genre")
+            .then((res) => {
+                setListGenres(res.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
     const songs = [
         { number: 1, name: 'Song 1', artist: 'Artist 1' },
         { number: 2, name: 'Song 2', artist: 'Artist 2' },
@@ -57,42 +87,16 @@ function ListOfSong() {
                     </div>
                     <div className={cx('option')}>
                         <div>
-                            <label className={cx('container')}>
-                                <input className={cx('custom-radio')} type="radio" name="radio" />
-                                <span className={cx('checkmark')}>One</span>
-                            </label>
-                            <label className={cx('container')}>
-                                <input className={cx('custom-radio')} type="radio" name="radio" />
-                                <span className={cx('checkmark')}>One</span>
-                            </label>
-                            <label className={cx('container')}>
-                                <input className={cx('custom-radio')} type="radio" name="radio" />
-                                <span className={cx('checkmark')}>One</span>
-                            </label>
-                            <label className={cx('container')}>
-                                <input className={cx('custom-radio')} type="radio" name="radio" />
-                                <span className={cx('checkmark')}>One</span>
-                            </label>
-                            <label className={cx('container')}>
-                                <input className={cx('custom-radio')} type="radio" name="radio" />
-                                <span className={cx('checkmark')}>One</span>
-                            </label>
-                            <label className={cx('container')}>
-                                <input className={cx('custom-radio')} type="radio" name="radio" />
-                                <span className={cx('checkmark')}>One</span>
-                            </label>
-                            <label className={cx('container')}>
-                                <input className={cx('custom-radio')} type="radio" name="radio" />
-                                <span className={cx('checkmark')}>One</span>
-                            </label>
-                            <label className={cx('container')}>
-                                <input className={cx('custom-radio')} type="radio" name="radio" />
-                                <span className={cx('checkmark')}>One</span>
-                            </label>
-                            <label className={cx('container')}>
-                                <input className={cx('custom-radio')} type="radio" name="radio" />
-                                <span className={cx('checkmark')}>One</span>
-                            </label>
+                        {listGenres ?
+                                <div className={cx("rhythm-list")} id="rhythms">
+                                    {listGenres.map((item) => {
+                                        return <label className={cx('container')}>
+                                        <input className={cx('custom-radio')} type="radio" name="radio" />
+                                        <span className={cx('checkmark')}>{item.name}</span>
+                                    </label>
+                                    })}
+
+                                </div> : <div></div>}
                         </div>
                         {/* Add more labels as needed */}
                     </div>
