@@ -271,6 +271,7 @@ public class SongService {
             dto.setChords(getChords(s.getId()));
             dto.setView(s.getView());
             dto.setTotalLike(s.getTotalLike());
+            dto.setRating(s.getRating());
             return dto;
         }
         return null;

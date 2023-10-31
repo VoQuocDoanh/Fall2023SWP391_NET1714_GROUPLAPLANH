@@ -119,6 +119,7 @@ public class SongCommentService {
                             value.getCreatedAt(),
                             getSubComment(value)
                     );
+                    dtoList.add(parentComment);
                 }
                 return dtoList;
             }
