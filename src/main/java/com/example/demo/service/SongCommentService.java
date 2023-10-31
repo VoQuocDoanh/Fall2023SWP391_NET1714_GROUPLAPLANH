@@ -81,19 +81,15 @@ public class SongCommentService {
                 Song song = foundSound.get();
                 Optional<SongComment> foundComment = this.songCommentRepository.findSongCommentByIdAndCommentByUsers(id, foundUser.get());
                 if (foundComment.isPresent()) {
-                    Optional<SongComment> isParentComment = this.songCommentRepository.findParentCommentById(dto.getParentId());
-                    if (isParentComment.isEmpty()) {
-                        List<SongComment> songComments = this.songCommentRepository.findByParentComment(foundComment.get());
-                        this.songCommentRepository.deleteAll(songComments);
-                        this.songCommentRepository.delete(foundComment.get());
-                        song.setCmt(song.getCmt() - songComments.size());
-                        this.songRepository.save(song);
-                        return new ResponseEntity<>("Deleted Comment Successfully!", HttpStatus.OK);
-                    }
+                    List<SongComment> songComments = this.songCommentRepository.findByParentComment(foundComment.get());
+                    this.songCommentRepository.deleteAll(songComments);
+                    this.songCommentRepository.delete(foundComment.get());
+                    song.setCmt(song.getCmt() - songComments.size());
+                    this.songRepository.save(song);
                     this.songCommentRepository.delete(foundComment.get());
                     song.setCmt(song.getCmt() - 1);
                     this.songRepository.save(song);
-                    return new ResponseEntity<>("Deleted SubComment Successfully!", HttpStatus.OK);
+                    return new ResponseEntity<>("Deleted Comment Successfully!", HttpStatus.OK);
                 }
                 return new ResponseEntity<>("Comment not found!", HttpStatus.NOT_FOUND);
             }
