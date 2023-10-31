@@ -26,6 +26,9 @@ public class JwtService {
                 .withExpiresAt(new Date(System.currentTimeMillis() + 100*60*1000))
                 .withClaim("username", user.getUsername())
                 .withClaim("role", user.getRole())
+                .withClaim("fullName",user.getFullName())
+                .withClaim("phoneNumber",user.getPhoneNumber())
+                .withClaim("mail",user.getMail())
                 .sign(algorithm);
     }
 
