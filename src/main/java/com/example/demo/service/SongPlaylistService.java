@@ -118,7 +118,7 @@ public class SongPlaylistService {
             Optional<SongPlaylist> foundPlaylist = this.songPlaylistRepository.findUserSongPlaylistByName(playlistDTO.getName(), foundUser.get().getId());
             if (foundPlaylist.isPresent()) {
                 SongPlaylist playlist = foundPlaylist.get();
-                playlist.setName(playlistDTO.getName());
+                playlist.setName(playlistDTO.getNewname());
                 this.songPlaylistRepository.save(playlist);
                 return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
             } else {
