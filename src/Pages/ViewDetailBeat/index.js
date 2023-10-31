@@ -59,7 +59,7 @@ function ViewDetailBeat() {
 
     useEffect(() => {
         loadSoundDemo()
-    },[])
+    }, [])
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -210,7 +210,7 @@ function ViewDetailBeat() {
             <div className={cx("first-container")}>
                 <Link to={"/listbeat"}>
                     <Button variant="contained" className={cx("back-to-shop")}>
-                        <div style={{fontSize: 15}}>Back to Shop</div>
+                        <div style={{ fontSize: 15 }}>Back to Shop</div>
                     </Button>
                 </Link>
                 {/* <div className={cx("text-header")}>
@@ -310,14 +310,20 @@ function ViewDetailBeat() {
                                 <div className={cx('list')}>
                                     <div className={cx('genre')}>
                                         <span>&#x2022; Beat's Name: {beatDetail.beatName}</span>
-                                        <span>&#x2022; Genre:
-                                            {
-                                                beatDetail.genres.map((item, index) => {
-                                                    return <span> {item.name},</span>
-                                                })
+                                        {beatDetail.genres !== null ?
+                                            <span>&#x2022; Genre:
+                                                {
+                                                    beatDetail.genres.map((item, index) => {
+                                                        return <span> {item.name},</span>
+                                                    })
 
-                                            }
-                                        </span>
+                                                }
+                                            </span>
+                                            :
+                                            <span>&#x2022; Genre:
+
+                                            </span>
+                                        }
                                         <span>&#x2022; Price: ${beatDetail.price}</span>
                                         <span>&#x2022; Views: {(beatDetail.view / 2).toFixed()}</span>
                                         <span>&#x2022; Tone: {beatDetail.vocalRange}</span>
@@ -380,9 +386,9 @@ function ViewDetailBeat() {
                 {/* Comment */}
 
                 <div className={cx('comment-all')}>
-                    <h2 style={{marginLeft:25, fontSize:38}}>Comment</h2>
+                    <h2 style={{ marginLeft: 25, fontSize: 38 }}>Comment</h2>
                     <div className={cx('comment')}>
-                        <textarea style={{resize: 'none', height: 300, padding: 10, borderRadius: 12}} id="ABC" name="ABC" rows="2" cols="174" placeholder=' Comment...' onChange={handleComment} ></textarea>
+                        <textarea style={{ resize: 'none', height: 300, padding: 10, borderRadius: 12 }} id="ABC" name="ABC" rows="2" cols="174" placeholder=' Comment...' onChange={handleComment} ></textarea>
                         {!token ?
                             <Link to={"/login"}>
                                 <div className={cx('post-button')}>
@@ -390,11 +396,11 @@ function ViewDetailBeat() {
                                 </div>
                             </Link>
                             : <div className={cx('post-button')} onClick={() => handlePostCommentParent()}>
-                                <button className={cx("post-buttonn")} style={{height: 60, borderRadius:14,padding: 10}}>Post a comment</button>
+                                <button className={cx("post-buttonn")} style={{ height: 60, borderRadius: 14, padding: 10 }}>Post a comment</button>
                             </div>
                         }
-                        <div className={cx("select-comment")} style={{marginTop: -50}} >
-                            <select style={{height: 40, padding: 10, borderRadius:5 }}  name="comment" id="comment">
+                        <div className={cx("select-comment")} style={{ marginTop: -50 }} >
+                            <select style={{ height: 40, padding: 10, borderRadius: 5 }} name="comment" id="comment">
                                 <option value="Latest comments">Latest comments</option>
                                 <option value="Oldest comment">Oldest comment</option>
                             </select>

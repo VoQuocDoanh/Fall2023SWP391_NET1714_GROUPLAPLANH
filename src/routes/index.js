@@ -32,6 +32,8 @@ import ViewDetailsMusician from "../Pages/ViewDetailsMusician";
 import ViewDetailBeatMusician from "../Pages/ViewDetailBeatMusician";
 import ViewDetailUser2 from "../Pages/ViewDetailsUser";
 import ListOfSong from "../Pages/ListOfSong";
+import DetailUser from "../Pages/DetailUser";
+import FeedbackMusician from "../Pages/FeedbackMusician";
 const publicRoutes = [
   {
     path: "/",
@@ -170,6 +172,12 @@ const publicRoutes = [
   {
     path: "/listofsong",
     component: ListOfSong,
+    path: "/DetailUser",
+    component: DetailUser,
+  },
+  {
+    path: "/FeedbackMusician",
+    component: FeedbackMusician,
   },
 ];
 

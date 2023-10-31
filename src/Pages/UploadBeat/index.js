@@ -23,27 +23,32 @@ function UploadBeat() {
   if(token){
     username = jwtDecode(token).username
   }
-  const [genre, setGenre] = useState("");
+  const [inputGenres, setInputGenres] = useState("");
+  let genres = []
   const [description, setDescription] = useState("");
   const [uploadMessage, setUploadMessage] = useState('')
-  const [beatSoundDemo, setBeatSoundDemo] = useState(null)
-  const [beatSoundFull, setBeatSoundFull] = useState(null)
+  const [beatSoundDemo, setBeatSoundDemo] = useState("")
+  const [beatSoundFull, setBeatSoundFull] = useState("")
   const [vocalRange, setVocalRange] = useState(null)
   const [listGenres, setListGenres] = useState(null)
 
-  const beat = { beatName, price, username, genre, description, vocalRange }
+  const beat = { beatName, price, username, genres, description, vocalRange }
   const navigate = useNavigate();
   const formData = new FormData();
 
   useEffect(() => {
     loadGenres()
   }, [])
-
+  const values = inputGenres.split(',');
+  console.log(values[0])
+  for(let i = 0; i < values.length; i++){
+      genres.push(values[i])
+  }
   const handleUpload = async () => {
     if(!token){
       navigate("/login")
   }
-    if (!beatName || !price || !username || !genre || !price || !vocalRange || !beatSoundDemo || !beatSoundFull) {
+    if (!beatName || !price || !username || genres.length === 0 || !price || !vocalRange) {
       alert("Please fill in all fields!")
       return;
     } else if (price < 0) {
@@ -51,13 +56,10 @@ function UploadBeat() {
       return;
     }
     
-    formData.append("json",JSON.stringify(beat))
-    formData.append('file1',"123");
+    formData.append('json', new Blob([JSON.stringify(beat)], { type: 'application/json' }));
+    formData.append('file1',beatSoundFull);
     formData.append('file2',beatSoundDemo)
     setUploadMessage()
-    console.log(beat)
-    console.log(beatSoundDemo)
-    console.log(beatSoundFull)
     formData.forEach((value, key) => {
       console.log(key, value);
     });
@@ -214,8 +216,8 @@ function UploadBeat() {
             type="Text"
             placeholder="Genres"
             className={cx("input-text")}
-            value={genre}
-            onChange={(e) => setGenre(e.target.value)}
+            value={inputGenres}
+            onChange={(e) => setInputGenres(e.target.value)}
           />} position="right center">
             {listGenres.map((item) => {
               return <div >{item.name}</div>
@@ -280,8 +282,7 @@ function UploadBeat() {
             type="file"
             placeholder="BeatSound"
             className={cx("input-text")}
-            value={beatSoundDemo}
-            onChange={(e) => setBeatSoundDemo(e.target.value)}
+            onChange={(e) => setBeatSoundDemo(e.target.files[0])}
           />
         </div>
 
@@ -295,8 +296,7 @@ function UploadBeat() {
             type="file"
             placeholder="BeatSound"
             className={cx("input-text")}
-            value={beatSoundFull}
-            onChange={(e) => setBeatSoundFull(e.target.value)}
+            onChange={(e) => setBeatSoundFull(e.target.files[0])}
           />
         </div>
 

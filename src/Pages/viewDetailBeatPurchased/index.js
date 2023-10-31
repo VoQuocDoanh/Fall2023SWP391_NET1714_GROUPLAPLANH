@@ -13,6 +13,7 @@ import music from "../../assets/audio/Dont_Coi.mp3";
 import { useNavigate } from "react-router-dom";
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
+import Popup from "reactjs-popup";
 const cx = classNames.bind(styles);
 
 function ViewDetailBeatPurchased() {
@@ -22,7 +23,10 @@ function ViewDetailBeatPurchased() {
     const token = useToken();
     const navigate = useNavigate();
     const [beatSoundFull, setBeatSoundFull] = useState("")
-    const [checkFeedBack, setCheckFeedBack] = useState(null)
+    const [checkFeedBack, setCheckFeedBack] = useState("")
+    const [check, setCheck] = useState(false)
+    const [feedBack, setFeedBack] = useState("")
+    const contentStyle = { background: 'white', width: 460, height: 370, borderRadius: 20 };
     let userId = ""
     if (token) {
         userId = jwtDecode(token).sub
@@ -56,6 +60,21 @@ function ViewDetailBeatPurchased() {
             .catch((error) => {
                 console.log(error)
             })
+    }
+
+    const handleFeedback = async() => {
+        if(check){
+            setCheckFeedBack("You have already feedbacked this beat!")
+            return;
+        }
+        await axiosInstance.post("http://localhost:8080/api/v1/song/feedback",{userId: userId, beatId: beatId, content: feedBack})
+        .then((res) =>{
+            setCheckFeedBack("FeedbackSuccessfully")
+            setCheck(true)
+        })
+        .catch((error) =>{
+            console.log(error)
+        })
     }
 
     if (beatDetail !== null) {
@@ -148,23 +167,41 @@ function ViewDetailBeatPurchased() {
                                 <div className={cx('list')}>
                                     <div className={cx('genre')}>
                                         <span>&#x2022; Beat's Name: {beatDetail.beatName}</span>
-                                        <span>&#x2022; Genre:
-                                            {
-                                                beatDetail.genres.map((item, index) => {
-                                                    return <span> {item.name},</span>
-                                                })
+                                        {beatDetail.genres !== null ?
+                                            <span>&#x2022; Genre:
+                                                {
+                                                    beatDetail.genres.map((item, index) => {
+                                                        return <span> {item.name},</span>
+                                                    })
 
-                                            }
-                                        </span>
+                                                }
+                                            </span>
+                                            :
+                                            <span>&#x2022; Genre:
+
+                                            </span>
+                                        }
                                         <span>&#x2022; Price: ${beatDetail.price}</span>
                                         <span>&#x2022; Views: {(beatDetail.view / 2).toFixed()}</span>
                                         <span>&#x2022; Tone: {beatDetail.vocalRange}</span>
                                         <span>&#x2022; Total Rating: {(beatDetail.totalRating)}</span>
                                         <span>&#x2022; Release date: {day}/{month}/{year}</span>
                                         <div style={{ textAlign: "center", marginTop: 20 }}>
-                                            <Button variant="contained" className={cx('button-1')} onClick={() => loadSoundFull()}>
+                                            <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<Button variant="contained" className={cx('button-1')}>
                                                 <div>Feedback</div>
-                                            </Button>
+                                            </Button>}  {...{ contentStyle }} position="bottom left center">
+                                                <div className={cx("text-all")} style={{ padding: 10 }}>
+                                                    <div style={{ display: 'grid' }}>
+                                                        <td style={{ fontWeight: 'bold', fontSize: "2.2rem", marginLeft: 80, color: 'red' }}>Feedback Information</td>
+                                                        
+                                                    </div>
+                                                    <textarea className={cx("text-des")} value={feedBack} style={{ resize: 'none', width: '385px', border: 1, height: 150, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12 }} onChange={ (e) => setFeedBack(e.target.value)}/>
+                                                    <td className={cx("button-type")}>
+                                                        <button type="button" className={cx("button-send")} aria-disabled="false" onClick={() => handleFeedback()} >Send</button>
+                                                    </td>
+                                                </div>
+                                            </Popup>
+
                                         </div>
                                         <div>
                                             {checkFeedBack}

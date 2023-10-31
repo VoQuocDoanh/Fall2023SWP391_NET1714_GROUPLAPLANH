@@ -3,7 +3,6 @@ import useToken from './useToken';
 
 // Create a base Axios instance with common settings
 const axiosInstance = axios.create({
-    baseURL: 'https://api.example.com', // Replace with your API's base URL
     headers: {
         'Content-Type': 'application/json', // Set the content type as needed
     },

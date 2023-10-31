@@ -176,14 +176,20 @@ function ViewDetailBeatMusician() {
                                 <div className={cx('list')}>
                                     <div className={cx('genre')}>
                                         <span>&#x2022; Beat's Name: {beatDetail.beatName}</span>
-                                        <span>&#x2022; Genre:
-                                            {
-                                                beatDetail.genres.map((item, index) => {
-                                                    return <span> {item.name},</span>
-                                                })
+                                        {beatDetail.genres !== null ?
+                                            <span>&#x2022; Genre:
+                                                {
+                                                    beatDetail.genres.map((item, index) => {
+                                                        return <span> {item.name},</span>
+                                                    })
 
-                                            }
-                                        </span>
+                                                }
+                                            </span>
+                                            :
+                                            <span>&#x2022; Genre:
+
+                                            </span>
+                                        }
                                         <span>&#x2022; Price: ${beatDetail.price}</span>
                                         <span>&#x2022; Views: {(beatDetail.view / 2).toFixed()}</span>
                                         <span>&#x2022; Tone: {beatDetail.vocalRange}</span>

@@ -200,7 +200,7 @@
 .button-send {
   width: 80%;
   height: 40px;
-  margin-left: 105px;
+  margin-left: 88px;
   border-radius: 12px;
   background-color: #06c;
   cursor: pointer;
@@ -208,8 +208,9 @@
   color: white;
   padding: 5px;
   font-family: Sono;
-  font-weight: 500;
+  font-weight: bold;
   margin-top: 20px;
+  outline: 2px solid white;
 }
 
 .text-des {

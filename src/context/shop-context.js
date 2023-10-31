@@ -10,9 +10,11 @@ function ShopContextProvider({children}) {
 
     
     const getDefaultCart = () => {
-        if(listBeatContext === null){
+        console.log(listBeatContext)
+        if(!listBeatContext){
             return;
         }
+        console.log(123)
         let cart = {};
         // for(let i = 1; i < listBeat.length + 1; i++){
         //     cart[i] = 0;

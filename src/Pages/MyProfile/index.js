@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { faChevronLeft, faChevronRight, faPause, faPlay, faPlayCircle, faRedo, faStepBackward, faStepForward } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "bootstrap";
+import axiosInstance from "../../authorization/axiosInstance";
+import useToken from "../../authorization/useToken";
+import jwtDecode from "jwt-decode";
 const cx = classNames.bind(styles);
 const DATA = [
     {
@@ -13,27 +16,49 @@ const DATA = [
     },
 ]
 function MyProfile() {
-    const [search, setSearch] = useState("");
-    const [list, setList] = useState(DATA);
-    const [play, setPlay] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
-    const [ten, setTen] = useState("");
-    const handleSearch = (e) => {
-        setSearch(e.target.value);
+    const [fullName, setFullname] = useState("");
+    const [address, setAddress] = useState("");
+    const mail = "";
+    const [phone, setPhone] = useState("");
+    const [gender, setGender] = useState("MALE");
+    const [userImg, setUserImg] = useState()
+    let id = ""
+    const token = useToken()
+    if (token) {
+        id = jwtDecode(token).sub
     }
-    const handleSearch1 = (e) => {
-        setTen(e.target.value);
+    const userProfile = { fullName, address, phone, gender, id }
+    const formData = new FormData()
+
+    const loadDetailUser = async () => {
+        await axiosInstance.get("")
     }
 
+    const handleEdit = async () => {
+        if(!fullName || !address || !phone || !gender || !id){
+            console.log(id + fullName + address + phone + gender)
+            console.log(123)
+            return
+        }
+        formData.append('json', new Blob([JSON.stringify(userProfile)], { type: 'application/json' }));
+        console.log(userImg)
+        formData.append('file', userImg);
 
-    useEffect(() => {
-        const data = DATA.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
-        setList(data);
-    }, [search])
-    useEffect(() => {
-        const data = DATA.filter((item) => item.name.toLowerCase().includes(ten.toLowerCase()));
-        setList(data);
-    }, [ten])
+
+        await axiosInstance.patch("http://localhost:8080/api/v1/user/customer", formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
+            .then((res) => {
+                console.log(res.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
     return (
         <div>
             <div>
@@ -52,7 +77,7 @@ function MyProfile() {
                                             <label className={cx("login-text")}>Full Name</label>
                                         </td>
                                         <div>
-                                            <input className={cx("input-username0")} type="text" placeholder value={search} onChange={handleSearch} />
+                                            <input className={cx("input-username0")} type="text" placeholder value={fullName} onChange={(e) => setFullname(e.target.value)} />
                                         </div>
                                     </div>
                                 </td>
@@ -63,7 +88,7 @@ function MyProfile() {
                                         <label className={cx("text-name")}>Address</label>
                                     </td>
                                     <div className={cx("placeholder-ten")}>
-                                        <input className={cx("input-username")} type="text" placeholder value={ten} onChange={handleSearch1} />
+                                        <input className={cx("input-username")} type="text" placeholder value={address} onChange={(e) => setAddress(e.target.value)} />
                                     </div>
                                 </td>
                             </div>
@@ -73,9 +98,8 @@ function MyProfile() {
                                         Email:
                                     </div>
                                     <div className={cx("email-change")}>
-                                        do******@fpt.edu.vn
+                                        {mail}
                                     </div>
-                                    <button className={cx("email-button")}>Change</button>
                                 </td>
 
                             </div>
@@ -84,7 +108,7 @@ function MyProfile() {
                                     Phone number
                                 </td>
                                 <div className={cx("placeholder-ten")}>
-                                    <input className={cx("input-phonenumber")} type="text" placeholder value={ten} onChange={handleSearch1} />
+                                    <input className={cx("input-phonenumber")} type="text" placeholder value={phone} onChange={(e) => setPhone(e.target.value)} />
                                 </div>
                             </div>
                             <div className={cx("part4")} style={{ marginLeft: 65 }}>
@@ -126,22 +150,7 @@ function MyProfile() {
                                                     </label>
                                                 </div>
                                             </div>
-                                            <div className={cx("footer")}>
-                                                <div className={cx("footer-left")}>
-                                                    <input
-                                                        type="radio"
-                                                        id="remember"
-                                                        name="rememeber"
-                                                        value="check"
-                                                        checked={isChecked}
-                                                        onChange={() => setIsChecked(!isChecked)}
-                                                        className={cx("input-check")}
-                                                    />
-                                                    <label htmlFor="remember" className={cx("text")}>
-                                                        Other
-                                                    </label>
-                                                </div>
-                                            </div>
+
                                         </div>
                                     </div>
                                 </td>
@@ -150,7 +159,7 @@ function MyProfile() {
                                 <td className={cx("save-button")}>
                                 </td>
                                 <td className={cx("button-type")}>
-                                    <button type="button" className={cx("button-save-details")} aria-disabled="false" >Edit</button>
+                                    <button type="button" className={cx("button-save-details")} aria-disabled="false" onClick={() => handleEdit()}>Edit</button>
                                 </td>
                             </div>
 
@@ -172,7 +181,7 @@ function MyProfile() {
                                     Customer
                                 </td>
                             </div>
-                            <input className={cx("img-click")} style={{marginLeft: -30}} type="file" accept=".jpg,.jpeg,.png" />
+                            <input className={cx("img-click")} style={{ marginLeft: -30 }} type="file" accept=".jpg,.jpeg,.png" onChange={(e) => setUserImg(e.target.files[0])} />
                         </div>
                     </div>
                 </div>

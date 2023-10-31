@@ -20,6 +20,7 @@ const SideBar = ({listGenres, listMusicianName}) => {
                                 return <MenuItem > {item.name}</MenuItem>
                             })}
                         </SubMenu>
+                        {console.log(listMusicianName)}
                         <SubMenu label="Musician">
                             {listMusicianName.map((item) => {
                                 return <MenuItem>{item}</MenuItem>

@@ -119,7 +119,7 @@ function ListBeat() {
     }
 
     const loadMusicianName = async () => {
-        await axiosInstance.get("http://localhost:8080/api/v1/beat/musician/full")
+        await axiosInstance.get("http://localhost:8080/api/v1/user/musician/name")
             .then((res) => {
                 setListMusicianName(res.data)
             })
@@ -142,7 +142,6 @@ function ListBeat() {
         }
     }
     console.log(list)
-    if (list !== null) {
         return (
             <div className={cx("list-header")}>
                 {listGenres && listMusicianName ?
@@ -167,7 +166,7 @@ function ListBeat() {
                     </div>
 
                 </div>
-                {list.length !== 0 ?
+                {list ?
                     <div>
                         <div className={cx("listbeat")}>
                             {list.map((item) => {
@@ -180,7 +179,7 @@ function ListBeat() {
                         </div>
                     </div>
 
-                    : <div className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800 }}> All Beat are sold out!<div> Thank you for your visiting on our website </div> </div>}
+                    : <div className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 600 }}> All Beat are sold out!<div> Thank you for your visiting on our website </div> </div>}
 
                 {/* <div className={cx("list-beat")}>
                 {list.map((item, index) => {
@@ -221,10 +220,6 @@ function ListBeat() {
             </div>
 
         );
-    }
-    else {
-        return <div>Loading Page... </div>
-    }
 }
 
 export default ListBeat;

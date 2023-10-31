@@ -118,7 +118,7 @@ function ListBeatPurchased() {
     }
 
     const loadMusicianName = async () => {
-        await axiosInstance.get("http://localhost:8080/api/v1/beat/musician/full")
+        await axiosInstance.get("http://localhost:8080/api/v1/user/musician/name")
             .then((res) => {
                 setListMusicianName(res.data)
                 console.log(res.data)
@@ -141,8 +141,7 @@ function ListBeatPurchased() {
                 })
         }
     }
-
-    if (list !== null) {
+    {console.log(list)}
         return (
             <div className={cx("list-header")}>
                 {listGenres && listMusicianName ?
@@ -173,7 +172,7 @@ function ListBeatPurchased() {
                     return <ListBeatBox key={index} name={item.name} type={item.type} price={item.price} member={item.member} play={play} setPlay={setPlay} />
                 })}
             </div> */}
-                {list.length !== 0 ?
+                {list ?
                     <div>
                         <div className={cx("listbeat")}>
                             {list.map((item) => {
@@ -218,10 +217,6 @@ function ListBeatPurchased() {
             </div>
 
         );
-    }
-    else {
-        return <div>Loading Page... {console.log("check")}</div>
-    }
 }
 
 export default ListBeatPurchased;
