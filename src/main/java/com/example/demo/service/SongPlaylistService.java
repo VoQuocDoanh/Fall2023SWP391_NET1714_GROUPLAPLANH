@@ -171,7 +171,8 @@ public class SongPlaylistService {
                     PlaylistResponseDTO dto = new PlaylistResponseDTO(value.getId(),
                             value.getName(),
                             value.getUser().getId(),
-                            value.getCreatedAt());
+                            value.getCreatedAt(),
+                            value.getSongsinplaylist().size());
                     dtos.add(dto);
                 }
                 return dtos;

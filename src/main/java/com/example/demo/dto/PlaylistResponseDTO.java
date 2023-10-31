@@ -16,11 +16,21 @@ public class PlaylistResponseDTO {
     private Long userid;
     private LocalDateTime createAt;
     private List<SongResponseDTO> songs;
+    private int quantityOfSong;
 
-    public PlaylistResponseDTO(Long id, String name, Long userid, LocalDateTime createAt) {
+    public PlaylistResponseDTO(Long id, String name, Long userid, LocalDateTime createAt, int quantityOfSong) {
         this.id = id;
         this.name = name;
         this.userid = userid;
         this.createAt = createAt;
+        this.quantityOfSong = quantityOfSong;
+    }
+
+    public PlaylistResponseDTO(Long id, String name, Long userid, LocalDateTime createAt, List<SongResponseDTO> songs) {
+        this.id = id;
+        this.name = name;
+        this.userid = userid;
+        this.createAt = createAt;
+        this.songs = songs;
     }
 }

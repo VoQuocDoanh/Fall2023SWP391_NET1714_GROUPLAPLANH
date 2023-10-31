@@ -135,7 +135,8 @@ public class SongCommentService {
                         value.getContent(),
                         value.getCommentByUsers().getId(),
                         value.getSongOfComment().getId(),
-                        value.getCreatedAt());
+                        value.getCreatedAt(),
+                        getSubComment(value));
                 subCommentDtos.add(dto);
             }
             return subCommentDtos;

@@ -352,5 +352,21 @@ public class SongService {
         }
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
+
+    // view rating (user - song)
+    public RatingResponseDTO viewRateOfSongByUser (Long userid, Long songid){
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userid, 1);
+        if(foundUser.isPresent()){
+            Optional<Song> foundSong = this.songRepository.findSongByIdAndStatus(songid, 1);
+            if(foundSong.isPresent()){
+                Optional<SongRating> foundRating = this.songRatingRepository.findSongRatingBySongOfRatingAndRateByUser(foundSong.get(), foundUser.get());
+                if(foundRating.isPresent()){
+                    return new RatingResponseDTO(foundRating.get().getRating());
+                }
+            }
+        }
+        return null;
+    }
+
 }
 

@@ -19,12 +19,4 @@ public class CommentSongResponseDTO {
     private LocalDateTime localDateTime;
     private List<CommentSongResponseDTO> subComment;
 
-    public CommentSongResponseDTO(Long id, Long parentId, String content, Long userId, Long songId, LocalDateTime localDateTime) {
-        this.id = id;
-        this.parentId = parentId;
-        this.content = content;
-        this.userId = userId;
-        this.songId = songId;
-        this.localDateTime = localDateTime;
-    }
 }

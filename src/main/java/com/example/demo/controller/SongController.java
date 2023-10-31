@@ -5,6 +5,7 @@
 
 package com.example.demo.controller;
 
+import com.example.demo.dto.RatingResponseDTO;
 import com.example.demo.dto.SongDTO;
 import com.example.demo.dto.SongResponseDTO;
 import com.example.demo.service.SongService;
@@ -91,5 +92,11 @@ public class SongController {
     @GetMapping("/rate")
     public ResponseEntity<String> rateSong (@RequestParam("userid") Long userid, @RequestParam("songid") Long songid, @RequestParam("rating") int rating){
         return this.songService.rateSong(userid, songid, rating);
+    }
+
+    // View Song rating by user
+    @GetMapping("/rate/user")
+    public ResponseEntity<RatingResponseDTO> viewRateOfSongByUser (@RequestParam("userid") Long userid, @RequestParam("songid") Long songid){
+        return ResponseEntity.ok(this.songService.viewRateOfSongByUser(userid, songid));
     }
 }
