@@ -50,7 +50,7 @@ public class SongPlaylistService {
         if (foundUser.isPresent()) {
             Optional<SongPlaylist> foundPlaylist = this.songPlaylistRepository.findUserSongPlaylistByName(name, foundUser.get().getId());
             if (foundPlaylist.isPresent()) {
-                return new ResponseEntity<>("Playlist is already created", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("Playlist is already created", HttpStatus.NOT_IMPLEMENTED);
             } else {
                 SongPlaylist playlist = new SongPlaylist(name,
                         foundUser.get(),
@@ -60,7 +60,7 @@ public class SongPlaylistService {
                 return new ResponseEntity<>("Playlist is created successfully", HttpStatus.OK);
             }
         }
-        return new ResponseEntity<>("Create Failed", HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
     // create and add
@@ -86,7 +86,7 @@ public class SongPlaylistService {
                 return new ResponseEntity<>("Song not found", HttpStatus.OK);
             }
         }
-        return new ResponseEntity<>("Customer not found", HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_IMPLEMENTED);
     }
 
 
