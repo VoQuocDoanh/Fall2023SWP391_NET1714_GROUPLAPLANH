@@ -172,6 +172,8 @@ const publicRoutes = [
   {
     path: "/listofsong",
     component: ListOfSong,
+  },
+  {
     path: "/DetailUser",
     component: DetailUser,
   },
