@@ -34,5 +34,8 @@ public class UserReportController {
     public ResponseEntity<List<UserResponeDTO>> getAll (){
         return ResponseEntity.ok(this.userReportService.listUserReported());
     }
+    
+
+
 
 }

@@ -294,4 +294,20 @@ public class UserService {
         return null;
     }
 
+    public List<UserResponeDTO> listUserBanned() {
+        List<User> users = userRepository.findAllByStatus(0);
+        List<UserResponeDTO> dtos =new ArrayList<>();
+        for (User us : users){
+            UserResponeDTO dto = new UserResponeDTO(
+                    us.getUsername(),
+                    us.getRole(),
+                    us.getMail(),
+                    us.getStatus(),
+                    us.getCreatedAt(),
+                    us.getAvatar()
+            );
+            dtos.add(dto);
+        }
+        return dtos;
+    }
 }

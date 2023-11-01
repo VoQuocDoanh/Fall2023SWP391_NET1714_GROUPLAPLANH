@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.PaginationResponseDTO;
 import com.example.demo.dto.UserDTO;
+import com.example.demo.dto.UserResponeDTO;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 import com.example.demo.validationgroups.UpdateValidation;
@@ -72,5 +73,11 @@ public class AdminController {
             errors.put(fieldName, errorMsg);
         }));
         return errors;
+    }
+
+
+    @GetMapping("/ban")
+    public ResponseEntity<List<UserResponeDTO>> getAllBannedUser(){
+        return ResponseEntity.ok(this.userService.listUserBanned());
     }
 }
