@@ -21,6 +21,7 @@ public class UserResponeDTO {
     private int status;
     private LocalDateTime createAt;
     private String avatar;
+    private String address;
 
     private String professional;
     private String prize;
