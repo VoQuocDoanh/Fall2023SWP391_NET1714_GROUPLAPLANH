@@ -49,6 +49,12 @@ public class AdminController {
         return this.userService.banUser(userDTO);
     }
 
+    //Unban user
+    @PostMapping("/unban")
+    public ResponseEntity<String> unbanUser(@RequestBody UserDTO userDTO) {
+        return this.userService.unbanUser(userDTO);
+    }
+
     //Search user by name
     @GetMapping("/username")
     public ResponseEntity<List<User>> searchByUserName(@RequestParam("username") String name) {

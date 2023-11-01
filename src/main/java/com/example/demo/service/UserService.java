@@ -173,6 +173,20 @@ public class UserService {
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
+    public ResponseEntity<String> unbanUser(UserDTO userDTO) {
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userDTO.getId(), 0);
+        if (foundUser.isPresent()) {
+            User user = foundUser.get();
+            user.setStatus(1);
+            this.userRepository.save(user);
+            this.emailService.sendEmailForUnBan(user.getMail(), "YOU GOT UNBANNED", userDTO.getContent());
+            return new ResponseEntity<>("Unban Successfully", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+    }
+
+
+
     // Update Admin Info
     public ResponseEntity<String> updateAdminInfo(UserDTO userDTO) {
         Optional<User> foundUser = this.userRepository.findById(userDTO.getId());
