@@ -55,7 +55,11 @@ public class FeedbackService {
         List<Feedback> feedback =new ArrayList<>();
         List<FeedbackResponseDTO> dto = new ArrayList<>();
         for (Beat i : beatList){
-            feedback.add(feedbackRepository.findByBeatFeedback(i));
+            Feedback f = new Feedback();
+            f = feedbackRepository.findByBeatFeedback(i);
+            if (f!=null){
+                feedback.add(f);
+            }
         }
         dto = getFeedbackResponseDTO(feedback);
         int pagecount = pageable.getPageNumber();
@@ -80,13 +84,16 @@ public class FeedbackService {
     private List<FeedbackResponseDTO> getFeedbackResponseDTO(List<Feedback> feedbacks){
         List<FeedbackResponseDTO> feedbackDTOS = new ArrayList<>();
         for (Feedback i : feedbacks){
-            FeedbackResponseDTO dto = new FeedbackResponseDTO(
-                    i.getContent(),
-                    getUser(i.getUserFeedback()),
-                    i.getCreatedAt(),
-                    getBeat(i.getBeatFeedback())
-            );
-            feedbackDTOS.add(dto);
+            if (i.getContent()!=null){
+                FeedbackResponseDTO dto = new FeedbackResponseDTO(
+                        i.getContent(),
+                        getUser(i.getUserFeedback()),
+                        i.getCreatedAt(),
+                        getBeat(i.getBeatFeedback())
+                );
+                feedbackDTOS.add(dto);
+            }
+
         }
         return feedbackDTOS;
     }

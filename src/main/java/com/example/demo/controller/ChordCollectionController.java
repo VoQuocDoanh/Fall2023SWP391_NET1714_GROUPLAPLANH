@@ -42,7 +42,7 @@ public class ChordCollectionController {
 
     @PostMapping("/remove")
     public ResponseEntity<String> removeChord(@Valid @RequestBody ChordCollectionDTO chordCollectionDTO){
-        return chordCollectionService.removeChord(chordCollectionDTO);
+        return chordCollectionService. removeChord(chordCollectionDTO);
     }
 
     @DeleteMapping("/delete")
