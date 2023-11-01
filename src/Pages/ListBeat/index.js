@@ -69,7 +69,7 @@ function ListBeat() {
 
     useEffect(() => {
         loadBeats()
-    }, [checkLike])
+    }, [checkLike,page])
 
     useEffect(() => {
         loadGenres()
@@ -90,8 +90,10 @@ function ListBeat() {
 
 
     const loadBeats = async () => {
+        console.log(page)
         await axiosInstance.get(`http://localhost:8080/api/v1/beat/all/${page}`)
             .then(res => {
+                
                 setList(res.data.dtoList)
                 setListBeatContext(res.data.dtoList)
                 setPages(res.data.max)
