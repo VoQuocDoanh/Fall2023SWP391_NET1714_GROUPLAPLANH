@@ -147,7 +147,7 @@ public class UserService {
             dto.setUsername(user.getUsername());
             dto.setFullName(user.getFullName());
             dto.setGender(user.getGender().toString());
-
+            dto.setAvatar(user.getAvatar());
             dto.setCreateAt(user.getCreatedAt());
             dto.setPhone(user.getPhoneNumber());
             dto.setMail(user.getMail());
