@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.ReportDTO;
-import com.example.demo.dto.ReportResponseDTO;
+import com.example.demo.dto.ReportSongResponseDTO;
 import com.example.demo.dto.SongReportResponseDTO;
 import com.example.demo.entity.Song;
 import com.example.demo.entity.SongReport;
@@ -51,15 +51,15 @@ public class SongReportService {
     }
 
     // view report of a song
-    public List<ReportResponseDTO> viewReport (Long id){
+    public List<ReportSongResponseDTO> viewReport (Long id){
         Optional<Song> foundSong = this.songRepository.findSongByIdAndStatus(id, 1);
         if(foundSong.isPresent()){
             Song song = foundSong.get();
             List<SongReport> foundReports = this.songReportRepository.findSongReportsBySongOfReport(song);
             if(!foundReports.isEmpty()){
-                List<ReportResponseDTO> dtos = new ArrayList<>();
+                List<ReportSongResponseDTO> dtos = new ArrayList<>();
                 for (SongReport value: foundReports) {
-                    ReportResponseDTO dto = new ReportResponseDTO(value.getId(),
+                    ReportSongResponseDTO dto = new ReportSongResponseDTO(value.getId(),
                             value.getReportByUsers().getId(),
                             value.getReportByUsers().getUsername(),
                             value.getContent(),

@@ -6,6 +6,7 @@ import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserResponeDTO;
 import com.example.demo.entity.User;
 import com.example.demo.service.SongReportService;
+import com.example.demo.service.SongService;
 import com.example.demo.service.UserService;
 import com.example.demo.validationgroups.UpdateValidation;
 import jakarta.validation.Valid;
@@ -31,6 +32,9 @@ public class AdminController {
     @Autowired
     private SongReportService songReportService;
 
+    @Autowired
+    private SongService songService;
+
     // Update Admin Info
     @PatchMapping
     public ResponseEntity<String> updateAdminInfo(@Validated(UpdateValidation.Admin.class) @RequestBody UserDTO userDTO){
@@ -50,13 +54,13 @@ public class AdminController {
     }
 
     //Ban user
-    @PostMapping()
+    @PostMapping("/user/ban")
     public ResponseEntity<String> banUser(@RequestBody UserDTO userDTO) {
         return this.userService.banUser(userDTO);
     }
 
     //Unban user
-    @PostMapping("/unban")
+    @PostMapping("/user/unban")
     public ResponseEntity<String> unbanUser(@RequestBody UserDTO userDTO) {
         return this.userService.unbanUser(userDTO);
     }
@@ -67,9 +71,14 @@ public class AdminController {
         return ResponseEntity.ok(this.userService.searchByUserName(name));
     }
 
-    @GetMapping("/report")
+    @GetMapping("/report/song")
     public ResponseEntity<List<SongReportResponseDTO>> viewSongBeenReport(){
         return ResponseEntity.ok(this.songReportService.viewSongReported());
+    }
+
+    @PostMapping("/ban/song/{id}")
+    public ResponseEntity<String> banSong(@PathVariable Long id){
+        return this.songService.banSong(id);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -85,8 +94,7 @@ public class AdminController {
         return errors;
     }
 
-
-    @GetMapping("/ban")
+    @GetMapping("/user/ban")
     public ResponseEntity<List<UserResponeDTO>> getAllBannedUser(){
         return ResponseEntity.ok(this.userService.listUserBanned());
     }

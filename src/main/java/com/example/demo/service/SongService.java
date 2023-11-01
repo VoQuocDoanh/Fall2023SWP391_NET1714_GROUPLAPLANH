@@ -376,10 +376,17 @@ public class SongService {
         return null;
     }
 
-
-
-
     // ban song
+    public ResponseEntity<String> banSong (Long songid){
+        Optional<Song> foundSong = this.songRepository.findSongByIdAndStatus(songid, 1);
+        if(foundSong.isPresent()){
+            Song song = foundSong.get();
+            song.setStatus(-1);
+            this.songRepository.save(song);
+            return new ResponseEntity<>("Ban Successfully!", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Song has been banned!", HttpStatus.NOT_IMPLEMENTED);
+    }
 
 
 }

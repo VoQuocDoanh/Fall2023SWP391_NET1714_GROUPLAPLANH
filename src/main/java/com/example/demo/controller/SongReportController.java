@@ -1,9 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.ReportDTO;
-import com.example.demo.dto.ReportResponseDTO;
+import com.example.demo.dto.ReportSongResponseDTO;
 import com.example.demo.service.SongReportService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +17,12 @@ public class SongReportController {
     private SongReportService songReportService;
 
     @PostMapping
-    public ResponseEntity<String> reportSong(@Valid @RequestBody ReportDTO reportDTO){
+    public ResponseEntity<String> reportSong(@RequestBody ReportDTO reportDTO){
         return this.songReportService.report(reportDTO);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<List<ReportResponseDTO>> viewReport (@Valid @PathVariable Long id){
+    @GetMapping("/song/{id}")
+    public ResponseEntity<List<ReportSongResponseDTO>> viewReport (@PathVariable Long id){
         return ResponseEntity.ok(this.songReportService.viewReport(id));
     }
 }

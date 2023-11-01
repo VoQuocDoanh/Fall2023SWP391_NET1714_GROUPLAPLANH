@@ -19,14 +19,6 @@ public class ReportResponseDTO {
 
     private UserResponeDTO user;
 
-    public ReportResponseDTO(Long id, Long userId, Long songId, String content, LocalDateTime localDateTime) {
-        this.id = id;
-        this.userId = userId;
-        this.songId = songId;
-        this.content = content;
-        this.localDateTime = localDateTime;
-    }
-
     public ReportResponseDTO(Long id, LocalDateTime localDateTime, String content, UserResponeDTO user, UserResponeDTO userReported) {
         this.id = id;
         this.content = content;
