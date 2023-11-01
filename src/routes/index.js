@@ -35,6 +35,7 @@ import ListOfSong from "../Pages/ListOfSong";
 import DetailUser from "../Pages/DetailUser";
 import FeedbackMusician from "../Pages/FeedbackMusician";
 import UpdateProfile from "../Pages/UpdateProfile";
+import ReportUser from "../Pages/ReportUser";
 const publicRoutes = [
   {
     path: "/",
@@ -185,6 +186,10 @@ const publicRoutes = [
   {
     path: "/UpdateProfile",
     component: UpdateProfile,
+  },
+  {
+    path: "/ReportUser",
+    component: ReportUser,
   },
 ];
 
