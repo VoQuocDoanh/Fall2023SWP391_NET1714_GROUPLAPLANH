@@ -26,7 +26,7 @@ public class SongCommentController {
         return this.songCommentService.updateComment(dto, id);
     }
 
-    @DeleteMapping("/{id}")
+    @PostMapping("/{id}")
     public ResponseEntity<String> deleteComment (@PathVariable Long id,@RequestBody CommentSongDTO dto){
         return this.songCommentService.deleteComment(dto, id);
     }

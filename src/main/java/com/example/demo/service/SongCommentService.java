@@ -81,13 +81,10 @@ public class SongCommentService {
                 Song song = foundSound.get();
                 Optional<SongComment> foundComment = this.songCommentRepository.findSongCommentByIdAndCommentByUsers(id, foundUser.get());
                 if (foundComment.isPresent()) {
-                    List<SongComment> songComments = this.songCommentRepository.findByParentComment(foundComment.get());
-                    this.songCommentRepository.deleteAll(songComments);
-                    this.songCommentRepository.delete(foundComment.get());
-                    song.setCmt(song.getCmt() - songComments.size());
-                    this.songRepository.save(song);
-                    this.songCommentRepository.delete(foundComment.get());
-                    song.setCmt(song.getCmt() - 1);
+                    SongComment commentToDelete = foundComment.get();
+                    deleteSubComments(commentToDelete);
+                    Long remainingComment = this.songCommentRepository.countBySongOfComment(song);
+                    song.setCmt(remainingComment.intValue());
                     this.songRepository.save(song);
                     return new ResponseEntity<>("Deleted Comment Successfully!", HttpStatus.OK);
                 }
@@ -96,6 +93,14 @@ public class SongCommentService {
             return new ResponseEntity<>("Song not found!", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>("User not found!", HttpStatus.NOT_FOUND);
+    }
+
+    private void deleteSubComments(SongComment comment) {
+        List<SongComment> subComments = this.songCommentRepository.findByParentComment(comment);
+        for (SongComment subComment : subComments) {
+            deleteSubComments(subComment);
+        }
+        this.songCommentRepository.delete(comment);
     }
 
     // view
