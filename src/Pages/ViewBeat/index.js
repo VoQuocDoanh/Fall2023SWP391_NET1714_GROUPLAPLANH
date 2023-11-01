@@ -36,11 +36,6 @@ function ListBeatPurchased() {
     const [page, setPage] = useState(1)
     const [pages, setPages] = useState(1)
     // 
-    const handleSearch = (e) => {
-        setSearch(e.target.value);
-        // setList(data);
-    }
-
     // const handleClickAudio = (value) => {
 
     //     setSrcMusic(`data:audio/mpeg;base64,${atob(value.beatSound)}`);
@@ -86,13 +81,13 @@ function ListBeatPurchased() {
 
 
     const loadBeats = async () => {
-        await axiosInstance.get(`http://localhost:8080/api/v1/beat/user/${jwtDecode(token).sub}/all/1`)
+        if(!token){
+            navigate("/login")
+        }
+        await axiosInstance.get(`http://localhost:8080/api/v1/beat/user/${jwtDecode(token).sub}/all/${page}`)
             .then(res => {
                 setList(res.data.dtoList)
-                if (viewBeatFirstTime === 0) {
-                    setViewBeatFirstTime(1)
-                }
-
+                setPage(res.data.max)
             })
             .catch((error) => {
                 if (error.message.includes("Network")) {
@@ -102,10 +97,7 @@ function ListBeatPurchased() {
     }
 
     //
-    if (viewBeatFirstTime === 1) {
-        setViewBeatFirstTime(2)
-        setDefaultCart()
-    }
+    
 
     const loadGenres = async () => {
         await axiosInstance.get("http://localhost:8080/api/v1/genre")
@@ -142,11 +134,38 @@ function ListBeatPurchased() {
         }
     }
 
-    if (list !== null) {
+    const handleSearch = async() => {
+        if(!token){
+            navigate("/login")
+        }
+        if(search !== ""){
+        await axiosInstance.get(`http://localhost:8080/api/v1/beat/name/${search}`)
+        .then((res) => {
+            setList(res.data)
+        })
+        .catch((error) =>{
+            console.log(error)
+        })
+    }else{
+        await axiosInstance.get(`http://localhost:8080/api/v1/beat/user/${jwtDecode(token).sub}/all/${page}`)
+            .then(res => {
+                setList(res.data.dtoList)
+                setPages(res.data.max)
+                console.log(pages)            
+            })
+            .catch((error) => {
+                if (error.message.includes("Network")) {
+                    navigate("/login")
+                }
+            })
+    }
+        // setList(data);
+    }
+
         return (
             <div className={cx("list-header")}>
                 {listGenres && listMusicianName ?
-                    <Sidebar listGenres={listGenres} listMusicianName={listMusicianName}></Sidebar>
+                    <Sidebar listGenres={listGenres} listMusicianName={listMusicianName} page = {2}></Sidebar>
                     : <div></div>}
                 <div className={cx("text-header")}>
                     <h1 className={cx("text-welcome")}>
@@ -156,10 +175,10 @@ function ListBeatPurchased() {
                 </div>
                 <div className={cx("icon-shopping")}>
                     <div className={cx("searchBox")}>
-                        <input className={cx("searchInput")} type="text" placeholder="Search Beat..." value={search} onChange={handleSearch} />
+                        <input className={cx("searchInput")} type="text" placeholder="Search Beat..." value={search} onChange={(e) => setSearch(e.target.value)} />
                         <button className={cx("searchButton")} href="#">
                             <i className={cx("material-icons")}>
-                                <svg className={cx("icon-search")} xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 35 35" fill="none">
+                                <svg className={cx("icon-search")} xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 35 35" fill="none" onClick={() => handleSearch()}>
                                     <path d="M15.5 14H14.71L14.43 13.73C15.4439 12.554 16.0011 11.0527 16 9.5C16 8.21442 15.6188 6.95772 14.9046 5.8888C14.1903 4.81988 13.1752 3.98676 11.9874 3.49479C10.7997 3.00282 9.49279 2.87409 8.23192 3.1249C6.97104 3.3757 5.81285 3.99477 4.90381 4.90381C3.99477 5.81285 3.3757 6.97104 3.1249 8.23192C2.87409 9.49279 3.00282 10.7997 3.49479 11.9874C3.98676 13.1752 4.81988 14.1903 5.8888 14.9046C6.95772 15.6188 8.21442 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z" fill="black" />
                                 </svg>
                             </i>
@@ -173,11 +192,11 @@ function ListBeatPurchased() {
                     return <ListBeatBox key={index} name={item.name} type={item.type} price={item.price} member={item.member} play={play} setPlay={setPlay} />
                 })}
             </div> */}
-                {list.length !== 0 ?
+                {list ?
                     <div>
                         <div className={cx("listbeat")}>
                             {list.map((item) => {
-                                return <ViewBeatBox id={item.id} name={item.beatName} genre={item.genre} price={item.price} view={(item.view / 2).toFixed()} like={item.totalLike} handleLike={() => handleLike(item.id)} rating={item.rating} vocalRange={item.vocalRange} fullName={item.user.fullName} status={item.status} />
+                                return <ViewBeatBox id={item.id} name={item.beatName} genre={item.genre} price={item.price} view={(item.view / 2).toFixed()} like={item.totalLike} handleLike={() => handleLike(item.id)} rating={item.rating} vocalRange={item.vocalRange} fullName={item.user.fullName} status={item.status} page={2} />
                             })}
                         </div>
                         <div className={cx("pagination")}>
@@ -214,14 +233,8 @@ function ListBeatPurchased() {
             </div> */}
                 {/* <audio style={{ borderRadius: 10 }} id="audio" ref={audioRef} src={srcMusic}>
             </audio> */}
-
             </div>
-
         );
-    }
-    else {
-        return <div>Loading Page... {console.log("check")}</div>
-    }
 }
 
 export default ListBeatPurchased;

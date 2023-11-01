@@ -70,17 +70,17 @@ function UploadSong() {
     }, [])
 
     const handleUploadSong = async () => {
-        if(!token){
+        if (!token) {
             navigate("/login")
         }
         console.log(inputGenres)
         const values = inputGenres.split(',');
         console.log(values[0])
-        for(let i = 0; i < values.length; i++){
+        for (let i = 0; i < values.length; i++) {
             genres.push(values[i])
         }
         console.log(genres)
-        if(description ==="" || songName ==="" || userid ==="" || singer ==="" || tone ==="" || songUrl ==="" || genres[0] === "" || vocalRange ==="") {
+        if (description === "" || songName === "" || userid === "" || singer === "" || tone === "" || songUrl === "" || genres[0] === "" || vocalRange === "") {
             alert("Please fill in all fields!")
             return;
         }
@@ -105,12 +105,12 @@ function UploadSong() {
 
     const loadChords = async () => {
         await axiosInstance.get("http://localhost:8080/chord/guitar")
-        .then((res) =>{
-            setListChords(res.data)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+            .then((res) => {
+                setListChords(res.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     /* 
@@ -151,27 +151,35 @@ function UploadSong() {
                 }
             })
         }
+        setListTone(prev => prev.reduce((finalArray, current) => {
+            let obj = finalArray.find((item) => item.name_tone === current.name_tone);
+            if (obj) {
+                return finalArray;
+            }
+            return finalArray.concat([current]);
+        }, [])
+        )
     }, [description])
 
-    console.log(listTone)
-    if(listGenres !== null){
-    return (
-        <div className={cx('page-content')}> {/* trang tổng */}
-            {console.log(songInput)}
-            <div className={cx('container-16')}>
-                <h1>Upload new song</h1>
-                <div className={cx('grid-9')}> {/* trang tổng gổm 2 div trái phải*/}
-                    <div className={cx('page-content-left')}> {/* trang tổng bên trái*/}
-                        <h2><b>Song name: </b></h2>
-                        <input
-                            type="text"
-                            placeholder="Ex: Silent Night"
-                            value={songName}
-                            className={cx('input-song-name')}
-                            onChange={(event) => setSongName(event.target.value)}
-                        />
-                        <h2><b>Lyrics and chords: </b></h2>
-                        {/* <div className={cx('toolbox')} style={{ width: '80%' }}>
+    console.log("listTone: ", listTone);
+    if (listGenres !== null) {
+        return (
+            <div className={cx('page-content')}> {/* trang tổng */}
+                {console.log(songInput)}
+                <div className={cx('container-16')}>
+                    <h1>Upload new song</h1>
+                    <div className={cx('grid-9')}> {/* trang tổng gổm 2 div trái phải*/}
+                        <div className={cx('page-content-left')}> {/* trang tổng bên trái*/}
+                            <h2><b>Song name: </b></h2>
+                            <input
+                                type="text"
+                                placeholder="Ex: Silent Night"
+                                value={songName}
+                                className={cx('input-song-name')}
+                                onChange={(event) => setSongName(event.target.value)}
+                            />
+                            <h2><b>Lyrics and chords: </b></h2>
+                            {/* <div className={cx('toolbox')} style={{ width: '80%' }}>
                             <div className={cx('pull-left')}>
                                 <div className={cx('button-submit')}>
                                     <Button className={cx('button')}>
@@ -239,237 +247,238 @@ function UploadSong() {
                                 </Button>
                             </div>
                         </div> */}
-                        <div className={cx('song-lyric')}>
-                            <textarea style={{ width: '80%', resize: 'none', padding: 15 }} className={cx("textarea-box")} value={description} id="ABC" name="ABC" rows="20" cols="174" onChange={e => setDescription(e.target.value)}></textarea>
-                        </div>
-                        <div className={cx('toolbox-bottom')} style={{ width: '80%' }}>
-                            <span>Chords: </span>
-                        </div>
-                        <h2><b>Chords used:</b></h2>
-                        <div style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap" }} className={cx("list-tone")}>
-                            {listTone.map((item, index) => <span key={index} style={{ fontSize: 20 }}>
-                                <div className={cx("tone-item")}>
-                                    <h5 className={cx("name-tone")}>{item.name_tone}</h5>
-                                    {item.check === true ? <img src={item.img} alt={item.name_tone} /> : <span>Chord is not supported</span>}
-                                </div>
-                            </span>)}
-                        </div>
-                        <div className={cx('blue-header')}>
-                            <h4>Preview</h4>
-                        </div>
-                        <div className={cx('review-panel')} style={{ width: '80%' }}>
-                            <hr />
-                            <MarkdownPreview inputProps={{ maxLength: 1200 }} markdown={description} />
-                        </div>
-                        <div className={cx('grid-5-alpha')} style={{ width: '80%' }}>
-                            <div className={cx('song-singers')}>
-                                <h2><b>Singer:</b></h2>
-                                <input
-                                    type="text"
-                                    placeholder="Ex: Michael Buble"
-                                    value={singer}
-                                    className={cx('input-song-name')}
-                                    onChange={(event) => setSinger(event.target.value)}
-                                />
+                            <div className={cx('song-lyric')}>
+                                <textarea style={{ width: '80%', resize: 'none', padding: 15 }} className={cx("textarea-box")} value={description} id="ABC" name="ABC" rows="20" cols="174" onChange={e => setDescription(e.target.value)}></textarea>
                             </div>
-                            <div className={cx('song-genres')}>
-                                <h2><b>Genres:</b></h2>
-                                <Popup trigger={<input
-                                    type=""
-                                    placeholder="Ex: Pop"
-                                    value={inputGenres}
-                                    className={cx('input-song-name')}
-                                    onChange={(event) => setInputGenres(event.target.value)}
-                                />} position="right center">
-                                    {listGenres.map((item) =>{
-                                        return <div >{item.name}</div>
+                            <div className={cx('toolbox-bottom')} style={{ width: '80%' }}>
+                                <span>Chords: </span>
+                            </div>
+                            <h2><b>Chords used:</b></h2>
+                            <div style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap" }} className={cx("list-tone")}>
+                                {listTone.map((item, index) => <span key={index} style={{ fontSize: 20 }}>
+                                    <div className={cx("tone-item")}>
+                                        <h5 className={cx("name-tone")}>{item.name_tone}</h5>
+                                        {item.check === true ? <img src={item.img} alt={item.name_tone} /> : <span>Chord is not supported</span>}
+                                    </div>
+                                </span>)}
+                            </div>
+                            <div className={cx('blue-header')}>
+                                <h4>Preview</h4>
+                            </div>
+                            <div className={cx('review-panel')} style={{ width: '80%' }}>
+                                <hr />
+                                <MarkdownPreview inputProps={{ maxLength: 1200 }} markdown={description} />
+                            </div>
+                            <div className={cx('grid-5-alpha')} style={{ width: '80%' }}>
+                                <div className={cx('song-singers')}>
+                                    <h2><b>Singer:</b></h2>
+                                    <input
+                                        type="text"
+                                        placeholder="Ex: Michael Buble"
+                                        value={singer}
+                                        className={cx('input-song-name')}
+                                        onChange={(event) => setSinger(event.target.value)}
+                                    />
+                                </div>
+                                <div className={cx('song-genres')}>
+                                    <h2><b>Genres:</b></h2>
+                                    <Popup trigger={<input
+                                        type=""
+                                        placeholder="Ex: Pop"
+                                        value={inputGenres}
+                                        className={cx('input-song-name')}
+                                        onChange={(event) => setInputGenres(event.target.value)}
+                                    />} position="right center">
+                                        {listGenres.map((item) => {
+                                            return <div >{item.name}</div>
                                         })}
-                                </Popup>
-                                
-                                <br></br>
-                                {/* <button onClick={handleAddToList}>Add to list genre</button> */}
+                                    </Popup>
+
+                                    <br></br>
+                                    {/* <button onClick={handleAddToList}>Add to list genre</button> */}
+                                </div>
+                                <div className={cx('tone-info')}>
+                                    <h2><b>Tone:</b></h2>
+                                    <input
+                                        type="text"
+                                        placeholder="Ex: Am"
+                                        value={tone}
+                                        className={cx('input-song-name')}
+                                        onChange={(event) => setTone(event.target.value)}
+                                    />
+                                </div>
                             </div>
-                            <div className={cx('tone-info')}>
-                                <h2><b>Tone:</b></h2>
-                                <input
-                                    type="text"
-                                    placeholder="Ex: Am"
-                                    value={tone}
-                                    className={cx('input-song-name')}
-                                    onChange={(event) => setTone(event.target.value)}
-                                />
+                            <div className={cx('blue-header')} style={{ width: '80%' }}>
+                            </div>
+                            <div className={cx('grid-3-alpha')} style={{ width: '80%' }}>
+                                <div className={cx('singer-info')}>
+                                    <h2><b>Vocal Range:</b></h2>
+                                    <input
+                                        type="text"
+                                        placeholder="Ex: C3 to D6"
+                                        value={vocalRange}
+                                        className={cx('input-song-name')}
+                                        onChange={(event) => setVocalRange(event.target.value)}
+                                    />
+                                </div>
+                                <div className={cx('link-music')}>
+                                    <h2><b>Link:</b></h2>
+                                    <input
+                                        type="text"
+                                        placeholder="Ex: http://mp3.zing.vn/..."
+                                        value={songUrl}
+                                        className={cx('input-song-name')}
+                                        onChange={(event) => setSongUrl(event.target.value)}
+                                    />
+                                </div>
+                            </div>
+                            <div className={cx('add-singer')} style={{ width: '80%' }} onClick={() => handleUploadSong()}>
+                                <footer className={cx("Add-Songs")} >
+                                    <Link to="/UploadSong" className={cx("Add-Songs-body", "card-action")}>Add new song</Link>
+                                </footer>
                             </div>
                         </div>
-                        <div className={cx('blue-header')} style={{ width: '80%' }}>
-                        </div>
-                        <div className={cx('grid-3-alpha')} style={{ width: '80%' }}>
-                            <div className={cx('singer-info')}>
-                                <h2><b>Vocal Range:</b></h2>
-                                <input
-                                    type="text"
-                                    placeholder="Ex: C3 to D6"
-                                    value={vocalRange}
-                                    className={cx('input-song-name')}
-                                    onChange={(event) => setVocalRange(event.target.value)}
-                                />
-                            </div>
-                            <div className={cx('link-music')}>
-                                <h2><b>Link:</b></h2>
-                                <input
-                                    type="text"
-                                    placeholder="Ex: http://mp3.zing.vn/..."
-                                    value={songUrl}
-                                    className={cx('input-song-name')}
-                                    onChange={(event) => setSongUrl(event.target.value)}
-                                />
-                            </div>
-                        </div>
-                        <div className={cx('add-singer')} style={{ width: '80%' }} onClick={() => handleUploadSong()}>
-                            <footer className={cx("Add-Songs")} >
-                                <Link to="/UploadSong" className={cx("Add-Songs-body", "card-action")}>Add new song</Link>
-                            </footer>
-                        </div>
-                    </div>
 
-                    <div className={cx('page-content-right')}> {/* trang tổng bên phải*/}
-                        <div className={cx('white-box')}>
-                            <div className={cx('white-box-final')}>
-                                <div className={cx('white-box-text')}>
-                                    <h3><b>Get your post correctness</b></h3>
-                                    <h4>You can refer to the suggestions below</h4>
-                                </div>
-                                <div className={cx('check-failed-pass')}>
-                                    <div className={cx('icon-times-left')}>
-                                        {description === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                            <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>}
-
+                        <div className={cx('page-content-right')}> {/* trang tổng bên phải*/}
+                            <div className={cx('white-box')}>
+                                <div className={cx('white-box-final')}>
+                                    <div className={cx('white-box-text')}>
+                                        <h3><b>Get your post correctness</b></h3>
+                                        <h4>You can refer to the suggestions below</h4>
                                     </div>
-                                    <div className={cx('text-failed')}>
-                                        <div>
-                                            {description === "" && <span>Existed lyrics and chords</span>}
-                                            {description !== "" && <span style={{ color: "green" }}>Existed lyrics and chords </span>}
-                                            {description !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                                <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    <div className={cx('check-failed-pass')}>
+                                        <div className={cx('icon-times-left')}>
+                                            {description === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                             </svg>}
+
+                                        </div>
+                                        <div className={cx('text-failed')}>
+                                            <div>
+                                                {description === "" && <span>Existed lyrics and chords</span>}
+                                                {description !== "" && <span style={{ color: "green" }}>Existed lyrics and chords </span>}
+                                                {description !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                    <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className={cx('check-failed-pass')}>
-                                    <div className={cx('icon-times-left')}>
-                                        {songName === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                            <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>}
-
-                                    </div>
-                                    <div className={cx('text-failed')}>
-                                        <div>
-                                            {songName === "" && <span>Existed 1 Song name</span>}
-                                            {songName !== "" && <span style={{ color: "green" }}>Existed 1 Song name </span>}
-                                            {songName !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                                <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    <div className={cx('check-failed-pass')}>
+                                        <div className={cx('icon-times-left')}>
+                                            {songName === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                             </svg>}
+
+                                        </div>
+                                        <div className={cx('text-failed')}>
+                                            <div>
+                                                {songName === "" && <span>Existed 1 Song name</span>}
+                                                {songName !== "" && <span style={{ color: "green" }}>Existed 1 Song name </span>}
+                                                {songName !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                    <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className={cx('check-failed-pass')}>
-                                    <div className={cx('icon-times-left')}>
-                                        {songUrl === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                            <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>}
-
-                                    </div>
-                                    <div className={cx('text-failed')}>
-
-                                        <div>
-                                            {songUrl === "" && <span>Existed 1 Song Url</span>}
-                                            {songUrl !== "" && <span style={{ color: "green" }}>Existed 1 Song Url </span>}
-                                            {songUrl !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                                <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    <div className={cx('check-failed-pass')}>
+                                        <div className={cx('icon-times-left')}>
+                                            {songUrl === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                             </svg>}
+
+                                        </div>
+                                        <div className={cx('text-failed')}>
+
+                                            <div>
+                                                {songUrl === "" && <span>Existed 1 Song Url</span>}
+                                                {songUrl !== "" && <span style={{ color: "green" }}>Existed 1 Song Url </span>}
+                                                {songUrl !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                    <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className={cx('check-failed-pass')}>
-                                    <div className={cx('icon-times-left')}>
-                                        {singer === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                            <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>}
-
-                                    </div>
-                                    <div className={cx('text-failed')}>
-                                        <div>
-                                            {singer === "" && <span>Existed 1 Singer</span>}
-                                            {singer !== "" && <span style={{ color: "green" }}> Existed 1 Singer </span>}
-                                            {singer !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                                <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    <div className={cx('check-failed-pass')}>
+                                        <div className={cx('icon-times-left')}>
+                                            {singer === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                             </svg>}
+
+                                        </div>
+                                        <div className={cx('text-failed')}>
+                                            <div>
+                                                {singer === "" && <span>Existed 1 Singer</span>}
+                                                {singer !== "" && <span style={{ color: "green" }}> Existed 1 Singer </span>}
+                                                {singer !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                    <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className={cx('check-failed-pass')}>
-                                    <div className={cx('icon-times-left')}>
-                                        {tone === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                            <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>}
-
-                                    </div>
-                                    <div className={cx('text-failed')}>
-                                        <div>
-                                            {tone === "" && <span>Existed 1 Tone</span>}
-                                            {tone !== "" && <span style={{ color: "green" }}> Existed 1 Tone </span>}
-                                            {tone !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                                <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    <div className={cx('check-failed-pass')}>
+                                        <div className={cx('icon-times-left')}>
+                                            {tone === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                             </svg>}
+
+                                        </div>
+                                        <div className={cx('text-failed')}>
+                                            <div>
+                                                {tone === "" && <span>Existed 1 Tone</span>}
+                                                {tone !== "" && <span style={{ color: "green" }}> Existed 1 Tone </span>}
+                                                {tone !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                    <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className={cx('check-failed-pass')}>
-                                    <div className={cx('icon-times-left')}>
-                                        {inputGenres === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                            <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>}
-
-                                    </div>
-                                    <div className={cx('text-failed')}>
-                                        <div>
-                                            {inputGenres === "" && <span>Existed 1 Genres</span>}
-                                            {inputGenres !== "" && <span style={{ color: "green" }}>Existed 1 Genres </span>}
-                                            {inputGenres !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                                <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    <div className={cx('check-failed-pass')}>
+                                        <div className={cx('icon-times-left')}>
+                                            {inputGenres === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                             </svg>}
+
+                                        </div>
+                                        <div className={cx('text-failed')}>
+                                            <div>
+                                                {inputGenres === "" && <span>Existed 1 Genres</span>}
+                                                {inputGenres !== "" && <span style={{ color: "green" }}>Existed 1 Genres </span>}
+                                                {inputGenres !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                    <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className={cx('check-failed-pass')}>
-                                    <div className={cx('icon-times-left')}>
-                                        {vocalRange === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                            <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>}
-
-                                    </div>
-                                    <div className={cx('text-failed')}>
-                                        <div>
-                                            {vocalRange === "" && <span>Existed 1 Vocal Range</span>}
-                                            {vocalRange !== "" && <span style={{ color: "green" }}>Existed 1 Vocal Range </span>}
-                                            {vocalRange !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                                <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    <div className={cx('check-failed-pass')}>
+                                        <div className={cx('icon-times-left')}>
+                                            {vocalRange === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                             </svg>}
+
+                                        </div>
+                                        <div className={cx('text-failed')}>
+                                            <div>
+                                                {vocalRange === "" && <span>Existed 1 Vocal Range</span>}
+                                                {vocalRange !== "" && <span style={{ color: "green" }}>Existed 1 Vocal Range </span>}
+                                                {vocalRange !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                    <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className={cx('white-box-text')}>
-                                    <h6>After posting, you can still add/edit song information. Please note to monitor your post if Admin has feedback on your post.</h6>
-                                    <h6>Thank you for your contribution!</h6>
+                                    <div className={cx('white-box-text')}>
+                                        <h6>After posting, you can still add/edit song information. Please note to monitor your post if Admin has feedback on your post.</h6>
+                                        <h6>Thank you for your contribution!</h6>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    )}
-    else{
+        )
+    }
+    else {
         return (<div></div>)
     }
 }

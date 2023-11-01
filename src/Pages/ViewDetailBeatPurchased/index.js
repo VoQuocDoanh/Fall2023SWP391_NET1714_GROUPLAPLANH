@@ -24,7 +24,6 @@ function ViewDetailBeatPurchased() {
     const navigate = useNavigate();
     const [beatSoundFull, setBeatSoundFull] = useState("")
     const [checkFeedBack, setCheckFeedBack] = useState("")
-    const [check, setCheck] = useState(false)
     const [feedBack, setFeedBack] = useState("")
     const contentStyle = { background: 'white', width: 460, height: 370, borderRadius: 20 };
     let userId = ""
@@ -63,17 +62,13 @@ function ViewDetailBeatPurchased() {
     }
 
     const handleFeedback = async() => {
-        if(check){
-            setCheckFeedBack("You have already feedbacked this beat!")
-            return;
-        }
-        await axiosInstance.post("http://localhost:8080/api/v1/song/feedback",{userId: userId, beatId: beatId, content: feedBack})
+        await axiosInstance.post("http://localhost:8080/api/v1/beat/feedback",{userId: userId, beatId: beatId, content: feedBack})
         .then((res) =>{
             setCheckFeedBack("FeedbackSuccessfully")
-            setCheck(true)
         })
         .catch((error) =>{
             console.log(error)
+            setCheckFeedBack("You have already feedbacked this beat")
         })
     }
 

@@ -31,6 +31,70 @@
     background-position: 200% center;
   }
 }
+
+.searchBox {
+    transform: translate(0%, 100%);
+    background: #2f3640;
+    height: 60px;
+    border-radius: 40px;
+    padding: 10px;
+    margin-right: -50px;
+    margin-bottom: 50px;
+
+
+}
+
+.searchBox:hover>.searchInput {
+    width: 240px;
+    padding: 0 6px;
+}
+
+.searchBox:hover>.searchButton {
+    background: white;
+    color: #2f3640;
+}
+
+.searchButton {
+    color: white;
+    float: right;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #2f3640;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+    background: none;
+    border: none;
+}
+
+.searchInput {
+    border: none;
+    background: none;
+    outline: none;
+    float: right;
+    padding: 0;
+    color: white;
+    font-size: 16px;
+    transition: 0.4s;
+    line-height: 40px;
+    width: 0px;
+
+}
+
+@media screen and (max-width: 620px) {
+    .searchBox:hover>.searchInput {
+        width: 150px;
+        padding: 0 6px;
+    }
+}
+
+.material-icons {
+    margin-top: 20px;
+    margin-left: 15px;
+}
+
 .list-songs{
     margin-top: 60px;
 }
@@ -102,6 +166,7 @@ text-transform: uppercase;
     margin-left: -10px;
     margin-bottom: 30px;
     font-family: sono;
+    font-size: 3.5rem
 }
 // rythym 
 .rhythm-item{
@@ -288,4 +353,57 @@ text-transform: uppercase;
       padding: 10px 24px;
       color: #2da5f3;
       user-select: none;
+}
+
+.body-right {
+    flex: 7;
+    // Add a new container for the scrollable content
+    .scroll-container {
+        max-height: calc(100vh - 140px); /* Adjust as needed */
+        overflow-y: auto;
+        padding-right: 15px; /* Add padding to compensate for scrollbar width */
+        box-sizing: content-box;
+        &::-webkit-scrollbar { /* mất thanh */
+            width: 0;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: transparent; /* Make the thumb transparent */
+        }
+
+        &::-webkit-scrollbar-track {
+            background-color: transparent; /* Make the track transparent */
+        }
+    }
+}
+
+.song {
+  display: flex;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 27px;
+  background-color: lightgray;
+  padding: 30px;
+}
+
+.song-name {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.option{
+    margin-top:  25px;
+}
+.pagination{
+    justify-content: end;
+    align-items: end;
+    text-align: end;
+    margin-right: 50px;
+}
+.pagination span{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.pagination button svg {
+    padding-top: 5px;
 }
