@@ -101,26 +101,18 @@ public class FeedbackService {
         return new ResponseEntity<>("No update",HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public PaginationResponseDTO viewownFeedback(Long id, int page) {
+    public FeedbackResponseDTO viewownFeedback(Long id,Long id2) {
         Optional<User> foundUser = userRepository.findById(id);
-        Pageable pageable = PageRequest.of(page-1,10);
-        Page<Feedback> feedbacks = feedbackRepository.findByUserFeedback(foundUser.get(),pageable);
-        List<Feedback> f = feedbackRepository.findByUserFeedback(foundUser.get());
-        List<Feedback> feedback =new ArrayList<>();
-        List<FeedbackResponseDTO> dto = new ArrayList<>();
-        for (Feedback i :feedbacks){
-            feedback.add(i);
-        }
-        dto = getFeedbackResponseDTO(feedback);
-        int pagecount = pageable.getPageNumber();
-        int max = 0;
-        if (dto.size() % 10 != 0) {
-            max = f.size() / 10 + 1;
-        } else {
-            max = f.size() / 10;
-        }
-        return new PaginationResponseDTO(dto,pagecount,max);
-
+        Optional<Beat> foundBeat = beatRepository.findById(id2);
+       // Page<Feedback> feedbacks = feedbackRepository.findByUserFeedback(foundUser.get(),,pageable);
+        Feedback f = feedbackRepository.findByUserFeedbackAndAndBeatFeedback(foundUser.get(),foundBeat.get());
+        FeedbackResponseDTO feedbackResponseDTO = new FeedbackResponseDTO(
+                f.getContent(),
+                getUser(f.getUserFeedback()),
+                f.getCreatedAt(),
+                getBeat(f.getBeatFeedback())
+        );
+        return feedbackResponseDTO;
     }
 
 

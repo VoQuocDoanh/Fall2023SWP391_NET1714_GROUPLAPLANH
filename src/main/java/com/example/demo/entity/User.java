@@ -126,6 +126,10 @@ public class User implements UserDetails {
     @JsonIgnore
     private Set<SongReport> reportSongs;
 
+    @OneToMany(mappedBy = "reportByUser")
+    @JsonIgnore
+    private Set<UserReport> reportUser;
+
     @OneToMany(mappedBy = "userCollection")
     @JsonIgnore
     @JsonInclude(Include.NON_NULL)

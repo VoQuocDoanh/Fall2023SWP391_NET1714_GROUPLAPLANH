@@ -16,9 +16,9 @@ public interface FeedbackRepository extends JpaRepository<Feedback,Long> {
 
     Feedback findByBeatFeedback(Beat beatId);
 
-    Page<Feedback> findByUserFeedback(User user, Pageable pageable);
+    Page<Feedback> findByUserFeedbackAndAndBeatFeedback(User user,Beat beat, Pageable pageable);
 
-    List<Feedback> findByUserFeedback(User user);
+    Feedback findByUserFeedbackAndAndBeatFeedback(User user,Beat beat);
 
     Optional<Feedback> findByBeatFeedbackAndUserFeedback(Beat beat, User user);
 }
