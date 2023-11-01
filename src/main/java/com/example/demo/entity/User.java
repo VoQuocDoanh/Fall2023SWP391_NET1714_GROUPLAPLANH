@@ -68,6 +68,9 @@ public class User implements UserDetails {
 
     @Column(name = "Date")
     private LocalDateTime createdAt;
+
+    @Column(name =  "report")
+    private int report;
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();

@@ -13,4 +13,7 @@ public class ReportDTO {
     private Long songId;
     private String content;
 
+    private Long UserReported;
+    private Long beatId;
+
 }

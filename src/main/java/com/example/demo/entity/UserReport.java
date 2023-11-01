@@ -19,6 +19,20 @@ public class UserReport {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @Column(name = "ReportedUser")
+    private Long idReportedUser;
+
+    public UserReport(String content, Long idReportedUser, User reportByUser) {
+        this.content = content;
+        this.idReportedUser = idReportedUser;
+        this.reportByUser = reportByUser;
+    }
+
+    public UserReport() {
+
+    }
+
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
