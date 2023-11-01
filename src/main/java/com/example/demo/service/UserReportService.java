@@ -1,15 +1,16 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.PaginationResponseDTO;
 import com.example.demo.dto.ReportDTO;
 import com.example.demo.dto.ReportResponseDTO;
 import com.example.demo.dto.UserResponeDTO;
-import com.example.demo.entity.Song;
-import com.example.demo.entity.SongReport;
-import com.example.demo.entity.User;
-import com.example.demo.entity.UserReport;
+import com.example.demo.entity.*;
 import com.example.demo.repository.UserReportRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ public class UserReportService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     UserReportRepository userReportRepository;
@@ -51,12 +55,34 @@ public class UserReportService {
         return new UserResponeDTO(user.getId(), user.getFullName());
     }
 
+    public List<UserResponeDTO> listUserReported() {
+        List<UserReport> list = userReportRepository.findAll();
+        List<UserResponeDTO> dtos =new ArrayList<>();
+        List<User> users= new ArrayList<>();
+        for (UserReport u:list){
+            User user = new User();
+            user = userRepository.findByIdAndStatus(u.getId(),1);
+            users.add(user);
+        }
+        for (User us : users){
+            UserResponeDTO dto = new UserResponeDTO(
+                    us.getUsername(),
+                    us.getRole(),
+                    us.getMail(),
+                    us.getStatus(),
+                    us.getCreatedAt(),
+                    us.getAvatar()
+
+            );
+            dtos.add(dto);
+        }
+        return dtos;
+    }
 
     public List<ReportResponseDTO> viewReport(Long id) {
         Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(id, 1);
         if(foundUser.isPresent()){
             List<UserReport> foundReports = userReportRepository.findByIdReportedUser(foundUser.get().getId());
-            //List<SongReport> foundReports = this.userRepository.findSongReportsBySongOfReport(song);
             if(!foundReports.isEmpty()){
                 List<ReportResponseDTO> dtos = new ArrayList<>();
                 for (UserReport value: foundReports) {

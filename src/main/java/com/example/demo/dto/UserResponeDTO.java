@@ -38,6 +38,15 @@ public class UserResponeDTO {
         this.mail = mail;
     }
 
+    public UserResponeDTO(String username, String role, String mail, int status, LocalDateTime createAt, String avatar) {
+        this.username = username;
+        this.role = role;
+        this.mail = mail;
+        this.status = status;
+        this.createAt = createAt;
+        this.avatar = avatar;
+    }
+
     public UserResponeDTO(Long id, String fullName) {
         this.id = id;
         this.fullName = fullName;

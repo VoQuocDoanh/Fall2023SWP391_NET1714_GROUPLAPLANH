@@ -1,7 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.PaginationResponseDTO;
 import com.example.demo.dto.ReportDTO;
 import com.example.demo.dto.ReportResponseDTO;
+import com.example.demo.dto.UserResponeDTO;
+import com.example.demo.entity.UserReport;
 import com.example.demo.service.UserReportService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,11 @@ public class UserReportController {
     @GetMapping("/{id}")
     public ResponseEntity<List<ReportResponseDTO>> viewReport (@Valid @PathVariable Long id){
         return ResponseEntity.ok(this.userReportService.viewReport(id));
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<UserResponeDTO>> getAll (){
+        return ResponseEntity.ok(this.userReportService.listUserReported());
     }
 
 }

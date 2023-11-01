@@ -42,4 +42,15 @@ public class UserReport {
     @JsonIgnore
     @JoinColumn (name = "userId")
     private User reportByUser;
+
+    @Override
+    public String toString() {
+        return "UserReport{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", createdAt=" + createdAt +
+                ", idReportedUser=" + idReportedUser +
+                ", reportByUser=" + reportByUser +
+                '}';
+    }
 }

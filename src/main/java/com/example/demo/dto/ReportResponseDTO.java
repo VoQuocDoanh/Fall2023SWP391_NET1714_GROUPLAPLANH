@@ -35,6 +35,13 @@ public class ReportResponseDTO {
         this.localDateTime = localDateTime;
     }
 
+    public ReportResponseDTO(Long id, LocalDateTime localDateTime, String content, UserResponeDTO userReported) {
+        this.id = id;
+        this.content = content;
+        this.userReported = userReported;
+        this.localDateTime = localDateTime;
+    }
+
     private UserResponeDTO userReported;
 
 }
