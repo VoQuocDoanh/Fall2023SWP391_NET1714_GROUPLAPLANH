@@ -88,6 +88,12 @@ public class SongController {
         return this.songService.likeSong(userid, songid);
     }
 
+    // Check Liked
+    @GetMapping("/like/user")
+    public ResponseEntity<Boolean> checkLiked(@RequestParam("userid") Long userid, @RequestParam("songid") Long songid){
+        return this.songService.isLiked(userid, songid);
+    }
+
     // Rate Song
     @GetMapping("/rate")
     public ResponseEntity<String> rateSong (@RequestParam("userid") Long userid, @RequestParam("songid") Long songid, @RequestParam("rating") int rating){

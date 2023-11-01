@@ -285,7 +285,7 @@ public class SongService {
         Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userid, 1);
         if (foundUser.isPresent()) {
             User user = foundUser.get();
-            Optional<Song> foundSong = Optional.ofNullable(this.songRepository.findSongsLikeByUser(userid, songid));
+            Optional<Song> foundSong = Optional.ofNullable(this.songRepository.findSongLikeByUser(userid, songid));
             if (foundSong.isPresent()) {
                 Song s = foundSong.get();
                 Set<Song> songSet = user.getLikedSongs();
@@ -311,7 +311,15 @@ public class SongService {
         } else {
             return new ResponseEntity<>("Like Failed", HttpStatus.NOT_IMPLEMENTED);
         }
+    }
 
+    public ResponseEntity<Boolean> isLiked (Long userid, Long songid){
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userid, 1);
+        if(foundUser.isPresent()){
+            Optional<Song> foundSong = Optional.ofNullable(this.songRepository.findSongLikeByUser(userid, songid));
+            return foundSong.isPresent()? new ResponseEntity<>(true, HttpStatus.OK) : new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
     }
 
     // rating
