@@ -24,6 +24,11 @@ public class FeedbackController {
         return feedbackService.viewFeedback(id,page);
     }
 
+    @GetMapping("/user/{id}/{page}")
+    public PaginationResponseDTO viewOwnFeedback(@PathVariable Long id, @PathVariable int page){
+        return feedbackService.viewownFeedback(id,page);
+    }
+
     @PostMapping("")
     public ResponseEntity<String> addFeedback (@RequestBody FeedbackDTO dto){
         return feedbackService.addFeedback(dto);
