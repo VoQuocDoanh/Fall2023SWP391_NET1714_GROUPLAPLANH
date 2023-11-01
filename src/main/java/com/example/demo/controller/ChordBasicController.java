@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.ChordBasicResponseDTO;
 import com.example.demo.dto.ChordDTO;
 import com.example.demo.dto.ChordResponseDTO;
 import com.example.demo.entity.ChordBasic;
@@ -8,13 +7,10 @@ import com.example.demo.repository.ChordBasicRepository;
 import com.example.demo.service.ChordBasicService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -39,6 +35,11 @@ public class ChordBasicController {
     @GetMapping(path="/searchChord/{key}/{suffix}/{type}")
     public ResponseEntity<List<ChordBasic>> searchChord(@PathVariable String key, @PathVariable String suffix, @PathVariable String type){
         return ResponseEntity.ok(chordBasicService.searchChord(key,suffix,type));
+    }
+
+    @GetMapping(path="/searchChord/{type}")
+    public ResponseEntity<List<ChordResponseDTO>> searchChordByType(@PathVariable String type){
+        return ResponseEntity.ok(chordBasicService.searchChordByType(type));
     }
 
     @PostMapping("")
