@@ -163,7 +163,7 @@ const publicRoutes = [
     component: ListUser2,
   },
   {
-    path: "/ViewDetailsUser",
+    path: "/ViewDetailsUser/:id",
     component: ViewDetailsUser,
   },
   {

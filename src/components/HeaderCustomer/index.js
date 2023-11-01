@@ -94,8 +94,7 @@ function HeaderCustomer() {
               <div className={cx("text-all")}>
                 <Link to="/myprofile"><div className={cx("link-text")}>Account</div></Link>
                 <Link to="/listBeatPurchased"><div className={cx("link-text")}>Beat Purchased</div></Link>
-                <Link to="/viewcart"><div className={cx("link-text")}>Song's Playlist</div></Link>
-                <Link to="/viewcart"><div className={cx("link-text")}>Chord's Collection</div></Link>
+                <Link to="/viewcart"><div className={cx("link-text")}>My Collection</div></Link>
                 <Link to="/uploadsong"><div className={cx("link-text")}> Add new Song</div></Link>
                 <Link to="/"><div className={cx("link-text")} onClick={handleLogout}> Log out</div></Link>
               </div>

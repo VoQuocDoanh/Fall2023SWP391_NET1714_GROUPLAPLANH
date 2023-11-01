@@ -72,6 +72,8 @@ function ViewDetailBeatPurchased() {
         })
     }
 
+    
+
     if (beatDetail !== null) {
         const dateReleasing = new Date(beatDetail.creatAt)
         const month = dateReleasing.getUTCMonth() + 1

@@ -10,48 +10,52 @@ import GUITAR from "../../assets/ImageForChords/Guitar";
 import PIANO from "../../assets/ImageForChords/Piano";
 import UKULELE from "../../assets/ImageForChords/Ukulele";
 import Popup from "reactjs-popup";
+import axios from "axios";
+import axiosInstance from "../../authorization/axiosInstance";
 
 const cx = classNames.bind(styles);
 
-const KEY = ["C", "D", "E", "F", "G", "A", "B"];
+const KEY = ["C", "D", "E", "F", "G", "A", "B", "A#", "C#", "D#", "F#", "G#"];
 const SUFFIX = ["major", "minor", "7", "m7", "maj7"];
-const INSTRUMENT = ["Ukulele", "Guitar", "Piano"];
+const INSTRUMENT = ["ukulele", "guitar", "piano"];
 
 
-const DATA = [
-    {
-        type: "Guitar",
-        value: GUITAR,
-    },
-    {
-        type: "Piano",
-        value: PIANO,
-    },
-    {
-        type: "Ukulele",
-        value: UKULELE,
-    },
-    {
-        type: "All",
-        value: [GUITAR, [
-            {
-                type: "Ukulele",
-                img: "https://upload.wikimedia.org/wikipedia/commons/5/56/Ukulele1_HiRes.jpg",
-            }
-        ],]
-    }
-]
+// const DATA = [
+//     {
+//         type: "Guitar",
+//         value: GUITAR,
+//     },
+//     {
+//         type: "Piano",
+//         value: PIANO,
+//     },
+//     {
+//         type: "Ukulele",
+//         value: UKULELE,
+//     },
+//     {
+//         type: "All",
+//         value: [GUITAR, [
+//             {
+//                 type: "Ukulele",
+//                 img: "https://upload.wikimedia.org/wikipedia/commons/5/56/Ukulele1_HiRes.jpg",
+//             }
+//         ],]
+//     }
+// ]
 
 
 function ChordsDetails() {
 
     // const [list, setList] = useState(DATA);
 
+    const [DATA, setDATA] = useState([]);
     const [key, setKey] = useState(KEY[0]);
     const [suffix, setSuffix] = useState(SUFFIX[0]);
-    const [instrument, setInstrument] = useState(INSTRUMENT[1]);
+    const [instrument, setInstrument] = useState(INSTRUMENT[0]);
     const [listChord, setListChord] = useState([]);
     const contentStyle = { background: 'white', width: 330, height: 190, borderRadius: 12, background: '#34224F', color: 'white' };
+
     const handleKeyChange = (e) => {
         setKey(e.target.value);
     }
@@ -64,76 +68,26 @@ function ChordsDetails() {
         setInstrument(e.target.value);
     }
 
-    // useEffect(() => {
-    //     let listFilter = DATA.filter((list) => list.type === instrument);
-    //     let listType = listFilter[0].value.map((item) => {
-    //         return item;
-    //     })
-    //     setListChord(listType.flat(Infinity));
-    // }, [])
-
     useEffect(() => {
-        let listFilter = DATA.filter((list) => list.type === instrument);
-        let listType = listFilter[0].value.map((item) => {
-            return item;
-        })
-        if (key !== "All") {
-            let list = listType.flat(Infinity).filter((item) => {
-                return item.key === key;
-            });
-            if (suffix !== "All") {
-                list = list.filter(item => item.suffix === suffix);
-            }
+        async function fetchData() {
+            let data = await axiosInstance.get(`http://localhost:8080/chord/searchChord/${instrument}`);
+            setDATA(data.data);
+            let list = data.data.filter((item) => item.key === key && item.suffix === suffix);
             setListChord(list);
         }
-        // } else {
-        //     setListChord(listType.flat(Infinity))
-        // }
+        fetchData();
+    }, [instrument])
+
+
+    useEffect(() => {
+        let list = DATA.filter((item) => item.key === key && item.suffix === suffix);
+        setListChord(list);
     }, [key])
 
     useEffect(() => {
-        let listFilter = DATA.filter((list) => list.type === instrument);
-        let listType = listFilter[0].value.map((item) => {
-            return item;
-        })
-        if (suffix !== "All") {
-            let list = listType.flat(Infinity).filter((item) => {
-                return item.suffix === suffix;
-            });
-            if (key !== "All") {
-                list = list.filter(item => item.key === key);
-            }
-            setListChord(list);
-        }
-        // } else {
-        //     setListChord(listType.flat(Infinity))
-        // }
+        let list = DATA.filter((item) => item.key === key && item.suffix === suffix);
+        setListChord(list);
     }, [suffix])
-
-    useEffect(() => {
-        let listFilter = DATA.filter((list) => list.type === instrument);
-        let listType = listFilter[0].value.map((item) => {
-            return item;
-        })
-        // if(key !== "All" && suffix == "All") {
-        //     let list = listType.flat(Infinity).filter((item) => {
-        //         return item.key === key;
-        //     });
-        //     setListChord(list);
-        // } else if(key === "All" && suffix !== "All") {
-        //     let list = listType.flat(Infinity).filter((item) => {
-        //         return item.suffix === suffix;
-        //     });
-        //     setListChord(list);
-        if (key !== "All" && suffix !== "All") {
-            let list = listType.flat(Infinity).filter((item) => {
-                return item.key === key && item.suffix === suffix;
-            });
-            setListChord(list)
-            // }else {
-            //     setListChord(listType.flat(Infinity));
-        }
-    }, [instrument])
 
     return (
         <div className={cx("list-header")}>
@@ -208,9 +162,12 @@ function ChordsDetails() {
 
             <div className={cx("list-chords")} style={{}}>
                 {listChord.map((item) => {
-                    return <img className={cx("detail-img")} style={{ width: 250, height: 260, objectFit: 'fill', marginLeft: 700 }} key={item.type} src={item.img} alt={item.type} />
+                    return <div style={{display: "flex", flexDirection: "column", rowGap: "10px"}}>
+                        <img className={cx("detail-img")} style={{ width: 250, height: 260, objectFit: 'fill', marginLeft: 700 }} key={item.type} src={item.image} alt={item.chordName} />
+                        <p className={cx("img__description")}>{item.chordName} {item.description}<p style={{ marginTop: 35 }}>{item.type}</p></p>
+
+                        </div>
                 })}
-                <p className={cx("img__description")}>This image looks super neat<p style={{ marginTop: 35 }}>Description About Chords</p></p>
             </div>
         </div>
 

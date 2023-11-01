@@ -1,12 +1,13 @@
 
 import classNames from "classnames/bind";
 import styles from "./ViewDetailsUser.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { faChevronLeft, faChevronRight, faPause, faPlay, faPlayCircle, faRedo, faStepBackward, faStepForward } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "bootstrap";
 import { red } from "@mui/material/colors";
 import Popup from "reactjs-popup";
+import axiosInstance from "../../authorization/axiosInstance";
 const cx = classNames.bind(styles);
 const DATA = [
     {
@@ -15,12 +16,15 @@ const DATA = [
     },
 ]
 function ViewDetailsUser() {
+    const {id} = useParams()
     const [search, setSearch] = useState("");
-    const [list, setList] = useState(DATA);
-    const [play, setPlay] = useState(false);
-    const [isChecked, setIsChecked] = useState(false);
     const [ten, setTen] = useState("");
+    const [user, setUser] = useState();
     const contentStyle = { background: 'white', width: 460, height: 370, borderRadius: 20 };
+
+    useEffect(() =>{
+        loadDetailsUser()
+    },[])
     const handleSearch = (e) => {
         setSearch(e.target.value);
     }
@@ -28,15 +32,16 @@ function ViewDetailsUser() {
         setTen(e.target.value);
     }
 
+    const loadDetailsUser = async() => {
+        await axiosInstance.get(`http://localhost:8080/api/v1/admin/${id}`)
+        .then((res) =>{
+            setUser(res.data)
+        })
+        .catch((error) =>{
+            console.log(error)
+        })
+    }
 
-    useEffect(() => {
-        const data = DATA.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
-        setList(data);
-    }, [search])
-    useEffect(() => {
-        const data = DATA.filter((item) => item.name.toLowerCase().includes(ten.toLowerCase()));
-        setList(data);
-    }, [ten])
     return (
         <div>
             <div>
@@ -44,6 +49,7 @@ function ViewDetailsUser() {
                     My Profile
                 </h2>
             </div>
+            {user ?
             <div className={cx("profile")}>
                 <div className={cx("volt8A")}>
                     <form style={{ marginTop: 20 }}>
@@ -55,7 +61,7 @@ function ViewDetailsUser() {
                                             <label className={cx("login-text")}>Full Name</label>
                                         </td>
                                         <div>
-                                            <input className={cx("input-username0")} type="text" value="User Name" placeholder onChange={handleSearch} />
+                                            <input className={cx("input-username0")} type="text" value={user.fullName} placeholder readOnly />
                                         </div>
                                     </div>
                                 </td>
@@ -66,7 +72,7 @@ function ViewDetailsUser() {
                                         <label className={cx("text-name")}>Address</label>
                                     </td>
                                     <div className={cx("placeholder-ten")}>
-                                        <input className={cx("input-username")} type="text" placeholder value="User Name" onChange={handleSearch1} />
+                                        <input className={cx("input-username")} type="text" placeholder value={user.address} readOnly/>
                                     </div>
                                 </td>
                             </div>
@@ -76,9 +82,8 @@ function ViewDetailsUser() {
                                         Email:
                                     </div>
                                     <div className={cx("email-change")}>
-                                        do******@fpt.edu.vn
+                                        {user.mail}
                                     </div>
-                                    <button className={cx("email-button")}>Change</button>
                                 </td>
 
                             </div>
@@ -87,7 +92,7 @@ function ViewDetailsUser() {
                                     Phone number
                                 </td>
                                 <div className={cx("placeholder-ten")}>
-                                    <input className={cx("input-phonenumber")} type="text" placeholder value="095-XXX-XXX-XXX" onChange={handleSearch1} />
+                                    <input className={cx("input-phonenumber")} type="text" placeholder value={user.phoneNumber} onChange={handleSearch1} />
                                 </div>
                             </div>
                             <div className={cx("part5")}>
@@ -141,8 +146,8 @@ function ViewDetailsUser() {
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div> :<div></div>}
+        </div> 
     );
 }
 
