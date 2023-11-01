@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.PaginationResponseDTO;
 import com.example.demo.dto.SongReportResponseDTO;
 import com.example.demo.dto.UserDTO;
+import com.example.demo.dto.UserResponeDTO;
 import com.example.demo.entity.User;
 import com.example.demo.service.SongReportService;
 import com.example.demo.service.UserService;
@@ -54,6 +55,12 @@ public class AdminController {
         return this.userService.banUser(userDTO);
     }
 
+    //Unban user
+    @PostMapping("/unban")
+    public ResponseEntity<String> unbanUser(@RequestBody UserDTO userDTO) {
+        return this.userService.unbanUser(userDTO);
+    }
+
     //Search user by name
     @GetMapping("/username")
     public ResponseEntity<List<User>> searchByUserName(@RequestParam("username") String name) {
@@ -76,5 +83,11 @@ public class AdminController {
             errors.put(fieldName, errorMsg);
         }));
         return errors;
+    }
+
+
+    @GetMapping("/ban")
+    public ResponseEntity<List<UserResponeDTO>> getAllBannedUser(){
+        return ResponseEntity.ok(this.userService.listUserBanned());
     }
 }

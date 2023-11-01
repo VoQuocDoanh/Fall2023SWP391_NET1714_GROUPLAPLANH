@@ -75,4 +75,35 @@ public class ChordBasicService {
         }
         return null;
     }
+
+    private List<ChordResponseDTO> getChordResponseDTO(List<ChordBasic> chordBasicList){
+        if (chordBasicList.isEmpty())
+            return null;
+        else {
+            List<ChordResponseDTO> dtos = new ArrayList<>();
+            for (ChordBasic i : chordBasicList){
+                ChordResponseDTO dto = new ChordResponseDTO(
+                    i.getChordId(),
+                        i.getChordName(),
+                        i.getImage(),
+                        i.getChordKey(),
+                        i.getSuffix(),
+                        i.getDescription(),
+                        i.getType()
+                );
+                dtos.add(dto);
+            }
+            return dtos;
+        }
+    }
+
+    public List<ChordResponseDTO> searchChordByType(String type) {
+        List<ChordBasic> chordEntity=chordBasicRepository.findChordBasicsByType(type);
+        if (chordEntity.isEmpty()){
+            return null;
+        } else {
+            List<ChordResponseDTO> list = getChordResponseDTO(chordEntity);
+            return list;
+        }
+    }
 }

@@ -24,6 +24,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Page<User> findAllByOrderByStatusDesc(Pageable pageable);
     List<User> findAllByOrderByStatusDesc();
 
+    User findByIdAndStatus(Long id,int status);
+
+    List<User> findAllByStatus (int status);
+
     @Query("SELECT u.fullName from User u where u.Id =:id")
     String findUserName(Long id);
     @Query("select u.mail from User u where u.mail = :mail")

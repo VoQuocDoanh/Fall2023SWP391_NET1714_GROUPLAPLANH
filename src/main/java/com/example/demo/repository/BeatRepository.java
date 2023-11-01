@@ -5,6 +5,7 @@
 
 package com.example.demo.repository;
 
+import com.example.demo.dto.Feedback;
 import com.example.demo.entity.Beat;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.User;
@@ -35,6 +36,8 @@ public interface BeatRepository extends JpaRepository<Beat, Long> {
     List<User> findAllUser();
 
     Page<Beat> findBeatByOrderBeat(Order id, Pageable pageable);
+
+
 
     List<Beat> findBeatByOrderBeat(Order id);
 

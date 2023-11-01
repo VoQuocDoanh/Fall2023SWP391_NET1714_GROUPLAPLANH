@@ -47,4 +47,20 @@ public class EmailService {
             e.printStackTrace();
         }
     }
+    public void sendEmailForUnBan(String to, String subject, String text) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            String htmlContent =
+                    "<h1>You have been unbanned from the YourChords website</h1></br>" +
+                            "<p>Lý do:" + text + "</p></br>" +
+                            "<p>Thanks for joining my website</p>";
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(htmlContent, true);
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
 }

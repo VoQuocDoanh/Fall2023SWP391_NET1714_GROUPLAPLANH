@@ -68,6 +68,9 @@ public class User implements UserDetails {
 
     @Column(name = "Date")
     private LocalDateTime createdAt;
+
+    @Column(name =  "report")
+    private int report;
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
@@ -125,6 +128,10 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "reportByUsers")
     @JsonIgnore
     private Set<SongReport> reportSongs;
+
+    @OneToMany(mappedBy = "reportByUser")
+    @JsonIgnore
+    private Set<UserReport> reportUser;
 
     @OneToMany(mappedBy = "userCollection")
     @JsonIgnore

@@ -101,5 +101,19 @@ public class FeedbackService {
         return new ResponseEntity<>("No update",HttpStatus.NOT_IMPLEMENTED);
     }
 
+    public FeedbackResponseDTO viewownFeedback(Long id,Long id2) {
+        Optional<User> foundUser = userRepository.findById(id);
+        Optional<Beat> foundBeat = beatRepository.findById(id2);
+       // Page<Feedback> feedbacks = feedbackRepository.findByUserFeedback(foundUser.get(),,pageable);
+        Feedback f = feedbackRepository.findByUserFeedbackAndAndBeatFeedback(foundUser.get(),foundBeat.get());
+        FeedbackResponseDTO feedbackResponseDTO = new FeedbackResponseDTO(
+                f.getContent(),
+                getUser(f.getUserFeedback()),
+                f.getCreatedAt(),
+                getBeat(f.getBeatFeedback())
+        );
+        return feedbackResponseDTO;
+    }
+
 
 }

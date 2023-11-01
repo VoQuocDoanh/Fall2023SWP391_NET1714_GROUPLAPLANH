@@ -143,12 +143,15 @@ public class UserService {
             User user = foundUser.get();
             UserResponeDTO dto = new UserResponeDTO();
             dto.setId(user.getId());
+            dto.setAddress(user.getAddress());
             dto.setUsername(user.getUsername());
             dto.setFullName(user.getFullName());
             dto.setGender(user.getGender().toString());
+            dto.setAvatar(user.getAvatar());
             dto.setCreateAt(user.getCreatedAt());
             dto.setPhone(user.getPhoneNumber());
             dto.setMail(user.getMail());
+
             if (user.getRole().equals("MS")) {
                 MusicianInformation information = user.getInformation();
                 dto.setProfessional(information.getProfessional());
@@ -172,6 +175,20 @@ public class UserService {
         }
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
+
+    public ResponseEntity<String> unbanUser(UserDTO userDTO) {
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userDTO.getId(), 0);
+        if (foundUser.isPresent()) {
+            User user = foundUser.get();
+            user.setStatus(1);
+            this.userRepository.save(user);
+            this.emailService.sendEmailForUnBan(user.getMail(), "YOU GOT UNBANNED", userDTO.getContent());
+            return new ResponseEntity<>("Unban Successfully", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+    }
+
+
 
     // Update Admin Info
     public ResponseEntity<String> updateAdminInfo(UserDTO userDTO) {
@@ -248,7 +265,8 @@ public class UserService {
                     user.getMail(),
                     user.getStatus(),
                     user.getCreatedAt(),
-                    user.getPhoneNumber());
+                    user.getPhoneNumber(),
+                    user.getAvatar());
             if (user.getRole().equals("MS")) {
                 MusicianInformation information = user.getInformation();
                 dto.setProfessional(information.getProfessional());
@@ -276,4 +294,20 @@ public class UserService {
         return null;
     }
 
+    public List<UserResponeDTO> listUserBanned() {
+        List<User> users = userRepository.findAllByStatus(0);
+        List<UserResponeDTO> dtos =new ArrayList<>();
+        for (User us : users){
+            UserResponeDTO dto = new UserResponeDTO(
+                    us.getUsername(),
+                    us.getRole(),
+                    us.getMail(),
+                    us.getStatus(),
+                    us.getCreatedAt(),
+                    us.getAvatar()
+            );
+            dtos.add(dto);
+        }
+        return dtos;
+    }
 }
