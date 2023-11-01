@@ -45,4 +45,9 @@ public interface SongRepository extends JpaRepository<Song, Long> {
 
     Optional<Song> findSongByIdAndStatus(Long id, int status);
 
+    // Song report
+
+    @Query("select distinct s from Song s join fetch s.songReports sr where s.status = 1")
+    List<Song> findSongBeenReport();
+
 }

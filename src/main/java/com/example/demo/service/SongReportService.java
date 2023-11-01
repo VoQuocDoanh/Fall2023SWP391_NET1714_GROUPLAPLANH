@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.ReportDTO;
 import com.example.demo.dto.ReportResponseDTO;
+import com.example.demo.dto.SongReportResponseDTO;
 import com.example.demo.entity.Song;
 import com.example.demo.entity.SongReport;
 import com.example.demo.entity.User;
@@ -29,6 +30,7 @@ public class SongReportService {
     @Autowired
     private UserRepository userRepository;
 
+    // report a song
     public ResponseEntity<String> report (ReportDTO reportDTO){
         Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(reportDTO.getUserId(), 1);
         if(foundUser.isPresent()){
@@ -48,6 +50,7 @@ public class SongReportService {
         return new ResponseEntity<>("User not found!", HttpStatus.NOT_FOUND);
     }
 
+    // view report of a song
     public List<ReportResponseDTO> viewReport (Long id){
         Optional<Song> foundSong = this.songRepository.findSongByIdAndStatus(id, 1);
         if(foundSong.isPresent()){
@@ -58,7 +61,7 @@ public class SongReportService {
                 for (SongReport value: foundReports) {
                     ReportResponseDTO dto = new ReportResponseDTO(value.getId(),
                             value.getReportByUsers().getId(),
-                            value.getSongOfReport().getId(),
+                            value.getReportByUsers().getUsername(),
                             value.getContent(),
                             value.getCreatedAt());
                     dtos.add(dto);
@@ -66,6 +69,25 @@ public class SongReportService {
                 return dtos;
             }
             return null;
+        }
+        return null;
+    }
+
+    // view song been reported
+    public List<SongReportResponseDTO> viewSongReported (){
+        List<Song> foundSongs = this.songRepository.findSongBeenReport();
+        if(!foundSongs.isEmpty()){
+            List<SongReportResponseDTO> dtos = new ArrayList<>();
+            for (Song value: foundSongs){
+                SongReportResponseDTO dto = new SongReportResponseDTO(value.getId(),
+                        value.getSongname(),
+                        value.getUserUploadSong().getId(),
+                        value.getUserUploadSong().getFullName(),
+                        value.getCreatedAt(),
+                        value.getSongReports().size());
+                dtos.add(dto);
+            }
+            return dtos;
         }
         return null;
     }

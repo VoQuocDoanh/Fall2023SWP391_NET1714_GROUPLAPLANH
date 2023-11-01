@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.PaginationResponseDTO;
+import com.example.demo.dto.SongReportResponseDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.User;
+import com.example.demo.service.SongReportService;
 import com.example.demo.service.UserService;
 import com.example.demo.validationgroups.UpdateValidation;
 import jakarta.validation.Valid;
@@ -24,6 +26,9 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private SongReportService songReportService;
 
     // Update Admin Info
     @PatchMapping
@@ -53,6 +58,11 @@ public class AdminController {
     @GetMapping("/username")
     public ResponseEntity<List<User>> searchByUserName(@RequestParam("username") String name) {
         return ResponseEntity.ok(this.userService.searchByUserName(name));
+    }
+
+    @GetMapping("/report")
+    public ResponseEntity<List<SongReportResponseDTO>> viewSongBeenReport(){
+        return ResponseEntity.ok(this.songReportService.viewSongReported());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

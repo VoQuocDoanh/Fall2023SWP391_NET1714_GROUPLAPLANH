@@ -238,7 +238,7 @@ public class SongService {
             SongResponseDTO dto = new SongResponseDTO();
             dto.setId(s.getId());
             dto.setSongName(s.getSongname());
-            dto.setAuthor(s.getSinger());
+            dto.setSinger(s.getSinger());
             dto.setTone(s.getTone());
             dto.setDescription(s.getDescription());
             dto.setVocalRange(s.getVocalRange());
@@ -375,6 +375,12 @@ public class SongService {
         }
         return null;
     }
+
+
+
+
+    // ban song
+
 
 }
 

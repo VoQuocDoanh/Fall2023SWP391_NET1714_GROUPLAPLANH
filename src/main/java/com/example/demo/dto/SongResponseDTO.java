@@ -14,7 +14,7 @@ import java.util.List;
 public class SongResponseDTO {
     private Long id;
     private String songName;
-    private String author;
+    private String singer;
     private Long userid;
     private String userfullname;
     private String description;
@@ -27,11 +27,12 @@ public class SongResponseDTO {
     private int totalLike;
     private int view;
     private double rating;
+    private int reports;
 
-    public SongResponseDTO(Long id, String songName, String author, LocalDateTime createAt, Long userid, int totalLike, int view, double rating) {
+    public SongResponseDTO(Long id, String songName, String singer, LocalDateTime createAt, Long userid, int totalLike, int view, double rating) {
         this.id = id;
         this.songName = songName;
-        this.author = author;
+        this.singer = singer;
         this.createAt = createAt;
         this.userid = userid;
         this.view = view;
@@ -39,10 +40,10 @@ public class SongResponseDTO {
         this.rating = rating;
     }
 
-    public SongResponseDTO(Long id, String songName, String author, LocalDateTime createAt, Long userid, String userfullname,int totalLike, int view, double rating) {
+    public SongResponseDTO(Long id, String songName, String singer, LocalDateTime createAt, Long userid, String userfullname, int totalLike, int view, double rating) {
         this.id = id;
         this.songName = songName;
-        this.author = author;
+        this.singer = singer;
         this.createAt = createAt;
         this.userid = userid;
         this.userfullname = userfullname;

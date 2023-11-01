@@ -13,7 +13,7 @@ public class ReportResponseDTO {
 
     private Long id;
     private Long userId;
-    private Long songId;
+    private String username;
     private String content;
     private LocalDateTime localDateTime;
 
