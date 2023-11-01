@@ -11,8 +11,8 @@ $gradient-direction: to right top;
   box-sizing: border-box;
 }
 :root {
-  --global-BG: #white
-    ; //Background của các trang
+  --global-BG: #f8f8f8;
+   //Background của các trang
   // background-image: linear-gradient($gradient-direction, $gradient-colors);
   --white: #fff;
   --black: #000;

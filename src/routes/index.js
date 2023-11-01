@@ -34,6 +34,7 @@ import ViewDetailUser2 from "../Pages/ViewDetailsUser";
 import ListOfSong from "../Pages/ListOfSong";
 import DetailUser from "../Pages/DetailUser";
 import FeedbackMusician from "../Pages/FeedbackMusician";
+import UpdateProfile from "../Pages/UpdateProfile";
 const publicRoutes = [
   {
     path: "/",
@@ -180,6 +181,10 @@ const publicRoutes = [
   {
     path: "/FeedbackMusician",
     component: FeedbackMusician,
+  },
+  {
+    path: "/UpdateProfile",
+    component: UpdateProfile,
   },
 ];
 

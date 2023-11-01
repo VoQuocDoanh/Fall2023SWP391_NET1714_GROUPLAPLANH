@@ -73,23 +73,25 @@
 
 .img-user-div2 {
     padding: 20px;
-    background-color: rgb(241, 241, 241);
+    background-color: rgb(255, 255, 255);
     margin-right: 60px;
     border-radius: 20px;
     width: 500px;
     padding: 30px;
     height: 400px;
+    filter: drop-shadow(0 0 0.5rem rgb(146, 143, 144));
 }
 
 //form info user
 .volt8A {
-    height: 1300px;
+    height: auto;
     width: 900px;
     padding-left: 20px;
-    background-color: rgb(245, 245, 245);
+    background-color: rgb(255, 255, 255);
     padding: 30px;
     flex-shrink: 0;
     border-radius: 20px;
+    filter: drop-shadow(0 0 0.5rem rgb(146, 143, 144));
 
 }
 
