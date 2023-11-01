@@ -248,7 +248,8 @@ public class UserService {
                     user.getMail(),
                     user.getStatus(),
                     user.getCreatedAt(),
-                    user.getPhoneNumber());
+                    user.getPhoneNumber(),
+                    user.getAvatar());
             if (user.getRole().equals("MS")) {
                 MusicianInformation information = user.getInformation();
                 dto.setProfessional(information.getProfessional());

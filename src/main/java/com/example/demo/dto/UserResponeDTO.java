@@ -20,6 +20,7 @@ public class UserResponeDTO {
     private String mail;
     private int status;
     private LocalDateTime createAt;
+    private String avatar;
 
     private String professional;
     private String prize;
@@ -52,6 +53,20 @@ public class UserResponeDTO {
         this.phone = phoneNumber;
         this.mail = mail;
     }
+
+    public UserResponeDTO(Long id, String username, String fullName, String gender, String role, String mail, int status, LocalDateTime createAt, String phoneNumber, String avatar) {
+        this.id = id;
+        this.username = username;
+        this.fullName = fullName;
+        this.gender = gender;
+        this.role = role;
+        this.createAt = createAt;
+        this.status = status;
+        this.phone = phoneNumber;
+        this.mail = mail;
+        this.avatar = avatar;
+    }
+
     public UserResponeDTO(Long id, String username, String fullName, String gender, LocalDateTime createAt, String phoneNumber, String mail) {
         this.id = id;
         this.username = username;
