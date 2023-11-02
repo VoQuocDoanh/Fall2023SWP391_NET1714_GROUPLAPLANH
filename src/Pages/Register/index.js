@@ -17,7 +17,7 @@ function Register() {
   const [checkPassword, setCheckPassword] = useState("");
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
-  const [role, setRole] = useState("Customer");
+  const [role, setRole] = useState("CUS");
   const [registrationMessage, setRegistrationMessage] = useState(null)
   const user = { userName, password, email, fullName, role }
   const navigate = useNavigate();
@@ -25,26 +25,24 @@ function Register() {
   const handleSubmit = async (e) => {
     setRegistrationMessage()
     console.log(userName, password, email, fullName, role);
-    if (!userName || !password || !email || !fullName|| !role) {
+    if (!userName || !password || !email || !fullName || !role) {
       alert("Please fill in all fields!");
       return;
     }
-    if (password != checkPassword) {
-      if (password != checkPassword) {
-        alert("Confirm Password not match Password")
-        return;
-      }
-      e.preventDefault()
-
-      await axios.post("http://localhost:8080/api/auth/register", user)
-        .then((res) => {
-          setRegistrationMessage("Register Successfully! \n Go to mail to active your account")
-        })
-        .catch((error) => {
-          setRegistrationMessage("Username has been used!")
-        })
-
+    if (password !== checkPassword) {
+      alert("Confirm Password not match Password")
+      return;
     }
+    e.preventDefault()
+    await axios.post("http://localhost:8080/api/auth/register", user)
+      .then((res) => {
+        console.log(userName, password, email, fullName, role);
+        setRegistrationMessage("Register Successfully! \n Go to mail to active your account")
+      })
+      .catch((error) => {
+        setRegistrationMessage("Username has been used!")
+      })
+
   }
   return (
     <div className={cx("login-wrapper")}>
