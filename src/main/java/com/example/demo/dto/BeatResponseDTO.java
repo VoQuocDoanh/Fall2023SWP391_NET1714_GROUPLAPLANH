@@ -36,6 +36,9 @@ public class BeatResponseDTO {
     private int year;
     private String professional;
 
+    private OrderResponseDTO orderInformation;
+
+
     public BeatResponseDTO(Long id, String beatName, String beatSound, UserResponeDTO user, Double price, LocalDateTime creatAt, List<GenreResponseDTO> genres, int view, int totalLike, String vocalRange,int totalRating, Double rating, int status) {
         this.id = id;
         this.beatName = beatName;

@@ -344,6 +344,7 @@ public class BeatService {
             responseDTO.setBeatSound(i.getBeatSoundDemo());
             responseDTO.setPrice(i.getPrice());
             responseDTO.setCreatAt(i.getCreatedAt());
+            responseDTO.setOrderInformation(orderService.getInfor(i.getOrderBeat()));
             beatResponseDTOS.add(responseDTO);
         }
         int max = 0;

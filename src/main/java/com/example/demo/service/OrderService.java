@@ -82,6 +82,17 @@ public class OrderService {
                 beat.getPrice());
     }
 
+    public OrderResponseDTO getInfor(Order order){
+        Optional<Order> foundOrder = orderRepository.findById(order.getOrderId());
+        if (foundOrder.isPresent()){
+            OrderResponseDTO dto = new OrderResponseDTO(
+                    getUser(order.getUserOrder()),
+                    order.getCreatedAt());
+            return dto;
+        }
+        else return null;
+    }
+
 
     public List<OrderResponseDTO> getAllOrder(Long id) {
         Optional<User> foundUser = userRepository.findById(id);
