@@ -98,6 +98,11 @@ public class BeatController {
         return this.beatService.deleteBeat(id);
     }
 
+    @PutMapping({"/{id}"})
+    public ResponseEntity<String> sellBeat(@PathVariable Long id) {
+        return this.beatService.sellBeat(id);
+    }
+
     //list beat that user bought
     @GetMapping ("user/{id}/{page}")
     public ResponseEntity<PaginationResponseDTO> beatPurchased (@PathVariable Long id,@PathVariable int page){

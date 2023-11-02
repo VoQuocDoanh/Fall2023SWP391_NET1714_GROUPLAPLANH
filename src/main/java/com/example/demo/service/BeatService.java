@@ -278,6 +278,17 @@ public class BeatService {
         return new ResponseEntity<>("Delete Failed", HttpStatus.NOT_IMPLEMENTED);
     }
 
+    public ResponseEntity<String> sellBeat(Long id) {
+        Optional<Beat> foundBeat = this.beatRepository.findById(id);
+        if (foundBeat.isPresent()) {
+            Beat beat = foundBeat.get();
+            beat.setStatus(1);
+            this.beatRepository.save(beat);
+            return new ResponseEntity<>("Sell beat Successfully", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Sell Failed", HttpStatus.NOT_IMPLEMENTED);
+    }
+
     public BeatResponseDTO getDetail(Long id) {
         Optional<Beat> foundBeat = this.beatRepository.findById(id);
         if (foundBeat.isPresent()) {
