@@ -59,7 +59,7 @@ function ViewDetailBeat() {
 
     useEffect(() => {
         loadSoundDemo()
-    }, [])
+    }, [beatId])
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);

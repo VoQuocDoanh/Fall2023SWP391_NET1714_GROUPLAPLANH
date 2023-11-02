@@ -25,7 +25,7 @@ function ListBeatPurchased() {
     const navigate = useNavigate()
     const { setListBeatContext, setDefaultCart, setViewBeatFirstTime, viewBeatFirstTime, checkOut } = useContext(ShopContext)
     const [search, setSearch] = useState("");
-    const [list, setList] = useState(null);
+    const [list, setList] = useState([]);
     const [listGenres, setListGenres] = useState(null);
     const [listMusicianName, setListMusicianName] = useState(null);
     // const [play, setPlay] = useState(false);
@@ -180,7 +180,7 @@ function ListBeatPurchased() {
                     return <ListBeatBox key={index} name={item.name} type={item.type} price={item.price} member={item.member} play={play} setPlay={setPlay} />
                 })}
             </div> */}
-                {list ?
+                {list.length !== 0  ?
                     <div>
                         <div className={cx("listbeat")}>
                             {list.map((item) => {
