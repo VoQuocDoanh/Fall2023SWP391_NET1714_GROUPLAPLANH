@@ -348,18 +348,17 @@ video {
     }
 
     .trending-subcribe {
-        padding-left: 35px;
+        display: flex;
+        justify-content: center;
         background-color: #06c;
+        font-weight: bold;
         width: 142px;
         height: 36px;
         border-radius: 30px;
         padding-top: 5px;
         color: white;
         cursor: pointer;
-
-
-
-
+        text-wrap: nowrap;
     }
 
     .icon-trending {
@@ -376,10 +375,7 @@ video {
 .icon-trending-4 {
     text-align: center;
     justify-content: space-between;
-
-    .icon-trending2 {}
 }
-
 .icon-views-trending {
     display: flex;
     justify-content: space-around;
