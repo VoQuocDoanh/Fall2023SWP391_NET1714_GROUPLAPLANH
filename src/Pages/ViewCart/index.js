@@ -221,7 +221,7 @@ function ViewCart() {
             beatInvoice.push(item);
             return item;
         });
-        localStorage.setItem("totalAmount", JSON.stringify(totalAmount))
+    localStorage.setItem("totalAmount", JSON.stringify(totalAmount))
     localStorage.setItem("beatCheckout", JSON.stringify(beatCheckout))
     localStorage.setItem("beatInvoice", JSON.stringify(beatInvoice))
     console.log(JSON.parse(localStorage.getItem("beatInvoice")))
@@ -314,9 +314,9 @@ function ViewCart() {
                         {listBeatContext.map((item, index) => {
                             if (cartItems) {
                                 if (cartItems[item.id] !== 0) {
-                                    {console.log(123)}
+                                    { console.log(123) }
                                     return (
-                                        
+
                                         <CardItem
                                             id={item.id}
                                             name={item.beatName}

@@ -43,9 +43,10 @@ function UploadBeat() {
 
 const handleUpload = async () => {
   const values = inputGenres.split(',');
-  console.log(values[0])
+  console.log(values)
   for (let i = 0; i < values.length; i++) {
     genres.push(values[i])
+  }
     if (!token) {
       navigate("/login")
     }
@@ -81,7 +82,6 @@ const handleUpload = async () => {
         setUploadMessage("Username does not exist")
       })
   }
-}
   const loadGenres = async () => {
     await axiosInstance.get("http://localhost:8080/api/v1/genre")
       .then((res) => {
@@ -304,7 +304,7 @@ const handleUpload = async () => {
             />
           </div>
 
-          <Button variant="contained" className={cx("input", "submit")} onClick={handleUpload} >
+          <Button variant="contained" className={cx("input", "submit")} onClick={() => handleUpload()} >
             <input
               type="submit"
               value="Upload"

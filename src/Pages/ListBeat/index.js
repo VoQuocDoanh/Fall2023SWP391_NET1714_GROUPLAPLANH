@@ -23,7 +23,7 @@ function ListBeat() {
     const navigate = useNavigate()
     const { setListBeatContext, setDefaultCart, setViewBeatFirstTime, viewBeatFirstTime, checkOut } = useContext(ShopContext)
     const [search, setSearch] = useState("");
-    const [list, setList] = useState(null);
+    const [list, setList] = useState([]);
     const [listGenres, setListGenres] = useState(null);
     const [listMusicianName, setListMusicianName] = useState(null);
     // const [play, setPlay] = useState(false);
@@ -220,7 +220,7 @@ function ListBeat() {
                     </div>
 
                 </div>
-                {list ?
+                {list.length !== 0 ?
                     <div>
                         <div className={cx("listbeat")}>
                             {list.map((item) => {
