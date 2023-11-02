@@ -2,14 +2,11 @@ package com.example.demo.service;
 
 import com.example.demo.dto.*;
 import com.example.demo.entity.Beat;
-import com.example.demo.entity.Song;
 import com.example.demo.entity.User;
 import com.example.demo.repository.BeatRepository;
 import com.example.demo.repository.FeedbackRepository;
-import com.example.demo.repository.SongRepository;
 import com.example.demo.repository.UserRepository;
 import jakarta.annotation.Nullable;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -108,18 +105,22 @@ public class FeedbackService {
         return new ResponseEntity<>("No update",HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public FeedbackResponseDTO viewownFeedback(Long id,Long id2) {
+    public FeedbackResponseDTO viewOwnFeedback(Long id, Long id2) {
         Optional<User> foundUser = userRepository.findById(id);
         Optional<Beat> foundBeat = beatRepository.findById(id2);
        // Page<Feedback> feedbacks = feedbackRepository.findByUserFeedback(foundUser.get(),,pageable);
         Feedback f = feedbackRepository.findByUserFeedbackAndAndBeatFeedback(foundUser.get(),foundBeat.get());
-        FeedbackResponseDTO feedbackResponseDTO = new FeedbackResponseDTO(
-                f.getContent(),
-                getUser(f.getUserFeedback()),
-                f.getCreatedAt(),
-                getBeat(f.getBeatFeedback())
-        );
-        return feedbackResponseDTO;
+        if (f != null){
+            FeedbackResponseDTO feedbackResponseDTO = new FeedbackResponseDTO(
+                    f.getContent(),
+                    getUser(f.getUserFeedback()),
+                    f.getCreatedAt(),
+                    getBeat(f.getBeatFeedback())
+            );
+            return feedbackResponseDTO;
+        }
+        else return null;
+
     }
 
 
