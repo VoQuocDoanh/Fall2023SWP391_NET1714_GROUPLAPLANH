@@ -10,21 +10,21 @@ import { useEffect } from "react";
 
 const cx = classNames.bind(styles);
 function Home() {
-    const navigate = useNavigate() 
-    useEffect(() =>{
-      if(!token){
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (!token) {
 
-      }else if(jwtDecode(token).role === "MS"){
-        navigate("/viewBeat")
-      }else if(jwtDecode(token).role === "AD"){
-        navigate("/listUser")
-      }else{
+    } else if (jwtDecode(token).role === "MS") {
+      navigate("/viewBeat")
+    } else if (jwtDecode(token).role === "AD") {
+      navigate("/listUser")
+    } else {
 
-      }
-    },[])
-    const token = useToken()
+    }
+  }, [])
+  const token = useToken()
 
-    
+
   return (
     <div className={cx("home-wrapper")}>
       {/* Intro */}
@@ -45,7 +45,7 @@ function Home() {
             <Link to="/listbeat">
               <Button variant="contained" className={cx("start")}>
                 <div className={cx("title")}>
-                  Start Listening
+                  Start Praticing
                 </div>
               </Button>
             </Link>
@@ -73,8 +73,8 @@ function Home() {
                   <div>
                     <img className={cx("trending-details-img")} src={require("../../assets/images/Trending/Rectangle 33.png")}>
                     </img>
-                    <div className={cx("trending-subcribe")}>
-                      Subcribe
+                    <div style={{ textwrapper: "nowrap"}} className={cx("trending-subcribe")}>
+                      View Detail
                     </div>
                   </div>
                   <div className={cx("image-trending-ellipse")}>
@@ -83,10 +83,10 @@ function Home() {
                         <path d="M10 0C8.68678 0 7.38642 0.296172 6.17317 0.871607C4.95991 1.44704 3.85752 2.29047 2.92893 3.35373C1.05357 5.50109 0 8.41353 0 11.4504C0 14.4872 1.05357 17.3996 2.92893 19.547C3.85752 20.6103 4.95991 21.4537 6.17317 22.0291C7.38642 22.6045 8.68678 22.9007 10 22.9007C12.6522 22.9007 15.1957 21.6943 17.0711 19.547C18.9464 17.3996 20 14.4872 20 11.4504C20 9.94668 19.7413 8.45772 19.2388 7.0685C18.7362 5.67927 17.9997 4.417 17.0711 3.35373C16.1425 2.29047 15.0401 1.44704 13.8268 0.871607C12.6136 0.296172 11.3132 0 10 0ZM14.2 16.2595L9 12.5954V5.72518H10.5V11.6794L15 14.771L14.2 16.2595Z" fill="#4ECB71" />
                       </svg>
                       <div className={cx("text-header-trending")}>
-                        50 minutes
+                        Ballad
                       </div>
                       <div className={cx("text-header-trending")}>
-                        Episode
+                        Vocal Range
                       </div>
                     </div>
                     <div className={cx("chord-img-trending")}>
@@ -100,7 +100,7 @@ function Home() {
                           </img>
                           <div className={cx("text-role")}>
                             <div className={cx("text-ellipse1")}>
-                              ABC
+                              Dont coi
                             </div>
                             <div className={cx("text-ellipse2")}>
                               Musician
@@ -113,27 +113,6 @@ function Home() {
 
                   </div>
                 </div>
-
-                <div className={cx("trending-top-right")}>
-
-                        <div className={cx("icon-trending")}>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 30 30" fill="none">
-                            <g clipPath="url(#clip0_655_36)">
-                              <path d="M15 0C6.71572 0 0 6.71572 0 15C0 23.2843 6.71572 30 15 30C23.2843 30 30 23.2843 30 15C30 6.71572 23.2843 0 15 0ZM18.3197 8.58757C20.1021 8.55972 21.714 9.52872 22.4781 11.1807C23.185 13.3646 22.5935 15.5863 21.3469 17.2607C20.5241 18.3961 19.5407 19.3752 18.5353 20.2308C17.6104 21.0918 15.5401 22.7956 14.9915 22.8429C14.5065 22.7502 13.9621 22.201 13.5771 21.9187C11.4138 20.2742 9.08545 18.2752 7.90465 16.0885C6.91463 13.9893 6.91283 11.3919 8.45365 9.7825C10.4516 7.9813 13.4634 8.33385 14.9915 10.2156C15.4018 9.68325 15.9066 9.26398 16.5055 8.95895C17.1125 8.7167 17.7256 8.59688 18.3197 8.58757Z" fill="black" />
-                            </g>
-                            <defs>
-                              <clipPath id="clip0_655_36">
-                                <rect width="30" height="30" fill="white" />
-                              </clipPath>
-                            </defs>
-                          </svg>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
-                            <path d="M21.25 23.875L24.375 25.75L23.5 22.25L26.25 19.875L22.625 19.625L21.25 16.25L19.875 19.5L16.25 19.875L19 22.25L18.125 25.75L21.25 23.875ZM3.75 17.5H13.75V20H3.75V17.5ZM3.75 7.5H18.75V10H3.75V7.5ZM3.75 12.5H18.75V15H3.75V12.5Z" fill="black" />
-                          </svg>
-                        </div>
-                      </div>
-
-
               </div>
 
               <div className={cx("trending-footer")}>
@@ -170,7 +149,7 @@ function Home() {
                     <img className={cx("trending-details-img")} src={require("../../assets/images/Trending/hinh-guitar-am-cung.jpg")}>
                     </img>
                     <div className={cx("trending-subcribe")}>
-                      Subcribe
+                      View Detail
                     </div>
                   </div>
                   <div className={cx("image-trending-ellipse")}>
@@ -179,10 +158,10 @@ function Home() {
                         <path d="M10 0C8.68678 0 7.38642 0.296172 6.17317 0.871607C4.95991 1.44704 3.85752 2.29047 2.92893 3.35373C1.05357 5.50109 0 8.41353 0 11.4504C0 14.4872 1.05357 17.3996 2.92893 19.547C3.85752 20.6103 4.95991 21.4537 6.17317 22.0291C7.38642 22.6045 8.68678 22.9007 10 22.9007C12.6522 22.9007 15.1957 21.6943 17.0711 19.547C18.9464 17.3996 20 14.4872 20 11.4504C20 9.94668 19.7413 8.45772 19.2388 7.0685C18.7362 5.67927 17.9997 4.417 17.0711 3.35373C16.1425 2.29047 15.0401 1.44704 13.8268 0.871607C12.6136 0.296172 11.3132 0 10 0ZM14.2 16.2595L9 12.5954V5.72518H10.5V11.6794L15 14.771L14.2 16.2595Z" fill="#4ECB71" />
                       </svg>
                       <div className={cx("text-header-trending")}>
-                        50 minutes
+                        Rock
                       </div>
                       <div className={cx("text-header-trending")}>
-                        Episode
+                        Vocal Range
                       </div>
                     </div>
                     <div className={cx("chord-img-trending")}>
@@ -196,7 +175,7 @@ function Home() {
                           </img>
                           <div className={cx("text-role")}>
                             <div className={cx("text-ellipse1")}>
-                              ABC
+                              Dont give up
                             </div>
                             <div className={cx("text-ellipse2")}>
                               Musician
@@ -207,25 +186,6 @@ function Home() {
 
                     </div>
 
-                  </div>
-                </div>
-
-                <div className={cx("trending-top-right")}>
-
-                  <div className={cx("icon-trending")}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 30 30" fill="none">
-                      <g clip-path="url(#clip0_655_36)">
-                        <path d="M15 0C6.71572 0 0 6.71572 0 15C0 23.2843 6.71572 30 15 30C23.2843 30 30 23.2843 30 15C30 6.71572 23.2843 0 15 0ZM18.3197 8.58757C20.1021 8.55972 21.714 9.52872 22.4781 11.1807C23.185 13.3646 22.5935 15.5863 21.3469 17.2607C20.5241 18.3961 19.5407 19.3752 18.5353 20.2308C17.6104 21.0918 15.5401 22.7956 14.9915 22.8429C14.5065 22.7502 13.9621 22.201 13.5771 21.9187C11.4138 20.2742 9.08545 18.2752 7.90465 16.0885C6.91463 13.9893 6.91283 11.3919 8.45365 9.7825C10.4516 7.9813 13.4634 8.33385 14.9915 10.2156C15.4018 9.68325 15.9066 9.26398 16.5055 8.95895C17.1125 8.7167 17.7256 8.59688 18.3197 8.58757Z" fill="black" />
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_655_36">
-                          <rect width="30" height="30" fill="white" />
-                        </clipPath>
-                      </defs>
-                    </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
-                      <path d="M21.25 23.875L24.375 25.75L23.5 22.25L26.25 19.875L22.625 19.625L21.25 16.25L19.875 19.5L16.25 19.875L19 22.25L18.125 25.75L21.25 23.875ZM3.75 17.5H13.75V20H3.75V17.5ZM3.75 7.5H18.75V10H3.75V7.5ZM3.75 12.5H18.75V15H3.75V12.5Z" fill="black" />
-                    </svg>
                   </div>
                 </div>
 

@@ -304,7 +304,7 @@ function UploadBeat() {
           <input
             type="submit"
             value="Upload"
-            className={cx("input-text", "input-submit")}
+            className={cx("input-text-upload", "input-submit")}
           />
         </Button>
       </div>
