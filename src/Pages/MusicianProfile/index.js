@@ -10,6 +10,7 @@ import jwtDecode from "jwt-decode";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.scss';
 import 'react-tabs/style/react-tabs.css';
+import Pagination from "../../components/Pagination";
 const cx = classNames.bind(styles);
 const DATA = [
     {
@@ -41,6 +42,10 @@ function MyProfile() {
     const [year, setYear] = useState("")
     const [checkEdit, setCheckEdit] = useState("")
     const [username, setUserName] = useState("")
+    const [page, setPage] = useState(1)
+    const [pages, setPages] = useState(1)
+    const [feedBacks, setFeedBacks] = useState([]);
+
     let id = ""
     const token = useToken()
     if (token) {
@@ -50,7 +55,11 @@ function MyProfile() {
 
     useEffect(() => {
         loadDetailUser()
-    }, [])
+    }, [checkEdit])
+
+    useEffect(() => {
+        loadFeedBack()
+    }, [page])
 
     const loadDetailUser = async () => {
         await axiosInstance.get(`http://localhost:8080/api/v1/user/${id}`)
@@ -61,10 +70,10 @@ function MyProfile() {
                 if (res.data.username !== null) {
                     setUserName(res.data.username)
                 }
-                // if(res.data.address !== null){
-                //     console.log(123)
-                //     setFullname()
-                // }
+                if(res.data.address !== null){
+                    console.log(123)
+                    setAddress(res.data.address)
+                }
                 if (res.data.mail !== null) {
                     setMail(res.data.mail)
                 }
@@ -116,6 +125,17 @@ function MyProfile() {
             })
             .catch((error) => {
                 setCheckEdit("Edit Failed!")
+                console.log(error)
+            })
+    }
+
+    const loadFeedBack = async () => {
+        await axiosInstance.get(`http://localhost:8080/api/v1/beat/feedback/${id}/${page}`)
+            .then((res) => {
+                setFeedBacks(res.data.dtoList)
+                setPages(res.data.max)
+            })
+            .catch((error) => {
                 console.log(error)
             })
     }
@@ -269,26 +289,35 @@ function MyProfile() {
                     </TabPanel>
                     {/* Feedback */}
                     <TabPanel>
-                        <div className={cx("volt8A")}>
+                    <div className={cx("volt8A")}>
                             <div style={{ color: '#06c', fontWeight: 'bold' }} className={cx("title-feedback")}> Beat Review</div>
-                            <div style={{ fontSize: 18, fontWeight: 500, marginLeft: 70, marginTop: 20 }} className={cx("title-feedback")}> Beat Review</div>
-                            <form style={{ marginTop: 20 }}>
-                                <table className={classNames("profile-2")}>
-                                    <div className={cx("part0")}>
-                                        <td>
-                                            <div className={cx("text-username0")}>
+                            {console.log(feedBacks)}
+                            {feedBacks.length !== 0 ?
+
+                                <form style={{ marginTop: 20 }}>
+                                    {feedBacks.map((feedback) => {
+                                        return(
+                                        <table className={classNames("profile-2")}>
+                                            <div className={cx("part0")}>
                                                 <td>
-                                                    <label style={{ fontFamily: 'sono', fontWeight: 400, marginLeft: -2 }} className={cx("login-text")}>Dont coi</label>
-                                                    <label style={{ marginLeft: 20, fontFamily: 'Sono', fontWeight: 400 }} className={cx("login-text")}>Vo Quoc Doanh</label>
+                                                    <div className={cx("text-username0")}>
+                                                        <td>
+                                                            <label style={{ fontFamily: 'sono', fontWeight: 400, marginLeft: -2 }} className={cx("login-text")}>{feedback.beat.beatName}</label>
+                                                            <label style={{ marginLeft: 20, fontFamily: 'Sono', fontWeight: 400 }} className={cx("login-text")}>{feedback.user.fullName}</label>
+                                                        </td>
+                                                        <div>
+                                                            <input className={cx("input-username0")} type="text" placeholder value={feedback.content} readOnly />
+                                                        </div>
+                                                    </div>
                                                 </td>
-                                                <div>
-                                                    <input className={cx("input-username0")} type="text" placeholder value="Beat hay qua" />
-                                                </div>
                                             </div>
-                                        </td>
+                                        </table>)
+                                    })}
+                                    <div className={cx("pagination")}>
+                                        <Pagination pages={pages} page={page} setPage={setPage} />
                                     </div>
-                                </table>
-                            </form>
+                                </form>
+                                : <div> There are no feedbacks </div>}
                         </div>
                     </TabPanel>
                 </Tabs>
@@ -297,7 +326,7 @@ function MyProfile() {
                     <div className={cx("img-user-div1")}>
                         <div className={cx("img-user-div2")}>
                             <div className={cx("img-user-div3")}>
-                                {avatar !== null ?
+                                {avatar !== "" ?
                                 <img className={cx("box-img")} alt="" src={avatar} />
                                 : <img className={cx("box-img")} alt="" src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVhcVcxgW8LzmIu36MCeJb81AHXlI8CwikrHNh5vzY8A&s"} />}
                             </div>

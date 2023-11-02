@@ -211,7 +211,7 @@ function ViewCart() {
         .filter(item => cartItems && cartItems[item.id] !== 0)
         .map(item => {
             // You can also add item to beatInvoice here
-            beatInvoice.push(item);
+            beatCheckout.push(item);
             return item.id;
         });
     beatInvoice = listBeatContext

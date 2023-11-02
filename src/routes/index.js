@@ -30,12 +30,14 @@ import PaymentCancel from "../Pages/PaymentCancel";
 import ViewDetailsUser from "../Pages/ViewDetailsUser";
 import ViewDetailsMusician from "../Pages/ViewDetailsMusician";
 import ViewDetailBeatMusician from "../Pages/ViewDetailBeatMusician";
-import ViewDetailUser2 from "../Pages/ViewDetailsUser";
+import ViewDetailUser2 from "../Pages/ViewDetailsUserByAdmin";
 import ListOfSong from "../Pages/ListOfSong";
 import DetailUser from "../Pages/DetailUser";
 import FeedbackMusician from "../Pages/FeedbackMusician";
 import UpdateProfile from "../Pages/UpdateProfile";
 import ReportUser from "../Pages/ReportUser";
+import ViewDetailsUserByAdmin from "../Pages/ViewDetailsUserByAdmin";
+import ListBeatSoldOut from "../Pages/ListBeatSoldOut";
 const publicRoutes = [
   {
     path: "/",
@@ -50,7 +52,7 @@ const publicRoutes = [
     component: Register,
   },
   {
-    path: "/updatebeat/:id",
+    path: "/updatebeat/:beatId",
     component: UpdateBeat,
   },
   {
@@ -148,6 +150,10 @@ const publicRoutes = [
     component: ListBeatPurchased,
   },
   {
+    path: "/listbeatsoldout",
+    component: ListBeatSoldOut,
+  },
+  {
     path: "/listuser2",
     component: ListUser2,
   },
@@ -164,12 +170,16 @@ const publicRoutes = [
     component: ListUser2,
   },
   {
-    path: "/ViewDetailsUser/:id",
-    component: ViewDetailsUser,
+    path: "/ViewDetailsUserByAdmin/:id",
+    component: ViewDetailsUserByAdmin,
   },
   {
-    path: "/ViewDetailsMusician",
+    path: "/ViewDetailsMusician/:id",
     component: ViewDetailsMusician,
+  },
+  {
+    path: "ViewDetailsUser/:id",
+    component: ViewDetailsUser,
   },
   {
     path: "/listofsong",

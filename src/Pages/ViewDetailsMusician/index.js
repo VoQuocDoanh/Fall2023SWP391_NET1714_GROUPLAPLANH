@@ -10,6 +10,7 @@ import jwtDecode from "jwt-decode";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.scss';
 import 'react-tabs/style/react-tabs.css';
+import Pagination from "../../components/Pagination";
 const cx = classNames.bind(styles);
 const DATA = [
     {
@@ -39,12 +40,18 @@ function MyProfile() {
     const [professional, setProfessional] = useState("")
     const [year, setYear] = useState("")
     const [username, setUserName] = useState("")
-    const {id} = useParams()
+    const [page, setPage] = useState(1)
+    const [pages, setPages] = useState(1)
+    const [feedBacks, setFeedBacks] = useState([]);
+    const { id } = useParams()
 
 
     useEffect(() => {
         loadDetailUser()
     }, [])
+    useEffect(() => {
+        loadFeedBack()
+    }, [page])
 
     const loadDetailUser = async () => {
         await axiosInstance.get(`http://localhost:8080/api/v1/user/${id}`)
@@ -55,10 +62,9 @@ function MyProfile() {
                 if (res.data.username !== null) {
                     setUserName(res.data.username)
                 }
-                // if(res.data.address !== null){
-                //     console.log(123)
-                //     setFullname()
-                // }
+                if(res.data.address !== null){
+                    setAddress(res.data.address)
+                }
                 if (res.data.mail !== null) {
                     setMail(res.data.mail)
                 }
@@ -80,6 +86,17 @@ function MyProfile() {
                 if (res.data.year !== null) {
                     setYear(res.data.year)
                 }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    const loadFeedBack = async () => {
+        await axiosInstance.get(`http://localhost:8080/api/v1/beat/feedback/${id}/${page}`)
+            .then((res) => {
+                setFeedBacks(res.data.dtoList)
+                setPages(res.data.max)
             })
             .catch((error) => {
                 console.log(error)
@@ -111,7 +128,7 @@ function MyProfile() {
                                                     <label className={cx("login-text")}>Full Name</label>
                                                 </td>
                                                 <div>
-                                                    <input className={cx("input-username0")} type="text" placeholder value={fullName} readOnly/>
+                                                    <input className={cx("input-username0")} type="text" placeholder value={fullName} readOnly />
                                                 </div>
                                             </div>
                                         </td>
@@ -160,7 +177,7 @@ function MyProfile() {
                                             Prize
                                         </td>
                                         <div className={cx("placeholder-ten")}>
-                                            <input className={cx("input-phonenumber")} type="text" placeholder value={prize} readOnly/>
+                                            <input className={cx("input-phonenumber")} type="text" placeholder value={prize} readOnly />
                                         </div>
                                     </div>
                                     <div className={cx("part3")}>
@@ -187,25 +204,35 @@ function MyProfile() {
                     <TabPanel>
                         <div className={cx("volt8A")}>
                             <div style={{ color: '#06c', fontWeight: 'bold' }} className={cx("title-feedback")}> Beat Review</div>
-                            <div style={{ fontSize: 18, fontWeight: 500, marginLeft: 70, marginTop: 20 }} className={cx("title-feedback")}> Beat Review</div>
-                            <form style={{ marginTop: 20 }}>
-                                <table className={classNames("profile-2")}>
-                                    <div className={cx("part0")}>
-                                        <td>
-                                            <div className={cx("text-username0")}>
+                            {console.log(feedBacks)}
+                            {feedBacks.length !== 0 ?
+
+                                <form style={{ marginTop: 20 }}>
+                                    {feedBacks.map((feedback) => {
+                                        return(
+                                        <table className={classNames("profile-2")}>
+                                            <div className={cx("part0")}>
                                                 <td>
-                                                    <label style={{ fontFamily: 'sono', fontWeight: 400, marginLeft: -2 }} className={cx("login-text")}>Dont coi</label>
-                                                    <label style={{ marginLeft: 20, fontFamily: 'Sono', fontWeight: 400 }} className={cx("login-text")}>Vo Quoc Doanh</label>
+                                                    <div className={cx("text-username0")}>
+                                                        <td>
+                                                            <label style={{ fontFamily: 'sono', fontWeight: 400, marginLeft: -2 }} className={cx("login-text")}>{feedback.beat.beatName}</label>
+                                                            <label style={{ marginLeft: 20, fontFamily: 'Sono', fontWeight: 400 }} className={cx("login-text")}>{feedback.user.fullName}</label>
+                                                        </td>
+                                                        <div>
+                                                            <input className={cx("input-username0")} type="text" placeholder value={feedback.content} readOnly />
+                                                        </div>
+                                                    </div>
                                                 </td>
-                                                <div>
-                                                    <input className={cx("input-username0")} type="text" placeholder value="Beat hay qua" />
-                                                </div>
                                             </div>
-                                        </td>
+                                        </table>)
+                                    })}
+                                    <div className={cx("pagination")}>
+                                        <Pagination pages={pages} page={page} setPage={setPage} />
                                     </div>
-                                </table>
-                            </form>
+                                </form>
+                                : <div> There are no feedbacks </div>}
                         </div>
+
                     </TabPanel>
                 </Tabs>
                 <div className={cx("line")} />

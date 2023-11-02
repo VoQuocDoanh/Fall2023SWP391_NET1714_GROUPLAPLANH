@@ -80,6 +80,7 @@ function ListBeatPurchased() {
     const handleSearch = async() => {
         if(!token){
             navigate("/login")
+            return
         }
         if(search !== ""){
         await axiosInstance.get(`http://localhost:8080/api/v1/beat/name/${search}`)

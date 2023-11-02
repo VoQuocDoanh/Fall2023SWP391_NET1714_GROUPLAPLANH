@@ -139,6 +139,7 @@ function ListBeat() {
     const handleLike = async (id) => {
         if (!token) {
             navigate("/login")
+            return
         } else {
             await axiosInstance.post(`http://localhost:8080/api/v1/beat/like/${jwtDecode(token).sub}/${id}`)
                 .then((res) => {

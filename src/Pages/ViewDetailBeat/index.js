@@ -244,7 +244,7 @@ function ViewDetailBeat() {
                                     <div className={cx('information')}>
                                         {console.log(beatDetail)}
                                         <h1><b>{beatDetail.beatName}</b></h1>
-                                        <h4> {beatDetail.user.fullName} &#x2022; 2023 </h4>
+                                        <Link to={`/viewdetailsmusician/${beatDetail.user.id}`}><h4> {beatDetail.user.fullName} &#x2022; 2023 </h4></Link>
 
                                     </div>
                                     {/* <div className={cx('button-submit')}>

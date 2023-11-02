@@ -90,7 +90,7 @@ function HeaderCustomer() {
         {/* Phan quyen header */}
         <div className={cx("username")}>
           <div className={cx("pop-up")}>
-            <Popup trigger={<button className={cx("button-popup")}>Hi, {name}</button>} position="bottom left  center" closeOnDocumentClick on={['hover', 'focus']}>
+            <Popup trigger={<button className={cx("button-popup")}>Hi, {name}</button>} position="bottom left center" closeOnDocumentClick on={['hover', 'focus']}>
               <div className={cx("text-all")}>
                 <Link to="/myprofile"><div className={cx("link-text")}>Account</div></Link>
                 <Link to="/listBeatPurchased"><div className={cx("link-text")}>Beat Purchased</div></Link>

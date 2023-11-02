@@ -47,7 +47,7 @@ function MyProfile() {
 
     useEffect(() =>{
         loadDetailUser()
-    },[])
+    },[checkEdit])
 
     const loadDetailUser = async () => {
         await axiosInstance.get(`http://localhost:8080/api/v1/user/${id}`)
@@ -58,10 +58,9 @@ function MyProfile() {
             if(res.data.username !== null){
                 setUserName(res.data.username)
             }
-            // if(res.data.address !== null){
-            //     console.log(123)
-            //     setFullname()
-            // }
+            if(res.data.address !== null){
+                setAddress(res.data.address)
+            }
             if(res.data.mail !== null){
                 setMail(res.data.mail)
             }
@@ -226,7 +225,10 @@ function MyProfile() {
                     <div className={cx("img-user-div1")}>
                         <div className={cx("img-user-div2")}>
                             <div className={cx("img-user-div3")}>
+                                {console.log(avatar)}
+                                {avatar !== "" ?
                                 <img className={cx("box-img")} alt="" src={avatar} />
+                                : <img className={cx("box-img")} alt="" src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVhcVcxgW8LzmIu36MCeJb81AHXlI8CwikrHNh5vzY8A&s"} />}
                             </div>
                             <div className={cx("info-user")}>
                                 <td>

@@ -48,7 +48,7 @@ function UploadBeat() {
     if(!token){
       navigate("/login")
   }
-    if (!beatName || !price || !username || !beatSoundDemo || !beatSoundFull || genres.length === 0 || !price || !vocalRange) {
+    if (!beatName || !price || !username || !beatSoundDemo || !beatSoundFull || genres.length === 0 || !price || !vocalRange || description) {
       alert("Please fill in all fields!")
       return;
     } else if (price < 0) {

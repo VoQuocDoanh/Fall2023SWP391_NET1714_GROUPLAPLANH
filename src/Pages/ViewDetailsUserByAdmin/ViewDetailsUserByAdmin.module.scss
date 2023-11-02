@@ -5,7 +5,6 @@
 @import url('https://fonts.cdnfonts.com/css/sono');
 @import url('https://fonts.cdnfonts.com/css/inter');
 
-
 .profile {
     display: flex;
     justify-content: center;
@@ -73,7 +72,7 @@
 
 .img-user-div2 {
     padding: 20px;
-    background-color: rgb(255, 255, 255);
+    background-color: white;
     margin-right: 60px;
     border-radius: 20px;
     width: 500px;
@@ -84,21 +83,15 @@
 
 //form info user
 .volt8A {
-    height: 1300px;
+    height: auto;
     width: 900px;
     padding-left: 20px;
-    background-color: rgb(255, 255, 255);
+    background-color: white;
     padding: 30px;
     flex-shrink: 0;
-    filter: drop-shadow(0 0 0.5rem rgb(146, 143, 144));
     border-radius: 20px;
+    filter: drop-shadow(0 0 0.5rem rgb(146, 143, 144));
 
-}
-
-.title-feedback{
-    font-size: 30px;
-    font-family: inter;
-    font-weight: 500;
 }
 
 .profile-2 {
@@ -120,6 +113,7 @@
     height: 1px;
     margin-top: 30px;
     margin-left: -50px;
+    user-select: none;
 }
 
 .input-phonenumber {
@@ -136,7 +130,7 @@
 }
 
 .input-username0 {
-    padding: 22px 20px;
+    padding: 22px 6px;
     margin: 8px 0;
     box-sizing: border-box;
     border: none;
@@ -144,6 +138,7 @@
     width: 700px;
     margin-top: 30px;
     height: 1px;
+    font-size: 1.6rem;
     flex-shrink: 0;
 }
 
@@ -235,7 +230,7 @@
     margin-top: 40px;
     display: flex;
     justify-content: center;
-    margin-left: -360px;
+    margin-left: -420px;
     margin-top: 100px;
     display: flex;
 }
@@ -245,7 +240,7 @@
 }
 
 .email-text {
-    margin-left: 95px;
+    margin-left: 105px;
     font-family: inter;
 
 }
@@ -379,6 +374,31 @@
 }
 
 //line
+.button-save-details {
+    background-position: center;
+    transition: background 0.8s;
+  }
+  .button-save-details:hover {
+    background: rgb(204, 0, 0) radial-gradient(circle, transparent 1%, #d9d9da 1%) center/15000%;
+  }
+  .button-save-details:active {
+    background-color: rgb(204, 0, 0);
+    background-size: 100%;
+    transition: background 0s;
+  }
+  //unban
+  .button-save-details2 {
+    background-position: center;
+    transition: background 0.8s;
+  }
+  .button-save-details2:hover {
+    background: rgb(39, 214, 39) radial-gradient(circle, transparent 1%, #d9d9da 1%) center/15000%;
+  }
+  .button-save-details2:active {
+    background-color: rgb(39, 214, 39);
+    background-size: 100%;
+    transition: background 0s;
+  }
 .part-5-content {
     margin: auto;
     width: 500px;

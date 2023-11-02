@@ -83,6 +83,7 @@ function ListBeatPurchased() {
     const loadBeats = async () => {
         if(!token){
             navigate("/login")
+            return
         }
         await axiosInstance.get(`http://localhost:8080/api/v1/beat/user/${jwtDecode(token).sub}/all/${page}`)
             .then(res => {
@@ -123,6 +124,7 @@ function ListBeatPurchased() {
     const handleLike = async (id) => {
         if (!token) {
             navigate("/login")
+            return
         } else {
             await axiosInstance.post(`http://localhost:8080/api/v1/beat/like/${jwtDecode(token).sub}/${id}`)
                 .then((res) => {

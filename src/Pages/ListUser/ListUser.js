@@ -121,7 +121,7 @@ function ListUser() {
                                             : <img className={cx("img-user")} src={user.avatar} />
                                         }
 
-                                        <a href="#" style={{ marginLeft: 10, fontSize: '1.5rem' }} class="user-link"> <Link to={`/viewdetailsuser/${user.id}`}>{user.fullName}</Link></a>
+                                        <a href="#" style={{ marginLeft: 10, fontSize: '1.5rem' }} class="user-link"> <Link to={`/viewdetailsuserbyadmin/${user.id}`}>{user.fullName}</Link></a>
                                         {/* <span class="user-subhead">Admin</span> */}
                                     </td>
                                     <td style={{ marginLeft: 200 }}>

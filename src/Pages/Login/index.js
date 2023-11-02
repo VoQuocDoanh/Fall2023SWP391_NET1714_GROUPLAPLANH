@@ -49,9 +49,17 @@ function Login() {
         }
       })
       .catch((error) =>{
-        console.log(error)
-      setError(err)
-      setLoginMessage("Wrong username or password!");
+        if (error.response && error.response.status === 403) {
+          // Handle 403 error here
+          console.error("Access Denied (403)");
+          setError(err);
+          setLoginMessage("Access Denied (403): You are banned by Admin");
+        } else {
+          // Handle other errors
+          console.error(error);
+          setError(err);
+          setLoginMessage("Wrong username or password!");
+        }
       })
   };
 

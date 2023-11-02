@@ -211,9 +211,10 @@ function ViewDetailBeatMusician() {
                                             </div>
                                         }
                                         <div style={{ textAlign: "center", marginTop: 20 }}>
-                                            <Button variant="contained" className={cx('button-1')} onClick={() => loadSoundFull()}>
+                                            <Link to={`/updatebeat/${beatId}`}><Button variant="contained" className={cx('button-1')}>
                                                 <div>Update</div>
                                             </Button>
+                                            </Link>
                                         </div>
                                         <div>
                                             {checkFeedBack}
