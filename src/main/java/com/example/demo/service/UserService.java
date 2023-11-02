@@ -11,6 +11,7 @@ import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserResponeDTO;
 import com.example.demo.entity.MusicianInformation;
 import com.example.demo.entity.User;
+import com.example.demo.entity.ActivationToken;
 import com.example.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -97,12 +98,12 @@ public class UserService {
                             registerDTO.getEmail(),
                             registerDTO.getRole(),
                             1, 0);
-                   /* ActivationToken activationToken = new ActivationToken(token, LocalDateTime.now().plusHours(12), user);
-                    user.setActivationToken(activationToken);*/
+                    ActivationToken activationToken = new ActivationToken(token, LocalDateTime.now().plusHours(12), user);
+                    user.setActivationToken(activationToken);
                     this.userRepository.save(user);
-                   /* this.emailService.sendEmail(userDTO.getMail(),
+                    this.emailService.sendEmail(registerDTO.getEmail(),
                             "Activate Your Account",
-                            "http://localhost:3000/registeractivation?activetoken=" + token);*/
+                            "http://localhost:3000/registeractivation?activetoken=" + token);
                     if (user.getRole().equals("MS")) {
                         MusicianInformation information = new MusicianInformation();
                         user.setInformation(information);

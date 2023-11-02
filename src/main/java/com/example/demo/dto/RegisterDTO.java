@@ -22,7 +22,7 @@ public class RegisterDTO {
     private String password;
 
     @NotBlank(message = "Email must not be blank")
-    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(gmail\\.com|gmail\\.com\\.vn)$", message = "Please provide a valid email")
+    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(gmail\\.com|gmail\\.com\\.vn|fpt\\.edu\\.vn)$", message = "Please provide a valid email")
     private String email;
 
     private String role;

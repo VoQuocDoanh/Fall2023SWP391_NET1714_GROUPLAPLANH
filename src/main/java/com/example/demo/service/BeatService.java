@@ -38,8 +38,8 @@ public class BeatService {
     private GoogleCloudService service;
 
     private String extractObjectNameFromUrl(String fullUrl) {
-        if (fullUrl.startsWith("https://storage.googleapis.com/")) {
-            int startIndex = "https://storage.googleapis.com/".length();
+        if (fullUrl.startsWith("https://storage.googleapis.com/mychordproject/")) {
+            int startIndex = "https://storage.googleapis.com/mychordproject/".length();
             return fullUrl.substring(startIndex);
         }
         return null;
@@ -225,10 +225,16 @@ public class BeatService {
                 Beat beat = foundBeat.get();
                 beat.setBeatName(newBeat.getBeatName());
                 if (sound != null) {
-                    service.uploadFile(sound, foundUser.get().getId(), "audio", "full", beat.getObjectName());
+                    String pathfull = service.uploadFile(sound, foundUser.get().getId(), "audio", "full", beat.getObjectName());
+                    String objectfull = extractObjectNameFromUrl(pathfull);
+                    beat.setBeatSoundFull(objectfull);
+                    beat.setObjectName(objectfull);
                 }
                 if (sound2 != null) {
-                    service.uploadFile(sound2, foundUser.get().getId(), "audio", "demo", beat.getObjectNameDemo());
+                    String pathdemo = service.uploadFile(sound2, foundUser.get().getId(), "audio", "demo", beat.getObjectNameDemo());
+                    String objectdemo = extractObjectNameFromUrl(pathdemo);
+                    beat.setBeatSoundDemo(pathdemo);
+                    beat.setObjectNameDemo(objectdemo);
                 }
                 beat.setPrice(newBeat.getPrice());
                 beat.setGenresofbeat(genreSet(newBeat));
