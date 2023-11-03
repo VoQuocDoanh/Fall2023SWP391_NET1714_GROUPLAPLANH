@@ -8,6 +8,7 @@ package com.example.demo.repository;
 import com.example.demo.dto.Feedback;
 import com.example.demo.entity.Beat;
 import com.example.demo.entity.Order;
+import com.example.demo.entity.Song;
 import com.example.demo.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,7 +38,8 @@ public interface BeatRepository extends JpaRepository<Beat, Long> {
 
     Page<Beat> findBeatByOrderBeat(Order id, Pageable pageable);
 
-
+    @Query("select b from Beat b join b.userSet u where b.status = 1 and u.Id = :iduser and b.Id = :idBeat")
+    Beat findBeatLikeByUser(Long iduser, long idBeat);
 
     List<Beat> findBeatByOrderBeat(Order id);
 

@@ -466,4 +466,13 @@ public class BeatService {
         return responseDTO;
     }
 
+    public ResponseEntity<Boolean> isLiked (Long userid, Long beatId){
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userid, 1);
+        if(foundUser.isPresent()){
+            Optional<Beat> foundBeat = Optional.ofNullable(this.beatRepository.findBeatLikeByUser(userid, beatId));
+            return foundBeat.isPresent()? new ResponseEntity<>(true, HttpStatus.OK) : new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+    }
+
 }

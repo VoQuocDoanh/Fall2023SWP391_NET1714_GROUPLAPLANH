@@ -91,6 +91,12 @@ public class BeatController {
         return beatService.likeBeat(id1, id2);
     }
 
+    // Check Liked
+    @GetMapping("/check/{userId}/{beatId}")
+    public ResponseEntity<Boolean> checkLiked(@PathVariable Long userId,@PathVariable Long beatId){
+        return this.beatService.isLiked(userId, beatId);
+    }
+
 
     //delete beat by update status in MS
     @DeleteMapping({"/{id}"})
