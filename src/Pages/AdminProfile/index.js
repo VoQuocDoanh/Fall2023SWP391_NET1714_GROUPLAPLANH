@@ -38,35 +38,35 @@ function MyProfile() {
     if (token) {
         id = jwtDecode(token).sub
     }
-   
 
-    useEffect(() =>{
+
+    useEffect(() => {
         loadDetailUser()
-    },[])
+    }, [])
 
     const loadDetailUser = async () => {
         await axiosInstance.get(`http://localhost:8080/api/v1/user/${id}`)
-        .then((res) =>{
-            if(res.data.fullName !== null){
-                setFullname(res.data.fullName)
-            }
-            if(res.data.username !== null){
-                setUserName(res.data.username)
-            }
-            // if(res.data.address !== null){
-            //     console.log(123)
-            //     setFullname()
-            // }
-            if(res.data.mail !== null){
-                setMail(res.data.mail)
-            }  
-            if(res.data.gender !== null){
-                setGender(res.data.gender)
-            }   
-        })
-        .catch((error) =>{
-            console.log(error)
-        })
+            .then((res) => {
+                if (res.data.fullName !== null) {
+                    setFullname(res.data.fullName)
+                }
+                if (res.data.username !== null) {
+                    setUserName(res.data.username)
+                }
+                // if(res.data.address !== null){
+                //     console.log(123)
+                //     setFullname()
+                // }
+                if (res.data.mail !== null) {
+                    setMail(res.data.mail)
+                }
+                if (res.data.gender !== null) {
+                    setGender(res.data.gender)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     const handleEdit = async () => {
@@ -79,7 +79,7 @@ function MyProfile() {
 
         await axiosInstance.patch("http://localhost:8080/api/v1/admin", userProfile)
             .then((res) => {
-                setCheckEdit("Edit Successfully")              
+                setCheckEdit("Edit Successfully")
             })
             .catch((error) => {
                 setCheckEdit("Edit Failed!")
@@ -88,7 +88,7 @@ function MyProfile() {
     }
 
     return (
-        <div style={{marginTop:50}}>
+        <div style={{ marginTop: 50 }}>
             <div>
                 <h2 className={cx("title-myprofile")}>
                     My Profile
@@ -105,24 +105,25 @@ function MyProfile() {
                                             <label className={cx("login-text")}>Full Name</label>
                                         </td>
                                         <div>
-                                            <input className={cx("input-username0")} type="text" placeholder value={fullName} onChange={(e) => setFullname(e.target.value)} />
+                                            <input className={cx("input-username0")} type="text" placeholder value={fullName} onChange={(e) => setFullname(e.target.value)} autoFocus />
                                         </div>
                                     </div>
                                 </td>
                             </div>
-                            
+
                             <div className={cx("part2")}>
                                 <td>
-                                    <div className={cx("email-text")}>
-                                        Email:
-                                    </div>
-                                    <div className={cx("email-change")}>
-                                        {mail}
+                                    <div className={cx('text-username0')}>
+                                        <td >
+                                            <label className={cx("login-text")}>Email</label>
+                                        </td>
+                                        <div>
+                                            <input className={cx("input-username0")} type="text" placeholder value={mail} onChange={(e) => setMail(e.target.value)} autoFocus />
+                                        </div>
                                     </div>
                                 </td>
-
                             </div>
-                            
+
                             <div className={cx("part4")} style={{ marginLeft: 65 }}>
                                 <td className={cx("sex")}>
                                     Sex
@@ -179,7 +180,7 @@ function MyProfile() {
                                     <button type="button" className={cx("button-save-details")} aria-disabled="false" onClick={() => handleEdit()}>Edit</button>
                                 </td>
                             </div>
-                            <div style={{color:"green"}}>{checkEdit}</div>
+                            <div style={{ color: "green" }}>{checkEdit}</div>
 
                         </table>
                     </form>
@@ -192,10 +193,10 @@ function MyProfile() {
                                 <img className={cx("box-img")} alt="" src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVhcVcxgW8LzmIu36MCeJb81AHXlI8CwikrHNh5vzY8A&s"} />
                             </div>
                             <div className={cx("info-user")}>
-                                <td>
+                                <td style={{ fontSize: 35 }}>
                                     {username}
                                 </td>
-                                <td style={{fontSize:20}}>
+                                <td style={{ fontSize: 25 }}>
                                     Admin
                                 </td>
                             </div>

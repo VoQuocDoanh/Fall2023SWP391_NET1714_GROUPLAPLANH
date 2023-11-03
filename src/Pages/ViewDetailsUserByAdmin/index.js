@@ -23,7 +23,7 @@ function ViewDetailsUserByAdmin() {
     const [user, setUser] = useState();
     const [contentBan, setContentBan] = useState("")
     const [checkBan, setCheckBan] = useState("")
-    const [listReport, setListReport] = useState([1,2])
+    const [listReport, setListReport] = useState([1, 2])
     const contentStyle = { background: 'white', width: 460, height: 370, borderRadius: 20 };
 
     useEffect(() => {
@@ -77,8 +77,8 @@ function ViewDetailsUserByAdmin() {
                 <div className={cx("profile")}>
                     <Tabs style={{ marginTop: -50 }}>
                         <TabList>
-                            <Tab >Profile</Tab>
-                            <Tab >Report</Tab>
+                            <Tab ><b>Profile</b></Tab>
+                            <Tab ><b>Report</b></Tab>
                         </TabList>
                         {/* Detail musician */}
                         <TabPanel>
@@ -98,12 +98,14 @@ function ViewDetailsUserByAdmin() {
                                             </td>
                                         </div>
                                         <div className={cx("part1")}>
-                                            <td className={cx("")}>
-                                                <td>
-                                                    <label style={{ fontWeight: 500 }} className={cx("text-name")}>Address</label>
-                                                </td>
-                                                <div className={cx("placeholder-ten")}>
-                                                    <input className={cx("input-username")} type="text" placeholder value={user.address} readOnly />
+                                            <td>
+                                                <div className={cx("text-username0")}>
+                                                    <td >
+                                                        <label style={{ fontWeight: 500 }} className={cx("login-text")}>Address</label>
+                                                    </td>
+                                                    <div>
+                                                        <input className={cx("input-username0")} type="text" value={user.adress} placeholder readOnly />
+                                                    </div>
                                                 </div>
                                             </td>
                                         </div>
@@ -119,12 +121,16 @@ function ViewDetailsUserByAdmin() {
 
                                         </div>
                                         <div className={cx("part3")}>
-                                            <td style={{ fontWeight: 500 }} className={cx("phone-number")}>
-                                                Phone number
+                                            <td>
+                                                <div className={cx("text-username0")}>
+                                                    <td >
+                                                        <label style={{ fontWeight: 500 }} className={cx("login-text")}>Phone Number</label>
+                                                    </td>
+                                                    <div>
+                                                        <input className={cx("input-username0")} type="text" value={user.phoneNumber} placeholder readOnly />
+                                                    </div>
+                                                </div>
                                             </td>
-                                            <div className={cx("placeholder-ten")}>
-                                                <input className={cx("input-phonenumber")} type="text" placeholder value={user.phoneNumber} onChange={handleSearch1} />
-                                            </div>
                                         </div>
                                         <div className={cx("part5")}>
                                             {user.status === 1 ?
@@ -175,15 +181,15 @@ function ViewDetailsUserByAdmin() {
                                                 <div className={cx("part0")}>
                                                     <td>
                                                         {listReport.map((item => {
-                                                            return(
-                                                            <div className={cx("text-username0")}>
-                                                                <td>
-                                                                    <label style={{ fontFamily: 'Sono', fontWeight: 500 }} className={cx("login-text")}>Vo Quoc Doanh</label>
-                                                                </td>
-                                                                <div>
-                                                                    <input className={cx("input-username0")} type="text" placeholder value="Beat hay qua" onChange={handleSearch} />
-                                                                </div>
-                                                            </div>)
+                                                            return (
+                                                                <div className={cx("text-username0")}>
+                                                                    <td>
+                                                                        <label style={{ fontFamily: 'Sono', fontWeight: 500 }} className={cx("login-text")}>Vo Quoc Doanh</label>
+                                                                    </td>
+                                                                    <div>
+                                                                        <input className={cx("input-username0")} type="text" placeholder value="Beat hay qua" onChange={handleSearch} />
+                                                                    </div>
+                                                                </div>)
                                                         }))}
 
                                                     </td>

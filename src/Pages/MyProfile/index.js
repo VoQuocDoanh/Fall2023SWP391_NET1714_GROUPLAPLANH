@@ -43,47 +43,47 @@ function MyProfile() {
     if (token) {
         id = jwtDecode(token).sub
     }
-   
 
-    useEffect(() =>{
+
+    useEffect(() => {
         loadDetailUser()
-    },[checkEdit])
+    }, [checkEdit])
 
     const loadDetailUser = async () => {
         await axiosInstance.get(`http://localhost:8080/api/v1/user/${id}`)
-        .then((res) =>{
-            if(res.data.fullName !== null){
-                setFullname(res.data.fullName)
-            }
-            if(res.data.username !== null){
-                setUserName(res.data.username)
-            }
-            if(res.data.address !== null){
-                setAddress(res.data.address)
-            }
-            if(res.data.mail !== null){
-                setMail(res.data.mail)
-            }
-            if(res.data.phone !== null){
-                setPhone(res.data.phone)
-            }
-            if(res.data.gender !== null){
-                setGender(res.data.gender)
-            } 
-            if(res.data.avatar !== null){
-                setAvatar(res.data.avatar)
-            }   
-        })
-        .catch((error) =>{
-            console.log(error)
-        })
+            .then((res) => {
+                if (res.data.fullName !== null) {
+                    setFullname(res.data.fullName)
+                }
+                if (res.data.username !== null) {
+                    setUserName(res.data.username)
+                }
+                if (res.data.address !== null) {
+                    setAddress(res.data.address)
+                }
+                if (res.data.mail !== null) {
+                    setMail(res.data.mail)
+                }
+                if (res.data.phone !== null) {
+                    setPhone(res.data.phone)
+                }
+                if (res.data.gender !== null) {
+                    setGender(res.data.gender)
+                }
+                if (res.data.avatar !== null) {
+                    setAvatar(res.data.avatar)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     const handleEdit = async () => {
         if (!fullName || !address || !phone || !gender || !id) {
             alert("Please fill in all fields!")
             return
-        }else if( phone.length < 10){
+        } else if (phone.length < 10) {
             alert("Phone must be equal or higher than 10 numbers!")
         }
         const userProfile = { fullName, address, phone, gender, id };
@@ -99,7 +99,7 @@ function MyProfile() {
             },
         })
             .then((res) => {
-                setCheckEdit("Edit Successfully")              
+                setCheckEdit("Edit Successfully")
             })
             .catch((error) => {
                 setCheckEdit("Edit Failed!")
@@ -108,7 +108,7 @@ function MyProfile() {
     }
 
     return (
-        <div style={{marginTop:50}}>
+        <div style={{ marginTop: 50 }}>
             <div>
                 <h2 className={cx("title-myprofile")}>
                     My Profile
@@ -131,12 +131,14 @@ function MyProfile() {
                                 </td>
                             </div>
                             <div className={cx("part1")}>
-                                <td className={cx("")}>
-                                    <td>
-                                        <label className={cx("text-name")}>Address</label>
-                                    </td>
-                                    <div className={cx("placeholder-ten")}>
-                                        <input className={cx("input-username")} type="text" placeholder value={address} onChange={(e) => setAddress(e.target.value)} />
+                                <td>
+                                    <div className={cx("text-username0")}>
+                                        <td>
+                                            <label className={cx("login-text")}>Address</label>
+                                        </td>
+                                        <div >
+                                            <input className={cx("input-username0")} type="text" placeholder value={address} onChange={(e) => setAddress(e.target.value)} />
+                                        </div>
                                     </div>
                                 </td>
                             </div>
@@ -149,15 +151,18 @@ function MyProfile() {
                                         {mail}
                                     </div>
                                 </td>
-
                             </div>
                             <div className={cx("part3")}>
-                                <td className={cx("phone-number")}>
-                                    Phone number
+                                <td>
+                                    <div className={cx("text-username0")}>
+                                        <td>
+                                            <label className={cx("login-text")}>Phone number</label>
+                                        </td>
+                                        <div >
+                                            <input className={cx("input-username0")} type="text" placeholder value={phone} onChange={(e) => setPhone(e.target.value)} />
+                                        </div>
+                                    </div>
                                 </td>
-                                <div className={cx("placeholder-ten")}>
-                                    <input className={cx("input-phonenumber")} type="text" placeholder value={phone} onChange={(e) => setPhone(e.target.value)} />
-                                </div>
                             </div>
                             <div className={cx("part4")} style={{ marginLeft: 65 }}>
                                 <td className={cx("sex")}>
@@ -215,7 +220,7 @@ function MyProfile() {
                                     <button type="button" className={cx("button-save-details")} aria-disabled="false" onClick={() => handleEdit()}>Edit</button>
                                 </td>
                             </div>
-                            <div style={{color:"green"}}>{checkEdit}</div>
+                            <div style={{ color: "green" }}>{checkEdit}</div>
 
                         </table>
                     </form>
@@ -227,14 +232,14 @@ function MyProfile() {
                             <div className={cx("img-user-div3")}>
                                 {console.log(avatar)}
                                 {avatar !== "" ?
-                                <img className={cx("box-img")} alt="" src={avatar} />
-                                : <img className={cx("box-img")} alt="" src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVhcVcxgW8LzmIu36MCeJb81AHXlI8CwikrHNh5vzY8A&s"} />}
+                                    <img className={cx("box-img")} alt="" src={avatar} />
+                                    : <img className={cx("box-img")} alt="" src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVhcVcxgW8LzmIu36MCeJb81AHXlI8CwikrHNh5vzY8A&s"} />}
                             </div>
                             <div className={cx("info-user")}>
-                                <td>
+                                <td style={{ fontSize: 35 }}>
                                     {username}
                                 </td>
-                                <td style={{fontSize:20, display: 'flex', justifyContent: 'center'}}>
+                                <td style={{ fontSize: 20, display: 'flex', justifyContent: 'center' }}>
                                     Customer
                                 </td>
                             </div>

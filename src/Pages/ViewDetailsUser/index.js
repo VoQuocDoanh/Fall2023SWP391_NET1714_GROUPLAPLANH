@@ -27,7 +27,7 @@ function ViewDetailsUser() {
     const navigate = useNavigate()
     const token = useToken()
     let userId = ""
-    if(token){
+    if (token) {
         userId = jwtDecode(token).sub
     }
     const contentStyle = { background: 'white', width: 460, height: 370, borderRadius: 20 };
@@ -41,15 +41,15 @@ function ViewDetailsUser() {
     const handleSearch1 = (e) => {
         setTen(e.target.value);
     }
-    const handleReport = async() => {
-        if(!token){
+    const handleReport = async () => {
+        if (!token) {
             navigate("/login")
             return
         }
-        await axiosInstance("http://localhost:8080/api/v1/report/user",{userId:userId, userReported: id, content: report})
-        .then((res) => {
-            setCheckReport("Report Successfully")
-        })
+        await axiosInstance("http://localhost:8080/api/v1/report/user", { userId: userId, userReported: id, content: report })
+            .then((res) => {
+                setCheckReport("Report Successfully")
+            })
     }
 
     const loadDetailsUser = async () => {
@@ -78,7 +78,7 @@ function ViewDetailsUser() {
                                     <td>
                                         <div className={cx("text-username0")}>
                                             <td >
-                                                <label className={cx("login-text")}>Full Name</label>
+                                                <label style={{ fontWeight: 500 }} className={cx("login-text")}>Full Name</label>
                                             </td>
                                             <div>
                                                 <input className={cx("input-username0")} type="text" value={user.fullName} placeholder readOnly />
@@ -87,12 +87,14 @@ function ViewDetailsUser() {
                                     </td>
                                 </div>
                                 <div className={cx("part1")}>
-                                    <td className={cx("")}>
-                                        <td>
-                                            <label className={cx("text-name")}>Address</label>
-                                        </td>
-                                        <div className={cx("placeholder-ten")}>
-                                            <input className={cx("input-username")} type="text" placeholder value={user.address} readOnly />
+                                    <td>
+                                        <div className={cx("text-username0")}>
+                                            <td >
+                                                <label style={{ fontWeight: 500 }} className={cx("login-text")}>Address</label>
+                                            </td>
+                                            <div>
+                                                <input className={cx("input-username0")} type="text" value={user.adress} placeholder readOnly />
+                                            </div>
                                         </div>
                                     </td>
                                 </div>
@@ -108,12 +110,16 @@ function ViewDetailsUser() {
 
                                 </div>
                                 <div className={cx("part3")}>
-                                    <td className={cx("phone-number")}>
-                                        Phone number
+                                    <td>
+                                        <div className={cx("text-username0")}>
+                                            <td >
+                                                <label style={{ fontWeight: 500 }} className={cx("login-text")}>Phone Number</label>
+                                            </td>
+                                            <div>
+                                                <input className={cx("input-username0")} type="text" value={user.phoneNumber} placeholder readOnly />
+                                            </div>
+                                        </div>
                                     </td>
-                                    <div className={cx("placeholder-ten")}>
-                                        <input className={cx("input-phonenumber")} type="text" placeholder value={user.phoneNumber} onChange={handleSearch1} />
-                                    </div>
                                 </div>
                                 <div className={cx("part5")}>
                                     <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<button type="button" className={cx("button-save-details")} aria-disabled="false" >Report</button>}  {...{ contentStyle }} position="top center">
@@ -131,11 +137,11 @@ function ViewDetailsUser() {
                                             <td className={cx("button-type")}>
                                                 <button type="button" className={cx("button-send")} aria-disabled="false" onClick={() => handleReport()}>Send</button>
                                             </td>
-                                            
+
                                         </div>
                                     </Popup>
                                 </div>
-                                <div style={{fontSize:15,color:"green", marginLeft:50, marginTop:20}}>{checkReport}</div>
+                                <div style={{ fontSize: 15, color: "green", marginLeft: 50, marginTop: 20 }}>{checkReport}</div>
 
                             </table>
                         </form>
