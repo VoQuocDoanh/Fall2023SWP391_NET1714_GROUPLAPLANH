@@ -300,11 +300,12 @@ public class UserService {
         List<UserResponeDTO> dtos =new ArrayList<>();
         for (User us : users){
             UserResponeDTO dto = new UserResponeDTO(
+                    us.getId(),
                     us.getUsername(),
                     us.getRole(),
                     us.getMail(),
-                    us.getStatus(),
                     us.getCreatedAt(),
+                    us.getStatus(),
                     us.getAvatar()
             );
             dtos.add(dto);

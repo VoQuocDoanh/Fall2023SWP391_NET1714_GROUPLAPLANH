@@ -77,6 +77,16 @@ public class UserResponeDTO {
         this.avatar = avatar;
     }
 
+    public UserResponeDTO(Long id, String username, String role, String mail, LocalDateTime createAt, int status, String avatar) {
+        this.id = id;
+        this.username = username;
+        this.role = role;
+        this.createAt = createAt;
+        this.status = status;
+        this.mail = mail;
+        this.avatar = avatar;
+    }
+
     public UserResponeDTO(Long id, String username, String fullName, String gender, LocalDateTime createAt, String phoneNumber, String mail) {
         this.id = id;
         this.username = username;
