@@ -1,3 +1,4 @@
+
 @import url('https://fonts.cdnfonts.com/css/newsreader-2');
 @import url('https://fonts.cdnfonts.com/css/inter');
 @import "@fontsource/newsreader"; // Defaults to weight 400
@@ -131,15 +132,13 @@
 }
 
 .input-username0 {
-    padding: 22px 6px;
+    padding: 22px 20px;
     margin: 8px 0;
     box-sizing: border-box;
-    border: none;
-    border-bottom: 1px solid rgb(65, 65, 65);
+    border: 1px solid rgb(65, 65, 65);
     width: 700px;
-
+    margin-top: 30px;
     height: 1px;
-    font-size: 1.6rem;
     flex-shrink: 0;
 }
 
@@ -162,6 +161,7 @@
 .login-text {
     font-family: inter;
     margin-left: 4px;
+    font-size: 23px;
 }
 
 .part4 {

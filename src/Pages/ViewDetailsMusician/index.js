@@ -132,8 +132,8 @@ function MyProfile() {
                 </div>
                 <Tabs style={{ marginTop: -50 }}>
                     <TabList>
-                        <Tab >Profile</Tab>
-                        <Tab >Feedback</Tab>
+                        <Tab ><b>Profile</b></Tab>
+                        <Tab ><b>Feedback</b></Tab>
                     </TabList>
                     {/* Detail musician */}
                     <TabPanel>
@@ -153,12 +153,14 @@ function MyProfile() {
                                         </td>
                                     </div>
                                     <div className={cx("part1")}>
-                                        <td className={cx("")}>
-                                            <td>
-                                                <label className={cx("text-name")}>Address</label>
-                                            </td>
-                                            <div className={cx("placeholder-ten")}>
-                                                <input className={cx("input-username")} type="text" placeholder value={address} readOnly />
+                                        <td>
+                                            <div className={cx("text-username0")}>
+                                                <td>
+                                                    <label className={cx("login-text")}>Address</label>
+                                                </td>
+                                                <div >
+                                                    <input className={cx("input-username0")} type="text" placeholder value={address} onChange={(e) => setAddress(e.target.value)} />
+                                                </div>
                                             </div>
                                         </td>
                                     </div>
@@ -174,46 +176,66 @@ function MyProfile() {
 
                                     </div>
                                     <div className={cx("part3")}>
-                                        <td className={cx("phone-number")}>
-                                            Phone number
+                                        <td>
+                                            <div className={cx("text-username0")}>
+                                                <td>
+                                                    <label className={cx("login-text")}>Phone number</label>
+                                                </td>
+                                                <div >
+                                                    <input className={cx("input-username0")} type="text" placeholder value={phone} onChange={(e) => setPhone(e.target.value)} />
+                                                </div>
+                                            </div>
                                         </td>
-                                        <div className={cx("placeholder-ten")}>
-                                            <input className={cx("input-phonenumber")} type="text" placeholder value={phone} readOnly />
-                                        </div>
                                     </div>
                                     <div className={cx("part3")}>
-                                        <td className={cx("phone-number")}>
-                                            Sex
+                                        <td>
+                                            <div className={cx("text-username0")}>
+                                                <td>
+                                                    <label className={cx("login-text")}>Sex</label>
+                                                </td>
+                                                <div >
+                                                    <input className={cx("input-username0")} type="text" placeholder value={phone} onChange={(e) => setPhone(e.target.value)} />
+                                                </div>
+                                            </div>
                                         </td>
-                                        <div className={cx("placeholder-ten")}>
-                                            <input className={cx("input-phonenumber")} type="text" placeholder value={phone} readOnly />
-                                        </div>
                                     </div>
 
                                     <div style={{ marginLeft: 70, marginTop: 50, fontSize: 18, fontWeight: "bolder" }}>*More Information</div>
                                     <div className={cx("part3")}>
-                                        <td className={cx("phone-number")}>
-                                            Prize
+                                        <td>
+                                            <div className={cx("text-username0")}>
+                                                <td>
+                                                    <label className={cx("login-text")}>Prize</label>
+                                                </td>
+                                                <div >
+                                                    <input className={cx("input-username0")} type="text" placeholder value={prize} onChange={(e) => setPhone(e.target.value)} />
+                                                </div>
+                                            </div>
                                         </td>
-                                        <div className={cx("placeholder-ten")}>
-                                            <input className={cx("input-phonenumber")} type="text" placeholder value={prize} readOnly />
-                                        </div>
                                     </div>
                                     <div className={cx("part3")}>
-                                        <td className={cx("phone-number")}>
-                                            Professional
+                                        <td>
+                                            <div className={cx("text-username0")}>
+                                                <td>
+                                                    <label className={cx("login-text")}>Professional</label>
+                                                </td>
+                                                <div >
+                                                    <input className={cx("input-username0")} type="text" placeholder value={professional} onChange={(e) => setPhone(e.target.value)} />
+                                                </div>
+                                            </div>
                                         </td>
-                                        <div className={cx("placeholder-ten")}>
-                                            <input className={cx("input-phonenumber")} type="text" placeholder value={professional} readOnly />
-                                        </div>
                                     </div>
                                     <div className={cx("part3")}>
-                                        <td className={cx("phone-number")}>
-                                            Year of Operation
+                                        <td>
+                                            <div className={cx("text-username0")}>
+                                                <td>
+                                                    <label className={cx("login-text")}>Year of Operation</label>
+                                                </td>
+                                                <div >
+                                                    <input className={cx("input-username0")} type="text" placeholder value={year} onChange={(e) => setPhone(e.target.value)} />
+                                                </div>
+                                            </div>
                                         </td>
-                                        <div className={cx("placeholder-ten")}>
-                                            <input className={cx("input-phonenumber")} type="text" placeholder value={year} readOnly />
-                                        </div>
                                     </div>
                                 </table>
                             </form>
