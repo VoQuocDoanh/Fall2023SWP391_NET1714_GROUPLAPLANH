@@ -83,6 +83,7 @@ public class FeedbackService {
         for (Feedback i : feedbacks){
             if (i.getContent()!=null){
                 FeedbackResponseDTO dto = new FeedbackResponseDTO(
+                        i.getId(),
                         i.getContent(),
                         getUser(i.getUserFeedback()),
                         i.getCreatedAt(),
@@ -112,6 +113,7 @@ public class FeedbackService {
         Feedback f = feedbackRepository.findByUserFeedbackAndAndBeatFeedback(foundUser.get(),foundBeat.get());
         if (f != null){
             FeedbackResponseDTO feedbackResponseDTO = new FeedbackResponseDTO(
+                    f.getId(),
                     f.getContent(),
                     getUser(f.getUserFeedback()),
                     f.getCreatedAt(),
