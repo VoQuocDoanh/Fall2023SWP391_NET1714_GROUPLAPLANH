@@ -229,6 +229,18 @@ public class SongService {
         }
     }
 
+    // view user song by genre name
+    public List<SongResponseDTO> findUserSongbyGenreName (String genreNames, Long id){
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(id, 1);
+        if (foundUser.isPresent()) {
+            User user = foundUser.get();
+            List<Song> songs = this.songRepository.findUserSongByGenreName(genreNames, foundUser.get().getId());
+            return getSongResponseDTOS(user, songs);
+        } else {
+            return null;
+        }
+    }
+
     // view detail song
     public SongResponseDTO getDetailSong(Long id) {
         Optional<Song> foundSong = this.songRepository.findSongByIdAndStatus(id, 1);
