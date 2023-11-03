@@ -233,23 +233,6 @@ function Register() {
       </div>
 
       {/* Footer */}
-      <div className={cx("footer")}>
-        <div className={cx("footer-left")}>
-          <input
-            type="checkbox"
-            id="remember"
-            name="rememeber"
-            value="check"
-            checked={isChecked}
-            onChange={() => setIsChecked(!isChecked)}
-            className={cx("input-check")}
-          />
-          <label htmlFor="remember" className={cx("text")}>
-            Remember me
-          </label>
-        </div>
-        <div className={cx("footer-right", "text")}>Forgot password ?</div>
-      </div>
     </div>
   );
 

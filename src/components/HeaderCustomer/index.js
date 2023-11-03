@@ -66,8 +66,8 @@ function HeaderCustomer() {
           </div>
           <div className={cx("nav-item")}>Contact</div>
           <div className={cx("nav-item")}>
-            <Button>
               {/* Phan quyen */}
+              <div style={{display:"flex", marginTop:30}}>
               {token ?
                 <Link className={cx("viewCart")} to="/viewcart">
                   <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none">
@@ -81,9 +81,7 @@ function HeaderCustomer() {
                   </svg>                </Link>
               }
               <div className={cx("cart-number")}>{countCart}</div>
-
-
-            </Button>
+              </div>
           </div>
         </div>
 
@@ -94,7 +92,7 @@ function HeaderCustomer() {
               <div className={cx("text-all")}>
                 <Link to="/myprofile"><div className={cx("link-text")}>Account</div></Link>
                 <Link to="/listBeatPurchased"><div className={cx("link-text")}>Beat Purchased</div></Link>
-                <Link to="/viewcart"><div className={cx("link-text")}>My Collection</div></Link>
+                <Link to="/MyCollection"><div className={cx("link-text")}>My Collection</div></Link>
                 <Link to="/uploadsong"><div className={cx("link-text")}> Add new Song</div></Link>
                 <Link to="/"><div className={cx("link-text")} onClick={handleLogout}> Log out</div></Link>
               </div>

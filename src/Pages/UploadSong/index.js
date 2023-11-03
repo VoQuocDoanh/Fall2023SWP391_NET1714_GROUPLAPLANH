@@ -4,7 +4,6 @@ import classNames from "classnames/bind";
 import { Link, useNavigate } from "react-router-dom";
 import { React, useState, useRef, useEffect } from "react";
 import MarkdownPreview from '../../MarkdownPreview';
-import TextArea from "antd/es/input/TextArea";
 import axiosInstance from "../../authorization/axiosInstance";
 import useToken from "../../authorization/useToken";
 import jwtDecode from "jwt-decode";
@@ -86,6 +85,7 @@ function UploadSong() {
         }
         await axiosInstance.post("http://localhost:8080/api/v1/song/user", songInput)
             .then((res) => {
+                alert("Upload Successfully")
                 navigate("/songs")
             })
             .catch((error) => {

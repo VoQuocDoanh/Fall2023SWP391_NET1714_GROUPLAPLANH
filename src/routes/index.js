@@ -10,17 +10,14 @@ import ViewBeat from "../Pages/ViewBeat";
 import ViewCart from "../Pages/ViewCart";
 import OwlCarousel from "../components/OwlCarousel";
 import ViewDetailBeat from "../Pages/ViewDetailBeat";
-import ListBeat2 from "../Pages/ListBeat2";
 import ChordsDetails from "../Pages/ChordsDetails";
 import Songs from "../Pages/Songs";
 import ViewBeatsAll from "../Pages/ViewBeatsAll";
-import CustomerBeats from "../Pages/CustomerBeats";
 import ListSong from "../Pages/ListSong";
 import Uploadsong from "../Pages/UploadSong";
 import MusicianProfile from "../Pages/MusicianProfile";
 import AdminProfile from "../Pages/AdminProfile";
 import ViewDetailSong from "../Pages/ViewDetailSong";
-import ListUser2 from "../Pages/ListUser2";
 import MyProfile from "../Pages/MyProfile";
 import RegisterActivation from "../Pages/RegisterActivation";
 import ListBeatPurchased from "../Pages/listBeatPurchased";
@@ -30,15 +27,18 @@ import PaymentCancel from "../Pages/PaymentCancel";
 import ViewDetailsUser from "../Pages/ViewDetailsUser";
 import ViewDetailsMusician from "../Pages/ViewDetailsMusician";
 import ViewDetailBeatMusician from "../Pages/ViewDetailBeatMusician";
-import ViewDetailUser2 from "../Pages/ViewDetailsUserByAdmin";
 import ListOfSong from "../Pages/ListOfSong";
-import DetailUser from "../Pages/DetailUser";
 import FeedbackMusician from "../Pages/FeedbackMusician";
 import UpdateProfile from "../Pages/UpdateProfile";
 import ReportUser from "../Pages/ReportUser";
 import ViewDetailsUserByAdmin from "../Pages/ViewDetailsUserByAdmin";
 import ListBeatSoldOut from "../Pages/ListBeatSoldOut";
 import Contact from "../Pages/Contact";
+import MyCollection from "../Pages/MyCollection";
+import MyPlayListChordDetail from "@/Pages/MyPlaylistChordetail";
+import MyPLayListDetail from "@/Pages/MyPlaylistSongDetail";
+import SongDetail from "@/Pages/SongDetails";
+import ListAllUserBan from "../Pages/listAllUserBan";
 const publicRoutes = [
   {
     path: "/",
@@ -67,6 +67,10 @@ const publicRoutes = [
   {
     path: "/listuser",
     component: ListUser,
+  },
+  {
+    path: "/listAllUserBan",
+    component: ListAllUserBan,
   },
   {
     path: "uploadfile",
@@ -98,24 +102,16 @@ const publicRoutes = [
     component: ViewDetailBeatMusician,
   },
   {
-    path: "/listbeat2",
-    component: ListBeat2,
-  }
-  , {
     path: "/chordsdetails",
     component: ChordsDetails,
-  }
-  , {
+  },
+  {
     path: "/songs",
     component: Songs,
   },
   {
     path: "/viewbeatsall",
     component: ViewBeatsAll,
-  },
-  {
-    path: "/customerbeats",
-    component: CustomerBeats,
   },
   {
     path: "/listsong",
@@ -141,11 +137,11 @@ const publicRoutes = [
     path: "/myprofile",
     component: MyProfile,
   },
-  
+
   {
     path: "/registeractivation",
     component: RegisterActivation,
-  },  
+  },
   {
     path: "/listbeatpurchased",
     component: ListBeatPurchased,
@@ -155,20 +151,12 @@ const publicRoutes = [
     component: ListBeatSoldOut,
   },
   {
-    path: "/listuser2",
-    component: ListUser2,
-  },
-  {
     path: "/payment/cancel",
     component: PaymentCancel,
   },
   {
     path: "/payment/success",
     component: PaymentSuccess,
-  },
-  {
-    path: "/listuser2",
-    component: ListUser2,
   },
   {
     path: "/ViewDetailsUserByAdmin/:id",
@@ -187,10 +175,6 @@ const publicRoutes = [
     component: ListOfSong,
   },
   {
-    path: "/DetailUser",
-    component: DetailUser,
-  },
-  {
     path: "/FeedbackMusician",
     component: FeedbackMusician,
   },
@@ -205,6 +189,27 @@ const publicRoutes = [
   {
     path: "/Contact",
     component: Contact,
+  },
+  //////////////////////
+  {
+    path: "/MyCollection",
+    component: MyCollection,
+    customLayout: true,
+  },
+  {
+    path: "/my-playlist-chord/:id",
+    component: MyPlayListChordDetail,
+    customLayout: true,
+  },
+  {
+    path: "/my-playlist-song/:playListName",
+    component: MyPLayListDetail,
+    customLayout: true,
+  },
+  {
+    path: "/song/:id",
+    component: SongDetail,
+    customLayout: true,
   },
 ];
 

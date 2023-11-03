@@ -42,7 +42,7 @@ function Home() {
         </div>
         <div className={cx("slide-show")}>
           <div className={cx("action")}>
-            <Link to="/listbeat">
+            <Link to="/chordsdetails">
               <Button variant="contained" className={cx("start")}>
                 <div className={cx("title")}>
                   Start Praticing

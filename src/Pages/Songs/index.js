@@ -89,8 +89,8 @@ function Songs() {
 
 
                                     return <a className={cx("rhythm-item")} data-rhythm="ballad" >
-                                        {item.name}
-                                    </a>
+                                        {item.name} 
+                                    </a> 
                                 })}
 
                             </div> : <div></div>}

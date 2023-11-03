@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { faChevronLeft, faChevronRight, faPause, faPlay, faPlayCircle, faRedo, faStepBackward, faStepForward } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "bootstrap";
-import ListBeat2 from "../ListBeat2";
 import SideBar from "../../components/SideBar";
 const cx = classNames.bind(styles);
 const DATA = [

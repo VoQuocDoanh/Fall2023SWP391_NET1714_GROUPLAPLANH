@@ -17,7 +17,7 @@ function DefaultLayout({ children }) {
       <header className="header">
         <Header />
       </header>
-      <div className="main">{children}</div>
+      <div className="main" style={{marginTop:200}}>{children}</div>
       <footer className="footer">
         <Footer />
       </footer>

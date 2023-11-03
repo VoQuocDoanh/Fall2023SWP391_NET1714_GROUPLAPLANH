@@ -57,7 +57,7 @@ function ListBeatSoldOut() {
   }
 
   return (
-    <div style={{ marginTop: 100 }}>
+    <div style={{ marginTop: 100, marginBottom:600 }}>
       <div className={cx("text-header")} >
         <h1 className={cx("text-welcome")}>
           My Beats Sold Out

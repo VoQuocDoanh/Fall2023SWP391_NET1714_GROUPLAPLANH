@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
-import React, { useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import { useState } from "react";
 import styles from "./ListUser.module.scss";
 import BasicPagination from "../../components/Pagination";
@@ -8,77 +8,20 @@ import PaginationControlled from "../../components/Pagination";
 import ReactPaginate from 'react-paginate';
 import Pagination from "../../components/Pagination";
 import axiosInstance from "../../authorization/axiosInstance";
+import { ShopContext } from "../../context/shop-context";
 
 
 const cx = classNames.bind(styles);
 
 // Fake API
 
-const DATA = [
-    {
-        id: 1,
-        name: "Doanh",
-        beatsound: "Beat Sound",
-        datecreate: "10/10/2010",
-        role: "Admin",
-        status: "Active",
-    },
-    {
-        id: 2,
-        name: "Doanh",
-        beatsound: "Beat Sound",
-        datecreate: "10/10/2010",
-        role: "Admin",
-        status: "Active",
-    },
-    {
-        id: 3,
-        name: "Doanh",
-        beatsound: "Beat Sound",
-        datecreate: "10/10/2010",
-        role: "Admin",
-        status: "Active",
-    },
-    {
-        id: 4,
-        name: "Doanh",
-        beatsound: "Beat Sound",
-        datecreate: "10/10/2010",
-        role: "Admin",
-        status: "Active",
-    },
-    {
-        id: 5,
-        name: "Doanh",
-        beatsound: "Beat Sound",
-        datecreate: "10/10/2010",
-        role: "Admin",
-        status: "Active",
-    },
-
-
-];
-
 function ListUser( ) {
-
     const [page, setPage] = useState(1)
     const [pages, setPages] = useState(1)
     const [listUser, setListUser] = useState();
-    useEffect(() => {
-        loadListUser()
+    useEffect(() => { 
+            loadListUser()
     }, [page])
-
-    const handleDelete = (id) => {
-        console.log(id);
-    };
-
-    const handleUpdate = (id) => {
-        console.log(id);
-    };
-    const handlePageClick = () => {
-
-    }
-
 
     const loadListUser = async () => {
         await axiosInstance.get(`http://localhost:8080/api/v1/admin/${page}/10`)
@@ -105,11 +48,11 @@ function ListUser( ) {
             <div className={cx("listuser-header")}>
                 <thead>
                     <tr>
-                        <th><span style={{ paddingRight: 130 }}>User</span></th>
+                        <th><span style={{ paddingRight: 150 }}>User</span></th>
                         <th><span>Created</span></th>
                         <th class="text-center"><span>Status</span></th>
-                        <th><span style={{ marginLeft: 40 }}>Email</span></th>
-                        <th><span style={{ marginLeft: 190 }}>Role</span></th>
+                        <th><span style={{ marginLeft: 100 }}>Email</span></th>
+                        <th><span style={{ marginLeft: 170 }}>Role</span></th>
                     </tr>
                 </thead>
                 {listUser ?
@@ -141,16 +84,16 @@ function ListUser( ) {
                                         <td class="text-center" style={{ width: 170, textAlign: "center" }}>
                                             <span style={{ background: "green", padding: 5, height: 5, color: 'white', fontSize: '1.8rem', margin: '0 auto', borderRadius: 18 }} class={cx("label label-default")}>Active</span>
                                         </td>}
-                                    <td style={{ width: 370 }}>
+                                    <td style={{ width: 400 }}>
                                         <a style={{ marginLeft: 20, textDecorationLine: 'underline', color: '#337ab7' }} href="#">{user.mail}</a>
                                     </td>
                                     {user.role === "CUS" ?
                                         <td>
-                                            <a style={{ marginRight: 20, fontWeight: 500 }} href="#">Customer</a>
+                                            <a style={{ width:50, marginRight: 30, fontWeight: 500 }} href="#">Customer</a>
                                         </td>
                                         :
                                         <td>
-                                            <a style={{ marginRight: 20, fontWeight: 500 }} href="#">Musician</a>
+                                            <a style={{ marginRight: 30, fontWeight: 500 }} href="#">Musician</a>
                                         </td>
                                     }
 
