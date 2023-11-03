@@ -14,7 +14,7 @@ const CustomLayout = ({ children }) => {
     <ChakraProvider>
       <Box bg={useColorModeValue("gray.100", "gray.900")}>
         <Header onOpen={onOpen} notHaveSidebar={true} />
-        <Box ml={{ base: 0, md: 0 }} minH={"40vh"}>
+        <Box ml={{ base: 0, md: 0 }} minH={"40vh"} style={{marginTop:100}}>
           {children}
         </Box>
         <Footer />

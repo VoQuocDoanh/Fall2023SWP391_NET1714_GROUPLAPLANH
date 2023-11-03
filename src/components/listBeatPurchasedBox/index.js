@@ -35,7 +35,7 @@ function ListBeatPurchasedBox({ id, name, genre, price, view, like, onClick, rat
         <div className={cx("content")}>
             {/* Content left */}
             <div className={cx("content-left")}>
-                <h2 className={cx("name-beat")}> <Link to={`/viewdetailbeatpurchased/${id}`}>{name}</Link> <FontAwesomeIcon className={cx("check")} icon={faCheckCircle} /></h2>
+                <h2 className={cx("name-beat")}> <Link style={{color:'white', fontSize: '2rem'}} to={`/viewdetailbeatpurchased/${id}`}>{name}</Link> <FontAwesomeIcon className={cx("check")} icon={faCheckCircle} /></h2>
                 <span className={cx("type-beat")}>{fullName}</span> <br />
                 <span className={cx("type-beat")}>{vocalRange}</span>
 

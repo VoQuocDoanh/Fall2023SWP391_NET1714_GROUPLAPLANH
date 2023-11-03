@@ -3,18 +3,18 @@ function Lyrics({ songDescription, userfullname, ...props }) {
   return (
     <Card {...props}>
       <CardHeader display={'flex'} justifyContent={'space-between'}>
-        <Text fontWeight={'700'} fontSize={'1.5rem'}>
+        <Text fontWeight={'700'} fontSize={'2.5rem'}>
           Lyrics
         </Text>
-        <Text fontWeight={'400'} fontSize={'1rem'} textDecoration={'underline'}>
+        <Text fontWeight={'400'} fontSize={'1.6rem'} textDecoration={'underline'}>
           by{' ' + userfullname}
         </Text>
       </CardHeader>
       <Divider />
-      <CardBody fontSize={"1.1rem"}>
+      <CardBody fontSize={"1.2rem"}>
         {songDescription?.split('\n')?.map((line, index) => {
           return (
-            <Text key={index} dangerouslySetInnerHTML={{ __html: line }} />
+            <Text fontSize={"1.8rem"} key={index} dangerouslySetInnerHTML={{ __html: line }} />
           );
         })}
       </CardBody>

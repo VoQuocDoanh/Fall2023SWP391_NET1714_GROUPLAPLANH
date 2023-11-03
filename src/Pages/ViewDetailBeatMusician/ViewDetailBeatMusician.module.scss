@@ -18,6 +18,7 @@
 .view-detail-beat{
     display: flex;
     justify-content: center;
+    margin-bottom: 120px;
 }
 
 .container {
@@ -70,7 +71,7 @@
   }
 
 
-.image {
+.image-beat {
     width: 400px;
     border: 2px solid black;
     display: flex;
@@ -79,10 +80,11 @@
     transition: .5s ease;
     backface-visibility: hidden;
     margin-top: 160px;
+    margin-left: 130px;
     
 }
 
-.button-submit {
+.button-subm9it {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
@@ -111,6 +113,7 @@
     background-color: #000;
     color: #fff;
     margin-top: 60px;
+    height: 900px;
 }
 
 .detail-2{
@@ -179,7 +182,7 @@
 
 .mid-detail-right {
     margin-left: 10px;
-    margin-top: 120px;
+    margin-top: 170px;
 }
 
 .list-of-beats {
@@ -198,7 +201,8 @@
 }
 
 .list {
-    margin: 10px;
+    margin: 30px;
+
 }
 
 .header-submit {
@@ -221,6 +225,7 @@
 .genre {
     display: flex;
     flex-direction: column;
+    line-height: 1.5;
 }
 
 
@@ -344,8 +349,7 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    background-color: #06c;
-    outline: 1px solid white;
+
     // position: fixed;
     // top: 647px;
     // left: 20px;
@@ -601,9 +605,26 @@
 .new-icon-like{
     width: 30px;
 }
-
-
-
+.audio-total{
+    display: flex;
+    justify-content: space-between;
+    width: auto;
+    gap:50px;
+    margin-top: -80px;
+    margin-left: 40px;
+}
+.button-sell-update{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    .button-1{
+       outline: 2px solid white;
+       width: 120px;
+       height: 40px;
+       border-radius: 12px;
+       font-size: 1.4rem;
+    }
+}
 
 
 

@@ -85,7 +85,7 @@ function MusicCardItem({
             colorscheme='teal'
             overflow={isChorListDetail ? 'visible' : 'hidden'}
             textOverflow={'ellipsis'}
-            fontSize={'1rem'}
+            fontSize={'1.6rem'}
             fontWeight={'700'}
           >
             {name}
@@ -109,7 +109,7 @@ function MusicCardItem({
           whiteSpace={'normal'}
           display={isChorListDetail ? 'block' : '-webkit-box'}
           textOverflow={'ellipsis'}
-          fontSize={'0.875rem'}
+          fontSize={'1.4rem'}
           style={
             isChorListDetail
               ? {}

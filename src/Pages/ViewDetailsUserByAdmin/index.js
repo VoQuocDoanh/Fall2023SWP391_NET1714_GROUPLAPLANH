@@ -7,6 +7,8 @@ import { faChevronLeft, faChevronRight, faPause, faPlay, faPlayCircle, faRedo, f
 import { Button } from "bootstrap";
 import { red } from "@mui/material/colors";
 import Popup from "reactjs-popup";
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 import axiosInstance from "../../authorization/axiosInstance";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 const cx = classNames.bind(styles);
@@ -17,13 +19,22 @@ const DATA = [
     },
 ]
 function ViewDetailsUserByAdmin() {
+    //back drop
+    const [open, setOpen] = React.useState(false);
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
     const { id } = useParams()
     const [search, setSearch] = useState("");
     const [ten, setTen] = useState("");
     const [user, setUser] = useState();
     const [contentBan, setContentBan] = useState("")
     const [checkBan, setCheckBan] = useState("")
-    const [listReport, setListReport] = useState([1,2])
+    const [listReport, setListReport] = useState([1, 2])
     const contentStyle = { background: 'white', width: 460, height: 370, borderRadius: 20 };
 
     useEffect(() => {
@@ -50,6 +61,7 @@ function ViewDetailsUserByAdmin() {
         await axiosInstance.post("http://localhost:8080/api/v1/admin/user/ban", { id, content: contentBan })
             .then((res) => {
                 setCheckBan("Ban User Successfully")
+                setOpen(false)
             })
             .catch((error) => {
                 console.log(error)
@@ -60,6 +72,7 @@ function ViewDetailsUserByAdmin() {
         await axiosInstance.post("http://localhost:8080/api/v1/admin/user/unban", { id })
             .then((res) => {
                 setCheckBan("Unban User Successfully")
+                setOpen(false)
             })
             .catch((error) => {
                 console.log(error)
@@ -141,7 +154,14 @@ function ViewDetailsUserByAdmin() {
                                                         </div>
                                                         <textarea className={cx("text-des")} style={{ resize: 'none', width: '385px', border: 1, height: 150, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12 }} onChange={(e) => setContentBan(e.target.value)} />
                                                         <td className={cx("button-type")}>
-                                                            <button type="button" className={cx("button-send")} aria-disabled="false" onClick={() => handleBanUser()} >Send</button>
+                                                            <button type="button" className={cx("button-send")} aria-disabled="false" onClick={() => { handleBanUser(); handleOpen(); }} >Send</button>
+                                                            <Backdrop
+                                                                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                                                                open={open}
+                                                                onClick={handleClose}
+                                                            >
+                                                                <CircularProgress color="inherit" />
+                                                            </Backdrop>
                                                         </td>
                                                     </div>
                                                 </Popup>
@@ -153,7 +173,14 @@ function ViewDetailsUserByAdmin() {
                                                             <td style={{ fontWeight: '500', fontSize: "2.5rem", marginLeft: 0, color: 'black', textAlign: 'center', marginTop: 60 }}>Are you sure you want to unban this user?</td>
                                                         </div>
                                                         <td className={cx("button-type")}>
-                                                            <button type="button" className={cx("button-send-2")} aria-disabled="false" onClick={() => handleUnbanUser()} >Accept</button>
+                                                            <button type="button" className={cx("button-send-2")} aria-disabled="false" onClick={() => {handleUnbanUser();handleOpen();}} >Accept</button>
+                                                            <Backdrop
+                                                                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                                                                open={open}
+                                                                onClick={handleClose}
+                                                            >
+                                                                <CircularProgress color="inherit" />
+                                                            </Backdrop>
                                                         </td>
                                                     </div>
                                                 </Popup>}
@@ -175,15 +202,15 @@ function ViewDetailsUserByAdmin() {
                                                 <div className={cx("part0")}>
                                                     <td>
                                                         {listReport.map((item => {
-                                                            return(
-                                                            <div className={cx("text-username0")}>
-                                                                <td>
-                                                                    <label style={{ fontFamily: 'Sono', fontWeight: 500 }} className={cx("login-text")}>Vo Quoc Doanh</label>
-                                                                </td>
-                                                                <div>
-                                                                    <input className={cx("input-username0")} type="text" placeholder value="Beat hay qua" onChange={handleSearch} />
-                                                                </div>
-                                                            </div>)
+                                                            return (
+                                                                <div className={cx("text-username0")}>
+                                                                    <td>
+                                                                        <label style={{ fontFamily: 'Sono', fontWeight: 500 }} className={cx("login-text")}>Vo Quoc Doanh</label>
+                                                                    </td>
+                                                                    <div>
+                                                                        <input className={cx("input-username0")} type="text" placeholder value="Beat hay qua" onChange={handleSearch} />
+                                                                    </div>
+                                                                </div>)
                                                         }))}
 
                                                     </td>

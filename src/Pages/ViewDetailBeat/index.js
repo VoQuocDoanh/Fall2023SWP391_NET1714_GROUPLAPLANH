@@ -488,10 +488,10 @@ function ViewDetailBeat() {
                                             <div className={cx('reply')}>
                                                 <div className={cx('replay-title')}>
                                                     <div className={cx('comment-box')}>
-                                                        <span
+                                                        <span  style={{fontSize: '1.8rem'}}
                                                             onClick={handleCommentClick}
                                                         >
-                                                            trả lời
+                                                            Trả lời
                                                         </span>
                                                         {isCommenting && (
                                                             <div>

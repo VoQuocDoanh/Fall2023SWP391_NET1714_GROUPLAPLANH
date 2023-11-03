@@ -93,7 +93,7 @@ function MyProfile() {
         formData.append('file', userImg);
 
 
-        await axiosInstance.patch("http://localhost:8080/api/v1/user/musician", formData, {
+        await axiosInstance.patch("http://localhost:8080/api/v1/user/customer", formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },

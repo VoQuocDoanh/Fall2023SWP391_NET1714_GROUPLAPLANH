@@ -147,7 +147,7 @@ function SongDetail() {
       />
       <ReportForm isOpen={isOpen} onClose={onClose} />
       <ViewReport isOpen={modalView} onClose={() => setModalView(false)} />
-      <BannerTitle  
+      <BannerTitle
         songData={songData}
         handleRating={handleRating}
         BACK_END_PORT={BACK_END_PORT}
@@ -158,13 +158,15 @@ function SongDetail() {
         <Flex m={"0 auto 1%"} w={"68%"} justifyContent={"flex-end"}>
           <Box display={"flex"}>
             <Button
+              height="40px"
+              width="100px"
               onClick={() => setModalView(true)}
               colorScheme="teal"
               variant="outline"
             >
               View report
             </Button>
-            <Button onClick={onOpen} colorScheme="red" variant="outline" ml={2}>
+            <Button  height="40px"  width="100px" onClick={onOpen} colorScheme="red" variant="outline" ml={2}>
               Report
             </Button>
             <Menu>
@@ -192,11 +194,11 @@ function SongDetail() {
           </Box>
         </Flex>
         <Flex justifyContent={"center"}>
-          <Stack w={"45%"} mr={10}>
+          <Stack w={"60%"} mr={10}>
             <LyricsComponent
               songDescription={songDescription}
               userfullname={songData?.userfullname}
-              maxH={"400px"}
+              maxH={"600px"}
               overflowY={"scroll"}
             />
             <CommentComponent
@@ -209,6 +211,7 @@ function SongDetail() {
           <ChordsComponent
             songData={songData}
             maxH={"1220px"}
+
             overflowY={"scroll"}
           />
         </Flex>

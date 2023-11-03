@@ -86,12 +86,12 @@ function ViewDetailBeatMusician() {
 
     const handleSell = async () => {
         await axiosInstance.put(`http://localhost:8080/api/v1/beat/${beatId}`)
-        .then((res) => {
-            setCheckSell(true)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+            .then((res) => {
+                setCheckSell(true)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     if (beatDetail !== null) {
@@ -122,7 +122,7 @@ function ViewDetailBeatMusician() {
                                 <div>
                                     <div className={cx('container')}>
 
-                                        <img className={cx('image')} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} />
+                                        <img className={cx('image-beat')} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} />
                                         <div className={cx('middle-image')}>
                                             {/* <div className={cx('text')}>Click</div> */}
                                             <Button variant="contained" className={cx('button-1')} onClick={() => loadSoundFull()}>
@@ -145,16 +145,28 @@ function ViewDetailBeatMusician() {
                                 <div>Message</div>
                             </Button>
                         </div> */}
-                                    <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundDemo}>
-                                    </audio>
-                                    <audio style={{ marginTop: 50 }} className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundFull}>
-                                    </audio>
+                                    <div className={cx("audio-total")}>
+                                        <div>
+                                            <td style={{ display: 'flex', justifyContent: 'start', fontSize: '2rem', fontWeight: '500', marginBottom: 30 }}>
+                                                Listen to Demo
+                                            </td>
+                                            <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundDemo}>
+                                            </audio>
+                                        </div>
+                                        <div>
+                                            <td style={{ display: 'flex', justifyContent: 'start', fontSize: '2rem', fontWeight: '500', marginBottom: 30 }}>
+                                                Listen full Beat
+                                            </td>
+                                            <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundFull}>
+                                            </audio>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
                             <div className={cx('mid-detail-right')}>
 
-                                <h3><b>Beat information</b></h3>
+                                <h3><b style={{fontSize: '2.5rem'}}>Beat information</b></h3>
 
                                 {/* <div className={cx('list-of-beats')}>
                                 <div className={cx('cart')}>
@@ -184,47 +196,54 @@ function ViewDetailBeatMusician() {
                         </div>
                             </div> */}
                                 <div className={cx('list')}>
-                                    <div className={cx('genre')}>
-                                        <span>&#x2022; Beat's Name: {beatDetail.beatName}</span>
+                                    <div  className={cx('genre')}>
+                                        <span style={{fontSize: '2rem'}}>&#x2022; Beat's Name: {beatDetail.beatName}</span>
                                         {beatDetail.genres !== null ?
-                                            <span>&#x2022; Genre:
+                                            <span style={{fontSize: '2rem'}}>&#x2022; Genre:
                                                 {
                                                     beatDetail.genres.map((item, index) => {
-                                                        return <span> {item.name},</span>
+                                                        return <span style={{fontSize: '2rem'}}> {item.name},</span>
                                                     })
 
                                                 }
                                             </span>
                                             :
-                                            <span>&#x2022; Genre:
+                                            <span style={{fontSize: '2rem'}}>&#x2022; Genre:
 
                                             </span>
                                         }
-                                        <span>&#x2022; Price: ${beatDetail.price}</span>
-                                        <span>&#x2022; Views: {(beatDetail.view / 2).toFixed()}</span>
-                                        <span>&#x2022; Tone: {beatDetail.vocalRange}</span>
-                                        <span>&#x2022; Release date: {day}/{month}/{year}</span>
-                                        <span>&#x2022; Total Rating: {(beatDetail.totalRating)}</span>
-                                        <span>&#x2022; Rating: {(beatDetail.rating)}</span>
-                                        <span>&#x2022; Total Like: {(beatDetail.totalLike)}</span>
-                                        {beatDetail.status === 1 ?
-                                            <div style={{ textAlign: "center", marginTop: 20 }}>
-                                                <Button variant="contained" className={cx('button-1')} onClick={() => handleUnsell()}>
-                                                    <div>UnSell</div>
-                                                </Button>
+                                        <span style={{fontSize: '2rem'}}>&#x2022; Price: ${beatDetail.price}</span>
+                                        <span style={{fontSize: '2rem'}} >&#x2022; Views: {(beatDetail.view / 2).toFixed()}</span>
+                                        <span style={{fontSize: '2rem'}}>&#x2022; Tone: {beatDetail.vocalRange}</span>
+                                        <span style={{fontSize: '2rem'}}>&#x2022; Release date: {day}/{month}/{year}</span>
+                                        <span style={{fontSize: '2rem'}}>&#x2022; Total Rating: {(beatDetail.totalRating)}</span>
+                                        <span style={{fontSize: '2rem'}}>&#x2022; Rating: {(beatDetail.rating)}</span>
+                                        <span style={{fontSize: '2rem'}}>&#x2022; Total Like: {(beatDetail.totalLike)}</span>
+                                        <div className={cx("button-sell-update")}>
+                                            <div>
+                                                {beatDetail.status === 1 ?
+                                                    <div style={{ textAlign: "center", marginTop: 20 }}>
+                                                        <Button variant="contained" className={cx('button-1')} onClick={() => handleUnsell()}>
+                                                            <div>UnSell</div>
+                                                        </Button>
+                                                    </div>
+                                                    :
+                                                    <div style={{ textAlign: "center", marginTop: 20 }}>
+                                                        <Button variant="contained" className={cx('button-1')} onClick={() => handleSell()}>
+                                                            <div>Sell</div>
+                                                        </Button>
+                                                    </div>
+                                                }
+
                                             </div>
-                                            :
-                                            <div style={{ textAlign: "center", marginTop: 20 }}>
-                                                <Button variant="contained" className={cx('button-1')} onClick={() => handleSell()}>
-                                                    <div>Sell</div>
-                                                </Button>
+                                            <div>
+                                                <div style={{ textAlign: "center", marginTop: 20 }}>
+                                                    <Link to={`/updatebeat/${beatId}`}><Button variant="contained" className={cx('button-1')}>
+                                                        <div>Update</div>
+                                                    </Button>
+                                                    </Link>
+                                                </div>
                                             </div>
-                                        }
-                                        <div style={{ textAlign: "center", marginTop: 20 }}>
-                                            <Link to={`/updatebeat/${beatId}`}><Button variant="contained" className={cx('button-1')}>
-                                                <div>Update</div>
-                                            </Button>
-                                            </Link>
                                         </div>
                                         <div>
                                             {checkFeedBack}

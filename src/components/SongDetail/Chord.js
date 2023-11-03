@@ -17,19 +17,19 @@ import {
 
 function Chord({ songData, ...props }) {
   return (
-    <Card w={'22%'} {...props}>
+    <Card w={'32%'} {...props}>
       <CardHeader>
-        <Text fontWeight={'700'} fontSize={'1.5rem'}>
+        <Text fontWeight={'700'} fontSize={'1.8rem'}>
           Chords List
         </Text>
       </CardHeader>
       <Divider />
       <CardBody>
         <Tabs variant='soft-rounded' colorScheme='green'>
-          <TabList>
-            <Tab>Guitar</Tab>
-            <Tab>Ukulele</Tab>
-            <Tab>Piano</Tab>
+          <TabList fontSize={'1.5rem'}>
+            <Tab fontSize={'1.5rem'}>Guitar</Tab>
+            <Tab fontSize={'1.5rem'}>Ukulele</Tab>
+            <Tab fontSize={'1.5rem'}>Piano</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>

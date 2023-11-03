@@ -3,8 +3,9 @@
 @import url('https://fonts.cdnfonts.com/css/inter');
 
 .img-header {
-  width: 250px;
-  height: 150px;
+  width: 180px;
+  height: 100px;
+  object-fit: cover;
 }
 
 .header-wrapper {
@@ -143,6 +144,8 @@
   border: none;
   margin-left: 10px;
   color: white;
+  font-size:2.2rem;
+  text-wrap: nowrap;
 }
 
 .link-text {

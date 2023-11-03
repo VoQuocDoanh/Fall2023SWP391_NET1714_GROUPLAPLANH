@@ -181,21 +181,18 @@
     background-color: #e7e7e7;
     padding: 0 7px;
     font-size: 15px;
+    width: 120px;
+    height: 40px;
     line-height: 24px;
     border-radius: 4px;
     cursor: pointer;
-    -webkit-transition: box-shadow .1s, background-color .1s;
-    -moz-transition: box-shadow .1s, background-color .1s;
-    -ms-transition: box-shadow .1s, background-color .1s;
-    -o-transition: box-shadow .1s, background-color .1s;
-    transition: box-shadow .1s, background-color .1s;
     margin: 2px;
     display: inline-block;
 }
 
 .panel-content-text-center-padding-both {
     width: 25%;
-    height: 400px;
+    height: auto;
     padding: 10px;
     background-color: #ffffff;
     text-align: center;
@@ -471,4 +468,9 @@
     background: none;
     font-size: 2.5rem;
     font-weight: bold;
+}
+.rhythm-list{
+    display: grid;
+    row-gap: 10px;
+    margin-top: 30px;
 }

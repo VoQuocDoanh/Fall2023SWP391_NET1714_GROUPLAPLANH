@@ -125,13 +125,13 @@ function MyPlayListChordDetail() {
   }, [reload]);
 
   return (
-    <Box style={{marginTop:-75}}>
+    <Box style={{marginTop:145}}>
       <Box w={"60%"} m={"3% auto"} p={"0"}>
         {playListDetail?.chords?.length ? (
           <>
             <Card>
-              <CardHeader style={{marginTop:170}}>
-                <Text>Collection</Text>
+              <CardHeader>
+                <Text style={{fontSize:'1.8rem'}}>Collection</Text>
                 <Heading>{playListDetail?.name}</Heading>
               </CardHeader>
               <Divider />
@@ -145,7 +145,7 @@ function MyPlayListChordDetail() {
             </Card>
           </>
         ) : (
-          <Card mt={12}>
+          <Card mt={200}>
             <CardBody>
               <Heading>List Chord is empty</Heading>
             </CardBody>

@@ -66,7 +66,6 @@ function HeaderGuest() {
           </div>
           <div className={cx("nav-item")}>Contact</div>
           <div className={cx("nav-item")}>
-            <Button>
               {/* Phan quyen */}
               {token ?
                 <Link className={cx("viewCart")} to="/viewcart">
@@ -81,14 +80,13 @@ function HeaderGuest() {
                   </svg>                </Link>
               }
 
-            </Button>
           </div>
         </div>
         {/* Phan quyen header */}
         <Link to="/login">
-          <Button variant="contained" className={cx("action")}>
+          <button variant="contained" className={cx("action")}>
             <div className={cx("login")}>Login</div>
-          </Button>
+          </button>
         </Link>
       </div>
     </div>
