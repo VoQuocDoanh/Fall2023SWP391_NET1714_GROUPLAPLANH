@@ -56,12 +56,12 @@ public class UserReportService {
     }
 
     public List<UserResponeDTO> listUserReported() {
-        List<UserReport> list = userReportRepository.findAll();
+        List<Long> list = userReportRepository.findReportedUser();
         List<UserResponeDTO> dtos =new ArrayList<>();
         List<User> users= new ArrayList<>();
-        for (UserReport u:list){
+        for (Long u:list){
             User user = new User();
-            user = userRepository.findByIdAndStatus(u.getId(),1);
+            user = userRepository.findByIdAndStatus(u,1);
             users.add(user);
         }
         for (User us : users){
