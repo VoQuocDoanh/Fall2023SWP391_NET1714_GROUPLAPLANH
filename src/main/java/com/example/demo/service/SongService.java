@@ -177,6 +177,7 @@ public class SongService {
                 Song song = foundSong.get();
                 song.setSongname(songDTO.getSongName());
                 song.setSinger(songDTO.getSinger());
+                song.setDescription(songDTO.getDescription());
                 song.setTone(songDTO.getTone());
                 song.setVocalRange(songDTO.getVocalRange());
                 song.setSongUrl(songDTO.getSongUrl());
