@@ -39,6 +39,9 @@ import MyPlayListChordDetail from "@/Pages/MyPlaylistChordetail";
 import MyPLayListDetail from "@/Pages/MyPlaylistSongDetail";
 import SongDetail from "@/Pages/SongDetails";
 import ListAllUserBan from "../Pages/listAllUserBan";
+import UserSong from "@/Pages/UserSong";
+import ReportSong from "@/Pages/ReportSong";
+import ListUserReport from "@/Pages/ListUserReport";
 const publicRoutes = [
   {
     path: "/",
@@ -67,6 +70,10 @@ const publicRoutes = [
   {
     path: "/listuser",
     component: ListUser,
+  },
+  {
+    path: "/listuserreport",
+    component: ListUserReport,
   },
   {
     path: "/listAllUserBan",
@@ -108,6 +115,14 @@ const publicRoutes = [
   {
     path: "/songs",
     component: Songs,
+  },
+  {
+    path: "/usersong",
+    component: UserSong,
+  },
+  {
+    path: "/reportsong",
+    component: ReportSong,
   },
   {
     path: "/viewbeatsall",

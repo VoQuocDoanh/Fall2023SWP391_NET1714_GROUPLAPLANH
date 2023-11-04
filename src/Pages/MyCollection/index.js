@@ -131,7 +131,7 @@ function MyCollection() {
       content={item?.description}
       name={item?.name}
       showNumberSong={true}
-      numberSongs={item?.songs?.length ? item?.songs?.length : 0}
+      numberSongs={item?.quantityOfSong}
       minW="250px"
       h="380px"
       color={"black"}

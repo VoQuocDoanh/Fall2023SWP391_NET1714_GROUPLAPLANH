@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./Register.module.scss";
 import { useState } from "react";
-import { Button } from "@mui/material";
+import { Backdrop, Button, CircularProgress } from "@mui/material";
 import axios from "axios";
 import videoBg from '../../assets/video/video (2160p).mp4'
 
@@ -20,6 +20,13 @@ function Register() {
   const [role, setRole] = useState("CUS");
   const [registrationMessage, setRegistrationMessage] = useState(null)
   const user = { userName, password, email, fullName, role }
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -33,10 +40,10 @@ function Register() {
       alert("Confirm Password not match Password")
       return;
     }
-    e.preventDefault()
     await axios.post("http://localhost:8080/api/auth/register", user)
       .then((res) => {
         console.log(userName, password, email, fullName, role);
+        setOpen(false)
         setRegistrationMessage("Register Successfully! \n Go to mail to active your account")
       })
       .catch((error) => {
@@ -209,13 +216,20 @@ function Register() {
           />
         </div>
 
-        <Button variant="contained" className={cx("input", "submit")} onClick={handleSubmit}>
+        <Button variant="contained" className={cx("input", "submit")} onClick={() => [handleSubmit(),handleOpen()]}>
           <input
             type="submit"
             value="Sign up"
             className={cx("input-text-register", "input-submit")}
           />
         </Button>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+          onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
         {registrationMessage ?
           <div>
             {registrationMessage.includes("Successfully")

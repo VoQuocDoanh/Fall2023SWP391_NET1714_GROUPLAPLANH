@@ -53,8 +53,8 @@ function BannerTitle({
     }
   }, [information]);
   return (
-    <Box bg={'#f8f6fa'} p={'3% 0'} > 
-      <Flex justifyContent={'start'} ml={'20%'} style={{marginTop:120}}>
+    <Box bg={'#f8f6fa'} p={'3% 0'} mt={-50} > 
+      <Flex justifyContent={'start'} ml={'20%'} style={{marginTop:50}}>
         <Box w={'200px'} mr={10} >
           <Image src={DVDimage} />
         </Box>

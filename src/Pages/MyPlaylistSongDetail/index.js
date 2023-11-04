@@ -100,7 +100,7 @@ function MyPLayListDetail() {
   }, [reload]);
 
   return (
-    <Box style={{marginTop:-70, marginBottom:700}}>
+    <Box style={{marginTop:-70, marginBottom:300}}>
       <Box w={"60%"} m={"3% auto"} p={"0"}>
         <EditForm 
           userId={user_id}

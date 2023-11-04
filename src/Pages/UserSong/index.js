@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import styles from "./Songs.module.scss";
+import styles from "./UserSong.module.scss";
 import { Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -10,17 +10,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Popup from "reactjs-popup";
 import Pagination from "@/components/Pagination";
 import ListSplitter from "@/components/ListSplitter";
+import jwtDecode from "jwt-decode";
 const cx = classNames.bind(styles);
 
-function Songs() {
+function UserSong() {
     const [listSongs, setListSongs] = useState([])
     const [listGenres, setListGenres] = useState([])
     const [genre, setGenre] = useState("")
     const [page, setPage] = useState(1)
     const [pages, setPages] = useState(1)
     const [searchSong, setSearchSong] = useState("")
+    const token = useToken()
+    const navigate = useNavigate()
+    let userId = ""
+    if (token) {
+        userId = jwtDecode(token).sub
+    }
+
     const admin = false;
-    sessionStorage.setItem("Admin", JSON.stringify(admin))
+    sessionStorage.setItem("Admin",JSON.stringify(admin))
 
     useEffect(() => {
         loadGenres()
@@ -30,7 +38,11 @@ function Songs() {
     }, [page])
 
     const loadSongs = async () => {
-        await axiosInstance.get("http://localhost:8080/api/v1/song")
+        if (!token) {
+            navigate("/login")
+            return
+        }
+        await axiosInstance.get(`http://localhost:8080/api/v1/song/user/${userId}`)
             .then((res) => {
                 if (res.data.length === 0) {
                     setListSongs(res.data)
@@ -60,7 +72,7 @@ function Songs() {
     }
 
     const loadSongsByGenre = async (e) => {
-        await axiosInstance.get(`http://localhost:8080/api/v1/song/genre?genrename=${e}`)
+        await axiosInstance.get(`http://localhost:8080/api/v1/song/user/${userId}/genre?genrename=${e}`)
             .then((res) => {
                 if (res.data.length === 0) {
                     setListSongs(res.data)
@@ -81,7 +93,7 @@ function Songs() {
     }
 
     const handleSearchSong = async () => {
-        await axiosInstance.get(`http://localhost:8080/api/v1/song/name?songname=${searchSong}`)
+        await axiosInstance.get(`http://localhost:8080/api/v1/song/user/${userId}/name?songname=${searchSong}`)
             .then((res) => {
                 if (res.data.length === 0) {
                     setListSongs(res.data)
@@ -100,8 +112,10 @@ function Songs() {
     return (
 
         <div className={cx("list-songs")}>
-            <h1 className={cx("title")}> CHORDS OF SONGS</h1>
-            <h3 className={cx("title-song-style2")}>  Most Popular Today</h3>
+            <h1 className={cx("title")}> MY SONGS</h1>
+            <footer className={cx("Add-Songs")}>
+                <Link to="/UploadSong" className={cx("Add-Songs-body", "card-action")}>Add new song</Link>
+            </footer>
             {/* <div className={cx("button-chords")}>
                 <Link to="/chordsdetails">
                     <button variant="contained" className={cx("button")}>
@@ -187,7 +201,7 @@ function Songs() {
                                 <Pagination pages={pages} page={page} setPage={setPage} />
                             </div>
                         </div>
-                        : <div> There are no songs in the system! </div>}
+                        : <div> You are not upload any songs! </div>}
                     {/* <div className={cx('pagination')}>
                         <button onClick={handlePrevPage} disabled={currentPage === 1}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -207,4 +221,4 @@ function Songs() {
     );
 }
 
-export default Songs;
+export default UserSong;

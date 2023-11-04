@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./UploadBeat.module.scss";
 import { useEffect, useState } from "react";
-import { Button } from "@mui/material";
+import { Backdrop, Button, CircularProgress } from "@mui/material";
 import axios from "axios";
 import videoBg from '../../assets/video/video (2160p).mp4'
 import ValidationUpload from "../../Validation/ValidationUpload";
@@ -31,6 +31,13 @@ function UploadBeat() {
   const [beatSoundFull, setBeatSoundFull] = useState("")
   const [vocalRange, setVocalRange] = useState(null)
   const [listGenres, setListGenres] = useState(null)
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
   const beat = { beatName, price, username, genres, description, vocalRange }
   const navigate = useNavigate();
@@ -41,12 +48,12 @@ function UploadBeat() {
   }, [])
 
 
-const handleUpload = async () => {
-  const values = inputGenres.split(',');
-  console.log(values)
-  for (let i = 0; i < values.length; i++) {
-    genres.push(values[i])
-  }
+  const handleUpload = async () => {
+    const values = inputGenres.split(',');
+    console.log(values)
+    for (let i = 0; i < values.length; i++) {
+      genres.push(values[i])
+    }
     if (!token) {
       navigate("/login")
     }
@@ -74,13 +81,14 @@ const handleUpload = async () => {
       },
     })
       .then((res) => {
+        setOpen(false)
         console.log(res.data)
         alert("Upload Successfully")
         navigate("/viewbeat");
       })
       .catch((error) => {
         console.log(error)
-        setUploadMessage("Username does not exist")
+        setUploadMessage("Update Failed")
       })
   }
   const loadGenres = async () => {
@@ -225,7 +233,7 @@ const handleUpload = async () => {
               onChange={(e) => setInputGenres(e.target.value)}
             />} position="right center">
               {listGenres.map((item) => {
-                return <div >{item.name}</div>
+                return <div style={{background: 'white', padding: 10}} >{item.name}</div>
               })}
             </Popup>
 
@@ -305,13 +313,20 @@ const handleUpload = async () => {
             />
           </div>
 
-          <Button variant="contained" className={cx("input", "submit")} onClick={() => handleUpload()} >
+          <Button variant="contained" className={cx("input", "submit")} onClick={() => [handleUpload(),handleOpen()]} >
             <input
               type="submit"
               value="Upload"
               className={cx("input-text-upload", "input-submit")}
             />
           </Button>
+          <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={open}
+            onClick={handleClose}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
         </div>
         {/* Footer */}
         {/* <div className={cx("footer")}>

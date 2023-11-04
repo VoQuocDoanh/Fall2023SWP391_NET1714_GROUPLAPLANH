@@ -69,7 +69,7 @@ function ListBeatSoldOut() {
         {/* Header */}
         <header className={cx("card-header")}>
           <h2 className={cx("cart-heading")}>Beat Sold Out</h2>
-          <h3>{income}</h3>
+          <h3>Income: ${income}</h3>
         </header>
         {/* Content */}
         <div className={cx("card-names")}>
@@ -90,8 +90,8 @@ function ListBeatSoldOut() {
                 <CardBeatItem
                   id={item.id}
                   name={item.beatName}
-                  author={""}
-                  genre={""}
+                  author={item.orderInformation.userId.fullName}
+                  date={item.orderInformation.createAt}
                   price={item.price}
                   beatId={item.id}
                 />

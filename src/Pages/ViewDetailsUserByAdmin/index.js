@@ -29,24 +29,19 @@ function ViewDetailsUserByAdmin() {
     };
 
     const { id } = useParams()
-    const [search, setSearch] = useState("");
-    const [ten, setTen] = useState("");
     const [user, setUser] = useState();
     const [contentBan, setContentBan] = useState("")
     const [checkBan, setCheckBan] = useState("")
-    const [listReport, setListReport] = useState([1, 2])
+    const [listReport, setListReport] = useState()
     const contentStyle = { background: 'white', width: 460, height: 370, borderRadius: 20 };
 
     useEffect(() => {
         loadDetailsUser()
     }, [checkBan])
-    const handleSearch = (e) => {
-        setSearch(e.target.value);
-    }
-    const handleSearch1 = (e) => {
-        setTen(e.target.value);
-    }
 
+    useEffect(() => {
+        loadReport()
+    },[])
     const loadDetailsUser = async () => {
         await axiosInstance.get(`http://localhost:8080/api/v1/admin/${id}`)
             .then((res) => {
@@ -77,6 +72,16 @@ function ViewDetailsUserByAdmin() {
             .catch((error) => {
                 console.log(error)
             })
+    }
+
+    const loadReport = async () => {
+        await axiosInstance.get(`http://localhost:8080/api/v1/report/user/${id}`)
+        .then((res) => {
+            setListReport(res.data)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
     }
 
     return (
@@ -200,21 +205,21 @@ function ViewDetailsUserByAdmin() {
                         <TabPanel>
                             <div className={cx("volt8A")}>
                                 <div style={{ color: 'red', fontWeight: 'bold', fontSize: '3.2rem', display: 'flex', justifyContent: 'center' }} className={cx("title-feedback")}>List Reported</div>
-                                {1 === 1 ?
+                                {listReport ?
                                     <div>
                                         <div style={{ fontSize: 18, fontWeight: 500, marginLeft: 70, marginTop: 20 }} className={cx("title-feedback")}> User has reported:</div>
                                         <form style={{ marginTop: 20 }}>
                                             <table className={classNames("profile-2")}>
                                                 <div className={cx("part0")}>
                                                     <td>
-                                                        {listReport.map((item => {
+                                                        {listReport.map((report => {
                                                             return (
                                                                 <div className={cx("text-username0")}>
                                                                     <td>
-                                                                        <label style={{ fontFamily: 'Sono', fontWeight: 500 }} className={cx("login-text")}>Vo Quoc Doanh</label>
+                                                                        <label style={{ fontFamily: 'Sono', fontWeight: 500 }} className={cx("login-text")}>{report.user.fullName}</label>
                                                                     </td>
                                                                     <div>
-                                                                        <input className={cx("input-username0")} type="text" placeholder value="Beat hay qua" onChange={handleSearch} />
+                                                                        <input className={cx("input-username0")} type="text" placeholder value={report.content}  />
                                                                     </div>
                                                                 </div>)
                                                         }))}

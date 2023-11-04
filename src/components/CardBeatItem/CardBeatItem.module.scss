@@ -7,7 +7,7 @@
   
   // Product ==============
   .card-product {
-    margin-left: 30px;
+    margin-left: 20px;
     width: 50%;
     display: inline-flex;
     align-items: center;
@@ -27,26 +27,26 @@
     }
   }
 
-  .card-genre{
+  .card-date{
     width: 10%;
   font-size: 1.4rem;
   font-weight: 400;
   user-select: none;
-  margin-left: 30px;
+  margin-left: -20px;
   }
   .card-author{
     width: 10%;
   font-size: 1.4rem;
   font-weight: 400;
   user-select: none;
-  margin-left: 30px;
+  margin-left: 50px;
   }
   .card-price{
     width: 10%;
   font-size: 1.4rem;
   font-weight: 400;
   user-select: none;
-  margin-left: 30px;
+  margin-left: 50px;
   }
     
 

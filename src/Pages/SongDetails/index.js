@@ -27,6 +27,8 @@ import { AddIcon } from "@chakra-ui/icons";
 import { BsMusicNoteList } from "react-icons/bs";
 import EditForm from "@/components/PlaylistDetail/EditForm";
 import AddSongAndPlaylist from "@/components/SongDetail/AddForm";
+import useToken from "@/authorization/useToken";
+import jwtDecode from "jwt-decode";
 
 export const SongContext = createContext();
 
@@ -37,7 +39,6 @@ function highlightRedWords(line) {
   );
 }
 function SongDetail() {
-  const user_id = 3;
   const { id } = useParams();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [newListStatus, setNewListStatus] = useState(false);
@@ -46,8 +47,14 @@ function SongDetail() {
   const [songData, setSongData] = useState({});
   const [songCommentData, setSongCommentData] = useState([]);
   const [listPlaylist, setListPlayList] = useState([]);
+  const admin = JSON.parse(sessionStorage.getItem("Admin"))
+  const token = useToken()
+  let userId = ""
+  if (token) {
+    userId = jwtDecode(token).sub
+  }
   const information = {
-    userId: user_id,
+    userId: userId,
     songId: id,
   };
   const [reload, setReload] = useState(false);
@@ -62,11 +69,15 @@ function SongDetail() {
   const handleRating = async (score) => {
     axios
       .get(
-        `${BACK_END_PORT}/api/v1/song/rate?userid=${user_id}&songid=${id}&rating=${score}`
+        `${BACK_END_PORT}/api/v1/song/rate?userid=${userId}&songid=${id}&rating=${score}`
       )
       .then((response) => {
         if (response.data === "Rating Successfully") {
           alert(response.data);
+          setReload(true)
+          setTimeout(() => {
+            setReload(false)
+          }, 500)
         }
       })
       .catch((error) => {
@@ -80,7 +91,7 @@ function SongDetail() {
         await Promise.all([
           axios.get(`${BACK_END_PORT}/api/v1/song/${id}`),
           axios.get(`${BACK_END_PORT}/api/v1/comment/song/${id}`),
-          axios.get(`${BACK_END_PORT}/api/v1/playlist/user/${user_id}`),
+          axios.get(`${BACK_END_PORT}/api/v1/playlist/user/${userId}`),
         ]);
 
       if (getSongDetail) {
@@ -114,7 +125,7 @@ function SongDetail() {
       });
   };
 
-  const MenuItemHTML = listPlaylist?.map((item, index) => (
+  const MenuItemHTML = listPlaylist && listPlaylist?.map((item, index) => (
     <MenuItem
       icon={<BsMusicNoteList />}
       fontSize={"14px"}
@@ -139,7 +150,7 @@ function SongDetail() {
   return (
     <SongContext.Provider value={{ information, setReload }}>
       <AddSongAndPlaylist
-        userId={user_id}
+        userId={userId}
         isOpen={newListStatus}
         onClose={() => setNewListStatus(false)}
         songId={id}
@@ -157,18 +168,34 @@ function SongDetail() {
       <Box mb={10} mt={6}>
         <Flex m={"0 auto 1%"} w={"68%"} justifyContent={"flex-end"}>
           <Box display={"flex"}>
-            <Button
-              height="40px"
-              width="100px"
-              onClick={() => setModalView(true)}
-              colorScheme="teal"
-              variant="outline"
-            >
-              View report
-            </Button>
-            <Button  height="40px"  width="100px" onClick={onOpen} colorScheme="red" variant="outline" ml={2}>
-              Report
-            </Button>
+            {(admin || (userId.includes(songData.userid)))  ?
+              <div>
+              <Button
+                height="40px"
+                width="100px"
+                onClick={() => setModalView(true)}
+                colorScheme="teal"
+                variant="outline"
+              >
+                View report
+              </Button>
+              </div>
+              :
+              <div>
+                <Button
+                  height="40px"
+                  width="100px"
+                  onClick={() => setModalView(true)}
+                  colorScheme="teal"
+                  variant="outline"
+                >
+                  View report
+                </Button>
+                <Button height="40px" width="100px" onClick={onOpen} colorScheme="red" variant="outline" ml={2}>
+                  Report
+                </Button>
+              </div>
+            }
             <Menu>
               <MenuButton
                 as={IconButton}
@@ -200,6 +227,7 @@ function SongDetail() {
               userfullname={songData?.userfullname}
               maxH={"600px"}
               overflowY={"scroll"}
+              userId={songData?.userid}
             />
             <CommentComponent
               mt={8}

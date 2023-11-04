@@ -488,7 +488,7 @@ function ViewDetailBeat() {
                                             <div className={cx('reply')}>
                                                 <div className={cx('replay-title')}>
                                                     <div className={cx('comment-box')}>
-                                                        <span  style={{fontSize: '1.8rem'}}
+                                                        <span  style={{fontSize: '1.8rem'}} 
                                                             onClick={handleCommentClick}
                                                         >
                                                             Trả lời

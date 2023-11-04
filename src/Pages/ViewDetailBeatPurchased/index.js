@@ -83,6 +83,10 @@ function ViewDetailBeatPurchased() {
         })
     }
 
+    const handleUpdateFeedback = async() => {
+        await axiosInstance.put("http://localhost:8080/api/v1/song/feedback",{})
+    }
+
     // const handleUpdateFeedback = async() => {
     //     await axiosInstance.put("http://localhost:8080/api/v1/beat/feedback", {id:})
     // }

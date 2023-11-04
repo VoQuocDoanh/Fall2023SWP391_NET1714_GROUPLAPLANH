@@ -35,35 +35,6 @@ function ListBeatPurchased() {
     const token = useToken();
     const [checkLike, setCheckLike] = useState();
     // 
-    // const handleClickAudio = (value) => {
-
-    //     setSrcMusic(`data:audio/mpeg;base64,${atob(value.beatSound)}`);
-    //     console.log(srcMusic)
-
-    // }
-
-    // useEffect(() => {
-    //     const data = DATA.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
-    //     setList(data);
-    // }, [search])
-    // // useEffect(() => {
-    // //     const video = document.querySelector('video');
-    // //     if (video) {
-    // //         video.playbackRate = 1.5;
-    // //     }
-    // // }, []);
-
-    // //Comment lai cho nay
-    // console.log(play);
-    //  UseEffect(() => {
-    //     if (play) {
-    //         audioRef.current.play();
-
-    //     } else {
-
-    //         audioRef.current.pause();
-    //     }
-    // }, [play])
 
     useEffect(() => {
         loadBeats()

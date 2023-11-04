@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
 import React, { useContext, useEffect, useMemo } from "react";
 import { useState } from "react";
-import styles from "./ListUser.module.scss";
+import styles from "./ListUserReport.module.scss";
 import BasicPagination from "../../components/Pagination";
 import PaginationControlled from "../../components/Pagination";
 import ReactPaginate from 'react-paginate';
@@ -15,7 +15,7 @@ const cx = classNames.bind(styles);
 
 // Fake API
 
-function ListUser() {
+function ListUserReport() {
     const [page, setPage] = useState(1)
     const [pages, setPages] = useState(1)
     const [listUser, setListUser] = useState();
@@ -110,4 +110,4 @@ function ListUser() {
     );
 }
 
-export default ListUser;
+export default ListUserReport;

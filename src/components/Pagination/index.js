@@ -14,13 +14,13 @@ function Pagination({ pages, page, setPage }) {
   for (let i = 0; i < pages; i++) {
     list.push(i + 1)
   }
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(1);
 
   console.log(page)
   return (
     <div className={cx("pagination-header")} style={{ marginTop: 50 }}>
       {page > 1 ?
-        <span onClick={() => setPage(page - 1)}><button className={cx('button-pagi')}>Previous</button></span>
+        <span onClick={() => [setPage(page - 1), setActive(page-1)]}><button className={cx('button-pagi')}>Previous</button></span>
         : <span><button className={cx('button-pagi')}>Previous</button> </span>
       }
 
@@ -28,13 +28,13 @@ function Pagination({ pages, page, setPage }) {
         return <span key= {index} className={cx("number-pagi")} onClick={() => setPage(item)}>
           <ul>
             <li className={cx("link", {
-              "active": active === index
-            })} onClick={() => setActive(index)}>{item}</li>
+              "active": active === item
+            })} onClick={() => setActive(item)}>{item}</li>
           </ul>
         </span>
       })}
       {page < list.length ?
-        <span onClick={() => setPage(page + 1)}><button className={cx('button-pagi')}>Next</button></span>
+        <span onClick={() => [setPage(page + 1), setActive(page + 1)]}><button className={cx('button-pagi')}>Next</button></span>
         : <span><button className={cx('button-pagi')}>Next</button> </span>
       }
     </div>

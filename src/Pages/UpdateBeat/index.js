@@ -244,7 +244,7 @@ function UploadBeat() {
               onChange={(e) => setInputGenres(e.target.value)}
             />} position="right center">
               {listGenres.map((item) => {
-                return <div >{item.name}</div>
+                return <div style={{background: 'white', padding: 10}}  >{item.name}</div>
               })}
             </Popup>
 

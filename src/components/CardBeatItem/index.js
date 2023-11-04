@@ -11,6 +11,10 @@ function CartBeatItem({
   date,
   price,
 }) {
+  const dateReleasing = new Date(date)
+        const month = dateReleasing.getUTCMonth() + 1
+        const day = dateReleasing.getUTCDate()
+        const year = dateReleasing.getUTCFullYear()
   const { removeFromCart } = useContext(ShopContext)
   return (
     <div className={cx("card-wrapper")}>
@@ -20,8 +24,8 @@ function CartBeatItem({
         <h2 className={cx("card-name")}>{name}</h2>
 
       </div>
-      <div className={cx("card-genre")}>
-        {date}
+      <div className={cx("card-date")}>
+        {day}/{month}/{year}
       </div>
 
       <div className={cx("card-author")}>{author}</div>

@@ -168,7 +168,7 @@ import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import styles from "./ViewCart.module.scss";
-import { Button } from "@mui/material";
+import { Backdrop, Button, CircularProgress } from "@mui/material";
 import { useReducer, useRef } from "react";
 import CardItem from "../../components/CardItem";
 import { ShopContext } from "../../context/shop-context";
@@ -207,6 +207,13 @@ function ViewCart() {
     const totalAmount = getTotalCartAmount()
     let beatCheckout = []
     let beatInvoice = []
+    const [open, setOpen] = React.useState(false);
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleOpen = () => {
+        setOpen(true);
+    };
     beatCheckout = listBeatContext
         .filter(item => cartItems && cartItems[item.id] !== 0)
         .map(item => {
@@ -231,12 +238,15 @@ function ViewCart() {
     const handleCheckout = async () => {
         if (beatCheckout.length === 0) {
             setCheckoutMessage("You have not chosen anything to buy")
+            setOpen(false)
+            console.log(open)
             return
         }
         if (token) {
             await axiosInstance.post(`http://localhost:8080/api/v1/paypal`, { totalprice: totalAmount, description: "Payment Success" })
                 .then((res) => {
                     console.log(res.data)
+                    setOpen(false)
                     window.location.href = res.data
                 })
                 .catch((error) => {
@@ -377,7 +387,18 @@ function ViewCart() {
                         </span>
                     </div>
 
-                    <Button className={cx("card-action")} onClick={() => handleCheckout()}>Proceed to Checkout</Button>
+                    <Button className={cx("card-action")} onClick={() => [handleCheckout(), handleOpen()]}>Proceed to Checkout</Button>
+                    {beatCheckout.length !== 0 ?
+                        <Backdrop
+                            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                            open={open}
+                            onClick={handleClose}
+                        >
+                            <CircularProgress color="inherit" />
+                        </Backdrop>
+                        : <div></div>
+                    }
+
                 </footer>
                 <div className={cx("card-payment")}>
                     Payment Method

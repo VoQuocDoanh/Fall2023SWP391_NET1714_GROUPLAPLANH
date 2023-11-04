@@ -46,14 +46,14 @@ function ViewDetailsUser() {
             navigate("/login")
             return
         }
-        await axiosInstance("http://localhost:8080/api/v1/report/user", { userId: userId, userReported: id, content: report })
+        await axiosInstance.post("http://localhost:8080/api/v1/report/user", { userId: userId, userReported: id, content: report })
             .then((res) => {
                 setCheckReport("Report Successfully")
             })
     }
 
     const loadDetailsUser = async () => {
-        await axiosInstance.get(`http://localhost:8080/api/v1/admin/${id}`)
+        await axiosInstance.get(`http://localhost:8080/api/v1/user/${id}`)
             .then((res) => {
                 setUser(res.data)
             })
@@ -66,7 +66,7 @@ function ViewDetailsUser() {
         <div>
             <div>
                 <h2 className={cx("title-myprofile")}>
-                    My Profile
+                    User Profile
                 </h2>
             </div>
             {user ?
@@ -121,6 +121,7 @@ function ViewDetailsUser() {
                                         </div>
                                     </td>
                                 </div>
+                                {(!userId.includes(user.id)) ? 
                                 <div className={cx("part5")}>
                                     <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<button type="button" className={cx("button-save-details")} aria-disabled="false" >Report</button>}  {...{ contentStyle }} position="top center">
                                         <div className={cx("text-all")} style={{ padding: 10 }}>
@@ -141,6 +142,7 @@ function ViewDetailsUser() {
                                         </div>
                                     </Popup>
                                 </div>
+                                : <div></div>}
                                 <div style={{ fontSize: 15, color: "green", marginLeft: 50, marginTop: 20 }}>{checkReport}</div>
 
                             </table>
@@ -157,10 +159,10 @@ function ViewDetailsUser() {
                                 </div>
                                 {/* <input className={cx("img-click")} type="file" accept=".jpg,.jpeg,.png" /> */}
                                 <div className={cx("info-user")}>
-                                    <td>
+                                    <td style={{ marginLeft: 10, fontWeight: 300, fontSize:30}}>
                                         {user.username}
                                     </td>
-                                    <td style={{ marginLeft: 10 }}>
+                                    <td style={{ marginLeft: 10, fontSize:15 }}>
                                         Customer
                                     </td>
                                 </div>
