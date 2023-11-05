@@ -16,7 +16,6 @@ import ViewBeatsAll from "../Pages/ViewBeatsAll";
 import Uploadsong from "../Pages/UploadSong";
 import MusicianProfile from "../Pages/MusicianProfile";
 import AdminProfile from "../Pages/AdminProfile";
-import ViewDetailSong from "../Pages/ViewDetailSong";
 import MyProfile from "../Pages/MyProfile";
 import RegisterActivation from "../Pages/RegisterActivation";
 import ListBeatPurchased from "../Pages/listBeatPurchased";
@@ -26,10 +25,7 @@ import PaymentCancel from "../Pages/PaymentCancel";
 import ViewDetailsUser from "../Pages/ViewDetailsUser";
 import ViewDetailsMusician from "../Pages/ViewDetailsMusician";
 import ViewDetailBeatMusician from "../Pages/ViewDetailBeatMusician";
-import ListOfSong from "../Pages/ListOfSong";
-import FeedbackMusician from "../Pages/FeedbackMusician";
 import UpdateProfile from "../Pages/UpdateProfile";
-import ReportUser from "../Pages/ReportUser";
 import ViewDetailsUserByAdmin from "../Pages/ViewDetailsUserByAdmin";
 import ListBeatSoldOut from "../Pages/ListBeatSoldOut";
 import Contact from "../Pages/Contact";
@@ -142,10 +138,6 @@ const publicRoutes = [
     component: AdminProfile,
   },
   {
-    path: "/viewdetailsong",
-    component: ViewDetailSong,
-  },
-  {
     path: "/myprofile",
     component: MyProfile,
   },
@@ -183,20 +175,8 @@ const publicRoutes = [
     component: ViewDetailsUser,
   },
   {
-    path: "/listofsong",
-    component: ListOfSong,
-  },
-  {
-    path: "/FeedbackMusician",
-    component: FeedbackMusician,
-  },
-  {
     path: "/UpdateProfile",
     component: UpdateProfile,
-  },
-  {
-    path: "/ReportUser",
-    component: ReportUser,
   },
   {
     path: "/Contact",
