@@ -115,11 +115,6 @@ function Login() {
           </Box> */}
           </div>
         </div>
-        {error.username && (
-          <p style={{ color: "red", paddingLeft: 5, marginBottom: -210, fontWeight: 'bold' }}>
-            {error.username}
-          </p>
-        )}
 
         {/* Password */}
         <div style={{ marginTop: -15 }}>
@@ -148,11 +143,7 @@ function Login() {
             />
           </div>
         </div>
-        {error.password && (
-          <p style={{ color: "red", paddingLeft: 5, marginBottom: -210, fontWeight: 'bold' }}>
-            {error.password}
-          </p>
-        )}
+        
         <Button variant="contained" style={{ marginLeft: 24 }} className={cx("submit-wrapper")} onClick={handleSubmit}>
           <input
             type="submit"
@@ -160,11 +151,6 @@ function Login() {
             className={cx("input-submit")}
           />
         </Button>
-        {loginMessage && (
-          <p style={{ color: "light-red", paddingLeft: 5, marginBottom: -210, fontWeight: 'bold', fontWeight: 'Sono' }}>
-            {loginMessage}
-          </p>
-        )}
         <div className={cx("heading")}>
           <span className={cx("title")}>Do not have an account ?</span>
           <Link to="/register" className={cx("link")}>

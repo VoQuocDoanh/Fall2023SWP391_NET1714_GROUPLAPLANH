@@ -13,7 +13,6 @@ import ViewDetailBeat from "../Pages/ViewDetailBeat";
 import ChordsDetails from "../Pages/ChordsDetails";
 import Songs from "../Pages/Songs";
 import ViewBeatsAll from "../Pages/ViewBeatsAll";
-import ListSong from "../Pages/ListSong";
 import Uploadsong from "../Pages/UploadSong";
 import MusicianProfile from "../Pages/MusicianProfile";
 import AdminProfile from "../Pages/AdminProfile";
@@ -46,6 +45,7 @@ const publicRoutes = [
   {
     path: "/",
     component: Home,
+    
   },
   {
     path: "/login",
@@ -70,6 +70,7 @@ const publicRoutes = [
   {
     path: "/listuser",
     component: ListUser,
+
   },
   {
     path: "/listuserreport",
@@ -127,10 +128,6 @@ const publicRoutes = [
   {
     path: "/viewbeatsall",
     component: ViewBeatsAll,
-  },
-  {
-    path: "/listsong",
-    component: ListSong,
   },
   {
     path: "/uploadsong",

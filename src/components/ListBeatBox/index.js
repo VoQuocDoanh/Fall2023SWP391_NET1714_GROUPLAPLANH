@@ -36,12 +36,11 @@ function ListBeatBox({ id, name, genre, price, view, like, onClick, handleLike, 
             {/* Content left */}
             <div className={cx("content-left")}>
                 <h3 className={cx("name-beat")}> <Link style={{color: 'white'}} to={`/viewdetailbeat/${id}`}>{name}</Link> <FontAwesomeIcon className={cx("check")} icon={faCheckCircle} /></h3>
-                <span className={cx("type-beat")}>{fullName}</span> <br />
-                <span className={cx("type-beat")}>{vocalRange}</span>
-
-                <div className={cx("footer")}>
+                <span style={{marginTop: 12}} className={cx("type-beat")}>{fullName}</span><br/>
+                <span style={{marginTop: 12}} className={cx("type-beat")}>{vocalRange}</span>
+                <div style={{marginTop: 12}} className={cx("footer")}>
                     <span className={cx("price")}>${price}</span>
-                    <span className={cx("like")}>
+                    <span style={{width: 30, height: 30}} className={cx("like")}>
                         <FontAwesomeIcon icon={faHeart} onClick={() => handleLike(id)} />
                         <span className={cx("number")}>{like}</span>
                     </span>

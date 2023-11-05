@@ -243,7 +243,10 @@ function MyProfile() {
                                     Customer
                                 </td>
                             </div>
-                            <input className={cx("img-click")} style={{ marginLeft: 100 }} type="file" accept=".jpg,.jpeg,.png" onChange={(e) => setUserImg(e.target.files[0])} />
+                            <label className={cx("file")}>
+                                <input className={cx("img-click")} style={{ marginLeft: 155, marginTop: -5 }} type="file" accept=".jpg,.jpeg,.png" onChange={(e) => setUserImg(e.target.files[0])} />
+                                <span className={cx("file-custom")}></span>
+                            </label>
                         </div>
                     </div>
                 </div>
