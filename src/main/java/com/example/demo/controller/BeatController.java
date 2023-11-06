@@ -31,6 +31,12 @@ public class BeatController {
         return ResponseEntity.ok(this.beatService.findAllOwnBeat(id,page));
     }
 
+    // List ms Beats in US
+    @GetMapping("/user/musician/{id}/all/{page}")
+    public ResponseEntity<PaginationResponseDTO> findAllMSBeat(@PathVariable Long id, @PathVariable int page) {
+        return ResponseEntity.ok(this.beatService.findAllMsBeat(id,page));
+    }
+
     // List all Beats in US
     @GetMapping("/all/{page}")
     public ResponseEntity<PaginationResponseDTO> findAllBeat(@PathVariable int page) {

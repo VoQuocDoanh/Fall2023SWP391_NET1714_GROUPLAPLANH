@@ -191,6 +191,27 @@ public class BeatService {
         }
     }
 
+    public PaginationResponseDTO findAllMsBeat(Long id,int page) {
+        Optional<User> foundUser = this.userRepository.findById(id);
+        Pageable pageable = PageRequest.of(page-1,8);
+        List<BeatResponseDTO> responseDTOS = new ArrayList<>();
+        if(foundUser.isPresent()){
+            Page<Beat> beats = this.beatRepository.findBeatByUsername(foundUser.get().getId(), pageable);
+            List<Beat> b = beatRepository.findMSBeatByUsername(foundUser.get().getId());
+            int pagecount = pageable.getPageNumber();
+            responseDTOS = getBeatResponseDTOS(foundUser,beats);
+            int max = 0;
+            if (responseDTOS.size() % 8 != 0) {
+                max = b.size() / 8 + 1;
+            } else {
+                max = b.size() / 8;
+            }
+            return new PaginationResponseDTO(responseDTOS,pagecount,max);
+        } else {
+            return null;
+        }
+    }
+
     public ResponseEntity<String> insertBeat(MultipartFile full, MultipartFile demo, BeatDTO beatDTO) {
         Optional<User> foundUser = Optional.ofNullable(this.userRepository.findByUsername(beatDTO.getUsername()));
         if (foundUser.isPresent()) {
