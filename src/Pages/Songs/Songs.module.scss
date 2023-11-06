@@ -173,7 +173,7 @@
     margin-left: -10px;
     margin-bottom: 30px;
     font-family: sono;
-    font-size: 3.5rem;
+    font-size: 4rem;
 }
 
 // rythym 
@@ -189,6 +189,11 @@
     cursor: pointer;
     margin: 2px;
     display: inline-block;
+}
+
+.rhythm-item:hover {
+    background-color: #0066CC;
+    color: white;
 }
 
 .panel-content-text-center-padding-both {

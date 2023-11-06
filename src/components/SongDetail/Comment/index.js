@@ -75,6 +75,7 @@ function Comment({ songCommentData, ...props }) {
           <InputGroup size='md'>
             <Input
               pr='4.5rem'
+              height= '50px'
               placeholder='Enter your comment'
               borderRadius={'9999px'}
               value={formData.content}
@@ -84,6 +85,7 @@ function Comment({ songCommentData, ...props }) {
             />
             <InputRightElement
               width='3.5rem'
+              height='50px'
               color={'#1877F2'}
               fontSize={'20px'}
             >

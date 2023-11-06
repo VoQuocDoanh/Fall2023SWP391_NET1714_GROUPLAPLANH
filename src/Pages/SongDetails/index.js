@@ -166,21 +166,9 @@ function SongDetail() {
         setReload={setReload}
       />
       <Box mb={10} mt={6}>
-        <Flex m={"0 auto 1%"} w={"68%"} justifyContent={"flex-end"}>
+        <Flex m={"0 auto 1%"} w={"68%"} justifyContent={"flex-end"} mb={4}>
           <Box display={"flex"}>
-            {(admin || (userId.includes(songData.userid)))  ?
-              <div>
-              <Button
-                height="40px"
-                width="100px"
-                onClick={() => setModalView(true)}
-                colorScheme="teal"
-                variant="outline"
-              >
-                View report
-              </Button>
-              </div>
-              :
+            {(admin || (userId.includes(songData.userid))) ?
               <div>
                 <Button
                   height="40px"
@@ -194,6 +182,19 @@ function SongDetail() {
                 <Button height="40px" width="100px" onClick={onOpen} colorScheme="red" variant="outline" ml={2}>
                   Report
                 </Button>
+              </div>
+              :
+              <div>
+                <Button
+                  height="40px"
+                  width="100px"
+                  onClick={() => setModalView(true)}
+                  colorScheme="teal"
+                  variant="outline"
+                >
+                  View report
+                </Button>
+
               </div>
             }
             <Menu>
@@ -225,7 +226,7 @@ function SongDetail() {
             <LyricsComponent
               songDescription={songDescription}
               userfullname={songData?.userfullname}
-              maxH={"600px"}
+              maxH={"900px"}
               overflowY={"scroll"}
               userId={songData?.userid}
             />
