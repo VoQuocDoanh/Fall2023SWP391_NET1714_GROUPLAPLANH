@@ -163,7 +163,7 @@ function MyCollection() {
       <Stack w={"80%"} m={"3% auto"} spacing={8}>
         <Card>
           <CardHeader display={"flex"} justifyContent={"space-between"} style={{paddingTop:170}}>
-            <Text fontWeight={"700"} fontSize={"2.2rem"}>
+            <Text fontWeight={"700"} fontSize={"4rem"}>
               My Chord Collection
             </Text>
             <Flex alignItems={"center"}>
@@ -215,7 +215,7 @@ function MyCollection() {
         </Card>
         <Card>
           <CardHeader display={"flex"} justifyContent={"space-between"}>
-            <Text fontWeight={"700"} fontSize={"2.2rem"}>
+            <Text fontWeight={"700"} fontSize={"4rem"}>
               My Song Collection
             </Text>
             <Flex alignItems={"center"}>
