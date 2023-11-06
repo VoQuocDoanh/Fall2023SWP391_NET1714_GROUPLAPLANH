@@ -196,8 +196,8 @@ public class BeatService {
         Pageable pageable = PageRequest.of(page-1,8);
         List<BeatResponseDTO> responseDTOS = new ArrayList<>();
         if(foundUser.isPresent()){
-            Page<Beat> beats = this.beatRepository.findBeatByUsername(foundUser.get().getId(), pageable);
-            List<Beat> b = beatRepository.findMSBeatByUsername(foundUser.get().getId());
+            Page<Beat> beats = this.beatRepository.findMSBeat(foundUser.get().getId(), pageable);
+            List<Beat> b = beatRepository.findMSBeat(foundUser.get().getId());
             int pagecount = pageable.getPageNumber();
             responseDTOS = getBeatResponseDTOS(foundUser,beats);
             int max = 0;

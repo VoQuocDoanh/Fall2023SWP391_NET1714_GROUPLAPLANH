@@ -29,11 +29,11 @@ public interface BeatRepository extends JpaRepository<Beat, Long> {
     @Query("select b from Beat b where b.userName.Id = :id and b.userName.status = 1 and b.status = 1 or b.status = 0 order by b.Id")
     Page<Beat> findUserBeatByUsername(Long id, Pageable pageable);
 
-    @Query("select b from Beat b where b.userName.Id = :id and b.userName.status = 1 and b.status = 1 or b.status = -1 order by b.Id")
-    Page<Beat> findBeatByUsername(Long id, Pageable pageable);
+    @Query("select b from Beat b where b.userName.Id = :id and b.userName.status = 1 and (b.status = -1 or b.status = 1) order by b.Id")
+    Page<Beat> findMSBeat(Long id, Pageable pageable);
 
-    @Query("select b from Beat b where b.userName.Id = :id and b.userName.status = 1 and b.status = 1 or b.status = -1 order by b.Id")
-    List<Beat> findMSBeatByUsername(Long id);
+    @Query("select b from Beat b where b.userName.Id = :id and b.userName.status = 1 and (b.status = -1 or b.status = 1) order by b.Id")
+    List<Beat> findMSBeat(Long id);
 
     @Query("select b from Beat b where b.userName.Id = :id and b.userName.status = 1 and b.status = 1 or b.status = 0 order by b.Id")
     List<Beat> listUserBeatByUsername(Long id);
