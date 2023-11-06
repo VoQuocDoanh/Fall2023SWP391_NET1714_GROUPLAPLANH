@@ -67,6 +67,7 @@ public class UserReportService {
         for (User us : users){
             UserResponeDTO dto = new UserResponeDTO(
                     us.getUsername(),
+                    us.getFullName(),
                     us.getRole(),
                     us.getMail(),
                     us.getStatus(),
