@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./Login.module.scss";
 import { useState } from "react";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, Modal, TextField, Typography } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faUser } from '@fortawesome/free-solid-svg-icons';
 import videoBg from '../../assets/video/video (2160p).mp4'
@@ -19,8 +19,22 @@ function Login() {
   const navigate = useNavigate();
   const [error, setError] = useState({});
   const [loginMessage, setLoginMessage] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
   const user = { username, password }
-
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+    fontSize: 25,
+  };
   const handleSubmit = async () => {
     console.log(username, password, isChecked);
 
@@ -28,12 +42,7 @@ function Login() {
     const form = { username: username, password: password };
     let err = ValidationLogin(form);
 
-    if (username === "" || password === "") {
-      console.log(err);
-      setError(err);
-      setLoginMessage("");
-      return;
-    }
+    
 
     await axios.post("http://localhost:8080/api/auth/login", user)
       .then((res) => {
@@ -49,17 +58,14 @@ function Login() {
         }
       })
       .catch((error) => {
-        if (error.response && error.response.status === 403) {
-          // Handle 403 error here
-          console.error("Access Denied (403)");
-          setError(err);
-          setLoginMessage("Access Denied (403): You are banned by Admin");
-        } else {
-          // Handle other errors
-          console.error(error);
-          setError(err);
-          setLoginMessage("Wrong username or password!");
+        if (username === "" || password === "") {
+          setOpenModal(true)
+          setLoginMessage("All fields must not be null!");
+          return;
         }
+        setOpenModal(true)
+          setLoginMessage("Wrong Username or Password!");
+        console.log(error.message)
       })
   };
 
@@ -159,6 +165,21 @@ function Login() {
         </div>
         {/* <img require className={cx("main")} src={require("../../assets/images/Other/")} alt="" /> */}
       </div>
+      <Modal
+        open={openModal}
+        onClose={handleCloseModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography style={{ fontSize: 25 }} id="modal-modal-title" variant="h6" component="h2">
+            Register Failed
+          </Typography>
+          <Typography style={{ fontSize: 20 }} id="modal-modal-description" sx={{ mt: 2 }}>
+            {loginMessage}
+          </Typography>
+        </Box>
+      </Modal>
 
       {/* Footer */}
     </div>

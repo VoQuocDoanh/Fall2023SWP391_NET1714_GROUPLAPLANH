@@ -13,6 +13,7 @@ import music from "../../assets/audio/Dont_Coi.mp3";
 import { useNavigate } from "react-router-dom";
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
+import Pagination from "@/components/Pagination";
 const cx = classNames.bind(styles);
 
 function ViewDetailBeat() {
@@ -35,6 +36,8 @@ function ViewDetailBeat() {
     const [listBeatComment, setListBeatComment] = useState([]);
     const [checkComment, setCheckComment] = useState(null)
     const [beatSoundDemo, setBeatSoundDemo] = useState("")
+    const [page, setPage] = useState(1)
+    const [pages, setPages] = useState(1)
     let userId = ""
     if (token) {
         userId = jwtDecode(token).sub
@@ -158,9 +161,10 @@ function ViewDetailBeat() {
             return
         }
 
-        await axiosInstance.get(`http://localhost:8080/api/v1/beat/musician/${beatDetail.user.fullName}`)
+        await axiosInstance.get(`http://localhost:8080/api/v1/beat/user/musician/${beatDetail.user.id}/all/${page}`)
             .then((res) => {
-                setListMusicianBeat(res.data)
+                setListMusicianBeat(res.data.dtoList)
+                setPages(res.data.max)
 
             })
             .catch(error => {
@@ -210,7 +214,7 @@ function ViewDetailBeat() {
             <div className={cx("first-container")}>
                 <Link to={"/listbeat"}>
                     <Button variant="contained" className={cx("back-to-shop")}>
-                        <div style={{ fontSize: 15, textWrap:'nowrap' }}>Back to Shop</div>
+                        <div style={{ fontSize: 15, textWrap: 'nowrap' }}>Back to Shop</div>
                     </Button>
                 </Link>
                 {/* <div className={cx("text-header")}>
@@ -243,8 +247,8 @@ function ViewDetailBeat() {
 
                                     <div className={cx('information')}>
                                         {console.log(beatDetail)}
-                                        <h1><b style={{color: 'white'}}>{beatDetail.beatName}</b></h1>
-                                        <Link to={`/viewdetailsmusician/${beatDetail.user.id}`}><h4 style={{fontWeight: 500, color: 'white', fontSize: '2.2rem'}}> {beatDetail.user.fullName} &#x2022; 2023 </h4></Link>
+                                        <h1><b style={{ color: 'white' }}>{beatDetail.beatName}</b></h1>
+                                        <Link to={`/viewdetailsmusician/${beatDetail.user.id}`}><h4 style={{ fontWeight: 500, color: 'white', fontSize: '2.2rem' }}> {beatDetail.user.fullName} &#x2022; 2023 </h4></Link>
 
                                     </div>
                                     {/* <div className={cx('button-submit')}>
@@ -265,16 +269,16 @@ function ViewDetailBeat() {
                             </div>
 
                             <div className={cx('mid-detail-right')}>
-                                <h3><b style={{fontSize: '3rem'}}>Musician information</b></h3>
+                                <h3><b style={{ fontSize: '3rem' }}>Musician information</b></h3>
                                 <div className={cx('info-musician')}>
-                                    <span style={{fontSize: '2rem'}} >&#x2022; Name: {beatDetail.user.fullName} </span>
-                                    <span style={{fontSize: '2rem'}} >&#x2022; Contact: {beatDetail.user.mail}</span>
-                                    <span style={{fontSize: '2rem'}} >&#x2022; Profession: {beatDetail.professional}</span>
-                                    <span style={{fontSize: '2rem'}} >&#x2022; Years of operation: {beatDetail.year} years</span>
-                                    <span style={{fontSize: '2rem'}} >&#x2022; Number of beats: {listMusicianBeat.length} </span>
-                                    <span style={{fontSize: '2rem'}} >&#x2022; Prize: {beatDetail.prize}</span>
+                                    <span style={{ fontSize: '2rem' }} >&#x2022; Name: {beatDetail.user.fullName} </span>
+                                    <span style={{ fontSize: '2rem' }} >&#x2022; Contact: {beatDetail.user.mail}</span>
+                                    <span style={{ fontSize: '2rem' }} >&#x2022; Profession: {beatDetail.professional}</span>
+                                    <span style={{ fontSize: '2rem' }} >&#x2022; Years of operation: {beatDetail.year} years</span>
+                                    <span style={{ fontSize: '2rem' }} >&#x2022; Number of beats: {listMusicianBeat.length} </span>
+                                    <span style={{ fontSize: '2rem' }} >&#x2022; Prize: {beatDetail.prize}</span>
                                 </div>
-                                <h3 style={{marginTop: 30, fontSize: '3rem'}} ><b >Beat information</b></h3>
+                                <h3 style={{ marginTop: 30, fontSize: '3rem' }} ><b >Beat information</b></h3>
                                 <div className={cx("container-like")}>
                                     <button className={cx("button")} onClick={() => handleLikeClick(beatDetail.id)}>
                                         <Heart id={checkLike ? cx('favorite-stroke') : cx('favorite-filled')} />
@@ -309,9 +313,9 @@ function ViewDetailBeat() {
                             </div> */}
                                 <div className={cx('list')}>
                                     <div className={cx('genre')}>
-                                        <span style={{fontSize: '2rem'}} >&#x2022; Beat's Name: {beatDetail.beatName}</span>
+                                        <span style={{ fontSize: '2rem' }} >&#x2022; Beat's Name: {beatDetail.beatName}</span>
                                         {beatDetail.genres !== null ?
-                                            <span style={{fontSize: '2rem'}} >&#x2022; Genre:
+                                            <span style={{ fontSize: '2rem' }} >&#x2022; Genre:
                                                 {
                                                     beatDetail.genres.map((item, index) => {
                                                         return <span> {item.name},</span>
@@ -324,25 +328,29 @@ function ViewDetailBeat() {
 
                                             </span>
                                         }
-                                        <span style={{fontSize: '2rem'}} >&#x2022; Price: ${beatDetail.price}</span>
-                                        <span style={{fontSize: '2rem'}} >&#x2022; Views: {(beatDetail.view / 2).toFixed()}</span>
-                                        <span style={{fontSize: '2rem'}} >&#x2022; Tone: {beatDetail.vocalRange}</span>
-                                        <span style={{fontSize: '2rem'}}  >&#x2022; Total Rating: {(beatDetail.totalRating)}</span>
-                                        <span style={{fontSize: '2rem'}} >&#x2022; Release date: {day}/{month}/{year}</span>
+                                        <span style={{ fontSize: '2rem' }} >&#x2022; Price: ${beatDetail.price}</span>
+                                        <span style={{ fontSize: '2rem' }} >&#x2022; Views: {(beatDetail.view / 2).toFixed()}</span>
+                                        <span style={{ fontSize: '2rem' }} >&#x2022; Tone: {beatDetail.vocalRange}</span>
+                                        <span style={{ fontSize: '2rem' }}  >&#x2022; Total Rating: {(beatDetail.totalRating)}</span>
+                                        <span style={{ fontSize: '2rem' }} >&#x2022; Release date: {day}/{month}/{year}</span>
                                     </div>
+                                    {beatDetail.status === 1 ?
+                                    <div>
                                     {token ? <div className={cx('mid-button')}>
-                                        <Button variant="contained" className={cx('button-1')} style={{borderRadius: 15, outline: '3px solid white', marginTop: 40}} onClick={() => addToCart(beatId)}>
-                                            <div style={{fontSize:'1.4rem', textWrap: 'nowrap'}} >Add to cart</div>
+                                        <Button variant="contained" className={cx('button-1')} style={{ borderRadius: 15, outline: '3px solid white', marginTop: 40 }} onClick={() => addToCart(beatId)}>
+                                            <div style={{ fontSize: '1.4rem', textWrap: 'nowrap' }} >Add to cart</div>
                                         </Button>
                                     </div>
                                         : <div className={cx('mid-button')}>
                                             <Link to={"/login"}>
-                                                <Button variant="contained" className={cx('button-1')} style={{borderRadius: 15, outline: '3px solid white', marginTop: 40}}>
+                                                <Button variant="contained" className={cx('button-1')} style={{ borderRadius: 15, outline: '3px solid white', marginTop: 40 }}>
                                                     <div>Add to cart</div>
                                                 </Button>
                                             </Link>
                                         </div>
                                     }
+                                    </div>
+                                    : <h3 style={{marginTop:50}}>Beat is sold out</h3>}
 
 
                                 </div>
@@ -352,7 +360,7 @@ function ViewDetailBeat() {
 
                         <div className={cx('total-detail')}>
                             <div className={cx('title-detail')}>
-                                <span style={{fontSize: '3rem', fontWeight:'bold', display: 'flex', justifyContent: 'center', marginLeft: -70}}>Beats List</span>
+                                <span style={{ fontSize: '3rem', fontWeight: 'bold', display: 'flex', justifyContent: 'center', marginLeft: -70 }}>Beats List</span>
                             </div>
 
                             {listMusicianBeat.map((item, index) => {
@@ -365,12 +373,18 @@ function ViewDetailBeat() {
                                         </div>
                                         <div className={cx('mid-detail-right-2')}>
                                             <div className={cx('text-2')}>
-                                                <h4  className={cx("musician-beat")}><b><Link style={{color: 'white', fontSize: '2rem'}} to={`/viewdetailbeat/${item.id}`}>{item.beatName}</Link></b></h4>
-                                                <span className={cx("musician-name")} style={{fontSize: '1.8rem', color: '#FFFFFF90'}}>{item.user.fullName}</span>
+                                                <h4 className={cx("musician-beat")}><b><Link style={{ color: 'white', fontSize: '2rem' }} to={`/viewdetailbeat/${item.id}`}>{item.beatName}</Link></b></h4>
+                                                <span className={cx("musician-name")} style={{ fontSize: '1.8rem', color: '#FFFFFF90' }}>{item.user.fullName}</span>
                                             </div>
                                         </div>
+
                                     </div>)
                             })}
+                            {pages !== 1 ?
+                            <div className={cx("pagination")}>
+                                <Pagination pages={pages} page={page} setPage={setPage} />
+                            </div>
+                            : <div></div>}
 
 
 
@@ -488,7 +502,7 @@ function ViewDetailBeat() {
                                             <div className={cx('reply')}>
                                                 <div className={cx('replay-title')}>
                                                     <div className={cx('comment-box')}>
-                                                        <span  style={{fontSize: '1.8rem'}} 
+                                                        <span style={{ fontSize: '1.8rem' }}
                                                             onClick={handleCommentClick}
                                                         >
                                                             Trả lời

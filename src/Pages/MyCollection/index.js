@@ -17,6 +17,9 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { GlobalContext } from "@/Provider";
+import { useToast } from "react-toastify";
+import jwtDecode from "jwt-decode";
+import useToken from "@/authorization/useToken";
 
 function MyCollection() {
   const [listPlayList, setListPlayList] = useState([]);
@@ -70,6 +73,13 @@ function MyCollection() {
   const [nextPage2, setNextPage2] = useState(false);
   const [previosPage2, setPreviosPage2] = useState(false);
   const [dynamicPlaylist2, setDynamicPlaylist2] = useState([]);
+  const token = useToken()
+  let userId = ""
+  if(token){
+    userId = jwtDecode(token).sub
+    console.log(jwtDecode(token).sub)
+    console.log(userId)
+  }
 
   const getPaginationListOfMyPlaylistChords = (status, list) => {
     let value = 0;
@@ -100,7 +110,8 @@ function MyCollection() {
   };
 
   useEffect(() => {
-    const id = 3;
+    {console.log(userId)}
+    const id = userId;
 
     const fetchData = async () => {
       try {
@@ -159,10 +170,10 @@ function MyCollection() {
     />
   ));
   return (
-    <div style={{marginTop:-75}}>
+    <div style={{height:"auto"}}>
       <Stack w={"80%"} m={"3% auto"} spacing={8}>
-        <Card>
-          <CardHeader display={"flex"} justifyContent={"space-between"} style={{paddingTop:170}}>
+        <Card style={{marginTop:30}}>
+          <CardHeader display={"flex"} justifyContent={"space-between"} style={{paddingTop:12.5}}>
             <Text fontWeight={"700"} fontSize={"2.2rem"}>
               My Chord Collection
             </Text>
@@ -209,9 +220,12 @@ function MyCollection() {
                 listChord?.length === 5 ? "space-between" : "flex-start"
               }
             >
-              {ListMyChordHTML}
+              {ListMyChordHTML.length !== 0 ? ListMyChordHTML : <div>There are no chord collection</div>}
+              <div>123</div>
             </Flex>
+            
           </CardBody >
+          
         </Card>
         <Card>
           <CardHeader display={"flex"} justifyContent={"space-between"}>
@@ -261,7 +275,7 @@ function MyCollection() {
                 listPlayList?.length === 5 ? "space-between" : "flex-start"
               }
             >
-              {ListMyPLaylistHTML}
+              {ListMyPLaylistHTML.length !== 0 ? ListMyPLaylistHTML : <div>There are no chord collection</div>}
             </Flex>
           </CardBody>
         </Card>

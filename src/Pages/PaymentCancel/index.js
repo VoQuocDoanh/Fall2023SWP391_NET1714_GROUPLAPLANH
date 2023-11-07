@@ -24,27 +24,8 @@ function PaymentCancel() {
     }
   };
   const activateMessage = useParams();
-  const login = () =>{
-    navigate("/")
+  const login = () => {
   }
-  const handleActivation = async () => {
-    await axios.get("http://localhost:8080/api/v1/user/active", {
-      params: {
-        activetoken: activetoken
-      }
-    })
-      .then((res) => {
-        console.log(res)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
-
-  useEffect(() =>{
-    handleActivation()
-  },[])
-
   return (
     <div>
       <div className={cx("icon")}>
@@ -68,10 +49,10 @@ function PaymentCancel() {
         Cancel Payment Successfully
       </div>
       <div className={cx("text")}>
-        Redirect to Home Page...
+        Redirect to Beat Page...
       </div>
       <div className={cx("countdown")}>
-      <Countdown date={Date.now() + 5000} renderer={renderer} />
+        <Countdown date={Date.now() + 3000} renderer={renderer} />
       </div>
     </div>
   );

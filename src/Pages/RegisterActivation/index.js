@@ -71,7 +71,7 @@ function RegisterActivation() {
         Redirect to Home Page...
       </div>
       <div className={cx("countdown")}>
-      <Countdown date={Date.now() + 5000} renderer={renderer} />
+      <Countdown date={Date.now() + 3000} renderer={renderer} />
       </div>
     </div>
   );

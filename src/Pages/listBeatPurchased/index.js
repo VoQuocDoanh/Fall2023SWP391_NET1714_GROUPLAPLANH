@@ -48,38 +48,38 @@ function ListBeatPurchased() {
         loadMusicianName()
     }, [])
 
-    const handleSearch = async() => {
-        if(!token){
+    const handleSearch = async () => {
+        if (!token) {
             navigate("/login")
             return
         }
-        if(search !== ""){
-        await axiosInstance.get(`http://localhost:8080/api/v1/beat/name/${search}`)
-        .then((res) => {
-            setList(res.data)
-        })
-        .catch((error) =>{
-            console.log(error)
-        })
-    }else{
-        await axiosInstance.get(`http://localhost:8080/api/v1/beat/user/${jwtDecode(token).sub}/${page}`)
-            .then(res => {
-                setList(res.data.dtoList)
-                setPages(res.data.max)
-                console.log(pages)            
-            })
-            .catch((error) => {
-                if (error.message.includes("Network")) {
-                    navigate("/login")
-                }
-            })
-    }
+        if (search !== "") {
+            await axiosInstance.get(`http://localhost:8080/api/v1/beat/name/${search}`)
+                .then((res) => {
+                    setList(res.data)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        } else {
+            await axiosInstance.get(`http://localhost:8080/api/v1/beat/user/${jwtDecode(token).sub}/${page}`)
+                .then(res => {
+                    setList(res.data.dtoList)
+                    setPages(res.data.max)
+                    console.log(pages)
+                })
+                .catch((error) => {
+                    if (error.message.includes("Network")) {
+                        navigate("/login")
+                    }
+                })
+        }
         // setList(data);
     }
 
 
     const loadBeats = async () => {
-        if(!token){
+        if (!token) {
             navigate("/login")
             return
         }
@@ -117,39 +117,41 @@ function ListBeatPurchased() {
     }
 
     //  
-    {console.log(list)}
-        return (
-            <div className={cx("list-header")}>
-                {listGenres && listMusicianName ?
-                    <Sidebar listGenres={listGenres} listMusicianName={listMusicianName} page = {2}></Sidebar>
-                    : <div></div>}
-                <div className={cx("text-header")} >
-                    <h1 className={cx("text-welcome")} style={{marginBottom:200}}>
-                        My Beat Purchased
-                    </h1>
+    { console.log(list) }
+    return (
+        <div className={cx("list-header")}>
+            {listGenres && listMusicianName ?
+                <Sidebar listGenres={listGenres} listMusicianName={listMusicianName} page={2}></Sidebar>
+                : <div></div>}
+            <div className={cx("text-header")} >
+                <h1 className={cx("text-welcome")} style={{ marginBottom: 200 }}>
+                    My Beat Purchased
+                </h1>
 
-                </div>
-                
+            </div>
 
-                {/* <div className={cx("list-beat")}>
+
+            {/* <div className={cx("list-beat")}>
                 {list.map((item, index) => {
                     return <ListBeatBox key={index} name={item.name} type={item.type} price={item.price} member={item.member} play={play} setPlay={setPlay} />
                 })}
             </div> */}
-                {list?
-                    <div>
-                        <div className={cx("listbeat")}>
-                            {list.map((item) => {
-                                return <ListBeatPurchasedBox id={item.id} name={item.beatName} genre={item.genre} price={item.price} view={(item.view / 2).toFixed()} like={item.totalLike} rating={item.rating} vocalRange={item.vocalRange} fullName={item.user.fullName} page={2} />
-                            })}
-                        </div>
+            {list ?
+                <div>
+                    <div className={cx("listbeat")}>
+                        {list.map((item) => {
+                            return <ListBeatPurchasedBox id={item.id} name={item.beatName} genre={item.genre} price={item.price} view={(item.view / 2).toFixed()} like={item.totalLike} rating={item.rating} vocalRange={item.vocalRange} fullName={item.user.fullName} page={2} />
+                        })}
+                    </div>
+                    {pages !== 1 ?
                         <div className={cx("pagination")}>
                             <Pagination pages={pages} page={page} setPage={setPage} />
                         </div>
-                    </div>
-                    : <div className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 600 }}> You are not buying any beats<div> Visiting our website to buy the beats </div> </div>}
+                        : <div></div>}
+                </div>
+                : <div className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 600 }}> You are not buying any beats<div> Visiting our website to buy the beats </div> </div>}
 
-                {/* <div className={cx("audio")}>
+            {/* <div className={cx("audio")}>
 
                 <div className={cx("control")}>
                     <div className={cx("btn", "btn-prev")}>
@@ -175,12 +177,12 @@ function ListBeatPurchased() {
                     <span className={cx("end")}>0:00</span>
                 </div>
             </div> */}
-                {/* <audio style={{ borderRadius: 10 }} id="audio" ref={audioRef} src={srcMusic}>
+            {/* <audio style={{ borderRadius: 10 }} id="audio" ref={audioRef} src={srcMusic}>
             </audio> */}
 
-            </div>
+        </div>
 
-        );
+    );
 }
 
 export default ListBeatPurchased;

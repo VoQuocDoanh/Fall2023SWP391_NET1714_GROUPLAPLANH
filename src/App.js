@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { publicRoutes } from "./routes";
+import { notificationRoutes, publicRoutes } from "./routes";
 import DefaultLayout from "./components/DefaultLayout/DefaultLayout";
 import CustomLayout from "./components/CustomLayout";
 import ShopContextProvider from "./context/shop-context";
@@ -23,6 +23,20 @@ function App() {
                     </Layout>
                   }
                 />
+              );
+            })}
+          </Routes>
+          <Routes>
+          {notificationRoutes.map((route,index) => {
+              const Page = route.component;
+              return(
+                <Route 
+                  key={index}
+                  path={route.path}
+                  element={
+                    <Page/>
+                  }
+                  />
               );
             })}
           </Routes>

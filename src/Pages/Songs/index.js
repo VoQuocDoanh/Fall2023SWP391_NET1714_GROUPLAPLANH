@@ -166,7 +166,7 @@ function Songs() {
                                                 </div>
                                                 <div className={cx('song-name')}>
                                                     <span style={{ fontWeight: 500 }}>{song.songName}</span>
-                                                    <span>{song.author}</span>
+                                                    <span>{song.singer}</span>
                                                 </div>
                                             </div>
                                         </Link>
@@ -183,9 +183,12 @@ function Songs() {
                                     </div>
                                 ))}
 
-                            </div><div className={cx("pagination")}>
-                                <Pagination pages={pages} page={page} setPage={setPage} />
                             </div>
+                            {pages !== 1 ?
+                                <div className={cx("pagination")}>
+                                    <Pagination pages={pages} page={page} setPage={setPage} />
+                                </div>
+                                : <div></div>}
                         </div>
                         : <div> There are no songs in the system! </div>}
                     {/* <div className={cx('pagination')}>

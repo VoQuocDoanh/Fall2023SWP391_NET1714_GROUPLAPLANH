@@ -4,7 +4,7 @@ import styles from "./SideBar.module.scss";
 import classNames from "classnames/bind";
 import { Sidebar } from "react-pro-sidebar";
 const cx = classNames.bind(styles);
-const SideBar = ({listGenres, listMusicianName, setGenre, setMusicianName, page}) => {
+const SideBar = ({listGenres, listMusicianName, handleSearchByGenres, handleSearchByMusicianName, page}) => {
     console.log("Page" + page)
     if(page === 1)
     return (
@@ -19,13 +19,13 @@ const SideBar = ({listGenres, listMusicianName, setGenre, setMusicianName, page}
                 
                         <SubMenu label="Genre">
                             {listGenres.map((item) => {
-                                return <MenuItem onClick={() => setGenre(item.name)} > {item.name}</MenuItem>
+                                return <MenuItem onClick={() => handleSearchByGenres(item.name)} > {item.name}</MenuItem>
                             })}
                         </SubMenu>
                         {console.log(listMusicianName)}
                         <SubMenu label="Musician">
                             {listMusicianName.map((item) => {
-                                return <MenuItem onClick={() => setMusicianName(item)}>{item}</MenuItem>
+                                return <MenuItem onClick={() => handleSearchByMusicianName(item)}>{item}</MenuItem>
                             })}
                         </SubMenu>
                     </Menu>

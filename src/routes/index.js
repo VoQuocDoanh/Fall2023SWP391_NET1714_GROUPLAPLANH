@@ -17,11 +17,9 @@ import Uploadsong from "../Pages/UploadSong";
 import MusicianProfile from "../Pages/MusicianProfile";
 import AdminProfile from "../Pages/AdminProfile";
 import MyProfile from "../Pages/MyProfile";
-import RegisterActivation from "../Pages/RegisterActivation";
 import ListBeatPurchased from "../Pages/listBeatPurchased";
 import ViewDetailBeatPurchased from "../Pages/ViewDetailBeatPurchased";
 import PaymentSuccess from "../Pages/PaymentSuccess";
-import PaymentCancel from "../Pages/PaymentCancel";
 import ViewDetailsUser from "../Pages/ViewDetailsUser";
 import ViewDetailsMusician from "../Pages/ViewDetailsMusician";
 import ViewDetailBeatMusician from "../Pages/ViewDetailBeatMusician";
@@ -37,6 +35,9 @@ import ListAllUserBan from "../Pages/listAllUserBan";
 import UserSong from "@/Pages/UserSong";
 import ReportSong from "@/Pages/ReportSong";
 import ListUserReport from "@/Pages/ListUserReport";
+import RegisterActivation from "@/Pages/RegisterActivation";
+import MailActivation from "@/Pages/MailActivation";
+import PaymentCancel from "@/Pages/PaymentCancel";
 const publicRoutes = [
   {
     path: "/",
@@ -141,11 +142,6 @@ const publicRoutes = [
     path: "/myprofile",
     component: MyProfile,
   },
-
-  {
-    path: "/registeractivation",
-    component: RegisterActivation,
-  },
   {
     path: "/listbeatpurchased",
     component: ListBeatPurchased,
@@ -153,10 +149,6 @@ const publicRoutes = [
   {
     path: "/listbeatsoldout",
     component: ListBeatSoldOut,
-  },
-  {
-    path: "/payment/cancel",
-    component: PaymentCancel,
   },
   {
     path: "/payment/success",
@@ -205,6 +197,21 @@ const publicRoutes = [
   },
 ];
 
+const notificationRoutes = [
+  {
+    path: "/registeractivation",
+    component: RegisterActivation,
+  },
+  {
+    path: "/mailactivation",
+    component: MailActivation,
+  },
+  {
+    path: "/payment/cancel",
+    component: PaymentCancel,
+  },
+]
+
 const privateRoute = [];
 
-export { publicRoutes, privateRoute };
+export { publicRoutes, privateRoute, notificationRoutes };

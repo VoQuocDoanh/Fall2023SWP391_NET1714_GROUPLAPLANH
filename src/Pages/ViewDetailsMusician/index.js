@@ -43,8 +43,12 @@ function MyProfile() {
     const [page, setPage] = useState(1)
     const [pages, setPages] = useState(1)
     const [feedBacks, setFeedBacks] = useState([]);
+    const [listMusicianBeat, setListMusicianBeat] = useState([])
     const { id } = useParams()
 
+    useEffect(() => {
+        loadMusicianBeat()
+    }, [])
 
     useEffect(() => {
         loadDetailUser()
@@ -103,6 +107,19 @@ function MyProfile() {
             })
     }
 
+    const loadMusicianBeat = async () => {
+
+        await axiosInstance.get(`http://localhost:8080/api/v1/beat/user/musician/${id}/all/${page}`)
+            .then((res) => {
+                setListMusicianBeat(res.data.dtoList)
+                setPages(res.data.max)
+
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
     return (
         <div style={{ marginTop: 50 }}>
             <div>
@@ -134,6 +151,7 @@ function MyProfile() {
                     <TabList>
                         <Tab ><b>Profile</b></Tab>
                         <Tab ><b>Feedback</b></Tab>
+                        <Tab ><b>Beat</b></Tab>
                     </TabList>
                     {/* Detail musician */}
                     <TabPanel>
@@ -255,9 +273,9 @@ function MyProfile() {
                                                 <div className={cx("part0")}>
                                                     <td>
                                                         <div className={cx("text-username0")}>
-                                                            <td>
-                                                                <label style={{ fontFamily: 'sono', fontWeight: 400, marginLeft: -2 }} className={cx("login-text")}>{feedback.beat.beatName}</label>
-                                                                <label style={{ marginLeft: 20, fontFamily: 'Sono', fontWeight: 400 }} className={cx("login-text")}>{feedback.user.fullName}</label>
+                                                            <td>                                                          
+                                                                <label style={{ fontFamily: 'sono', fontWeight: 400, marginLeft: -2 }} className={cx("login-text")}>{feedback.user.fullName}</label>
+                                                                <label style={{ marginLeft: 20, fontFamily: 'Sono', fontWeight: 400 }} className={cx("login-text")}>{feedback.beat.beatName}</label>
                                                             </td>
                                                             <div>
                                                                 <input className={cx("input-username0")} type="text" placeholder value={feedback.content} readOnly />
@@ -267,11 +285,48 @@ function MyProfile() {
                                                 </div>
                                             </table>)
                                     })}
-                                    <div className={cx("pagination")}>
-                                        <Pagination pages={pages} page={page} setPage={setPage} />
-                                    </div>
+                                    {pages !== 1 ?
+                                        <div className={cx("pagination")}>
+                                            <Pagination pages={pages} page={page} setPage={setPage} />
+                                        </div>
+                                        : <div></div>}
                                 </form>
                                 : <div> There are no feedbacks </div>}
+                        </div>
+
+                    </TabPanel>
+                    <TabPanel>
+                        <div className={cx("volt8A")}>
+                            <div style={{ color: '#06c', fontWeight: 'bold' }} className={cx("title-feedback")}> All Beats</div>
+                            {console.log(feedBacks)}
+                            {listMusicianBeat.length !== 0 ?
+
+                                <form style={{ marginTop: 20 }}>
+                                    {listMusicianBeat.map((beat) => {
+                                        return (
+                                            <table className={classNames("profile-2")}>
+                                                <div className={cx("part0")}>
+                                                    <td>
+                                                        <div className={cx("text-username0")}>
+                                                            <td>
+                                                                <Link style={{color:"black"}} to={`/viewdetailbeat/${beat.id}`}><label style={{ fontFamily: 'sono', fontWeight: 400, marginLeft: -2 }} className={cx("login-text")}>{beat.beatName}</label></Link>
+                                                            </td>
+                                                            {beat.status === 1 ?
+                                                            <div>Active</div>
+                                                            : <div>Sold out</div>
+                                                            }
+                                                        </div>
+                                                    </td>
+                                                </div>
+                                            </table>)
+                                    })}
+                                    {pages !== 1 ?
+                                        <div className={cx("pagination")}>
+                                            <Pagination pages={pages} page={page} setPage={setPage} />
+                                        </div>
+                                        : <div></div>}
+                                </form>
+                                : <div> There are no beats of this Musician </div>}
                         </div>
 
                     </TabPanel>

@@ -102,9 +102,11 @@ function ListUser() {
                         })}
 
                     </tbody> : <div> </div>}
-                <div className={cx("pagination")}>
-                    <Pagination pages={pages} page={page} setPage={setPage} />
-                </div>
+                {pages !== 1 ?
+                    <div className={cx("pagination")}>
+                        <Pagination pages={pages} page={page} setPage={setPage} />
+                    </div>
+                    : <div></div>}
             </div>
         </div>
     );

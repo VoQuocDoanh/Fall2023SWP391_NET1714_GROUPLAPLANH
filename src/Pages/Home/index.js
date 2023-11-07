@@ -67,7 +67,7 @@ function Home() {
           </div>
           <div className={cx("trending-parts")}>
             {/* Trending detail */}
-            <div className={cx("trending-details")}>
+            <Link style={{color:"black"}} to={"/viewdetailbeat/34"}><div className={cx("trending-details")}>
               <div className={cx("trending-top")}>
                 <div className={cx("trending-top-left")}>
                   <div>
@@ -92,7 +92,7 @@ function Home() {
                     <div className={cx("chord-img-trending")}>
                       <div className={cx("text-trending")}>
                         <span className={cx("text-ellipse3")}>
-                          Chords
+                          Beat
                         </span>
 
                         <div className={cx("trending-text")}>
@@ -139,10 +139,10 @@ function Home() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div></Link>
 
             {/* Trending detail */}
-            <div className={cx("trending-details")}>
+            <Link style={{color:"black"}} to={"/viewdetailbeat/37"}><div className={cx("trending-details")}>
               <div className={cx("trending-top")}>
                 <div className={cx("trending-top-left")}>
                   <div>
@@ -167,7 +167,7 @@ function Home() {
                     <div className={cx("chord-img-trending")}>
                       <div className={cx("text-trending")}>
                         <span className={cx("text-ellipse3")}>
-                          Chords
+                          Beat
                         </span>
 
                         <div className={cx("trending-text")}>
@@ -216,7 +216,7 @@ function Home() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div></Link>
 
 
 
@@ -235,7 +235,7 @@ function Home() {
           </div>
 
           <div className={cx("title-categories")}>
-            <div className={cx("categories-items")}>
+            <Link to={"/chordsdetails"}><div className={cx("categories-items")}>
 
               <img className={cx("img")} src={require("../../assets/images/Chords/Rectangle 23.png")} alt="Guitar">
               </img>
@@ -247,9 +247,9 @@ function Home() {
                 50 Episode
               </div>
 
-            </div>
+            </div></Link>
 
-            <div className={cx("categories-items")}>
+            <Link to={"/chordsdetails"}><div className={cx("categories-items")}>
               <img className={cx("img")} src={require("../../assets/images/Chords/Rectangle 18.png")} alt="Piano">
               </img>
               <div className={cx("content-1")}>
@@ -258,9 +258,9 @@ function Home() {
               <div className={cx("content-2")}>
                 50 Episode
               </div>
-            </div>
+            </div></Link>
 
-            <div className={cx("categories-items")}>
+            <Link to={"/chordsdetails"}><div className={cx("categories-items")}>
               <img className={cx("img")} src={require("../../assets/images/Chords/Rectangle 19.png")} alt="Ukulele">
               </img>
               <div className={cx("content-1")}>
@@ -269,7 +269,7 @@ function Home() {
               <div className={cx("content-2")}>
                 50 Episode
               </div>
-            </div>
+            </div></Link>
 
           </div>
         </div>
@@ -283,7 +283,7 @@ function Home() {
           </div>
           {/* Chords of Songs detail */}
           <div className={cx("chords-part")}>
-            <div className={cx("chords-details")}>
+          <Link style={{color:"black"}} to={"/songs"}><div className={cx("chords-details")}>
               <img className={cx("chords-details-img")} src={require("../../assets/images/ChordsOfSongs/bao-lau-len-day-dan-piano-5.jpg")}>
               </img>
               <div className={cx("content-3")}>
@@ -338,9 +338,9 @@ function Home() {
                 <div>924k</div>
 
               </div>
-            </div>
+            </div></Link>
 
-            <div className={cx("chords-details")}>
+            <Link style={{color:"black"}} to={"/songs"}><div className={cx("chords-details")}>
               <img className={cx("chords-details-img")} src={require("../../assets/images/ChordsOfSongs/gia-dan-ukulele-size-24.jpg")}>
               </img>
               <div className={cx("content-3")}>
@@ -394,9 +394,9 @@ function Home() {
                 <div>2k5</div>
                 <div>924k</div>
               </div>
-            </div>
+            </div></Link>
 
-            <div className={cx("chords-details")}>
+            <Link style={{color:"black"}} to={"/songs"}><div className={cx("chords-details")}>
               <img className={cx("chords-details-img")} src={require("../../assets/images/ChordsOfSongs/Rectangle 36.png")}>
               </img>
               <div className={cx("content-3")}>
@@ -451,7 +451,7 @@ function Home() {
                 <div>924k</div>
               </div>
 
-            </div>
+            </div></Link>
 
           </div>
         </div>

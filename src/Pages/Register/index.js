@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./Register.module.scss";
 import { useState } from "react";
-import { Backdrop, Button, CircularProgress } from "@mui/material";
+import { Backdrop, Box, Button, CircularProgress, Modal, Typography } from "@mui/material";
 import axios from "axios";
 import videoBg from '../../assets/video/video (2160p).mp4'
 
@@ -21,6 +21,9 @@ function Register() {
   const [registrationMessage, setRegistrationMessage] = useState(null)
   const user = { userName, password, email, fullName, role }
   const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
   const handleClose = () => {
     setOpen(false);
   };
@@ -28,26 +31,69 @@ function Register() {
     setOpen(true);
   };
   const navigate = useNavigate();
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+    fontSize: 25,
+  };
 
   const handleSubmit = async (e) => {
     setRegistrationMessage()
     console.log(userName, password, email, fullName, role);
-    if (!userName || !password || !email || !fullName || !role) {
-      alert("Please fill in all fields!");
-      return;
-    }
-    if (password !== checkPassword) {
-      alert("Confirm Password not match Password")
-      return;
-    }
+
     await axios.post("http://localhost:8080/api/auth/register", user)
       .then((res) => {
         console.log(userName, password, email, fullName, role);
+        setRegistrationMessage("Register Successfully. Please go to your mail to activate your account!")
+        setOpenModal(true)
         setOpen(false)
-        setRegistrationMessage("Register Successfully! \n Go to mail to active your account")
+
       })
       .catch((error) => {
-        setRegistrationMessage("Username has been used!")
+        if (!userName || !password || !email || !fullName || !role) {
+          setRegistrationMessage("All fields must not be null!")
+          setOpenModal(true)
+          setOpen(false)
+          return
+        }
+        if (password !== checkPassword) {
+          setRegistrationMessage("Confirm Password not match Password!")
+          setOpenModal(true)
+          setOpen(false)
+          return;
+        }
+        if (userName.length < 6) {
+          setRegistrationMessage("Username must be at least 6 characters!")
+          setOpenModal(true)
+          setOpen(false)
+          return
+        }
+        if (password.length < 6) {
+          setRegistrationMessage("Quick Password!")
+          setOpenModal(true)
+          setOpen(false)
+          return
+        }
+        if (!email.match("^[A-Za-z0-9+_.-]+@(gmail\\.com|gmail\\.com\\.vn|fpt\\.edu\\.vn)$")) {
+          setRegistrationMessage("Invalid Email!")
+          setOpenModal(true)
+          setOpen(false)
+          return
+        }
+        if(error.response.data){
+          setRegistrationMessage("Username or Email has been used!")
+        setOpenModal(true)
+        setOpen(false)
+        return
+        }
+        
       })
 
   }
@@ -216,7 +262,7 @@ function Register() {
           />
         </div>
 
-        <Button variant="contained" className={cx("input", "submit")} onClick={() => [handleSubmit(),handleOpen()]}>
+        <Button variant="contained" className={cx("input", "submit")} onClick={() => [handleSubmit(), handleOpen()]}>
           <input
             type="submit"
             value="Sign up"
@@ -230,21 +276,22 @@ function Register() {
         >
           <CircularProgress color="inherit" />
         </Backdrop>
-        {registrationMessage ?
-          <div>
-            {registrationMessage.includes("Successfully")
-              ?
-              <p style={{ color: "green", marginTop: 10, paddingLeft: 5 }}>
-                {registrationMessage}
-              </p>
-              :
-              <p style={{ color: "red", marginTop: 10, paddingLeft: 5 }}>
-                {registrationMessage}
-              </p>}
-          </div>
-          :
-          <div></div>}
       </div>
+      <Modal
+        open={openModal}
+        onClose={handleCloseModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography style={{ fontSize: 25 }} id="modal-modal-title" variant="h6" component="h2">
+            Register Failed
+          </Typography>
+          <Typography style={{ fontSize: 20 }} id="modal-modal-description" sx={{ mt: 2 }}>
+            {registrationMessage}
+          </Typography>
+        </Box>
+      </Modal>
 
       {/* Footer */}
     </div>

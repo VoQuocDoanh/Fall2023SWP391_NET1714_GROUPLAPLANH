@@ -203,7 +203,9 @@ const cx = classNames.bind(styles);
 // ];
 
 function ViewCart() {
-    const { cartItems, getTotalCartAmount, checkOut, listBeatContext } = useContext(ShopContext)
+    const { getTotalCartAmount, checkOut, listBeatContext } = useContext(ShopContext)
+    const cartItems = JSON.parse(localStorage.getItem("Cart"))
+    console.log(JSON.parse(localStorage.getItem("Cart")))
     const totalAmount = getTotalCartAmount()
     let beatCheckout = []
     let beatInvoice = []
@@ -245,11 +247,18 @@ function ViewCart() {
         if (token) {
             await axiosInstance.post(`http://localhost:8080/api/v1/paypal`, { totalprice: totalAmount, description: "Payment Success" })
                 .then((res) => {
+                    if (localStorage.getItem("CheckOutPage") !== null) {
+                        localStorage.removeItem("CheckOutPage")
+                    }
+                    if (localStorage.getItem("CheckOutPage") === null) {
+                        localStorage.setItem("CheckOutPage", JSON.stringify("true"))
+                    }
                     console.log(res.data)
                     setOpen(false)
                     window.location.href = res.data
                 })
                 .catch((error) => {
+                    setOpen(false)
                     if (error.message.includes("Network")) {
                         navigate("/login")
                     } else if (error.message.includes("501")) {
@@ -324,9 +333,7 @@ function ViewCart() {
                         {listBeatContext.map((item, index) => {
                             if (cartItems) {
                                 if (cartItems[item.id] !== 0) {
-                                    { console.log(123) }
                                     return (
-
                                         <CardItem
                                             id={item.id}
                                             name={item.beatName}

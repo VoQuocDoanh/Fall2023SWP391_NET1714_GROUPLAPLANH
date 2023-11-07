@@ -33,8 +33,6 @@ function ListBeat() {
     const [checkLike, setCheckLike] = useState();
     const [page, setPage] = useState(1)
     const [pages, setPages] = useState(1)
-    const [genre, setGenre] = useState()
-    const [musicianName, setMusicianName] = useState()
     const pageRole = 1 
     // 
     // const handleClickAudio = (value) => {
@@ -79,25 +77,12 @@ function ListBeat() {
         loadMusicianName()
     }, [])
 
-    useEffect(() => {
-        handleSearchByGenres()
-    },[genre])
-
-    useEffect(() => {
-        handleSearchByMusicianName()
-    },[musicianName])
-
-
-
     const loadBeats = async () => {
-        console.log(page)
         await axiosInstance.get(`http://localhost:8080/api/v1/beat/all/${page}`)
             .then(res => {
-                
                 setList(res.data.dtoList)
                 setListBeatContext(res.data.dtoList)
                 setPages(res.data.max)
-                console.log(pages)
                 if (viewBeatFirstTime === 0) {
                     setViewBeatFirstTime(1)
                 }
@@ -176,30 +161,32 @@ function ListBeat() {
         // setList(data);
     }
 
-    const handleSearchByGenres = async() =>{
-        await axiosInstance.get(`http://localhost:8080/api/v1/beat/genre/${genre}`)
+    const handleSearchByGenres = async(e) =>{
+        await axiosInstance.get(`http://localhost:8080/api/v1/beat/genre/${e}`)
         .then((res) => {
             setList(res.data)
+            setPages(1)
         })
         .catch((error) => {
             console.log(error)
         })
     }
 
-    const handleSearchByMusicianName = async() =>{
-        await axiosInstance.get(`http://localhost:8080/api/v1/beat/musician/${musicianName}`)
+    const handleSearchByMusicianName = async(e) =>{
+        await axiosInstance.get(`http://localhost:8080/api/v1/beat/musician/${e}`)
         .then((res) => {
             setList(res.data)
+            setPages(1)
         })
         .catch((error) => {
             console.log(error)
         })
     }
-    console.log(list)
         return (
             <div className={cx("list-header")}>
+                {console.log(list)}
                 {listGenres && listMusicianName ?
-                    <Sidebar listGenres={listGenres} listMusicianName={listMusicianName} setGenre = {setGenre} setMusicianName={setMusicianName} page = {1}></Sidebar>
+                    <Sidebar listGenres={listGenres} listMusicianName={listMusicianName} handleSearchByGenres={handleSearchByGenres} handleSearchByMusicianName={handleSearchByMusicianName} page = {1}></Sidebar>
                     : <div></div>}
                 <div className={cx("text-header")}>
                     <h1 className={cx("text-welcome")}>
@@ -228,9 +215,11 @@ function ListBeat() {
                             })}
 
                         </div>
-                        <div className={cx("pagination")}>
-                            <Pagination pages={pages} page={page} setPage={setPage} />
-                        </div>
+                        {pages !== 1 ?
+                            <div className={cx("pagination")}>
+                                <Pagination pages={pages} page={page} setPage={setPage} />
+                            </div>
+                            : <div></div>}
                     </div>
 
                     : <div className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 600 }}> All Beat are sold out!<div> Thank you for your visiting on our website </div> </div>}
