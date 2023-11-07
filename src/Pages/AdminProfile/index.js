@@ -103,7 +103,7 @@ function MyProfile() {
                                 <td>
                                     <div className={cx("text-username0")}>
                                         <td >
-                                            <label className={cx("login-text")}>Full Name</label>
+                                            <label className={cx("login-text")}>Full Name*</label>
                                         </td>
                                         <div>
                                             <input className={cx("input-username0")} type="text" placeholder value={fullName} onChange={(e) => setFullname(e.target.value)} autoFocus />
@@ -116,7 +116,7 @@ function MyProfile() {
                                 <td>
                                     <div className={cx('text-username0')}>
                                         <td >
-                                            <label className={cx("login-text")}>Email</label>
+                                            <label className={cx("login-text")}>Email*</label>
                                         </td>
                                         <div>
                                             <input className={cx("input-username0")} type="text" placeholder value={mail} onChange={(e) => setMail(e.target.value)} autoFocus />
@@ -126,8 +126,8 @@ function MyProfile() {
                             </div>
 
                             <div className={cx("part4")} style={{ marginLeft: 65 }}>
-                                <td className={cx("sex")}>
-                                    Sex
+                                <td style= {{fontWeight: '500'}} className={cx("sex")}>
+                                    Gender*
                                 </td>
                                 <td>
                                     <div className={cx("sex-button")}>

@@ -1,8 +1,7 @@
 @import "normalize.css";
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
-$gradient-colors:#ececec, #ececec, #ececec, #ececec, #ececec, #d8d8da, #c5c5c8, #b1b2b6, #85898f, #5b636a, #334045, #0d1f23;
+$gradient-colors: #ececec, #ececec, #ececec, #ececec, #ececec, #d8d8da, #c5c5c8, #b1b2b6, #85898f, #5b636a, #334045, #0d1f23;
 $gradient-direction: to right top;
-
 
 
 * {
@@ -10,16 +9,33 @@ $gradient-direction: to right top;
   padding: 0;
   box-sizing: border-box;
 }
+
 :root {
-  --global-BG: #f9f9f9;
-   //Background của các trang
-  // background-image: linear-gradient($gradient-direction, $gradient-colors);
-  --white: #fff;
-  --black: #000;
+  // --global-BG: #f9f9f9;
+  background-image: url("../../assets/images/Other/download (1).jpg") ;
+  // background-repeat: no-repeat;
+  // //Background của các trang
+  // // background-image: linear-gradient($gradient-direction, $gradient-colors);
+  // --white: #fff;
+  // --black: #000;
+  // top: 12%;
+  // left: 0;
+  // height: 100%;
+  // width: 100%;
+  // z-index: -1;
+  // opacity: 2;
+  // position: absolute;
+  // background-position: center;
+  // background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 html {
   font-size: 62.5%;
+  height: 100%;
 }
 
 body {
@@ -27,15 +43,14 @@ body {
   font-family: "Poppins", sans-serif;
   background-color: var(--global-BG);
   height: 100%;
+  
 }
 
 a {
   text-decoration: none;
-  &:hover{
+
+  &:hover {
     background-color: transparent;
-    color:white
+    color: white
   }
 }
-
-
-

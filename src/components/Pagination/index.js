@@ -18,7 +18,7 @@ function Pagination({ pages, page, setPage }) {
 
   console.log(page)
   return (
-    <div className={cx("pagination-header")} style={{ marginTop: 50 }}>
+    <div className={cx("pagination-header")} style={{ marginTop: 50, marginBottom: 250 }}>
       {page > 1 ?
         <span onClick={() => [setPage(page - 1), setActive(page-1)]}><button className={cx('button-pagi')}>Previous</button></span>
         : <span><button className={cx('button-pagi')}>Previous</button> </span>

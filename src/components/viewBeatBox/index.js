@@ -24,17 +24,10 @@ function ViewBeatBox({ id, name, genre, price, view, like, onClick, handleLike, 
         <div className={cx("content")}>
             {/* Content left */}
             <div className={cx("content-left")}>
-                <h2 className={cx("name-beat")}> <Link style={{color: 'white', fontSize: '2rem'}} to={`/viewdetailbeatmusician/${id}`}>{name}</Link> <FontAwesomeIcon className={cx("check")} icon={faCheckCircle} /></h2>
-                <span className={cx("type-beat")}>{fullName}</span> <br />
-                <span className={cx("type-beat")}>{vocalRange}</span>
-
-                <div className={cx("footer")}>
-                    <span className={cx("price")}>${price}</span>
-                    <div className={cx("number-sell")}>
-                        <span className={cx("box")}></span>
-                        <FontAwesomeIcon icon={faEye} />
-                        <span className={cx("number")}>{view}</span>
-                    </div>
+                <h2 className={cx("name-beat")}> <Link style={{ color: 'white', fontSize: '2rem' }} to={`/viewdetailbeatmusician/${id}`}>{name}</Link> <FontAwesomeIcon className={cx("check")} icon={faCheckCircle} /></h2>
+                <span style={{textwrap: 'nowrap'}} className={cx("type-beat")}>{fullName}</span> <br />
+                <span style={{textwrap:'nowrap'}} className={cx("type-beat")}>{vocalRange}</span>
+                <div style={{ display: 'grid', justifyContent: 'flex-end', marginLeft: 80, rowGap: 10, width: 200, marginTop: -30 }}>
                     <span className={cx("like")}>
                         <FontAwesomeIcon icon={faHeart} onClick={() => handleLike(id)} />
                         <span className={cx("number")}>{like}</span>
@@ -44,15 +37,22 @@ function ViewBeatBox({ id, name, genre, price, view, like, onClick, handleLike, 
                         <span className={cx("number")}>{rating}</span>
                     </span>
                 </div>
+                <div style={{marginTop: -20}} className={cx("footer")}>
+                    <span className={cx("price")}>${price}</span>
+                    <div className={cx("number-sell")}>
+                        <span className={cx("box")}></span>
+                        <FontAwesomeIcon icon={faEye} />
+                        <span className={cx("number")}>{view}</span>
+                    </div>
+                </div>
                 {status === 1 ?
-                    <div style={{ background: "green", padding: 10, height: 45, color: 'white', fontSize: '1.8rem', borderRadius: 18, marginBottom: 20, marginRight: 110 }}>Active</div>
+                    <div style={{ background: "green", padding: 12, height: 45, color: 'white', fontSize: '1.8rem', borderRadius: 18, marginBottom: 10, marginRight: 110 }}>Active</div>
                     :
-                    <div style={{ background: "red", padding: 10, height: 45, color: 'white', fontSize: '1.8rem', borderRadius: 18, marginBottom: 20, marginRight: 110 }}>UnSell</div>
+                    <div style={{ background: "red", padding: 12, height: 45, color: 'white', fontSize: '1.8rem', borderRadius: 18, marginBottom: 20, marginRight: 110 }}>UnSell</div>
                 }
 
             </div>
             {/* Content right  */}
-
         </div>
         {/* <div className={cx("control")}>
             <div className={cx("btn", "btn-prev")}>

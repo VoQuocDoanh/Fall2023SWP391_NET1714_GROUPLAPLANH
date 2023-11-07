@@ -101,7 +101,6 @@ function Songs() {
 
         <div className={cx("list-songs")}>
             <h1 className={cx("title")}> CHORDS OF SONGS</h1>
-            <h3 className={cx("title-song-style2")}>  Most Popular Today</h3>
             {/* <div className={cx("button-chords")}>
                 <Link to="/chordsdetails">
                     <button variant="contained" className={cx("button")}>
@@ -201,6 +200,8 @@ function Songs() {
                             </svg>
                         </button>
                     </div> */}
+                    
+
                 </div>
             </div>
         </div>

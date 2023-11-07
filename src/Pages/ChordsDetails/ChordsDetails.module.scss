@@ -1,9 +1,10 @@
 @import url('https://fonts.cdnfonts.com/css/newsreader-2');
 @import url('https://fonts.cdnfonts.com/css/inter');
 @import url('https://fonts.cdnfonts.com/css/sono');
-
+@import url('https://fonts.cdnfonts.com/css/fredoka-one');
 .list-header {
   margin-top: 60px;
+  margin-bottom: 280px;
 }
 
 * {
@@ -50,9 +51,10 @@
 .list-chords {
   margin-top: 12px;
   display: grid;
-  grid-gap: 36px;
-  margin-left: 120px;
-  margin-right: 50px;
+  grid-gap: 15px;
+  width: auto;
+  grid-template-columns: 1fr;
+  object-fit: cover;
 }
 
 .choice-header {
@@ -165,18 +167,18 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgb(255, 255, 255);
   color: rgb(41, 41, 41);
-  visibility: hidden;
+  // visibility: hidden;
   opacity: 0;
   width: 500px;
-  height: 300px;
+  height: 250px;
 }
 
-.list-chords:hover .img__description {
-  visibility: visible;
-  opacity: 1;
-}
+// .list-chords:hover .img__description {
+//   visibility: visible;
+//   opacity: 1;
+// }
 
 .img__description {
   padding: 10px;
@@ -188,9 +190,14 @@
   opacity: 1;
 }
 
+.detail-img {
+  margin-left: 400px;
+}
+
 // add to playlist
 .button-popup-add {
-  height: 80%;
+  height: 60px;
+  width: 260px;
   margin-top: 15px;
   border-radius: 5px;
   color: white;
@@ -246,6 +253,13 @@
 }
 
 .chord-collection-select {
-  height: 40px;
-  width: 70px;
+  
+}
+//key, sufix, instument
+.key-option{
+  padding: 10px;
+  font-size: 1.5rem;
+  row-gap: 5px;
+  height: 30px;
+  width: 80px;
 }

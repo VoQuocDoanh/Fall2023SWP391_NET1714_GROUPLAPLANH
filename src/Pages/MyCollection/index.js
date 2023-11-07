@@ -8,6 +8,7 @@ import {
   Text,
   Box,
   IconButton,
+  Button,
   ChakraProvider,
 } from "@chakra-ui/react";
 import MusicCardItem from "@/components/MusicCard";
@@ -159,13 +160,18 @@ function MyCollection() {
     />
   ));
   return (
-    <div style={{marginTop:-75}}>
-      <Stack w={"80%"} m={"3% auto"} spacing={8}>
-        <Card>
-          <CardHeader display={"flex"} justifyContent={"space-between"} style={{paddingTop:170}}>
-            <Text fontWeight={"700"} fontSize={"2.2rem"}>
-              My Chord Collection
-            </Text>
+    <div style={{ marginTop: -100 }}>
+      <Stack w={"80%"} m={"auto auto"} spacing={8}>
+        <Card style={{ marginTop: 140 }}>
+          <CardHeader display={"flex"} justifyContent={"space-between"} style={{ paddingTop: 12.5 }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-start', gap: 20 }}>
+              <Text fontWeight={"700"} fontSize={"2.2rem"}>
+                My Chord Collection
+              </Text>
+              <Button fontWeight={"700"} fontSize={"1.5rem"} style={{ background: '#EDF2F7', padding: 5, width: 40, height: 30, textWrap: 'nowrap', fontSize: '2rem' }} variant="outlined"><a><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M11 13H5V11H11V5H13V11H19V13H13V19H11V13Z" fill="black" />
+              </svg></a></Button>
+            </div>
             <Flex alignItems={"center"}>
               <IconButton
                 fontSize={"24px"}

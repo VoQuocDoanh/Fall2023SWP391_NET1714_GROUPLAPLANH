@@ -66,12 +66,14 @@
 
 .content-left {
     width: 70%;
+    padding: 5px;
 
-    .name-beat {
+        .name-beat {
         margin-top: 0;
         color: white;
         font-size: 18px;
         font-weight: bold;
+        margin-top: 10px;
     }
 
     .like {
@@ -107,10 +109,6 @@
 
     .number {}
 
-}
-
-.list-box {
-    box-shadow: 0 5px 5px 0;
 }
 
 .video {
@@ -196,5 +194,12 @@
 }
 .audio{
     width: 280px;
-    margin-left: 7px;
+}
+.content-bottom{
+    display: flex;
+}
+.footer{
+    margin-top: -25px;
+    margin-bottom: 10px;
+    display: flex;
 }

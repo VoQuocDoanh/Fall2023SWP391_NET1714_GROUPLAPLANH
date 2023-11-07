@@ -151,7 +151,7 @@ function ViewDetailBeatPurchased() {
 
                                     <div className={cx('information')}>
                                         {console.log(beatDetail)}
-                                        <h1><b>{beatDetail.beatName}</b></h1>
+                                        <h1><b style={{color: 'white',fontFamily: 'fredoka one'}}>{beatDetail.beatName}</b></h1>
                                         <h4> {beatDetail.user.fullName} &#x2022; 2023 </h4>
 
                                     </div>
@@ -170,7 +170,7 @@ function ViewDetailBeatPurchased() {
 
                             <div className={cx('mid-detail-right')}>
 
-                                <h3><b>Beat information</b></h3>
+                                <h3><b style={{fontSize: '2.5rem'}}>Beat information</b></h3>
 
                                 {/* <div className={cx('list-of-beats')}>
                                 <div className={cx('cart')}>
@@ -221,10 +221,10 @@ function ViewDetailBeatPurchased() {
                                         <span>&#x2022; Tone: {beatDetail.vocalRange}</span>
                                         <span>&#x2022; Total Rating: {(beatDetail.totalRating)}</span>
                                         <span>&#x2022; Release date: {day}/{month}/{year}</span>
-                                        <div style={{ textAlign: "center", marginTop: 20 }}>
+                                        <div style={{ textAlign: "center", marginTop: 20,display: 'flex', gap: 40, outline: '2px solid white', width: 110, height: 50, borderRadius: 5 }}>
                                             {!checkFeedBack ?
-                                            <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<Button variant="contained" className={cx('button-1')}>
-                                                <div>Feedback</div>
+                                            <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<Button variant="contained" className={cx('button-2')}>
+                                                <div style={{fontSize: '2rem'}}>Feedback</div>
                                             </Button>}  {...{ contentStyle }} position="bottom left center">
                                                 <div className={cx("text-all")} style={{ padding: 10 }}>
                                                     <div style={{ display: 'grid' }}>
@@ -238,8 +238,8 @@ function ViewDetailBeatPurchased() {
                                                 </div>
                                             </Popup>
                                             :
-                                            <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<Button variant="contained" className={cx('button-1')}>
-                                                <div>Update Feedback</div>
+                                            <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<Button variant="contained" className={cx('button-2')}>
+                                                <div style={{fontSize: '1.5rem'}}>Update Feedback</div>
                                             </Button>}  {...{ contentStyle }} position="bottom left center">
                                                 <div className={cx("text-all")} style={{ padding: 10 }}>
                                                     <div style={{ display: 'grid' }}>

@@ -41,7 +41,7 @@ function ViewDetailsUserByAdmin() {
 
     useEffect(() => {
         loadReport()
-    },[])
+    }, [])
     const loadDetailsUser = async () => {
         await axiosInstance.get(`http://localhost:8080/api/v1/admin/${id}`)
             .then((res) => {
@@ -76,12 +76,12 @@ function ViewDetailsUserByAdmin() {
 
     const loadReport = async () => {
         await axiosInstance.get(`http://localhost:8080/api/v1/report/user/${id}`)
-        .then((res) => {
-            setListReport(res.data)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+            .then((res) => {
+                setListReport(res.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     return (
@@ -93,6 +93,31 @@ function ViewDetailsUserByAdmin() {
             </div>
             {user ?
                 <div className={cx("profile")}>
+                    <div className={cx("img-user-div")}>
+                        <div className={cx("img-user-div1")}>
+                            <div className={cx("img-user-div2")}>
+                                <div className={cx("img-user-div3")}>
+                                    {user.avatar !== null ?
+                                        <img className={cx("box-img")} src={user.avatar} />
+                                        : <img className={cx("box-img")} src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVhcVcxgW8LzmIu36MCeJb81AHXlI8CwikrHNh5vzY8A&s"} />}
+                                </div>
+                                {/* <input className={cx("img-click")} type="file" accept=".jpg,.jpeg,.png" /> */}
+                                <div className={cx("info-user")}>
+                                    <td style={{ fontWeight: 500, fontFamily: 'fredoka one' }}>
+                                        {user.username}
+                                    </td>
+                                    {user.role === "MS" ?
+                                        <td style={{ marginLeft: 0, fontWeight: 300 }}>
+                                            Musician
+                                        </td> : <td style={{ marginLeft: 0 }}>
+                                            Customer
+                                        </td>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <Tabs style={{ marginTop: -50 }}>
                         <TabList>
                             <Tab ><b>Profile</b></Tab>
@@ -107,7 +132,7 @@ function ViewDetailsUserByAdmin() {
                                             <td>
                                                 <div className={cx("text-username0")}>
                                                     <td >
-                                                        <label style={{ fontWeight: 500 }} className={cx("login-text")}>Full Name</label>
+                                                        <label style={{ fontWeight: 500 }} className={cx("login-text")}>Full Name*</label>
                                                     </td>
                                                     <div>
                                                         <input className={cx("input-username0")} type="text" value={user.fullName} placeholder readOnly />
@@ -119,7 +144,7 @@ function ViewDetailsUserByAdmin() {
                                             <td>
                                                 <div className={cx("text-username0")}>
                                                     <td >
-                                                        <label style={{ fontWeight: 500 }} className={cx("login-text")}>Address</label>
+                                                        <label style={{ fontWeight: 500 }} className={cx("login-text")}>Address*</label>
                                                     </td>
                                                     <div>
                                                         <input className={cx("input-username0")} type="text" value={user.adress} placeholder readOnly />
@@ -130,7 +155,7 @@ function ViewDetailsUserByAdmin() {
                                         <div className={cx("part2")}>
                                             <td>
                                                 <div style={{ fontWeight: 500 }} className={cx("email-text")}>
-                                                    Email:
+                                                    Email*
                                                 </div>
                                                 <div className={cx("email-change")}>
                                                     {user.mail}
@@ -142,7 +167,7 @@ function ViewDetailsUserByAdmin() {
                                             <td>
                                                 <div className={cx("text-username0")}>
                                                     <td >
-                                                        <label style={{ fontWeight: 500 }} className={cx("login-text")}>Phone Number</label>
+                                                        <label style={{ fontWeight: 500 }} className={cx("login-text")}>Phone Number*</label>
                                                     </td>
                                                     <div>
                                                         <input className={cx("input-username0")} type="text" value={user.phoneNumber} placeholder readOnly />
@@ -184,7 +209,7 @@ function ViewDetailsUserByAdmin() {
                                                             <td style={{ fontWeight: '500', fontSize: "2.5rem", marginLeft: 0, color: 'black', textAlign: 'center', marginTop: 60 }}>Are you sure you want to unban this user?</td>
                                                         </div>
                                                         <td className={cx("button-type")}>
-                                                            <button type="button" className={cx("button-send-2")} aria-disabled="false" onClick={() => {handleUnbanUser();handleOpen();}} >Accept</button>
+                                                            <button type="button" className={cx("button-send-2")} aria-disabled="false" onClick={() => { handleUnbanUser(); handleOpen(); }} >Accept</button>
                                                             <Backdrop
                                                                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                                                                 open={open}
@@ -219,7 +244,7 @@ function ViewDetailsUserByAdmin() {
                                                                         <label style={{ fontFamily: 'Sono', fontWeight: 500 }} className={cx("login-text")}>{report.user.fullName}</label>
                                                                     </td>
                                                                     <div>
-                                                                        <input className={cx("input-username0")} type="text" placeholder value={report.content}  />
+                                                                        <input className={cx("input-username0")} type="text" placeholder value={report.content} />
                                                                     </div>
                                                                 </div>)
                                                         }))}
@@ -232,33 +257,8 @@ function ViewDetailsUserByAdmin() {
                                     : <div style={{ display: 'flex', justifyContent: 'center', marginTop: 30 }}>There are no report</div>}
                             </div>
                         </TabPanel>
-                    </Tabs>
-                    <div className={cx("line")} />
-                    <div className={cx("img-user-div")}>
-                        <div className={cx("img-user-div1")}>
-                            <div className={cx("img-user-div2")}>
-                                <div className={cx("img-user-div3")}>
-                                    {user.avatar !== null ?
-                                        <img className={cx("box-img")} src={user.avatar} />
-                                        : <img className={cx("box-img")} src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVhcVcxgW8LzmIu36MCeJb81AHXlI8CwikrHNh5vzY8A&s"} />}
-                                </div>
-                                {/* <input className={cx("img-click")} type="file" accept=".jpg,.jpeg,.png" /> */}
-                                <div className={cx("info-user")}>
-                                    <td style={{ fontWeight: 500 }}>
-                                        {user.username}
-                                    </td>
-                                    {user.role === "MS" ?
-                                        <td style={{ marginLeft: 10, fontWeight: 300 }}>
-                                            Musician
-                                        </td> : <td style={{ marginLeft: 10 }}>
-                                            Customer
-                                        </td>
-                                    }
+                    </Tabs>     
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div> : <div></div>}
         </div>
     );

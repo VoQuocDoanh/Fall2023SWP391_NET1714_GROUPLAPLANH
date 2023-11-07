@@ -113,7 +113,15 @@
 }
 
 .list-box {
-    box-shadow: 0 5px 5px 0;
+    // box-shadow: 0 5px 5px 0;
+    width: 300px;
+    filter: drop-shadow(0 0 0.8rem rgb(146, 143, 144));
+    padding-left: 22px;
+
+    &:hover {
+        transform: scale(1.05);
+        transition: all 0.7s ease;
+    }
 }
 
 .video {

@@ -1,6 +1,6 @@
 import "./GlobalStyle.scss";
-
-function GlobalStyle({ children }) {
+import classNames from "classnames/bind";
+function GlobalStyle({ children}) {
   return children;
 }
 

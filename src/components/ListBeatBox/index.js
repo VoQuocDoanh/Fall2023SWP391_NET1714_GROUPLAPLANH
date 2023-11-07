@@ -35,19 +35,11 @@ function ListBeatBox({ id, name, genre, price, view, like, onClick, handleLike, 
         <div className={cx("content")}>
             {/* Content left */}
             <div className={cx("content-left")}>
-                <h3 className={cx("name-beat")}> <Link style={{color: 'white'}} to={`/viewdetailbeat/${id}`}>{name}</Link> <FontAwesomeIcon className={cx("check")} icon={faCheckCircle} /></h3>
-                <span style={{marginTop: 12}} className={cx("type-beat")}>{fullName}</span><br/>
-                <span style={{marginTop: 12}} className={cx("type-beat")}>{vocalRange}</span>
-                <div style={{marginTop: 12}} className={cx("footer")}>
+                <h3 className={cx("name-beat")}> <Link style={{ color: 'white' }} to={`/viewdetailbeat/${id}`}>{name}</Link> <FontAwesomeIcon className={cx("check")} icon={faCheckCircle} /></h3>
+                <span style={{ marginTop: 12, fontWeight: 500, fontSize: 18 }} className={cx("type-beat")}>{fullName}</span><br />
+                <span style={{ marginTop: 12 }} className={cx("type-beat")}>{vocalRange}</span>
+                <div style={{ marginTop: 12 }} className={cx("footer")}>
                     <span className={cx("price")}>${price}</span>
-                    <span style={{width: 30, height: 30}} className={cx("like")}>
-                        <FontAwesomeIcon icon={faHeart} onClick={() => handleLike(id)} />
-                        <span className={cx("number")}>{like}</span>
-                    </span>
-                    <span className={cx("rating")}>
-                        <FontAwesomeIcon icon={faStar} />
-                        <span className={cx("number")}>{rating}</span>
-                    </span>
                 </div>
                 <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundDemo}>
                 </audio>
@@ -58,7 +50,14 @@ function ListBeatBox({ id, name, genre, price, view, like, onClick, handleLike, 
                     <Button className={cx("action")} onClick={() => addToCart(id)}><FontAwesomeIcon icon={faCartShopping} className={cx("shop")} /></Button>
                     : <Link to={"/login"}><Button className={cx("action")}><FontAwesomeIcon icon={faCartShopping} className={cx("shop")} /></Button></Link>
                 }
-
+                <span style={{ width: 30, height: 30,textWrap: 'nowrap' }} className={cx("like")}>
+                    <FontAwesomeIcon icon={faHeart}/>
+                    <span className={cx("number")} style={{marginLeft: 2}}>{like}</span>
+                </span>
+                <span className={cx("rating")}>
+                    <FontAwesomeIcon icon={faStar} />
+                    <span className={cx("number")} >{rating}</span>
+                </span>
             </div>
         </div>
         {/* <div className={cx("control")}>

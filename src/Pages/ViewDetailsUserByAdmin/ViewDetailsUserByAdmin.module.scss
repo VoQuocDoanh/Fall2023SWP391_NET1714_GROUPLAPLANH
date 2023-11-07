@@ -5,7 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800&display=swap');
 @import url('https://fonts.cdnfonts.com/css/sono');
 @import url('https://fonts.cdnfonts.com/css/inter');
-
+@import url('https://fonts.cdnfonts.com/css/fredoka-one');
 .profile {
     display: flex;
     justify-content: center;
@@ -108,7 +108,6 @@
 
 .input-username {
     padding: 22px 20px;
-    margin: 8px 0;
     box-sizing: border-box;
     border: none;
     border-bottom: 1px solid rgb(65, 65, 65);
@@ -120,7 +119,6 @@
 
 .input-phonenumber {
     padding: 22px 20px;
-    margin: 8px 0;
     box-sizing: border-box;
     border: none;
     border-bottom: 1px solid rgb(65, 65, 65);
@@ -133,11 +131,9 @@
 
 .input-username0 {
     padding: 22px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: 1px solid rgb(65, 65, 65);
+    border: none;
+    border-bottom: 1px solid rgb(65, 65, 65);
     width: 700px;
-    margin-top: 30px;
     height: 1px;
     flex-shrink: 0;
 }
@@ -159,9 +155,9 @@
 }
 
 .login-text {
-    font-family: inter;
+    font-family: fredoka one;
     margin-left: 4px;
-    font-size: 23px;
+    font-size: 20px;
 }
 
 .part4 {
@@ -231,17 +227,19 @@
     display: flex;
     justify-content: center;
     margin-left: -400px;
-    margin-top: 70px;
+    margin-top: 45px;
     display: flex;
 }
 
 .email-change {
     margin-left: 50px;
+    text-decoration: underline;
 }
 
 .email-text {
-    margin-left: 105px;
-    font-family: inter;
+    margin-left: 111px;
+    font-size: 20px;
+    font-family: fredoka one;
 
 }
 
@@ -367,11 +365,11 @@
 .info-user {
     display: grid;
     justify-content: center;
-    margin-top: 30px;
     font-size: 2.5rem;
     font-family: 'Sono';
     font-weight: 400;
-}
+    margin-top: 15px;
+    }
 
 //line
 .button-save-details {

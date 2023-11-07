@@ -273,7 +273,7 @@ function Home() {
 
           </div>
         </div>
-        <div className={cx("title")}>
+        <div className={cx("title")} style={{marginBottom: 220}}>
           <div className={(cx("title-header"))}>
             <div className={cx("text")}>
               CHORDS OF SONGS

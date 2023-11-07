@@ -4,6 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800&display=swap');
 @import url('https://fonts.cdnfonts.com/css/sono');
 @import url('https://fonts.cdnfonts.com/css/inter');
+@import url('https://fonts.cdnfonts.com/css/fredoka-one');
 
 .profile {
     display: flex;
@@ -28,7 +29,7 @@
 
 .title-myprofile {
     text-transform: uppercase;
-    margin-left: 500px;
+    margin-left: 250px;
     background-image: linear-gradient(-225deg,
             #231557 0%,
             #44107a 29%,
@@ -70,15 +71,21 @@
 }
 
 .img-user-div2 {
-    padding: 20px;
     background-color: rgb(255, 255, 255);
-    margin-right: 60px;
+    color: black;
     border-radius: 20px;
+    margin-left: -160px;
     width: 500px;
     padding: 30px;
     filter: drop-shadow(0 0 0.5rem rgb(146, 143, 144));
     height: auto;
+    margin-top: -70px;
+    // position: fixed;
+    // top: 460px;
+    // left: 2%;
+    // transition: top 1s linear;
 }
+
 
 //form info user
 .volt8A {
@@ -127,11 +134,12 @@
 
 .input-username0 {
     padding: 22px 20px;
+    font-size: 1.8rem;
     margin: 8px 0;
     box-sizing: border-box;
-    border: 1px solid rgb(65, 65, 65);
-    width: 700px;
-    margin-top: 30px;
+    border: none;
+    border-bottom: 1px solid rgb(65, 65, 65);
+    width: 600px;
     height: 1px;
     flex-shrink: 0;
 }
@@ -141,7 +149,7 @@
 }
 
 .text-username0 {
-    margin-left: 65px;
+    margin-left: 35px;
 }
 
 .input-text {
@@ -153,9 +161,10 @@
 }
 
 .login-text {
-    font-family: inter;
+    font-family: fredoka one;
     margin-left: 4px;
-    font-size: 23px;
+    font-size: 20px;
+    font-weight: 400;
 }
 
 .part4 {
@@ -196,10 +205,7 @@
 }
 
 
-.part3 {
-    margin-top: 30px;
-
-}
+.part3 {}
 
 .part3>td {
     font-family: inter;
@@ -216,26 +222,25 @@
     gap: 30px;
 }
 
-.part0 {
-    margin-bottom: 40px;
-}
-
 .part2>td {
     display: flex;
-    justify-content: center;
-    margin-left: -290px;
-    margin-top: 70px;
-    display: flex;
+    justify-content: flex-start;
+    margin-left: 31px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .email-change {
-    margin-left: 50px;
+    margin-left: 52px;
+    text-decoration: underline;
 }
 
 .email-text {
     text-align: start;
-    font-family: inter;
-
+    font-family: fredoka one;
+    margin-left: 12px;
+    font-size: 20px;
+    font-weight: 400;
 }
 
 .part5 {
@@ -255,6 +260,16 @@
 
     }
 
+}
+
+.more-info {
+    background-color: #06c;
+    width: 800px;
+    margin-left: -32px;
+    display: flex;
+    justify-content: center;
+    color: white;
+    padding: 10px;
 }
 
 .email-button {
@@ -323,17 +338,17 @@
 
 .volt8A {
     height: auto;
-    width: 900px;
+    width: 800px;
     padding-left: 20px;
     background-color: rgb(255, 255, 255);
     padding: 30px;
     flex-shrink: 0;
     filter: drop-shadow(0 0 0.5rem rgb(146, 143, 144));
     border-radius: 20px;
-
+    pointer-events: none;
 }
 
-.title-feedback{
+.title-feedback {
     font-size: 30px;
     font-family: inter;
     font-weight: 500;

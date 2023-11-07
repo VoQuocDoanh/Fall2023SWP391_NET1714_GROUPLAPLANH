@@ -46,12 +46,12 @@ function ListUser() {
             <div className={cx("line")}>
             </div>
             <div className={cx("listuser-header")}>
-                <thead>
+                <thead style={{padding: 15, background: '#06c',borderRadius: 10, color: 'white', width: '80%'}}>
                     <tr>
                         <th><span style={{ paddingRight: 150 }}>User</span></th>
-                        <th><span>Created</span></th>
+                        <th><span style={{marginLeft: -20}}>Created</span></th>
                         <th class="text-center"><span>Status</span></th>
-                        <th><span style={{ marginLeft: 100 }}>Email</span></th>
+                        <th><span style={{ marginLeft: 40 }}>Email</span></th>
                         <th><span style={{ marginLeft: 170 }}>Role</span></th>
                     </tr>
                 </thead>
@@ -85,7 +85,7 @@ function ListUser() {
                                             <span style={{ background: "green", padding: 5, height: 5, color: 'white', fontSize: '1.8rem', margin: '0 auto', borderRadius: 18 }} class={cx("label label-default")}>Active</span>
                                         </td>}
                                     <td style={{ width: 400 }}>
-                                        <a style={{ marginLeft: 20, textDecorationLine: 'underline', color: '#337ab7' }} href="#">{user.mail}</a>
+                                        <a style={{ marginLeft: 20, textDecorationLine: 'underline', color: '#337ab7'}} href="#">{user.mail}</a>
                                     </td>
                                     {user.role === "CUS" ?
                                         <td>

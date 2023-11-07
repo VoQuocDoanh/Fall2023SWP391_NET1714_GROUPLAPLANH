@@ -1,4 +1,5 @@
 @import url('https://fonts.cdnfonts.com/css/sono');
+@import url('https://fonts.cdnfonts.com/css/fredoka-one');
 
 .title {
     text-transform: uppercase;
@@ -19,7 +20,8 @@
     animation: textclip 2s linear infinite;
     display: inline-block;
     font-size: 100px;
-    border-bottom: 1px solid var(--gray-100, #e4e7e9)
+    border-bottom: 1px solid var(--gray-100, #e4e7e9);
+    font-family: fredoka one;
 }
 
 @keyframes textclip {
@@ -193,7 +195,7 @@
 
 .panel-content-text-center-padding-both {
     width: 25%;
-    height: auto;
+    height: 600px;
     padding: 10px;
     background-color: #ffffff;
     text-align: center;
@@ -385,7 +387,6 @@
 
 .body-right {
     flex: 7;
-
     // Add a new container for the scrollable content
     .scroll-container {
         height: 560px;
@@ -395,11 +396,6 @@
         /* Add padding to compensate for scrollbar width */
         box-sizing: content-box;
         padding: 5px;
-
-        &::-webkit-scrollbar {
-            /* mất thanh */
-            width: 0;
-        }
 
         &::-webkit-scrollbar-thumb {
             background-color: transparent;
@@ -470,12 +466,13 @@
     font-size: 2.5rem;
     font-weight: bold;
 }
-.rhythm-list{
+
+.rhythm-list {
     display: grid;
     row-gap: 10px;
     margin-top: 30px;
 }
 
-.pagination{
+.pagination {
     margin-left: 500px
 }

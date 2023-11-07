@@ -3,6 +3,7 @@ import { Box, Image, Flex, Button, IconButton } from '@chakra-ui/react';
 import { BsMusicNote } from 'react-icons/bs';
 import { DeleteIcon } from '@chakra-ui/icons';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function MusicCardItem({
   name,
@@ -42,6 +43,7 @@ function MusicCardItem({
           width='100%'
           mb={isChorListDetail ? '4px' : '16px'}
         >
+            <Button style={{ marginTop: -30, marginBottom: -10, marginLeft: 165}}>...</Button>
           <Image
             src={
               image
@@ -53,6 +55,7 @@ function MusicCardItem({
             w='100%'
             h='100%'
             borderRadius={'6px'}
+            paddingBottom={'10px'}
           />
         </Box>
       }
@@ -79,6 +82,7 @@ function MusicCardItem({
         overflow={'hidden'}
         textOverflow={'ellipsis'}
       >
+
         <Box>
           <Box
             borderRadius='full'
@@ -90,6 +94,7 @@ function MusicCardItem({
           >
             {name}
           </Box>
+
           {showNumberSong && (
             <Flex
               borderRadius='full'
@@ -114,9 +119,9 @@ function MusicCardItem({
             isChorListDetail
               ? {}
               : {
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: 'vertical',
-                }
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+              }
           }
         >
           {content}

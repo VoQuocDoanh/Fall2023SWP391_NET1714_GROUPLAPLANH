@@ -104,33 +104,35 @@ function MyProfile() {
     }
 
     return (
-        <div style={{ marginTop: 50 }}>
+        <div style={{ marginTop: 50, marginLeft: 200 }}>
             <div>
                 <h2 className={cx("title-myprofile")}>
                     Musician Profile
                 </h2>
             </div>
             <div className={cx("profile")}>
-                <div className={cx("img-user-div")}>
-                    <div className={cx("img-user-div1")}>
-                        <div className={cx("img-user-div2")}>
-                            <div className={cx("img-user-div3")}>
-                                {avatar !== "" ?
-                                    <img className={cx("box-img")} alt="" src={avatar} />
-                                    : <img className={cx("box-img")} alt="" src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVhcVcxgW8LzmIu36MCeJb81AHXlI8CwikrHNh5vzY8A&s"} />}
-                            </div>
-                            <div className={cx("info-user")}>
-                                <td style={{ fontSize: 30, display: 'flex', justifyContent: 'center' }}>
-                                    {username}
-                                </td>
-                                <td style={{ fontSize: 20, display: 'flex', justifyContent: 'center' }}>
-                                    Musician
-                                </td>
+                <div className={cx("for-possition")} >
+                    <div className={cx("img-user-div")} >
+                        <div className={cx("img-user-div1")}>
+                            <div className={cx("img-user-div2")}>
+                                <div className={cx("img-user-div3")}>
+                                    {avatar !== "" ?
+                                        <img className={cx("box-img")} alt="" src={avatar} />
+                                        : <img className={cx("box-img")} alt="" src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVhcVcxgW8LzmIu36MCeJb81AHXlI8CwikrHNh5vzY8A&s"} />}
+                                </div>
+                                <div className={cx("info-user")}>
+                                    <td style={{ fontSize: 30, display: 'flex', justifyContent: 'center',fontFamily: 'fredoka one' }}>
+                                        {username}
+                                    </td>
+                                    <td style={{ fontSize: 20, display: 'flex', justifyContent: 'center' }}>
+                                        Musician
+                                    </td>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </div>  
                 </div>
-                <Tabs style={{ marginTop: -50 }}>
+                <Tabs style={{ marginTop: -120, marginBottom: 250 }}>
                     <TabList>
                         <Tab ><b>Profile</b></Tab>
                         <Tab ><b>Feedback</b></Tab>
@@ -140,11 +142,11 @@ function MyProfile() {
                         <div className={cx("volt8A")}>
                             <form style={{ marginTop: 20 }}>
                                 <table className={classNames("profile-2")}>
-                                    <div className={cx("part0")}>
+                                    <div className={cx("part0")} style={{ marginBottom: -20 }}>
                                         <td>
                                             <div className={cx("text-username0")}>
                                                 <td >
-                                                    <label className={cx("login-text")}>Full Name</label>
+                                                    <label className={cx("login-text")}>Full Name*</label>
                                                 </td>
                                                 <div>
                                                     <input className={cx("input-username0")} type="text" placeholder value={fullName} readOnly />
@@ -156,7 +158,7 @@ function MyProfile() {
                                         <td>
                                             <div className={cx("text-username0")}>
                                                 <td>
-                                                    <label className={cx("login-text")}>Address</label>
+                                                    <label style={{ marginLeft: 6 }} className={cx("login-text")}>Address*</label>
                                                 </td>
                                                 <div >
                                                     <input className={cx("input-username0")} type="text" placeholder value={address} onChange={(e) => setAddress(e.target.value)} />
@@ -167,7 +169,7 @@ function MyProfile() {
                                     <div className={cx("part2")}>
                                         <td>
                                             <div className={cx("email-text")}>
-                                                Email:
+                                                Email*:
                                             </div>
                                             <div className={cx("email-change")}>
                                                 {mail}
@@ -179,7 +181,7 @@ function MyProfile() {
                                         <td>
                                             <div className={cx("text-username0")}>
                                                 <td>
-                                                    <label className={cx("login-text")}>Phone number</label>
+                                                    <label className={cx("login-text")}>Phone number*</label>
                                                 </td>
                                                 <div >
                                                     <input className={cx("input-username0")} type="text" placeholder value={phone} onChange={(e) => setPhone(e.target.value)} />
@@ -191,16 +193,16 @@ function MyProfile() {
                                         <td>
                                             <div className={cx("text-username0")}>
                                                 <td>
-                                                    <label className={cx("login-text")}>Sex</label>
+                                                    <label className={cx("login-text")}>Sex*</label>
                                                 </td>
                                                 <div >
-                                                    <input className={cx("input-username0")} type="text" placeholder value={phone} onChange={(e) => setPhone(e.target.value)} />
+                                                    <input className={cx("input-username0")} type="text" placeholder value={gender} onChange={(e) => setPhone(e.target.value)} />
                                                 </div>
                                             </div>
                                         </td>
                                     </div>
 
-                                    <div style={{ marginLeft: 70, marginTop: 50, fontSize: 18, fontWeight: "bolder" }}>*More Information</div>
+                                    <div className={cx("more-info")} style={{ marginTop: 50, fontSize: 18, fontWeight: "bolder" }}>*More Information</div>
                                     <div className={cx("part3")}>
                                         <td>
                                             <div className={cx("text-username0")}>

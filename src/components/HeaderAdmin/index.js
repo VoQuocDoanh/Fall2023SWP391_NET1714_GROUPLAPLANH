@@ -53,13 +53,13 @@ function HeaderAdmin() {
       <div className={cx("header-right")}>
         <div className={cx("navigation")}>
           <Link to={"/"}><div className={cx("nav-item")}>Home</div></Link>
-          <Popup trigger={<button className={cx("button-page")}>Ban</button>} position="bottom left center" closeOnDocumentClick on={['hover', 'focus']}>
+          <Popup trigger={<button className={cx("button-page")}>Ban</button>} position="bottom center" closeOnDocumentClick on={['hover', 'focus']}>
             <div className={cx("text-all")}>
               <Link to="/listalluserban"><div className={cx("link-text")} >User</div></Link>
               <Link to="/reportsong"><div className={cx("link-text")} >Song</div></Link>
             </div>
           </Popup>
-          <Popup trigger={<button className={cx("button-page")}>Report</button>} position="bottom left center" closeOnDocumentClick on={['hover', 'focus']}>
+          <Popup trigger={<button className={cx("button-page")}>Report</button>} position="bottom center" closeOnDocumentClick on={['hover', 'focus']}>
             <div className={cx("text-all")}>
               <Link to="/listuserreport"><div className={cx("link-text")} >User</div></Link>
               <Link to="/reportsong"><div className={cx("link-text")} >Song</div></Link>
@@ -72,7 +72,7 @@ function HeaderAdmin() {
 
         {/* Phan quyen header */}
         <div className={cx("pop-up")}>
-          <Popup trigger={<button className={cx("button-popup")}>Hi, {name}</button>} position="bottom left center">
+          <Popup trigger={<button className={cx("button-popup")}>Hi, {name}</button>} position="bottom center" closeOnDocumentClick on={['hover', 'focus']}>
             <div className={cx("text-all")}>
               <Link to="/adminprofile"><div className={cx("link-text")}>Account</div></Link>
               <Link to="/listuser"><div className={cx("link-text")}>View User</div></Link>
