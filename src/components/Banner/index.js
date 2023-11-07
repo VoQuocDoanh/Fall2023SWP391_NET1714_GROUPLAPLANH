@@ -62,10 +62,10 @@ function BannerTitle({
           <Text fontSize={'4rem'} fontWeight={'700'}>
             {songData?.songName}
           </Text>
-          <Text fontSize={'1.2rem'} fontWeight={'400'}>
+          <Text fontSize={'3rem'} fontWeight={'400'}>
             Author: {' ' + songData?.singer}
           </Text>
-          <Text fontSize={'1.2rem'} fontWeight={'400'}>
+          <Text fontSize={'3rem'} fontWeight={'400'}>
             Genres:{' '}
             {songData?.genres?.length
               ? ' ' + songData?.genres?.map((item) => item?.name)
@@ -74,7 +74,7 @@ function BannerTitle({
           <Flex mt={2} alignItems={'center'}>
             <Text
               mr={2}
-              fontSize={'1.2rem'}
+              fontSize={'3rem'}
               ml={2}
               display={'flex'}
               alignItems={'center'}
@@ -98,8 +98,8 @@ function BannerTitle({
             </Text> */}
           </Flex>
           <Flex mt={2} alignItems={'center'}>
-            <Rating maxRating={5} handleRating={handleRating} />
-            <Text fontSize={'1.2rem'} ml={2}>
+            <Rating fontSize={'4rem'} maxRating={5} handleRating={handleRating} />
+            <Text fontSize={'3rem'} ml={2}>
               {songData?.rating}
             </Text>
           </Flex>

@@ -201,7 +201,7 @@ function UserSong() {
                                 <Pagination pages={pages} page={page} setPage={setPage} />
                             </div>
                         </div>
-                        : <div> You are not upload any songs! </div>}
+                        : <div className={cx("notification")}> You are not upload any songs! </div>}
                     {/* <div className={cx('pagination')}>
                         <button onClick={handlePrevPage} disabled={currentPage === 1}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
