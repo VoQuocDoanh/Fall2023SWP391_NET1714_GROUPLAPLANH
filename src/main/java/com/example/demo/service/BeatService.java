@@ -148,25 +148,16 @@ public class BeatService {
         return dtos;
     }
 
-    public PaginationResponseDTO findAllBeat(int page){
-        Pageable pageable = PageRequest.of(page-1,8);
+    public List<BeatResponseDTO> findAllBeat(){
         List<Beat> b = beatRepository.findAllListBeat();
-        Page<Beat> beats = this.beatRepository.findAllBeat(pageable);
-        int max= 0;
         List<BeatResponseDTO> responseDTOS = new ArrayList<>();
-        if (beats.isEmpty()) {
+        if (b.isEmpty()) {
             return null;
         } else {
-            for (Beat i : beats){
+            for (Beat i : b){
                 responseDTOS.add(getDetailBeatResponseDTO(i));
             }
-            int pagecount = pageable.getPageNumber();
-            if (b.size()%8!=0){
-                max = b.size() / 8 +1;
-            } else{
-                max = b.size()/8 ;
-            }
-            return new PaginationResponseDTO(responseDTOS,pagecount, max);
+            return responseDTOS;
         }
     }
 
