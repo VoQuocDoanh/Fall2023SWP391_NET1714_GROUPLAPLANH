@@ -38,9 +38,9 @@ public class BeatController {
     }
 
     // List all Beats in US
-    @GetMapping("/all/{page}")
-    public ResponseEntity<PaginationResponseDTO> findAllBeat(@PathVariable int page) {
-        return ResponseEntity.ok(this.beatService.findAllBeat(page));
+    @GetMapping("/all")
+    public ResponseEntity<List<BeatResponseDTO>> findAllBeat() {
+        return ResponseEntity.ok(this.beatService.findAllBeat());
     }
 
     // Get detail Beat US and MS
