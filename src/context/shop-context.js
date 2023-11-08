@@ -24,7 +24,6 @@ function ShopContextProvider({ children }) {
         };
         return cart;
     };
-
     const [cartItems, setCartItems] = useState(getDefaultCart());
     // if(JSON.parse(localStorage.getItem("Cart")) !== null &&  ){
 
