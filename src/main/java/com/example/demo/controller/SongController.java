@@ -37,7 +37,7 @@ public class SongController {
 
     // Delete Song
     @DeleteMapping("/user/{userid}")
-    public ResponseEntity<String> deleteSong (@RequestParam("songid") Long songid, @PathVariable Long userid){
+    public ResponseEntity<String> deleteSong (@PathVariable Long userid, @RequestParam("songid") Long songid){
         return this.songService.deleteSong(songid, userid);
     }
 

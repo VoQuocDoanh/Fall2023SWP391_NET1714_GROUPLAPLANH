@@ -191,19 +191,19 @@ public class SongService {
 
     // delete
     public ResponseEntity<String> deleteSong(Long songid, Long userid) {
-        Optional<User> foundUser = this.userRepository.findById(userid);
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userid, 1);
         if (foundUser.isPresent()) {
-            Optional<Song> foundSong = this.songRepository.findUserSongByUserUploadSongAndSongId(songid, foundUser.get().getId());
+            Optional<Song> foundSong = this.songRepository.findUserSongByUserUploadSongAndSongId(foundUser.get().getId(), songid);
             if (foundSong.isPresent()) {
                 Song song = foundSong.get();
                 song.setStatus(0);
                 this.songRepository.save(song);
                 return new ResponseEntity<>("Delete Successfully", HttpStatus.OK);
             } else {
-                return new ResponseEntity<>("This Song isn't owned by you", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("This Song isn't owned by you", HttpStatus.NOT_IMPLEMENTED);
             }
         }
-        return new ResponseEntity<>("Delete Failed", HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_IMPLEMENTED);
     }
 
     // view all user song
