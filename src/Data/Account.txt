@@ -1,0 +1,5 @@
+Username: Customer
+Email: hiennmse170279@fpt.edu.vn
+Fullname: I am Customer
+Password: 123456
+Confirm password: 123456

@@ -212,7 +212,7 @@ function Contact() {
                             <div className={cx("right-content-total")}>
                                 <div>
                                     <h3 style={{ color: '#fff', fontSize: '20px', marginBottom: 30, fontSize: 30 }}>Contact Information</h3>
-                                    <p style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: 25, margin: '0px 0px 48px', lineHeight: 1.5 }}>VuiVuiVUiVuiVuiVuiVeveveveveveveveeveveve</p>
+                                    <p style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: 25, margin: '0px 0px 48px', lineHeight: 1.5 }}>Welcome to our website</p>
                                     <div className={cx("footer-part")}>
                                         <span style={{ fontSize: 20 }} >
                                             <span style={{ paddingRight: 10 }}>

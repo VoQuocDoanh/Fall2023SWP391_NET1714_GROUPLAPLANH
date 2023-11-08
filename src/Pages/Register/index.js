@@ -21,6 +21,7 @@ function Register() {
   const [registrationMessage, setRegistrationMessage] = useState(null)
   const user = { userName, password, email, fullName, role }
   const [open, setOpen] = useState(false);
+  const [error, setError] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
@@ -53,6 +54,7 @@ function Register() {
         console.log(userName, password, email, fullName, role);
         setRegistrationMessage("Register Successfully. Please go to your mail to activate your account!")
         setOpenModal(true)
+        setError(false)
         setOpen(false)
 
       })
@@ -258,9 +260,10 @@ function Register() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
+        
         <Box sx={style}>
           <Typography style={{ fontSize: 25 }} id="modal-modal-title" variant="h6" component="h2">
-            Register Failed
+            Register Alert!
           </Typography>
           <Typography style={{ fontSize: 20 }} id="modal-modal-description" sx={{ mt: 2 }}>
             {registrationMessage}

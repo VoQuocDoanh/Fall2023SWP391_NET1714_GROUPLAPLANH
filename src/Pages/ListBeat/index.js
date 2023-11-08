@@ -86,7 +86,7 @@ function ListBeat() {
                     setList(res.data)
                 }
                 else {
-                    const newGroup = ListSplitter({ data: res.data, groupSize: 10 })
+                    const newGroup = ListSplitter({ data: res.data, groupSize: 8 })
                     for (let i = 0; i < newGroup.length; i++) {
                         if (page === i + 1) {
                             setList(newGroup[i])

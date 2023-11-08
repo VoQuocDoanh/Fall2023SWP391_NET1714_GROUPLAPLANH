@@ -30,6 +30,8 @@ function ShopContextProvider({ children }) {
 
     // }
 
+
+
     if (localStorage.getItem("CheckOutPage") !== null) {
         // console.log(JSON.parse(localStorage.getItem("Cart")))
         // console.log(JSON.parse(localStorage.getItem("CheckOutPage")))
