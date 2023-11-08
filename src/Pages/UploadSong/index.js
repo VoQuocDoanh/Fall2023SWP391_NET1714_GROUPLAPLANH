@@ -167,10 +167,10 @@ function UploadSong() {
             <div className={cx('page-content')}> {/* trang tổng */}
                 {console.log(songInput)}
                 <div className={cx('container-16')}>
-                    <h1>Upload new song</h1>
+                    <div className={cx('title')}>Upload new song</div>
                     <div className={cx('grid-9')}> {/* trang tổng gổm 2 div trái phải*/}
                         <div className={cx('page-content-left')}> {/* trang tổng bên trái*/}
-                            <h2><b>Song name: </b></h2>
+                            <h2 style={{ marginBottom: "20px"}}><b>Song name: </b></h2>
                             <input
                                 type="text"
                                 placeholder="Ex: Silent Night"
@@ -178,7 +178,7 @@ function UploadSong() {
                                 className={cx('input-song-name')}
                                 onChange={(event) => setSongName(event.target.value)}
                             />
-                            <h2><b>Lyrics and chords: </b></h2>
+                            <h2 style={{ marginTop: "20px", marginBottom: "20px"}}><b>Lyrics and chords: </b></h2>
                             {/* <div className={cx('toolbox')} style={{ width: '80%' }}>
                             <div className={cx('pull-left')}>
                                 <div className={cx('button-submit')}>
@@ -250,10 +250,10 @@ function UploadSong() {
                             <div className={cx('song-lyric')}>
                                 <textarea style={{ width: '80%', resize: 'none', padding: 15 }} className={cx("textarea-box")} value={description} id="ABC" name="ABC" rows="20" cols="174" onChange={e => setDescription(e.target.value)}></textarea>
                             </div>
-                            <div className={cx('toolbox-bottom')} style={{ width: '80%' }}>
+                            {/* <div className={cx('toolbox-bottom')} style={{ width: '80%' }}>
                                 <span>Chords: </span>
-                            </div>
-                            <h2><b>Chords used:</b></h2>
+                            </div> */}
+                            <h2 style={{ marginTop: "20px" }}><b>Chords used:</b></h2>
                             <div style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap" }} className={cx("list-tone")}>
                                 {listTone.map((item, index) => <span key={index} style={{ fontSize: 20 }}>
                                     <div className={cx("tone-item")}>
@@ -270,8 +270,8 @@ function UploadSong() {
                                 <MarkdownPreview inputProps={{ maxLength: 1200 }} markdown={description} />
                             </div>
                             <div className={cx('grid-5-alpha')} style={{ width: '80%' }}>
-                                <div className={cx('song-singers')}>
-                                    <h2><b>Singer:</b></h2>
+                                <div style={{ marginTop: "20px" }} className={cx('song-singers')}>
+                                    <h2 style={{ marginBottom: "20px"}}><b>Singer:</b></h2>
                                     <input
                                         type="text"
                                         placeholder="Ex: Michael Buble"
@@ -280,8 +280,8 @@ function UploadSong() {
                                         onChange={(event) => setSinger(event.target.value)}
                                     />
                                 </div>
-                                <div className={cx('song-genres')}>
-                                    <h2><b>Genres:</b></h2>
+                                <div style={{ marginTop: "20px" }} className={cx('song-genres')}>
+                                    <h2 style={{ marginBottom: "20px"}}><b>Genres:</b></h2>
                                     <Popup trigger={<input
                                         type=""
                                         placeholder="Ex: Pop"
@@ -298,7 +298,7 @@ function UploadSong() {
                                     {/* <button onClick={handleAddToList}>Add to list genre</button> */}
                                 </div>
                                 <div className={cx('tone-info')}>
-                                    <h2><b>Tone:</b></h2>
+                                    <h2 style={{ marginTop: "20px", marginBottom: "20px"}}><b>Tone:</b></h2>
                                     <input
                                         type="text"
                                         placeholder="Ex: Am"
@@ -312,7 +312,7 @@ function UploadSong() {
                             </div>
                             <div className={cx('grid-3-alpha')} style={{ width: '80%' }}>
                                 <div className={cx('singer-info')}>
-                                    <h2><b>Vocal Range:</b></h2>
+                                    <h2 style={{ marginTop: "20px", marginBottom: "20px"}}><b>Vocal Range:</b></h2>
                                     <input
                                         type="text"
                                         placeholder="Ex: C3 to D6"
@@ -322,7 +322,7 @@ function UploadSong() {
                                     />
                                 </div>
                                 <div className={cx('link-music')}>
-                                    <h2><b>Link:</b></h2>
+                                    <h2 style={{ marginTop: "20px", marginBottom: "20px" }}><b>Link:</b></h2>
                                     <input
                                         type="text"
                                         placeholder="Ex: http://mp3.zing.vn/..."
@@ -333,15 +333,15 @@ function UploadSong() {
                                 </div>
                             </div>
                             <div className={cx('add-singer')} style={{ width: '80%' }} onClick={() => handleUploadSong()}>
-                                <footer className={cx("Add-Songs")} >
+                                <div className={cx("Add-Songs")} >
                                     <Link to="/UploadSong" className={cx("Add-Songs-body", "card-action")}>Add new song</Link>
-                                </footer>
+                                </div>
                             </div>
                         </div>
 
                         <div className={cx('page-content-right')}> {/* trang tổng bên phải*/}
-                            <div className={cx('white-box')}>
-                                <div className={cx('white-box-final')}>
+                            <div className={cx('white-box-final')}>
+                                <div className={cx('white-box')}>
                                     <div className={cx('white-box-text')}>
                                         <h3><b>Get your post correctness</b></h3>
                                         <h4>You can refer to the suggestions below</h4>
@@ -467,8 +467,8 @@ function UploadSong() {
                                         </div>
                                     </div>
                                     <div className={cx('white-box-text')}>
-                                        <h6>After posting, you can still add/edit song information. Please note to monitor your post if Admin has feedback on your post.</h6>
-                                        <h6>Thank you for your contribution!</h6>
+                                        <h4>After posting, you can still add/edit song information. Please note to monitor your post if Admin has feedback on your post.</h4>
+                                        <h4>Thank you for your contribution!</h4>
                                     </div>
                                 </div>
                             </div>

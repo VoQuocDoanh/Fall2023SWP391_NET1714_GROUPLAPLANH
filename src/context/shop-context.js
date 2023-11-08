@@ -24,13 +24,14 @@ function ShopContextProvider({ children }) {
         };
         return cart;
     };
-
+    
     const [cartItems, setCartItems] = useState(getDefaultCart());
     // if(JSON.parse(localStorage.getItem("Cart")) !== null &&  ){
 
     // }
 
-
+    localStorage.setItem("CheckOutPage", JSON.stringify("false"))
+    localStorage.setItem("Cart", JSON.stringify(cartItems))
 
     if (localStorage.getItem("CheckOutPage") !== null) {
         // console.log(JSON.parse(localStorage.getItem("Cart")))

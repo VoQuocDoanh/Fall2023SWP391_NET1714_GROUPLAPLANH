@@ -46,7 +46,7 @@ function Chord({ songData, ...props }) {
                         <Image src={item?.image} />
                       </Box>
                       <Box>
-                        <Text fontWeight={'500'} fontSize={'1rem'}>
+                        <Text fontWeight={'500'} fontSize={'2.5rem'}>
                           {item?.chordName}
                         </Text>
                       </Box>
@@ -64,7 +64,7 @@ function Chord({ songData, ...props }) {
                         <Image src={item?.image} />
                       </Box>
                       <Box>
-                        <Text fontWeight={'500'} fontSize={'1rem'}>
+                        <Text fontWeight={'500'} fontSize={'2.5rem'}>
                           {item?.chordName}
                         </Text>
                       </Box>
@@ -82,7 +82,7 @@ function Chord({ songData, ...props }) {
                         <Image src={item?.image} />
                       </Box>
                       <Box>
-                        <Text fontWeight={'500'} fontSize={'1rem'}>
+                        <Text fontWeight={'500'} fontSize={'2.5rem'}>
                           {item?.chordName}
                         </Text>
                       </Box>

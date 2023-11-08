@@ -1,6 +1,17 @@
 @import url('https://fonts.cdnfonts.com/css/sono');
 @import url('https://fonts.cdnfonts.com/css/fredoka-one');
 
+
+.firstpart {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    margin-top: -100px;
+    margin-bottom: -60px;
+    width: 100%;
+    justify-content: space-around;
+}
+
 .title {
     text-transform: uppercase;
     text-align: center;
@@ -18,10 +29,10 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: textclip 2s linear infinite;
-    display: inline-block;
     font-size: 100px;
     border-bottom: 1px solid var(--gray-100, #e4e7e9);
     font-family: fredoka one;
+    width: 85%;
 }
 
 @keyframes textclip {
@@ -37,11 +48,11 @@
     border-radius: 40px;
     padding: 10px;
     margin-right: -50px;
-    margin-bottom: 50px;
-    width: 18%;
+    margin-top: -100px;
+    margin-bottom: 10px;
+    width: 55%;
     display: flex;
-    margin-left: 1500px;
-
+    margin-left: 60px;
 }
 
 .searchBox:hover>.searchInput {
@@ -184,10 +195,10 @@
     white-space: nowrap;
     background-color: #e7e7e7;
     padding: 0 7px;
-    font-size: 15px;
-    width: 120px;
+    font-size: 20px;
+    width: 150px;
     height: 40px;
-    line-height: 24px;
+    line-height: 40px;
     border-radius: 4px;
     cursor: pointer;
     margin: 2px;
@@ -200,8 +211,8 @@
 }
 
 .panel-content-text-center-padding-both {
-    width: 25%;
-    height: 600px;
+    width: 15%;
+    height: 560px;
     padding: 10px;
     background-color: #ffffff;
     text-align: center;
@@ -393,6 +404,7 @@
 
 .body-right {
     flex: 7;
+
     // Add a new container for the scrollable content
     .scroll-container {
         height: 560px;
@@ -436,14 +448,15 @@
 
 .name-and-musician {
     display: flex;
-
+    justify-content: start;
+    height: 45px;
 }
 
 .song-name {
-    margin-left: 20px;
-    display: grid;
-    text-align: left;
-
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    margin-left: 10px;
 }
 
 .option {
@@ -477,9 +490,29 @@
     display: grid;
     row-gap: 10px;
     margin-top: 30px;
+    text-align: center;
 }
 
 .pagination {
     margin-left: 500px
 }
 
+// .box-img {
+//     width: 25%;
+// }
+
+.number-song{
+    width: 50%;
+}
+
+.img{
+    width: 20%;
+}
+
+// .number{
+//     display: flex;
+//     align-items: center;
+//     text-align: center;
+//     margin-bottom: 50px;
+//     // margin-left: 10px;
+// }
