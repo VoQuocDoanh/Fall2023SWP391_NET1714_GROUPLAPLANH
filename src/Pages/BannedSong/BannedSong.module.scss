@@ -147,7 +147,6 @@
     gap: 120px;
     margin-left: 50px;
     padding: 10px;
-    height: 800px;
 }
 
 .title {
@@ -194,7 +193,7 @@
 
 .panel-content-text-center-padding-both {
     width: 25%;
-    height: 600px;
+    height: auto;
     padding: 10px;
     background-color: #ffffff;
     text-align: center;
@@ -386,6 +385,7 @@
 
 .body-right {
     flex: 7;
+
     // Add a new container for the scrollable content
     .scroll-container {
         height: 560px;
@@ -395,6 +395,11 @@
         /* Add padding to compensate for scrollbar width */
         box-sizing: content-box;
         padding: 5px;
+
+        &::-webkit-scrollbar {
+            /* mất thanh */
+            width: 0;
+        }
 
         &::-webkit-scrollbar-thumb {
             background-color: transparent;
@@ -473,8 +478,4 @@
 
 .pagination{
     margin-left: 500px
-}
-
-.notification{
-    font-size: 40px;
 }

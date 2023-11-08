@@ -31,9 +31,9 @@ function ShopContextProvider({ children }) {
     // }
 
     if (localStorage.getItem("CheckOutPage") !== null) {
-        console.log(JSON.parse(localStorage.getItem("Cart")))
-        console.log(JSON.parse(localStorage.getItem("CheckOutPage")))
-        console.log(cartItems)
+        // console.log(JSON.parse(localStorage.getItem("Cart")))
+        // console.log(JSON.parse(localStorage.getItem("CheckOutPage")))
+        // console.log(cartItems)
         if (JSON.parse(localStorage.getItem("CheckOutPage")).includes("true")) {
             console.log(JSON.parse(localStorage.getItem("Cart")))
             setCartItems(JSON.parse(localStorage.getItem("Cart")))
@@ -42,8 +42,8 @@ function ShopContextProvider({ children }) {
     }
     useEffect(() => {
         if (JSON.parse(localStorage.getItem("CheckOutPage")).includes("false")) {
-            console.log(JSON.parse(localStorage.getItem("Cart")))
-            console.log(cartItems)
+            // console.log(JSON.parse(localStorage.getItem("Cart")))
+            // console.log(cartItems)
             localStorage.setItem("Cart", JSON.stringify(cartItems))
 
         }

@@ -16,6 +16,8 @@ import axios from "axios";
 import { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import MusicCardItem from "@/components/MusicCard";
+import { ChordsComponent } from "@/components/SongDetail";
+import TabChordList from "@/components/ChorDetail";
 
 function MyPlayListChordDetail() {
   const { id } = useParams();
@@ -27,17 +29,18 @@ function MyPlayListChordDetail() {
   const [playListDetail, setPlayListDetail] = useState({});
   const [dynamicPlaylist, setDynamicPlaylist] = useState([]);
   const itemsPerPage = 6;
+  const [tabSelected, setTabSelected] = useState("Guitar")
   const totalPages = Math.ceil(
     playListDetail?.chords?.length
-      ? playListDetail?.chords?.length / itemsPerPage
+      ? playListDetail?.chords?.filter(item=>item?.type === tabSelected).length / itemsPerPage
       : 0
   );
 
   const handlePageChange = (page, list = []) => {
     let newList = [];
     for (let i = (page - 1) * itemsPerPage; i < page * itemsPerPage; i++) {
-      if (list[i]) {
-        newList.push(list[i]);
+      if (list.filter(item=>item?.type === tabSelected)[i]) {
+        newList.push(list.filter(item=>item?.type === tabSelected)[i]);
       }
     }
     setCurrentPage(page);
@@ -113,6 +116,11 @@ function MyPlayListChordDetail() {
       removeSong={removeSong}
     />
   ));
+
+  useEffect(() => {
+    fetchData();
+  }, [tabSelected]);
+
   useEffect(() => {
     fetchData();
     handlePageChange(1);
@@ -124,21 +132,27 @@ function MyPlayListChordDetail() {
     }
   }, [reload]);
 
+  
+
+
   return (
-    <Box style={{marginTop:-100}}>
-      <Box w={"60%"} m={"3% auto"} p={"0"}>
+    <>
+    <Box h={"100px"}></Box>
+    <Box minH={"80vh"}>
+      <Box w={"60%"} m={"0 auto"} p={"0"}>
         {playListDetail?.chords?.length ? (
           <>
             <Card>
-              <CardHeader style={{marginTop:120}}>
+              <CardHeader>
                 <Text style={{fontSize:'1.8rem'}}>Collection</Text>
                 <Heading>{playListDetail?.name}</Heading>
               </CardHeader>
               <Divider />
               <CardBody my={5}>
-                <SimpleGrid columns={3} spacing={9} justifyItems={"center"}>
+                {/* <SimpleGrid columns={3} spacing={9} justifyItems={"center"}>
                   {SongItemsHTML}
-                </SimpleGrid>
+                </SimpleGrid> */}
+                <TabChordList chords={playListDetail?.chords} setTabSelected={setTabSelected}/>
               </CardBody>
               <Divider />
               <CardFooter>{PaginationHTML}</CardFooter>
@@ -153,6 +167,7 @@ function MyPlayListChordDetail() {
         )}
       </Box>
     </Box>
+    </>
   );
 }
 

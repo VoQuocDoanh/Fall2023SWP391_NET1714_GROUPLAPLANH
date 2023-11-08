@@ -4,7 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800&display=swap');
 @import url('https://fonts.cdnfonts.com/css/sono');
 @import url('https://fonts.cdnfonts.com/css/inter');
-
+@import url('https://fonts.cdnfonts.com/css/fredoka-one');
 .profile {
     display: flex;
     justify-content: center;
@@ -90,6 +90,7 @@
     flex-shrink: 0;
     border-radius: 20px;
     filter: drop-shadow(0 0 0.5rem rgb(146, 143, 144));
+    margin-bottom: 250px;
 
 }
 
@@ -154,9 +155,10 @@
 }
 
 .login-text {
-    font-family: inter;
+    font-family: fredoka one;
     margin-left: 4px;
-    font-size: 23px;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .part4 {
@@ -191,9 +193,10 @@
     margin-left: -4px;
 
     .sex {
-        font-family: inter;
+        font-family: fredoka one;
         margin-left: 6px;
-        font-size: 23px;
+        font-size: 20px;
+        font-weight: bold;
     }
 }
 
@@ -238,9 +241,10 @@
 
 .email-text {
     text-align: start;
-    font-family: inter;
-    font-size: 23px;
+    font-family: fredoka one;
+    font-size: 20px;
     margin-left: 15px;
+    font-weight: bold;
 }
 
 .part5 {

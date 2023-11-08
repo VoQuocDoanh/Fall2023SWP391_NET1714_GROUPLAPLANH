@@ -64,7 +64,7 @@ function HeaderCustomer() {
               </div>
             </Popup>
           </div>
-          <div className={cx("nav-item")}>Contact</div>
+          <Link to={"/contact"}><div className={cx("nav-item")}>Contact</div></Link>
           <div className={cx("nav-item")}>
               {/* Phan quyen */}
               <div style={{display:"flex", marginTop:30}}>

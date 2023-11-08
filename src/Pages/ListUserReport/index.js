@@ -41,7 +41,7 @@ function ListUserReport() {
     return (
 
         <div className={cx("container")}>
-            <h1 className={cx("login-wrapper")}>List User</h1>
+            <h1 className={cx("login-wrapper")}>List User Reported</h1>
             <div className={cx("line")}>
             </div>
             {listUser ? <div className={cx("listuser-header")}>

@@ -212,11 +212,11 @@ function ViewDetailBeat() {
         return (
 
             <div className={cx("first-container")}>
-                <Link to={"/listbeat"}>
+                {/* <Link to={"/listbeat"}>
                     <Button variant="contained" className={cx("back-to-shop")}>
                         <div style={{ fontSize: 15, textWrap: 'nowrap' }}>Back to Shop</div>
                     </Button>
-                </Link>
+                </Link> */}
                 {/* <div className={cx("text-header")}>
                 <h1>
                     Beats Name
@@ -259,11 +259,18 @@ function ViewDetailBeat() {
                                 <div>Message</div>
                             </Button>
                         </div> */}
-                                    <Stack className={cx("rating-form")} spacing={1}>
-                                        <Rating className={cx("start-icon")} name="size-large" defaultValue={0} size="large" onChange={handleRating} />
-                                    </Stack>
-                                    <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundDemo}>
-                                    </audio>
+                                    <div style={{ marginTop: -60 }}>
+                                        <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundDemo}>
+                                        </audio>
+                                        <div className={cx("container-like")}>
+                                            <Stack className={cx("rating-form")} spacing={1}>
+                                                <Rating className={cx("start-icon")} name="size-large" defaultValue={0} size="large" onChange={handleRating} />
+                                            </Stack>
+                                            <button className={cx("button")} onClick={() => handleLikeClick(beatDetail.id)}>
+                                                <Heart id={checkLike ? cx('favorite-stroke') : cx('favorite-filled')} />
+                                            </button>
+                                        </div>
+                                    </div>
                                     <div className={cx("check-rating")}>{checkRating}</div>
                                 </div>
                             </div>
@@ -279,11 +286,6 @@ function ViewDetailBeat() {
                                     <span style={{ fontSize: '2rem' }} >&#x2022; Prize: {beatDetail.prize}</span>
                                 </div>
                                 <h3 style={{ marginTop: 30, fontSize: '3rem' }} ><b >Beat information</b></h3>
-                                <div className={cx("container-like")}>
-                                    <button className={cx("button")} onClick={() => handleLikeClick(beatDetail.id)}>
-                                        <Heart id={checkLike ? cx('favorite-stroke') : cx('favorite-filled')} />
-                                    </button>
-                                </div>
                                 {/* <div className={cx('list-of-beats')}>
                                 <div className={cx('cart')}>
                                     <span>$25.00</span>
@@ -318,7 +320,7 @@ function ViewDetailBeat() {
                                             <span style={{ fontSize: '2rem' }} >&#x2022; Genre:
                                                 {
                                                     beatDetail.genres.map((item, index) => {
-                                                        return <span> {item.name},</span>
+                                                        return <span style={{fontSize: '2rem'}} >  {item.name}</span>
                                                     })
 
                                                 }
@@ -329,7 +331,7 @@ function ViewDetailBeat() {
                                             </span>
                                         }
                                         <span style={{ fontSize: '2rem' }} >&#x2022; Price: ${beatDetail.price}</span>
-                                        <span style={{ fontSize: '2rem' }} >&#x2022; Views: {(beatDetail.view / 2).toFixed()}</span>
+                                        {/* <span style={{ fontSize: '2rem' }} >&#x2022; Views: {(beatDetail.view / 2).toFixed()}</span> */}
                                         <span style={{ fontSize: '2rem' }} >&#x2022; Tone: {beatDetail.vocalRange}</span>
                                         <span style={{ fontSize: '2rem' }}  >&#x2022; Total Rating: {(beatDetail.totalRating)}</span>
                                         <span style={{ fontSize: '2rem' }} >&#x2022; Release date: {day}/{month}/{year}</span>
@@ -392,7 +394,7 @@ function ViewDetailBeat() {
                     </div>
                 </div>
 
-                {/* Comment */}
+                {/* Comment
 
                 <div className={cx('comment-all')}>
                     <h2 style={{ marginLeft: 25, fontSize: 38 }}>Comment</h2>
@@ -528,7 +530,7 @@ function ViewDetailBeat() {
                                 )
                             })}</div> : <div></div>}
                     </div>
-                </div>
+                </div> */}
 
 
 

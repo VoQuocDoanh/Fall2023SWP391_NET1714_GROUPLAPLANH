@@ -4,6 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800&display=swap');
 @import url('https://fonts.cdnfonts.com/css/sono');
 @import url('https://fonts.cdnfonts.com/css/inter');
+@import url('https://fonts.cdnfonts.com/css/fredoka-one');
 
 .profile {
     display: flex;
@@ -90,7 +91,7 @@
     flex-shrink: 0;
     border-radius: 20px;
     filter: drop-shadow(0 0 0.5rem rgb(146, 143, 144));
-
+    margin-bottom: 250px;
 }
 
 .profile-2 {
@@ -107,7 +108,7 @@
     margin: 8px 0;
     box-sizing: border-box;
     border: none;
-     border-bottom: 1px solid rgb(165, 165, 165);
+    border-bottom: 1px solid rgb(165, 165, 165);
     width: 700px;
     height: 1px;
     margin-left: -50px;
@@ -133,6 +134,7 @@
     width: 700px;
     margin-top: 30px;
     height: 1px;
+    font-size: 1.6rem;
     flex-shrink: 0;
 }
 
@@ -142,6 +144,7 @@
 
 .text-username0 {
     margin-left: 65px;
+
 }
 
 .input-text {
@@ -153,9 +156,9 @@
 }
 
 .login-text {
-    font-family: inter;
+    font-family: fredoka one;
     margin-left: 4px;
-    font-size: 23px;
+    font-size: 20px;
 }
 
 .part4 {
@@ -190,7 +193,8 @@
     margin-left: -4px;
 
     .sex {
-        font-family: inter;
+        font-family: fredoka one;
+        font-size: 20px;
         margin-left: 6px;
     }
 }
@@ -221,22 +225,24 @@
 }
 
 .part2>td {
-    margin-top: 40px;
     display: flex;
     justify-content: center;
     margin-left: -270px;
-    margin-top: 100px;
+    margin-top: 60px;
     display: flex;
 }
 
 .email-change {
     margin-left: 50px;
+    text-decoration: underline;
 }
 
 .email-text {
     text-align: start;
-    font-family: inter;
-
+    font-family: fredoka one;
+    font-weight: 500;
+    font-size: 20px;
+    margin-left: -100px;
 }
 
 .part5 {
@@ -321,6 +327,7 @@
     font-family: 'Sono';
     font-weight: 400;
 }
+
 //line
 
 .volt8A {
@@ -335,8 +342,58 @@
 
 }
 
-.title-feedback{
+.title-feedback {
     font-size: 30px;
     font-family: inter;
     font-weight: 500;
+}
+
+.more-info {
+    background-color: #06c;
+    width: 900px;
+    margin-left: -32px;
+    display: flex;
+    justify-content: center;
+    color: white;
+    padding: 10px;
+    margin-left: -32px;
+}
+
+//file
+.img-click {
+    color: transparent;
+}
+
+.img-click::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+.img-click::before {
+    content: 'Choose File';
+    color: black;
+    display: inline-block;
+    background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
+    border: 1px solid #999;
+    border-radius: 3px;
+    padding: 5px 8px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    text-shadow: 1px 1px #fff;
+    font-weight: 700;
+    font-size: 10pt;
+    width: 90px;
+}
+
+.img-click:hover::before {
+    border-color: black;
+}
+
+.img-click:active {
+    outline: 0;
+}
+
+.img-click:active::before {
+    background: -webkit-lin
 }

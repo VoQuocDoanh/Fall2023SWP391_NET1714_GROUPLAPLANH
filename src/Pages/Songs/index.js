@@ -36,7 +36,7 @@ function Songs() {
                     setListSongs(res.data)
                 }
                 else {
-                    const newGroup = ListSplitter({ data: res.data, groupSize: 5 })
+                    const newGroup = ListSplitter({ data: res.data, groupSize: 10 })
                     for (let i = 0; i < newGroup.length; i++) {
                         if (page === i + 1) {
                             setListSongs(newGroup[i])
@@ -66,7 +66,7 @@ function Songs() {
                     setListSongs(res.data)
                 }
                 else {
-                    const newGroup = ListSplitter({ data: res.data, groupSize: 5 })
+                    const newGroup = ListSplitter({ data: res.data, groupSize: 10 })
                     for (let i = 0; i < newGroup.length; i++) {
                         if (page === i + 1) {
                             setListSongs(newGroup[i])
@@ -87,7 +87,7 @@ function Songs() {
                     setListSongs(res.data)
                 }
                 else {
-                    const newGroup = ListSplitter({ data: res.data, groupSize: 5 })
+                    const newGroup = ListSplitter({ data: res.data, groupSize: 10 })
                     for (let i = 0; i < newGroup.length; i++) {
                         if (page === i + 1) {
                             setListSongs(newGroup[i])
@@ -101,7 +101,6 @@ function Songs() {
 
         <div className={cx("list-songs")}>
             <h1 className={cx("title")}> CHORDS OF SONGS</h1>
-            <h3 className={cx("title-song-style2")}>  Most Popular Today</h3>
             {/* <div className={cx("button-chords")}>
                 <Link to="/chordsdetails">
                     <button variant="contained" className={cx("button")}>
@@ -158,8 +157,8 @@ function Songs() {
                         <div>
                             <div className={cx('scroll-container')}>
                                 {listSongs.map((song, index) => (
-                                    <div className={cx('song')} key={index}>
-                                        <Link style={{ color: "black" }} to={`/song/${song.id}`}>
+                                    <Link style={{ color: "black" }} to={`/song/${song.id}`}><div className={cx('song')} key={index}>
+                                        
                                             <div className={cx("name-and-musician")}>
                                                 <div className={cx('number-song')}>
                                                     <span>{index + 1}.</span>
@@ -169,7 +168,7 @@ function Songs() {
                                                     <span>{song.singer}</span>
                                                 </div>
                                             </div>
-                                        </Link>
+                                        
                                         <Popup trigger={<button className={cx("button-page")}>...</button>} position="bottom centers">
                                             <div className={cx("text-all")}>
                                                 <div style={{ fontWeight: 500, fontSize: '2rem', padding: 5, display: 'flex', justifyContent: 'center', background: 'white' }}>
@@ -180,7 +179,7 @@ function Songs() {
                                                 </div>
                                             </div>
                                         </Popup>
-                                    </div>
+                                    </div></Link>
                                 ))}
 
                             </div>
@@ -190,7 +189,7 @@ function Songs() {
                                 </div>
                                 : <div></div>}
                         </div>
-                        : <div> There are no songs in the system! </div>}
+                        : <h1 style={{textAlign:"center"}}> There are no songs in the system! </h1>}
                     {/* <div className={cx('pagination')}>
                         <button onClick={handlePrevPage} disabled={currentPage === 1}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -204,6 +203,8 @@ function Songs() {
                             </svg>
                         </button>
                     </div> */}
+                    
+
                 </div>
             </div>
         </div>

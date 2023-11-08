@@ -109,7 +109,7 @@
     width: 120px;
     height: 60px;
     color: white;
-    
+
 }
 
 .mid-detail-left {
@@ -147,6 +147,7 @@
     margin-right: 50px;
     transition: all 0.3 ease;
     filter: drop-shadow(0 0 0.75rem rgb(161, 161, 161));
+    margin-top: -120px;
 
     &:hover {
         transform: scale(1.05);
@@ -282,6 +283,7 @@
     row-gap: 10px;
     font-weight: 400;
     font-family: Inter;
+    margin-top: 15px;
 }
 
 .mid-detail-left-2 {
@@ -321,10 +323,12 @@
         color: #f8f8f8;
     }
 }
-.musician-beat{
+
+.musician-beat {
     color: white;
 }
-.musician-name{
+
+.musician-name {
     font-size: 2.3rem;
 }
 
@@ -363,7 +367,25 @@
 
 .total-detail {
     display: grid;
+    padding: 15px;
+    border-radius: 10px;
+    height: auto;
+    filter: drop-shadow(0 0 0.7rem rgb(161, 161, 161));
+    overflow-y:scroll;
+    .total-detail::-webkit-scrollbar {
+        /* mất thanh */
+        width: 10px;
+    }
 
+    .total-detail::-webkit-scrollbar-thumb {
+        background-color: #ffd3d1;
+        /* Make the thumb transparent */
+    }
+
+    .total-detail::-webkit-scrollbar-track {
+        background-color: red;
+        /* Make the track transparent */
+    }
 }
 
 .comment {
@@ -380,12 +402,9 @@
 
 //audio
 .audio {
-    position: -webkit-sticky;
-    position: sticky;
     top: 0;
     max-width: 100%;
     margin: 0 auto;
-    margin-top: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -490,9 +509,9 @@
 
 // rating
 .rating-form {
-    margin-top: -60px;
+    margin-top: 50px;
     margin-left: 110px;
-    background-color: rgb(194, 194, 194);
+    background-color: white;
     padding: 10px;
     border-radius: 20px;
     width: 45%;
@@ -582,16 +601,17 @@
 
 //Like Button
 .container-like {
-    height: 300px;
+    height: auto;
     width: 300px;
-    margin-top: -200px;
     align-items: center;
     justify-content: center;
     display: flex;
+    margin-left: 110px;
 
     button {
         margin-right: 200px;
-        margin-top: 180px;
+        margin-bottom: -55px;
+        margin-left: 20px;
         cursor: pointer;
         height: 60px;
         min-width: 60px;
@@ -603,7 +623,7 @@
         justify-content: center;
         align-items: center;
         transition: 0.2s;
-        background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+        background: #06c;
 
         &:hover {
             transform: scale(1.1);

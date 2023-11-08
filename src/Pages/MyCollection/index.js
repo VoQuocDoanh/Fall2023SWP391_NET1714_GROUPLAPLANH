@@ -8,6 +8,7 @@ import {
   Text,
   Box,
   IconButton,
+  Button,
   ChakraProvider,
 } from "@chakra-ui/react";
 import MusicCardItem from "@/components/MusicCard";
@@ -20,6 +21,8 @@ import { GlobalContext } from "@/Provider";
 import { useToast } from "react-toastify";
 import jwtDecode from "jwt-decode";
 import useToken from "@/authorization/useToken";
+import axiosInstance from "@/authorization/axiosInstance";
+import { Alert, Snackbar } from "@mui/material";
 
 function MyCollection() {
   const [listPlayList, setListPlayList] = useState([]);
@@ -30,9 +33,6 @@ function MyCollection() {
     navigator(`/my-playlist-song/${userName}`);
   };
 
-  const handlePlayListChordDetail = (id) => {
-    navigator(`/my-playlist-chord/${id}`);
-  };
   //pagination list song
   const maxItems = 5;
   const [currentPage, setCurrentPage] = useState(0);
@@ -73,20 +73,34 @@ function MyCollection() {
   const [nextPage2, setNextPage2] = useState(false);
   const [previosPage2, setPreviosPage2] = useState(false);
   const [dynamicPlaylist2, setDynamicPlaylist2] = useState([]);
+  const [messageSuccess, setMessageSuccess] = useState("")
+  const [messageFailed, setMessageFailed] = useState("")
+  const [openModal, setOpenModal] = useState(false);
+  const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
+  const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
+  const handleOpenSuccessSnackBar = () => setOpenSuccessSnackBar(true);
+  const handleCloseSuccessSnackBar = () => setOpenSuccessSnackBar(false);
+  const handleOpenFailedSnackBar = () => setOpenFailedSnackBar(true);
+  const handleCloseFailedSnackBar = () => setOpenFailedSnackBar(false);
   const token = useToken()
   let userId = ""
-  if(token){
+  let username = ""
+  if (token) {
     userId = jwtDecode(token).sub
+    username = jwtDecode(token).username
     console.log(jwtDecode(token).sub)
     console.log(userId)
   }
 
   const getPaginationListOfMyPlaylistChords = (status, list) => {
+    console.log(list)
     let value = 0;
     if (status === "increase") {
-      value = currentPage + 1;
+      value = currentPage2 + 1;
     } else if (value === "decrease") {
-      value = currentPage - 1;
+      value = currentPage2 - 1;
     } else {
       setNextPage2(list.length <= maxItems ? false : true);
       setPreviosPage2(false);
@@ -102,7 +116,7 @@ function MyCollection() {
         setPreviosPage2(true);
       }
       if (status === "decrease") {
-        setPreviosPage2(currentPage === 0 ? false : true);
+        setPreviosPage2(currentPage2 === 0 ? false : true);
         setNextPage2(true);
       }
     }
@@ -110,7 +124,7 @@ function MyCollection() {
   };
 
   useEffect(() => {
-    {console.log(userId)}
+    { console.log(userId) }
     const id = userId;
 
     const fetchData = async () => {
@@ -134,7 +148,40 @@ function MyCollection() {
       }
     };
     fetchData();
-  }, [BACK_END_PORT]);
+  }, [BACK_END_PORT, messageSuccess]);
+
+  const handleDeleteChordCollection = async (name) => {
+    console.log(name)
+    console.log(username)
+    await axiosInstance.delete("http://localhost:8080/api/v1/chordcollection/delete",{
+      data: {
+        username: username,
+        name: name
+      }
+    })
+      .then((res) => {
+        setMessageSuccess("Delete Successfully")
+        setOpenSuccessSnackBar(true)
+      })
+      .catch((error) => {
+        setMessageFailed("Delete Failed!")
+        setOpenFailedSnackBar(true)
+      })
+  }
+
+  const handleDeleteSongCollection = async (name) => {
+    await axiosInstance.delete(`http://localhost:8080/api/v1/playlist/user/${userId}/${name}`)
+      .then((res) => {
+        setMessageSuccess("Delete Successfully")
+        setOpenSuccessSnackBar(true)
+      })
+      .catch((error) => {
+        setMessageFailed("Delete Failed!")
+        setOpenFailedSnackBar(true)
+      })
+  }
+
+
   const ListMyPLaylistHTML = dynamicPlaylist?.map((item, index) => (
     <MusicCardItem
       key={index}
@@ -143,6 +190,7 @@ function MyCollection() {
       name={item?.name}
       showNumberSong={true}
       numberSongs={item?.quantityOfSong}
+      handleDeleteSongCollection={handleDeleteSongCollection}
       minW="250px"
       h="380px"
       color={"black"}
@@ -150,33 +198,36 @@ function MyCollection() {
       _hover={{ boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px" }}
       mr={listPlayList.length !== 5 ? "4%" : "0"}
       alignItems={"flex-start"}
-      onClick={() => handlePlayListSongDetail(item?.name)}
     />
   ));
-  const ListMyChordHTML = listChord?.map((item, index) => (
+  const ListMyChordHTML = dynamicPlaylist2?.map((item, index) => (
     <MusicCardItem
       key={index}
       image={item?.image}
       content={item?.description}
       name={item?.name}
+      idChordCollection={item?.id}
+      handleDeleteChordCollection={handleDeleteChordCollection}
       w="250px"
       h="380px"
       color={"black"}
-      mr={listChord.length !== 5 ? "4%" : "0"}
       alignItems={"flex-start"}
       cursor="pointer"
+      mr={listPlayList.length !== 5 ? "4%" : "0"}
       _hover={{ boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px" }}
-      onClick={() => handlePlayListChordDetail(item?.id)}
     />
   ));
   return (
-    <div style={{height:"auto"}}>
-      <Stack w={"80%"} m={"3% auto"} spacing={8}>
-        <Card style={{marginTop:30}}>
-          <CardHeader display={"flex"} justifyContent={"space-between"} style={{paddingTop:12.5}}>
-            <Text fontWeight={"700"} fontSize={"2.2rem"}>
-              My Chord Collection
-            </Text>
+    <div style={{ marginTop: -100 }}>
+      <Stack w={"80%"} m={"auto auto"} spacing={8}>
+        <Card style={{ marginTop: 140 }}>
+          <CardHeader display={"flex"} justifyContent={"space-between"} style={{ paddingTop: 12.5 }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-start', gap: 20 }}>
+              <Text fontWeight={"700"} fontSize={"2.2rem"}>
+                My Chord Collection
+              </Text>
+
+            </div>
             <Flex alignItems={"center"}>
               <IconButton
                 fontSize={"24px"}
@@ -189,7 +240,7 @@ function MyCollection() {
                 }
                 isDisabled={!previosPage2}
                 onClick={() =>
-                  getPaginationListOfMyPlaylistChords("decrease", listPlayList)
+                  getPaginationListOfMyPlaylistChords("decrease", listChord)
                 }
               >
                 <ChevronLeftIcon />
@@ -206,7 +257,7 @@ function MyCollection() {
                 }
                 isDisabled={!nextPage2}
                 onClick={() =>
-                  getPaginationListOfMyPlaylistChords("increase", listPlayList)
+                  getPaginationListOfMyPlaylistChords("increase", listChord)
                 }
               >
                 <ChevronRightIcon />
@@ -221,17 +272,21 @@ function MyCollection() {
               }
             >
               {ListMyChordHTML.length !== 0 ? ListMyChordHTML : <div>There are no chord collection</div>}
-              <div>123</div>
             </Flex>
-            
+
           </CardBody >
-          
+
         </Card>
         <Card>
           <CardHeader display={"flex"} justifyContent={"space-between"}>
-            <Text fontWeight={"700"} fontSize={"2.2rem"}>
-              My Song Collection
-            </Text>
+            <div style={{ display: 'flex', justifyContent: 'flex-start', gap: 20 }}>
+              <Text fontWeight={"700"} fontSize={"2.2rem"}>
+                My Song Collection
+              </Text>
+              <Button fontWeight={"700"} fontSize={"1.5rem"} style={{ background: '#EDF2F7', padding: 5, width: 40, height: 30, textWrap: 'nowrap', fontSize: '2rem' }} variant="outlined"><a><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M11 13H5V11H11V5H13V11H19V13H13V19H11V13Z" fill="black" />
+              </svg></a></Button>
+            </div>
             <Flex alignItems={"center"}>
               <IconButton
                 fontSize={"24px"}
@@ -275,12 +330,13 @@ function MyCollection() {
                 listPlayList?.length === 5 ? "space-between" : "flex-start"
               }
             >
-              {ListMyPLaylistHTML.length !== 0 ? ListMyPLaylistHTML : <div>There are no chord collection</div>}
+              {ListMyPLaylistHTML.length !== 0 ? ListMyPLaylistHTML : <div>There are no playlist collection</div>}
             </Flex>
           </CardBody>
         </Card>
         <Flex></Flex>
       </Stack>
+      
     </div>
   );
 }

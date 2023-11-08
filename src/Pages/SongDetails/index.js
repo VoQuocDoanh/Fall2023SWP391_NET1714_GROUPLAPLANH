@@ -11,7 +11,7 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { useContext, useEffect, useState, createContext } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   ChordsComponent,
   CommentComponent,
@@ -29,6 +29,8 @@ import EditForm from "@/components/PlaylistDetail/EditForm";
 import AddSongAndPlaylist from "@/components/SongDetail/AddForm";
 import useToken from "@/authorization/useToken";
 import jwtDecode from "jwt-decode";
+import axiosInstance from "@/authorization/axiosInstance";
+
 
 export const SongContext = createContext();
 
@@ -47,6 +49,7 @@ function SongDetail() {
   const [songData, setSongData] = useState({});
   const [songCommentData, setSongCommentData] = useState([]);
   const [listPlaylist, setListPlayList] = useState([]);
+  const navigate = useNavigate()
   const admin = JSON.parse(sessionStorage.getItem("Admin"))
   const token = useToken()
   let userId = ""
@@ -107,7 +110,36 @@ function SongDetail() {
       console.log(error);
     }
   };
+  
+  const handleDeleteSong = async() => {
+    await axiosInstance.delete(`http://localhost:8080/api/v1/song/user/${userId}?${songData.id}`)
+    .then((res) => {
+      navigate("/songs")
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }
 
+  const iconStyle = {
+    position: "absolute",
+    top: "125px", // Adjust the position as needed
+    right: "140px", // Adjust the position as needed
+    padding: "5px",
+
+  }
+  const boxStyle = {
+    position: "absolute",
+    top: "110px", // Adjust the position as needed
+    left: "1200px", // Adjust the position as needed
+    fontSize: "40px",
+    padding: "5px",
+    borderRadius: "10px",
+    maginRight: "5px",
+    display: "flex",
+    gap: "5px",
+    
+  }
   const addSongToPlayList = (name) => {
     const formData = {
       name: name,
@@ -155,6 +187,8 @@ function SongDetail() {
         onClose={() => setNewListStatus(false)}
         songId={id}
         setReload={setReload}
+
+
       />
       <ReportForm isOpen={isOpen} onClose={onClose} />
       <ViewReport isOpen={modalView} onClose={() => setModalView(false)} />
@@ -164,34 +198,71 @@ function SongDetail() {
         BACK_END_PORT={BACK_END_PORT}
         information={information}
         setReload={setReload}
-      />
-      <Box mb={10} mt={6}>
-        <Flex m={"0 auto 1%"} w={"68%"} justifyContent={"flex-end"}>
+        sytle={{ position: "relative" }}
+
+      >
+      </BannerTitle>
+      
+      <Box mb={10} mt={6} >
+        <Flex m={"0 auto 1%"} w={"68%"} justifyContent={"flex-end"} mb={4}>
           <Box display={"flex"}>
-            {(admin || (userId.includes(songData.userid)))  ?
-              <div>
-              <Button
-                height="40px"
-                width="100px"
-                onClick={() => setModalView(true)}
-                colorScheme="teal"
-                variant="outline"
-              >
-                View report
-              </Button>
-              </div>
-              :
-              <div>
+            {((userId.includes(songData.userid))) ?
+              <div style={boxStyle}>
                 <Button
                   height="40px"
                   width="100px"
                   onClick={() => setModalView(true)}
                   colorScheme="teal"
                   variant="outline"
+                  color="black"
                 >
                   View report
                 </Button>
-                <Button height="40px" width="100px" onClick={onOpen} colorScheme="red" variant="outline" ml={2}>
+                <Button
+                  height="40px"
+                  width="100px"
+                  onClick={() => handleDeleteSong()}
+                  colorScheme="teal"
+                  variant="outline"
+                  color="black"
+                >
+                  Delete
+                </Button>
+                <Button
+                  height="40px"
+                  width="100px"
+                  onClick={() => setModalView(true)}
+                  colorScheme="teal"
+                  variant="outline"
+                  color="black"
+                >
+                  Update
+                </Button>
+              </div>
+              : admin ? 
+              <div style={boxStyle}>
+                <Button
+                  height="40px"
+                  width="100px"
+                  onClick={() => setModalView(true)}
+                  colorScheme="teal"
+                  variant="outline"
+                  color="black"
+                >
+                  View report
+                </Button>
+                <Button
+                  height="40px"
+                  width="100px"
+                  onClick={() => setModalView(true)}
+                  colorScheme="teal"
+                  variant="outline"
+                  color="black"
+                >
+                  Ban
+                </Button>
+              </div> : <div style={boxStyle}>
+                <Button height="40px" width="100px" onClick={onOpen} colorScheme="red" variant="outline" color="black" ml={2}>
                   Report
                 </Button>
               </div>
@@ -204,6 +275,7 @@ function SongDetail() {
                 variant="outline"
                 ml={2}
                 colorScheme={""}
+                style={iconStyle}
               />
               <MenuList>
                 <MenuItem
@@ -225,9 +297,10 @@ function SongDetail() {
             <LyricsComponent
               songDescription={songDescription}
               userfullname={songData?.userfullname}
-              maxH={"600px"}
+              maxH={"900px"}
               overflowY={"scroll"}
               userId={songData?.userid}
+
             />
             <CommentComponent
               mt={8}
@@ -244,6 +317,7 @@ function SongDetail() {
           />
         </Flex>
       </Box>
+
     </SongContext.Provider>
   );
 }

@@ -35,10 +35,21 @@ function ListBeatPurchasedBox({ id, name, genre, price, view, like, onClick, rat
         <div className={cx("content")}>
             {/* Content left */}
             <div className={cx("content-left")}>
-                <h2 className={cx("name-beat")}> <Link style={{color:'white', fontSize: '2rem'}} to={`/viewdetailbeatpurchased/${id}`}>{name}</Link> <FontAwesomeIcon className={cx("check")} icon={faCheckCircle} /></h2>
-                <span className={cx("type-beat")}>{fullName}</span> <br />
-                <span className={cx("type-beat")}>{vocalRange}</span>
-
+                <h2 className={cx("name-beat")}> <Link style={{ color: 'white', fontSize: '2rem' }} to={`/viewdetailbeatpurchased/${id}`}>{name}</Link> <FontAwesomeIcon className={cx("check")} icon={faCheckCircle} /></h2>
+                <div className={cx("content-bottom")}>
+                    <span className={cx("type-beat")}>{fullName}</span> <br />
+                    <span className={cx("type-beat")}>{vocalRange}</span>
+                    <div style={{ display: 'grid', justifyContent: 'flex-end', marginLeft: 60, rowGap: 10 }}>
+                        <span style={{textWrap: 'nowrap'}} className={cx("like")}>
+                            <FontAwesomeIcon icon={faHeart} />
+                            <span  className={cx("number")}>{like}</span>
+                        </span>
+                        <span className={cx("rating")}>
+                            <FontAwesomeIcon icon={faStar} />
+                            <span className={cx("number")}>{rating}</span>
+                        </span>
+                    </div>
+                </div>
                 <div className={cx("footer")}>
                     <span className={cx("price")}>${price}</span>
                     <div className={cx("number-sell")}>
@@ -46,14 +57,6 @@ function ListBeatPurchasedBox({ id, name, genre, price, view, like, onClick, rat
                         <FontAwesomeIcon icon={faEye} />
                         <span className={cx("number")}>{view}</span>
                     </div>
-                    <span className={cx("like")}>
-                        <FontAwesomeIcon icon={faHeart}/>
-                        <span className={cx("number")}>{like}</span>
-                    </span>
-                    <span className={cx("rating")}>
-                        <FontAwesomeIcon icon={faStar} />
-                        <span className={cx("number")}>{rating}</span>
-                    </span>
                 </div>
                 <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundFull}>
                 </audio>

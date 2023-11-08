@@ -151,7 +151,7 @@ function Contact() {
                 {/* Detail musician */}
 
                 <div className={cx("volt8A")}>
-                    <form style={{ marginTop: 20, display: 'flex' }}>
+                    <form style={{ marginTop: 20, display: 'flex',marginBottom: 250}}>
                         <div className={("profile-2")} style={{ backgroundColor: 'white', padding: 50, width: 800 }}>
                             <td style={{ paddingBottom: 30, fontSize: 23, fontWeight: '500', color: '#06c' }}> Send us message</td>
                             <div className={cx("part0")}>

@@ -225,7 +225,7 @@ function MyProfile() {
                         </table>
                     </form>
                 </div>
-                <div className={cx("line")} />
+                {/* <div className={cx("line")} /> */}
                 <div className={cx("img-user-div")}>
                     <div className={cx("img-user-div1")}>
                         <div className={cx("img-user-div2")}>

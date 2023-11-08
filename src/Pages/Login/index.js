@@ -80,7 +80,7 @@ function Login() {
       <div className={cx("form")}>
         {/* Username or email */}
         <div>
-          <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px' }}>User Name*</td>
+          <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>User Name*</td>
           <div className={cx("input")}>
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
               <path d="M17.4999 5.83325C19.047 5.83325 20.5307 6.44783 21.6247 7.5418C22.7187 8.63576 23.3333 10.1195 23.3333 11.6666C23.3333 13.2137 22.7187 14.6974 21.6247 15.7914C20.5307 16.8853 19.047 17.4999 17.4999 17.4999C15.9528 17.4999 14.4691 16.8853 13.3751 15.7914C12.2812 14.6974 11.6666 13.2137 11.6666 11.6666C11.6666 10.1195 12.2812 8.63576 13.3751 7.5418C14.4691 6.44783 15.9528 5.83325 17.4999 5.83325ZM17.4999 20.4166C23.9458 20.4166 29.1666 23.027 29.1666 26.2499V29.1666H5.83325V26.2499C5.83325 23.027 11.0541 20.4166 17.4999 20.4166Z" fill="black" />
@@ -124,7 +124,7 @@ function Login() {
 
         {/* Password */}
         <div style={{ marginTop: -15 }}>
-          <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px' }}>
+          <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px',  fontFamily: 'fredoka one'}}>
             Password*
           </td>
           <div className={cx("input")}>
@@ -163,7 +163,6 @@ function Login() {
             <span className={cx("title-link")}>Register here</span>
           </Link>
         </div>
-        {/* <img require className={cx("main")} src={require("../../assets/images/Other/")} alt="" /> */}
       </div>
       <Modal
         open={openModal}

@@ -57,7 +57,7 @@ function ListAllUserBan( ) {
     return (
 
         <div className={cx("container")}>
-            <h1 className={cx("login-wrapper")}>List User</h1>
+            <h1 className={cx("login-wrapper")}>List User Banned</h1>
             <div className={cx("line")}>
             </div>
             {listUser.length !== 0 ?

@@ -148,6 +148,29 @@ function MyProfile() {
                 </h2>
             </div>
             <div className={cx("profile")}>
+                <div className={cx("img-user-div")}>
+                    <div className={cx("img-user-div1")}>
+                        <div className={cx("img-user-div2")}>
+                            <div className={cx("img-user-div3")}>
+                                {avatar !== "" ?
+                                    <img className={cx("box-img")} alt="" src={avatar} />
+                                    : <img className={cx("box-img")} alt="" src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVhcVcxgW8LzmIu36MCeJb81AHXlI8CwikrHNh5vzY8A&s"} />}
+                            </div>
+                            <div className={cx("info-user")}>
+                                <td style={{ fontSize: 27, fontWeight: 500, display: 'flex', justifyContent: 'center' }}>
+                                    {username}
+                                </td>
+                                <td style={{ fontSize: 18, fontWeight: 400, display: 'flex', justifyContent: 'center' }}>
+                                    Musician
+                                </td>
+                            </div>
+                            <label style={{ marginLeft: 120 }} className={cx("file")}>
+                                <input className={cx("img-click")} style={{ marginLeft: 155, marginTop: -5 }} type="file" accept=".jpg,.jpeg,.png" onChange={(e) => setUserImg(e.target.files[0])} />
+                                <span className={cx("file-custom")}></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
                 <Tabs style={{ marginTop: -50 }}>
                     <TabList>
                         <Tab ><b>Profile</b></Tab>
@@ -162,7 +185,7 @@ function MyProfile() {
                                         <td>
                                             <div className={cx("text-username0")}>
                                                 <td >
-                                                    <label style={{ fontWeight: 500 }} className={cx("login-text")}>Full Name</label>
+                                                    <label style={{ fontWeight: 500 }} className={cx("login-text")}>Full Name*</label>
                                                 </td>
                                                 <div>
                                                     <input className={cx("input-username0")} type="text" placeholder value={fullName} onChange={(e) => setFullname(e.target.value)} />
@@ -174,7 +197,7 @@ function MyProfile() {
                                         <td>
                                             <div className={cx("text-username0")}>
                                                 <td>
-                                                    <label className={cx("login-text")}>Address</label>
+                                                    <label className={cx("login-text")}>Address*</label>
                                                 </td>
                                                 <div >
                                                     <input className={cx("input-username0")} type="text" placeholder value={address} onChange={(e) => setAddress(e.target.value)} />
@@ -185,7 +208,7 @@ function MyProfile() {
                                     <div className={cx("part2")}>
                                         <td>
                                             <div style={{ fontWeight: 500 }} className={cx("email-text")}>
-                                                Email:
+                                                Email*
                                             </div>
                                             <div className={cx("email-change")}>
                                                 {mail}
@@ -197,7 +220,7 @@ function MyProfile() {
                                         <td>
                                             <div className={cx("text-username0")}>
                                                 <td>
-                                                    <label className={cx("login-text")}>Phone number</label>
+                                                    <label className={cx("login-text")}>Phone number*</label>
                                                 </td>
                                                 <div >
                                                     <input className={cx("input-username0")} type="text" placeholder value={phone} onChange={(e) => setPhone(e.target.value)} />
@@ -207,7 +230,7 @@ function MyProfile() {
                                     </div>
                                     <div className={cx("part4")} style={{ marginLeft: 65 }}>
                                         <td style={{ fontWeight: 500 }} className={cx("sex")}>
-                                            Sex
+                                            Gender*
                                         </td>
                                         <td>
                                             <div className={cx("sex-button")}>
@@ -255,12 +278,12 @@ function MyProfile() {
                                         </td>
                                     </div>
 
-                                    <div style={{ marginLeft: 70, marginTop: 50, fontSize: 18, fontWeight: "bolder" }}>*More Information</div>
+                                    <div className={cx("more-info")} style={{ marginTop: 50, fontSize: 18, fontWeight: "bolder" }}>*More Information</div>
                                     <div className={cx("part3")}>
                                         <td>
                                             <div className={cx("text-username0")}>
                                                 <td>
-                                                    <label className={cx("login-text")}>Prize</label>
+                                                    <label className={cx("login-text")}>Prize*</label>
                                                 </td>
                                                 <div >
                                                     <input className={cx("input-username0")} type="text" placeholder value={prize} onChange={(e) => setPhone(e.target.value)} />
@@ -272,7 +295,7 @@ function MyProfile() {
                                         <td>
                                             <div className={cx("text-username0")}>
                                                 <td>
-                                                    <label className={cx("login-text")}>Professional</label>
+                                                    <label className={cx("login-text")}>Professional*</label>
                                                 </td>
                                                 <div >
                                                     <input className={cx("input-username0")} type="text" placeholder value={professional} onChange={(e) => setPhone(e.target.value)} />
@@ -284,7 +307,7 @@ function MyProfile() {
                                         <td>
                                             <div className={cx("text-username0")}>
                                                 <td>
-                                                    <label className={cx("login-text")}>Year of Operation</label>
+                                                    <label className={cx("login-text")}>Year of Operation*</label>
                                                 </td>
                                                 <div >
                                                     <input className={cx("input-username0")} type="text" placeholder value={year} onChange={(e) => setPhone(e.target.value)} />
@@ -320,8 +343,8 @@ function MyProfile() {
                                                     <td>
                                                         <div className={cx("text-username0")}>
                                                             <td>
-                                                                <label style={{ fontFamily: 'sono', fontWeight: 400, marginLeft: -2 }} className={cx("login-text")}>{feedback.beat.beatName}</label>
-                                                                <label style={{ marginLeft: 20, fontFamily: 'Sono', fontWeight: 400 }} className={cx("login-text")}>{feedback.user.fullName}</label>
+                                                                <label style={{ fontFamily: 'sono', fontWeight: 400, marginLeft: -2 }} className={cx("login-text")}>{feedback.user.fullName}</label>
+                                                                <label style={{ marginLeft: 20, fontFamily: 'Sono', fontWeight: 400 }} className={cx("login-text")}>{feedback.beat.beatName}</label>
                                                             </td>
                                                             <div>
                                                                 <input className={cx("input-username0")} type="text" placeholder value={feedback.content} readOnly />
@@ -331,35 +354,17 @@ function MyProfile() {
                                                 </div>
                                             </table>)
                                     })}
-                                    <div className={cx("pagination")}>
-                                        <Pagination pages={pages} page={page} setPage={setPage} />
-                                    </div>
+                                    {pages !== 1 ?
+                                        <div className={cx("pagination")}>
+                                            <Pagination pages={pages} page={page} setPage={setPage} />
+                                        </div>
+                                        : <div></div>}
                                 </form>
                                 : <div> There are no feedbacks </div>}
                         </div>
                     </TabPanel>
                 </Tabs>
-                <div className={cx("line")} />
-                <div className={cx("img-user-div")}>
-                    <div className={cx("img-user-div1")}>
-                        <div className={cx("img-user-div2")}>
-                            <div className={cx("img-user-div3")}>
-                                {avatar !== "" ?
-                                    <img className={cx("box-img")} alt="" src={avatar} />
-                                    : <img className={cx("box-img")} alt="" src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVhcVcxgW8LzmIu36MCeJb81AHXlI8CwikrHNh5vzY8A&s"} />}
-                            </div>
-                            <div className={cx("info-user")}>
-                                <td style={{ fontSize: 27, fontWeight: 500, display: 'flex', justifyContent: 'center' }}>
-                                    {username}
-                                </td>
-                                <td style={{ fontSize: 18, fontWeight: 400, display: 'flex', justifyContent: 'center' }}>
-                                    Musician
-                                </td>
-                            </div>
-                            <input className={cx("img-click")} style={{ marginLeft: 110 }} type="file" accept=".jpg,.jpeg,.png" onChange={(e) => setUserImg(e.target.files[0])} />
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
     );

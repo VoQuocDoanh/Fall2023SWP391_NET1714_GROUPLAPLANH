@@ -10,6 +10,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange, list }) => {
         key={page}
         colorScheme={page === currentPage ? 'blue' : 'gray'}
         onClick={() => onPageChange(page, list)}
+        p={"20px"}
+        fontSize={"1.6rem"}
       >
         {page}
       </Button>,
@@ -17,7 +19,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, list }) => {
   }
 
   return (
-    <HStack spacing={2} mt={4}>
+    <HStack spacing={2}>
       {pageButtons}
     </HStack>
   );

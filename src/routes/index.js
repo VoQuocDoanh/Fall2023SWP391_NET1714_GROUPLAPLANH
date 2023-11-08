@@ -38,6 +38,7 @@ import ListUserReport from "@/Pages/ListUserReport";
 import RegisterActivation from "@/Pages/RegisterActivation";
 import MailActivation from "@/Pages/MailActivation";
 import PaymentCancel from "@/Pages/PaymentCancel";
+import BannedSong from "@/Pages/BannedSong";
 const publicRoutes = [
   {
     path: "/",
@@ -121,6 +122,10 @@ const publicRoutes = [
   {
     path: "/reportsong",
     component: ReportSong,
+  },
+  {
+    path: "/bannedsong",
+    component: BannedSong,
   },
   {
     path: "/viewbeatsall",

@@ -47,7 +47,7 @@ function ViewDetailBeatPurchased() {
 
     useEffect(() => {
         loadFeedback()
-    },[checkFeedBack],[beatId])
+    }, [checkFeedBack], [beatId])
 
     const loadSoundFull = async () => {
         await axiosInstance(`http://localhost:8080/api/v1/beat/user/full/${beatId}`)
@@ -60,7 +60,7 @@ function ViewDetailBeatPurchased() {
     }
 
     const loadDetailBeat = async () => {
-        if(!token){
+        if (!token) {
             navigate("/login")
             return
         }
@@ -73,55 +73,55 @@ function ViewDetailBeatPurchased() {
             })
     }
 
-    const handleFeedback = async() => {
-        await axiosInstance.post("http://localhost:8080/api/v1/beat/feedback",{userId: userId, beatId: beatId, content: feedBackContent})
-        .then((res) =>{
-            alert("Feedback Successfully")
-            setCheckFeedBack(true)
-        })
-        .catch((error) =>{
-            console.log(error)
-        })
+    const handleFeedback = async () => {
+        await axiosInstance.post("http://localhost:8080/api/v1/beat/feedback", { userId: userId, beatId: beatId, content: feedBackContent })
+            .then((res) => {
+                alert("Feedback Successfully")
+                setCheckFeedBack(true)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     // const handleUpdateFeedback = async() => {
     //     await axiosInstance.put("http://localhost:8080/api/v1/beat/feedback", {id:})
     // }
 
-    const loadFeedback = async() => {
-        if(!token){
+    const loadFeedback = async () => {
+        if (!token) {
             navigate("/login")
             return
         }
         await axiosInstance.get(`http://localhost:8080/api/v1/beat/feedback/user/${userId}/${beatId}`)
-        .then((res) => {
-            if(res.data){
-                setFeedBack(res.data)
-                setFeedBackContent(res.data.content)
-                setCheckFeedBack(true)
-                console.log(res.data.content)
-                // setIdFeedback(res.data.)
-            }
-            else{
-                setCheckFeedBack(false)
-            }
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+            .then((res) => {
+                if (res.data) {
+                    setFeedBack(res.data)
+                    setFeedBackContent(res.data.content)
+                    setCheckFeedBack(true)
+                    console.log(res.data.content)
+                    // setIdFeedback(res.data.)
+                }
+                else {
+                    setCheckFeedBack(false)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
-    const handleUpdateFeedback = async(e) => {
-        if(!token){
+    const handleUpdateFeedback = async (e) => {
+        if (!token) {
             navigate("/login")
             return
         }
-        await axiosInstance.put(`http://localhost:8080/api/v1/beat/feedback`,{id: feedBack.id , content: feedBackContent})
-        .then((res) => {
-            alert("Updated Successfully")
-        })
+        await axiosInstance.put(`http://localhost:8080/api/v1/beat/feedback`, { id: feedBack.id, content: feedBackContent })
+            .then((res) => {
+                alert("Updated Successfully")
+            })
     }
-   
+
     if (beatDetail !== null) {
         const dateReleasing = new Date(beatDetail.creatAt)
         const month = dateReleasing.getUTCMonth() + 1
@@ -161,7 +161,7 @@ function ViewDetailBeatPurchased() {
 
                                     <div className={cx('information')}>
                                         {console.log(beatDetail)}
-                                        <h1><b>{beatDetail.beatName}</b></h1>
+                                        <h1><b style={{ color: 'white', fontFamily: 'fredoka one' }}>{beatDetail.beatName}</b></h1>
                                         <h4> {beatDetail.user.fullName} &#x2022; 2023 </h4>
 
                                     </div>
@@ -180,7 +180,7 @@ function ViewDetailBeatPurchased() {
 
                             <div className={cx('mid-detail-right')}>
 
-                                <h3><b>Beat information</b></h3>
+                                <h3><b style={{ fontSize: '2.5rem' }}>Beat information</b></h3>
 
                                 {/* <div className={cx('list-of-beats')}>
                                 <div className={cx('cart')}>
@@ -232,42 +232,41 @@ function ViewDetailBeatPurchased() {
                                         <span>&#x2022; Total Rating: {(beatDetail.totalRating)}</span>
                                         <span>&#x2022; Release date: {day}/{month}/{year}</span>
                                         <div style={{ textAlign: "center", marginTop: 20 }}>
-                                            {feedBack ? 
+
                                             <div>
-                                            {!checkFeedBack ?
-                                            <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<Button variant="contained" className={cx('button-1')}>
-                                                <div>Feedback</div>
-                                            </Button>}  {...{ contentStyle }} position="bottom left center">
-                                                <div className={cx("text-all")} style={{ padding: 10 }}>
-                                                    <div style={{ display: 'grid' }}>
-                                                        <td style={{ fontWeight: 'bold', fontSize: "2.2rem", marginLeft: 80, color: 'red' }}>Feedback Information</td>
-                                                        
-                                                    </div>
-                                                    <textarea className={cx("text-des")} value={feedBackContent} style={{ resize: 'none', width: '385px', border: 1, height: 150, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12 }} onChange={ (e) => setFeedBackContent(e.target.value)}/>
-                                                    <td className={cx("button-type")}>
-                                                        <button type="button" className={cx("button-send")} aria-disabled="false" onClick={() => handleFeedback()} >Send</button>
-                                                    </td>
-                                                </div>
-                                            </Popup>
-                                            :
-                                            <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<Button variant="contained" className={cx('button-1')}>
-                                                {console.log(feedBack)}
-                                                <div>Update Feedback</div>
-                                            </Button>}  {...{ contentStyle }} position="bottom left center">
-                                                <div className={cx("text-all")} style={{ padding: 10 }}>
-                                                    <div style={{ display: 'grid' }}>
-                                                        <td style={{ fontWeight: 'bold', fontSize: "2.2rem", marginLeft: 80, color: 'red' }}>Feedback Information</td>
-                                                        
-                                                    </div>
-                                                    <textarea className={cx("text-des")} value={feedBackContent} style={{ resize: 'none', width: '385px', border: 1, height: 150, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12 }} onChange={ (e) => setFeedBackContent(e.target.value)}/>
-                                                    <td className={cx("button-type")}>
-                                                        <button type="button" className={cx("button-send")} aria-disabled="false" onClick={(e) => handleUpdateFeedback(e.target.value)} >Send</button>
-                                                    </td>
-                                                </div>
-                                            </Popup>
-                                            }
+                                                {!checkFeedBack ?
+                                                    <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<Button variant="contained" className={cx('button-2')}>
+                                                        <div style={{ fontSize: '2rem' }}>Feedback</div>
+                                                    </Button>}  {...{ contentStyle }} position="bottom left center">
+                                                        <div className={cx("text-all")} style={{ padding: 10 }}>
+                                                            <div style={{ display: 'grid' }}>
+                                                                <td style={{ fontWeight: 'bold', fontSize: "2.2rem", marginLeft: 80, color: 'red' }}>Feedback Information</td>
+
+                                                            </div>
+                                                            <textarea className={cx("text-des")} value={feedBackContent} style={{ resize: 'none', width: '385px', border: 1, height: 150, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12 }} onChange={(e) => setFeedBackContent(e.target.value)} />
+                                                            <td className={cx("button-type")}>
+                                                                <button type="button" className={cx("button-send")} aria-disabled="false" onClick={() => handleFeedback()} >Send</button>
+                                                            </td>
+                                                        </div>
+                                                    </Popup>
+                                                    :
+                                                    <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<Button variant="contained" className={cx('button-2')}>
+                                                        <div style={{ fontSize: '1.5rem' }}>Update Feedback</div>
+                                                    </Button>}  {...{ contentStyle }} position="bottom left center">
+                                                        <div className={cx("text-all")} style={{ padding: 10 }}>
+                                                            <div style={{ display: 'grid' }}>
+                                                                <td style={{ fontWeight: 'bold', fontSize: "2.2rem", marginLeft: 80, color: 'red' }}>Feedback Information</td>
+
+                                                            </div>
+                                                            <textarea className={cx("text-des")} value={feedBackContent} style={{ resize: 'none', width: '385px', border: 1, height: 150, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12 }} onChange={(e) => setFeedBackContent(e.target.value)} />
+                                                            <td className={cx("button-type")}>
+                                                                <button type="button" className={cx("button-send")} aria-disabled="false" onClick={(e) => handleUpdateFeedback(e.target.value)} >Send</button>
+                                                            </td>
+                                                        </div>
+                                                    </Popup>
+                                                }
                                             </div>
-                                            :<div></div>}
+
 
                                         </div>
                                         <div>

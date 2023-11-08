@@ -50,7 +50,7 @@ const Rating = ({ maxRating, handleRating }) => {
         <Icon
           key={index}
           as={FaStar}
-          boxSize={6}
+          boxSize={10}
           cursor='pointer'
           color={
             hoveredRating !== null

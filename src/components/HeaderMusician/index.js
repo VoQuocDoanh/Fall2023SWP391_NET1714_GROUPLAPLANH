@@ -65,7 +65,7 @@ function HeaderMusician() {
 
         {/* Phan quyen header */}
         <div className={cx("pop-up")}>
-          <Popup trigger={<button className={cx("button-popup")}>Hi, {name}</button>} position="bottom left center">
+          <Popup trigger={<button className={cx("button-popup")}>Hi, {name}</button>} position="bottom center" closeOnDocumentClick on={['hover', 'focus']}>
             <div className={cx("text-all")}>
               <Link to="/musicianprofile"><div className={cx("link-text")}>Account</div></Link>
               <Link to="/viewbeat"><div className={cx("link-text")}>View Beat</div></Link>
