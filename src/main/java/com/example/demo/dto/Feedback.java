@@ -47,7 +47,7 @@ public class Feedback {
 
 
 
-    public Feedback(String content, User userFeedback, Beat beatFeedback, int status) {
+    public Feedback( String content, User userFeedback, Beat beatFeedback, int status) {
         this.content = content;
         this.userFeedback = userFeedback;
         this.beatFeedback = beatFeedback;

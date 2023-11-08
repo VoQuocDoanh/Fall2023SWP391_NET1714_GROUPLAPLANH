@@ -1,17 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.Feedback;
 import com.example.demo.dto.FeedbackDTO;
 import com.example.demo.dto.FeedbackResponseDTO;
 import com.example.demo.dto.PaginationResponseDTO;
 import com.example.demo.service.FeedbackService;
-import com.example.demo.service.SongService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/beat/feedback")
@@ -26,7 +21,7 @@ public class FeedbackController {
 
     @GetMapping("/user/{id}/{id2}")
     public ResponseEntity<FeedbackResponseDTO> viewOwnFeedback(@PathVariable Long id, @PathVariable Long id2){
-        return ResponseEntity.ok(feedbackService.viewownFeedback(id,id2));
+        return ResponseEntity.ok(feedbackService.viewOwnFeedback(id,id2));
     }
 
     @PostMapping("")

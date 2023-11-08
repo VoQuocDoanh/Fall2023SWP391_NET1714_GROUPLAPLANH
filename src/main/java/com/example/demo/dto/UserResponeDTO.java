@@ -38,8 +38,9 @@ public class UserResponeDTO {
         this.mail = mail;
     }
 
-    public UserResponeDTO(String username, String role, String mail, int status, LocalDateTime createAt, String avatar) {
+    public UserResponeDTO(String username, String fullName, String role, String mail, int status, LocalDateTime createAt, String avatar) {
         this.username = username;
+        this.fullName = fullName;
         this.role = role;
         this.mail = mail;
         this.status = status;
@@ -73,6 +74,16 @@ public class UserResponeDTO {
         this.createAt = createAt;
         this.status = status;
         this.phone = phoneNumber;
+        this.mail = mail;
+        this.avatar = avatar;
+    }
+
+    public UserResponeDTO(Long id, String username, String role, String mail, LocalDateTime createAt, int status, String avatar) {
+        this.id = id;
+        this.username = username;
+        this.role = role;
+        this.createAt = createAt;
+        this.status = status;
         this.mail = mail;
         this.avatar = avatar;
     }

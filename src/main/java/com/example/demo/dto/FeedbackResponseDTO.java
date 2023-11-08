@@ -15,8 +15,10 @@ public class FeedbackResponseDTO {
     private UserResponeDTO user;
     private BeatResponseDTO beat;
     private LocalDateTime createAt;
+    private Long id;
 
-    public FeedbackResponseDTO(String content, UserResponeDTO user, LocalDateTime createAt, BeatResponseDTO beat) {
+    public FeedbackResponseDTO(Long id, String content, UserResponeDTO user, LocalDateTime createAt, BeatResponseDTO beat) {
+        this.id = id;
         this.content = content;
         this.user = user;
         this.beat = beat;

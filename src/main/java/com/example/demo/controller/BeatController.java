@@ -31,10 +31,16 @@ public class BeatController {
         return ResponseEntity.ok(this.beatService.findAllOwnBeat(id,page));
     }
 
+    // List ms Beats in US
+    @GetMapping("/user/musician/{id}/all/{page}")
+    public ResponseEntity<PaginationResponseDTO> findAllMSBeat(@PathVariable Long id, @PathVariable int page) {
+        return ResponseEntity.ok(this.beatService.findAllMsBeat(id,page));
+    }
+
     // List all Beats in US
-    @GetMapping("/all/{page}")
-    public ResponseEntity<PaginationResponseDTO> findAllBeat(@PathVariable int page) {
-        return ResponseEntity.ok(this.beatService.findAllBeat(page));
+    @GetMapping("/all")
+    public ResponseEntity<List<BeatResponseDTO>> findAllBeat() {
+        return ResponseEntity.ok(this.beatService.findAllBeat());
     }
 
     // Get detail Beat US and MS
@@ -91,11 +97,22 @@ public class BeatController {
         return beatService.likeBeat(id1, id2);
     }
 
+    // Check Liked
+    @GetMapping("/check/{userId}/{beatId}")
+    public ResponseEntity<Boolean> checkLiked(@PathVariable Long userId,@PathVariable Long beatId){
+        return this.beatService.isLiked(userId, beatId);
+    }
+
 
     //delete beat by update status in MS
     @DeleteMapping({"/{id}"})
     public ResponseEntity<String> deleteBeat(@PathVariable Long id) {
         return this.beatService.deleteBeat(id);
+    }
+
+    @PutMapping({"/{id}"})
+    public ResponseEntity<String> sellBeat(@PathVariable Long id) {
+        return this.beatService.sellBeat(id);
     }
 
     //list beat that user bought

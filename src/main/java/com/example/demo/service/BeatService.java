@@ -38,8 +38,8 @@ public class BeatService {
     private GoogleCloudService service;
 
     private String extractObjectNameFromUrl(String fullUrl) {
-        if (fullUrl.startsWith("https://storage.googleapis.com/")) {
-            int startIndex = "https://storage.googleapis.com/".length();
+        if (fullUrl.startsWith("https://storage.googleapis.com/mychordproject/")) {
+            int startIndex = "https://storage.googleapis.com/mychordproject/".length();
             return fullUrl.substring(startIndex);
         }
         return null;
@@ -148,25 +148,16 @@ public class BeatService {
         return dtos;
     }
 
-    public PaginationResponseDTO findAllBeat(int page){
-        Pageable pageable = PageRequest.of(page-1,8);
+    public List<BeatResponseDTO> findAllBeat(){
         List<Beat> b = beatRepository.findAllListBeat();
-        Page<Beat> beats = this.beatRepository.findAllBeat(pageable);
-        int max= 0;
         List<BeatResponseDTO> responseDTOS = new ArrayList<>();
-        if (beats.isEmpty()) {
+        if (b.isEmpty()) {
             return null;
         } else {
-            for (Beat i : beats){
+            for (Beat i : b){
                 responseDTOS.add(getDetailBeatResponseDTO(i));
             }
-            int pagecount = pageable.getPageNumber();
-            if (b.size()%8!=0){
-                max = b.size() / 8 +1;
-            } else{
-                max = b.size()/8 ;
-            }
-            return new PaginationResponseDTO(responseDTOS,pagecount, max);
+            return responseDTOS;
         }
     }
 
@@ -177,6 +168,27 @@ public class BeatService {
         if(foundUser.isPresent()){
             Page<Beat> beats = this.beatRepository.findUserBeatByUsername(foundUser.get().getId(), pageable);
             List<Beat> b = beatRepository.listUserBeatByUsername(foundUser.get().getId());
+            int pagecount = pageable.getPageNumber();
+            responseDTOS = getBeatResponseDTOS(foundUser,beats);
+            int max = 0;
+            if (responseDTOS.size() % 8 != 0) {
+                max = b.size() / 8 + 1;
+            } else {
+                max = b.size() / 8;
+            }
+            return new PaginationResponseDTO(responseDTOS,pagecount,max);
+        } else {
+            return null;
+        }
+    }
+
+    public PaginationResponseDTO findAllMsBeat(Long id,int page) {
+        Optional<User> foundUser = this.userRepository.findById(id);
+        Pageable pageable = PageRequest.of(page-1,8);
+        List<BeatResponseDTO> responseDTOS = new ArrayList<>();
+        if(foundUser.isPresent()){
+            Page<Beat> beats = this.beatRepository.findMSBeat(foundUser.get().getId(), pageable);
+            List<Beat> b = beatRepository.findMSBeat(foundUser.get().getId());
             int pagecount = pageable.getPageNumber();
             responseDTOS = getBeatResponseDTOS(foundUser,beats);
             int max = 0;
@@ -225,10 +237,16 @@ public class BeatService {
                 Beat beat = foundBeat.get();
                 beat.setBeatName(newBeat.getBeatName());
                 if (sound != null) {
-                    service.uploadFile(sound, foundUser.get().getId(), "audio", "full", beat.getObjectName());
+                    String pathfull = service.uploadFile(sound, foundUser.get().getId(), "audio", "full", beat.getObjectName());
+                    String objectfull = extractObjectNameFromUrl(pathfull);
+                    beat.setBeatSoundFull(objectfull);
+                    beat.setObjectName(objectfull);
                 }
                 if (sound2 != null) {
-                    service.uploadFile(sound2, foundUser.get().getId(), "audio", "demo", beat.getObjectNameDemo());
+                    String pathdemo = service.uploadFile(sound2, foundUser.get().getId(), "audio", "demo", beat.getObjectNameDemo());
+                    String objectdemo = extractObjectNameFromUrl(pathdemo);
+                    beat.setBeatSoundDemo(pathdemo);
+                    beat.setObjectNameDemo(objectdemo);
                 }
                 beat.setPrice(newBeat.getPrice());
                 beat.setGenresofbeat(genreSet(newBeat));
@@ -276,6 +294,17 @@ public class BeatService {
             return new ResponseEntity<>("Delete Successfully", HttpStatus.OK);
         }
         return new ResponseEntity<>("Delete Failed", HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    public ResponseEntity<String> sellBeat(Long id) {
+        Optional<Beat> foundBeat = this.beatRepository.findById(id);
+        if (foundBeat.isPresent()) {
+            Beat beat = foundBeat.get();
+            beat.setStatus(1);
+            this.beatRepository.save(beat);
+            return new ResponseEntity<>("Sell beat Successfully", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Sell Failed", HttpStatus.NOT_IMPLEMENTED);
     }
 
     public BeatResponseDTO getDetail(Long id) {
@@ -344,6 +373,7 @@ public class BeatService {
             responseDTO.setBeatSound(i.getBeatSoundDemo());
             responseDTO.setPrice(i.getPrice());
             responseDTO.setCreatAt(i.getCreatedAt());
+            responseDTO.setOrderInformation(orderService.getInfor(i.getOrderBeat()));
             beatResponseDTOS.add(responseDTO);
         }
         int max = 0;
@@ -446,6 +476,15 @@ public class BeatService {
         Optional<Beat> beat = beatRepository.findById(id);
         responseDTO.setBeatSound(beat.get().getBeatSoundFull());
         return responseDTO;
+    }
+
+    public ResponseEntity<Boolean> isLiked (Long userid, Long beatId){
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userid, 1);
+        if(foundUser.isPresent()){
+            Optional<Beat> foundBeat = Optional.ofNullable(this.beatRepository.findBeatLikeByUser(userid, beatId));
+            return foundBeat.isPresent()? new ResponseEntity<>(true, HttpStatus.OK) : new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
     }
 
 }

@@ -132,7 +132,7 @@ public class SongPlaylistService {
             Optional<SongPlaylist> foundPlaylist = this.songPlaylistRepository.findUserSongPlaylistByName(name, userid);
             if (foundPlaylist.isPresent()) {
                 this.songPlaylistRepository.delete(foundPlaylist.get());
-                return new ResponseEntity<>("Delete Successfully!", HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<>("Delete Successfully!", HttpStatus.OK);
             }
                 return new ResponseEntity<>("Playlist does not exist or Playlist was already deleted", HttpStatus.NOT_IMPLEMENTED);
         }

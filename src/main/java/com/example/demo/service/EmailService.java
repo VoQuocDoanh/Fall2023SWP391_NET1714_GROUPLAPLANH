@@ -21,7 +21,7 @@ public class EmailService {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             String htmlContent =
                     "<h1><a href='" + text + "'>Click to ACTIVE Your Account</a></h1></br>" +
-                    "<p>Have a nice day</p>";
+                    "<h2>Have a nice day</h2>";
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(htmlContent, true);
@@ -38,7 +38,7 @@ public class EmailService {
             String htmlContent =
                     "<h1>You have been banned from the YourChords website</h1></br>" +
                     "<p>Lý do:" + text + "</p></br>" +
-                    "<p>Thanks for joining my website</p>";
+                    "<h2>Thanks for joining my website</h2>";
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(htmlContent, true);
@@ -53,8 +53,7 @@ public class EmailService {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             String htmlContent =
                     "<h1>You have been unbanned from the YourChords website</h1></br>" +
-                            "<p>Lý do:" + text + "</p></br>" +
-                            "<p>Thanks for joining my website</p>";
+                            "<h2>Thanks for joining my website</h2>";
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(htmlContent, true);

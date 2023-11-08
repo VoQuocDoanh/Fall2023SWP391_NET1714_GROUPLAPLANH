@@ -53,6 +53,12 @@ public class SongController {
         return ResponseEntity.ok(this.songService.findUserSongbySongName(name, userid));
     }
 
+    // Search User Song by genre
+    @GetMapping("/user/{userid}/genre")
+    public ResponseEntity<List<SongResponseDTO>> findUserSongbyGenreName(@RequestParam("genrename") String genrename, @PathVariable Long userid){
+        return ResponseEntity.ok(this.songService.findUserSongbyGenreName(genrename, userid));
+    }
+
     // List all Song
     @GetMapping("")
     public ResponseEntity<List<SongResponseDTO>> findAllSong (){
