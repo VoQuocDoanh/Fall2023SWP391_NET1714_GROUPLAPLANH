@@ -1,7 +1,7 @@
 
 import classNames from "classnames/bind";
 import styles from "./ListBeat.module.scss";
-import { Box, Button, Modal, Typography } from "@mui/material";
+import { Alert, Box, Button, Modal, Snackbar, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import ListBeatBox from "../../components/ListBeatBox";
@@ -34,8 +34,10 @@ function ListBeat() {
     const [checkLike, setCheckLike] = useState();
     const [page, setPage] = useState(1)
     const [pages, setPages] = useState(1)
-    const [openModalAuthen, setOpenModalAuthen] = useState(false)
-    const [functionError, setFunctionError] = useState("")
+    const [messageSuccess, setMessageSuccess] = useState("")
+    const [messageFailed, setMessageFailed] = useState("")
+    const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
+    const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
     const style = {
         position: 'absolute',
         top: '50%',
@@ -227,7 +229,7 @@ function ListBeat() {
                 <div>
                     <div className={cx("listbeat")}>
                         {list.map((item) => {
-                            return <ListBeatBox id={item.id} name={item.beatName} genre={item.genre} price={item.price} view={(item.view / 2).toFixed()} like={item.totalLike} handleLike={() => handleLike(item.id)} rating={item.rating} vocalRange={item.vocalRange} fullName={item.user.fullName} setFunctionError={setFunctionError} setOpenModalAuthen={setOpenModalAuthen} />
+                            return <ListBeatBox id={item.id} name={item.beatName} genre={item.genre} price={item.price} view={(item.view / 2).toFixed()} like={item.totalLike} handleLike={() => handleLike(item.id)} rating={item.rating} vocalRange={item.vocalRange} fullName={item.user.fullName} setOpenFailedSnackBar={setOpenFailedSnackBar} setMessageFailed={setMessageFailed} setOpenSuccessSnackBar={setOpenSuccessSnackBar} setMessageSuccess={setMessageSuccess} />
                         })}
 
                     </div>
@@ -275,21 +277,16 @@ function ListBeat() {
             </div> */}
             {/* <audio style={{ borderRadius: 10 }} id="audio" ref={audioRef} src={srcMusic}>
             </audio> */}
-            <Modal
-                open={openModalAuthen}
-                onClose={() => setOpenModalAuthen(false)}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <Typography style={{ fontSize: 25 }} id="modal-modal-title" variant="h6" component="h2">
-                        {functionError}
-                    </Typography>
-                    <Typography style={{ fontSize: 20 }} id="modal-modal-description" sx={{ mt: 2 }}>
-                        You need to login before using this function
-                    </Typography>
-                </Box>
-            </Modal>
+            <Snackbar open={openSuccessSnackBar} autoHideDuration={6000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+                <Alert onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {messageSuccess}
+                </Alert>
+            </Snackbar>
+            <Snackbar open={openFailedSnackBar} autoHideDuration={6000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+                <Alert onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {messageFailed}
+                </Alert>
+            </Snackbar>
         </div>
     );
 }

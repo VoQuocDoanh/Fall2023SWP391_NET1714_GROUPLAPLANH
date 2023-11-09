@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./Register.module.scss";
 import { useState } from "react";
-import { Backdrop, Box, Button, CircularProgress, Modal, Typography } from "@mui/material";
+import { Alert, Backdrop, Box, Button, CircularProgress, Modal, Snackbar, Typography } from "@mui/material";
 import axios from "axios";
 import videoBg from '../../assets/video/video (2160p).mp4'
 
@@ -21,9 +21,10 @@ function Register() {
   const [registrationMessage, setRegistrationMessage] = useState(null)
   const user = { userName, password, email, fullName, role }
   const [open, setOpen] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
-  const handleOpenModal = () => setOpenModal(true);
-  const handleCloseModal = () => setOpenModal(false);
+  const [messageSuccess, setMessageSuccess] = useState("")
+  const [messageFailed, setMessageFailed] = useState("")
+  const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
+  const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
   const handleClose = () => {
     setOpen(false);
   };
@@ -49,38 +50,38 @@ function Register() {
     setRegistrationMessage()
     console.log(userName, password, email, fullName, role);
     if (!userName || !password || !email || !fullName || !role) {
-      setRegistrationMessage("All fields must not be null!")
-      setOpenModal(true)
+      setMessageFailed("All fields must not be null!")
+      setOpenFailedSnackBar(true)
       setOpen(false)
       return
     }
     if (password !== checkPassword) {
-      setRegistrationMessage("Confirm Password not match Password!")
-      setOpenModal(true)
+      setMessageFailed("Confirm Password not match Password!")
+      setOpenFailedSnackBar(true)
       setOpen(false)
       return;
     }
     if (userName.length < 6) {
-      setRegistrationMessage("Username must be at least 6 characters!")
-      setOpenModal(true)
+      setMessageFailed("Username must be at least 6 characters!")
+      setOpenFailedSnackBar(true)
       setOpen(false)
       return
     }
     if (!email.match("^[A-Za-z0-9+_.-]+@(gmail\\.com|gmail\\.com\\.vn|fpt\\.edu\\.vn)$")) {
-      setRegistrationMessage("Invalid Email!")
-      setOpenModal(true)
+      setMessageFailed("Invalid Email!")
+      setOpenFailedSnackBar(true)
       setOpen(false)
       return
     }
     if (password.length < 6) {
-      setRegistrationMessage("Quick Password!")
-      setOpenModal(true)
+      setMessageFailed("Quick Password!")
+      setOpenFailedSnackBar(true)
       setOpen(false)
       return
     }
     if (password !== checkPassword) {
-      setRegistrationMessage("Password not matched Confirm password")
-      setOpenModal(true)
+      setMessageFailed("Password not matched Confirm password")
+      setOpenFailedSnackBar(true)
       setOpen(false)
       return
     }
@@ -92,18 +93,18 @@ function Register() {
         setFullName("")
         setPassWord("")
         setCheckPassword("")
-        setRegistrationMessage("Register Successfully.")
-        setOpenModal(true)
+        setMessageSuccess("Register Successfully.")
+        setOpenSuccessSnackBar(true)
         setOpen(false)
         setTimeout(() => {
           navigate('/mailactivation'); // Replace '/login' with the actual login route
         }, 3000);
-        
+
       })
       .catch((error) => {
         if (error.response.data) {
-          setRegistrationMessage("Username or Email has been used!")
-          setOpenModal(true)
+          setMessageFailed("Username or Email has been used!")
+          setOpenFailedSnackBar(true)
           setOpen(false)
           return
         }
@@ -112,6 +113,7 @@ function Register() {
 
   }
   return (
+    <div>
     <div className={cx("login-wrapper")}>
       {/* <div className={cx("main")}>
         <div className={cx("overlay")}></div>
@@ -265,24 +267,18 @@ function Register() {
           <CircularProgress color="inherit" />
         </Backdrop>
       </div>
-      <Modal
-        open={openModal}
-        onClose={handleCloseModal}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-
-        <Box sx={style}>
-          <Typography style={{ fontSize: 25 }} id="modal-modal-title" variant="h6" component="h2">
-            Register Alert!
-          </Typography>
-          <Typography style={{ fontSize: 20 }} id="modal-modal-description" sx={{ mt: 2 }}>
-            {registrationMessage}
-          </Typography>
-        </Box>
-      </Modal>
-
       {/* Footer */}
+    </div>
+    <Snackbar open={openSuccessSnackBar} autoHideDuration={6000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+        <Alert onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+          {messageSuccess}
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openFailedSnackBar} autoHideDuration={6000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+        <Alert onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+          {messageFailed}
+        </Alert>
+      </Snackbar>
     </div>
   );
 

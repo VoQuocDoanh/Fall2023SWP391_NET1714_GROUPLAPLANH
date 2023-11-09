@@ -13,7 +13,7 @@ import axiosInstance from "../../authorization/axiosInstance";
 
 const cx = classNames.bind(styles);
 
-function ListBeatBox({ id, name, genre, price, view, like, onClick, handleLike, rating, vocalRange, fullName, setFunctionError, setOpenModalAuthen }) {
+function ListBeatBox({ id, name, genre, price, view, like, onClick, handleLike, rating, vocalRange, fullName, setMessageFailed, setOpenFailedSnackBar, setMessageSuccess, setOpenSuccessSnackBar }) {
     const token = useToken()
     const audioRef = useRef()
     const { addToCart } = useContext(ShopContext)
@@ -47,8 +47,8 @@ function ListBeatBox({ id, name, genre, price, view, like, onClick, handleLike, 
             {/* Content right  */}
             <div className={cx("content-right")}>
                 {token ?
-                    <Button className={cx("action")} onClick={() => addToCart(id)}><FontAwesomeIcon icon={faCartShopping} className={cx("shop")} /></Button>
-                    : <Button className={cx("action")} onClick={() => [setOpenModalAuthen(true), setFunctionError("Add to cart error!")] }><FontAwesomeIcon icon={faCartShopping} className={cx("shop")} /></Button>
+                    <Button className={cx("action")} onClick={() => [addToCart(id), setOpenSuccessSnackBar(true), setMessageSuccess("Add to cart success")]}><FontAwesomeIcon icon={faCartShopping} className={cx("shop")} /></Button>
+                    : <Button className={cx("action")} onClick={() => [setOpenFailedSnackBar(true), setMessageFailed("You need to login before using this function!")] }><FontAwesomeIcon icon={faCartShopping} className={cx("shop")} /></Button>
                 }
                 <span style={{ width: 30, height: 30,textWrap: 'nowrap' }} className={cx("like")}>
                     <FontAwesomeIcon icon={faHeart}/>
