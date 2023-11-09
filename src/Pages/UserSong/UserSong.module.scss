@@ -34,11 +34,12 @@
     height: 80px;
     border-radius: 40px;
     padding: 10px;
+    margin-top: -50px;
     margin-right: -50px;
-    margin-bottom: 50px;
-    width: 18%;
+    margin-bottom: 10px;
+    width: 15%;
     display: flex;
-    margin-left: 1500px;
+    margin-left: 100px;
 
 }
 
@@ -192,14 +193,20 @@
     display: inline-block;
 }
 
+.rhythm-item:hover {
+    background-color: #0066CC;
+    color: white;
+}
+
 .panel-content-text-center-padding-both {
-    width: 25%;
-    height: 600px;
+    width: 15%;
+    height: 560px;
     padding: 10px;
     background-color: #ffffff;
     text-align: center;
     border-radius: 10px;
     flex-direction: column;
+    margin-left: 50px;
 }
 
 // new release today
@@ -363,11 +370,13 @@
     }
 }
 
+
+
 .Add-Songs {
-    width: 100%;
+    width: 93%;
     display: flex;
     padding: 24px;
-    justify-content: space-between;
+    justify-content: end;
     align-items: center;
 }
 
