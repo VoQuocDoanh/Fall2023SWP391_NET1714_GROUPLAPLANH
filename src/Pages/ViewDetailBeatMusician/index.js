@@ -123,12 +123,7 @@ function ViewDetailBeatMusician() {
                                     <div className={cx('container')}>
 
                                         <img className={cx('image-beat')} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} />
-                                        <div className={cx('middle-image')}>
-                                            {/* <div className={cx('text')}>Click</div> */}
-                                            <Button variant="contained" className={cx('button-1')} onClick={() => loadSoundFull()}>
-                                                <div>Click</div>
-                                            </Button>
-                                        </div>
+                                
                                     </div>
 
                                     <div className={cx('information')}>
@@ -202,7 +197,7 @@ function ViewDetailBeatMusician() {
                                             <span style={{fontSize: '2rem'}}>&#x2022; Genre:
                                                 {
                                                     beatDetail.genres.map((item, index) => {
-                                                        return <span style={{fontSize: '2rem'}}> {item.name},</span>
+                                                        return <span style={{fontSize: '2rem'}}> {item.name}</span>
                                                     })
 
                                                 }

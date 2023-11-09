@@ -14,8 +14,6 @@ import axiosInstance from "../../authorization/axiosInstance";
 const cx = classNames.bind(styles);
 function UploadBeat() {
   const { beatId } = useParams()
-  const [beatName, setBeatName] = useState("");
-  const [price, setPrice] = useState("");
   // const [orderID, setOrderID] = useState("");
   // const [username, setUserName] = useState("");
   const token = useToken();
@@ -23,6 +21,8 @@ function UploadBeat() {
   if (token) {
     userId = jwtDecode(token).sub
   }
+  const [beatName, setBeatName] = useState("");
+  const [price, setPrice] = useState("");
   const [inputGenres, setInputGenres] = useState("");
   const [genres, setGenres] = useState([])
   const [updateMessage, setUpdateMessage] = useState('')
@@ -67,13 +67,17 @@ function UploadBeat() {
     }
     const values = inputGenres.split(',');
     console.log(values[0])
+    console.log(values.length)
     for (let i = 0; i < values.length; i++) {
       genres.push(values[i])
     }
-    if (!beatName || !price || !userId || genres.length === 0 || !price || !vocalRange) {
+    console.log(genres.length)
+    if (!beatName || !price || !userId || genres.length === 0 || !vocalRange) {
+      console.log(beatName + price + userId + "length" + genres.length + vocalRange)
       setOpen(false)
       setOpenModal(true)
       setUpdateMessage("All fields must not be null!")
+      setGenres([])
       return;
     } else if (price < 0) {
       setOpen(false)
@@ -94,12 +98,7 @@ function UploadBeat() {
       },
     })
       .then((res) => {
-        setOpen(false)
-      setOpenModal(true)
-      setUpdateMessage("Update Successfully")
-      setTimeout(() => {
-        navigate(`/viewdetailbeatmusician/${beatId}`);      
-      }, 3000);
+        navigate(`/viewdetailbeatmusician/${beatId}`);
       })
       .catch((error) => {
         setOpen(false)
@@ -316,14 +315,14 @@ function UploadBeat() {
                 <path d="M1.25 17.6999H6.725C6.95553 17.6972 7.18121 17.6333 7.3789 17.5147C7.57659 17.3961 7.73918 17.227 7.85 17.0249L12.35 8.02488C12.4609 7.8008 12.6377 7.61602 12.8567 7.49536C13.0757 7.3747 13.3263 7.32393 13.575 7.34988C13.8227 7.36662 14.0591 7.45976 14.2516 7.61647C14.4441 7.77318 14.5833 7.98575 14.65 8.22488L20.225 26.7749C20.2982 27.0265 20.4485 27.2488 20.6549 27.4103C20.8613 27.5718 21.1132 27.6643 21.375 27.6749C21.6204 27.6667 21.8579 27.5865 22.0579 27.4443C22.258 27.302 22.4118 27.104 22.5 26.8749L25.925 18.4999C26.0193 18.2649 26.1814 18.0634 26.3907 17.9209C26.5999 17.7785 26.8469 17.7015 27.1 17.6999H33.75" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
               <div>DemoBeat: </div>
-              
+
               <label style={{ marginLeft: 120 }} className={cx("file")}>
-              <input
-                type="file"
-                placeholder="BeatSound"
-                className={cx("input-text", "img-click")}
-                onChange={(e) => setBeatSoundDemo(e.target.files[0])}
-              />
+                <input
+                  type="file"
+                  placeholder="BeatSound"
+                  className={cx("input-text", "img-click")}
+                  onChange={(e) => setBeatSoundDemo(e.target.files[0])}
+                />
                 <span className={cx("file-custom")}></span>
               </label>
             </div>
@@ -338,12 +337,12 @@ function UploadBeat() {
               </svg>
               <div>FullBeat: </div>
               <label style={{ marginLeft: 120 }} className={cx("file")}>
-              <input
-                type="file"
-                placeholder="BeatSound"
-                className={cx("input-text", "img-click")}
-                onChange={(e) => setBeatSoundFull(e.target.files[0])}
-              />
+                <input
+                  type="file"
+                  placeholder="BeatSound"
+                  className={cx("input-text", "img-click")}
+                  onChange={(e) => setBeatSoundFull(e.target.files[0])}
+                />
                 <span className={cx("file-custom")}></span>
               </label>
             </div>
@@ -358,28 +357,27 @@ function UploadBeat() {
           </Button>
         </div>
         <Backdrop
-            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={open}
-            onClick={handleClose}
-          >
-            <CircularProgress color="inherit" />
-          </Backdrop>
-          <Modal
-            open={openModal}
-            onClose={() => setOpenModal(false)}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+        <Modal
+          open={openModal}
+          onClose={() => setOpenModal(false)}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
 
-            <Box sx={style}>
-              <Typography style={{ fontSize: 25 }} id="modal-modal-title" variant="h6" component="h2">
-                Update Alert!
-              </Typography>
-              <Typography style={{ fontSize: 20 }} id="modal-modal-description" sx={{ mt: 2 }}>
-                {updateMessage}
-              </Typography>
-            </Box>
-          </Modal>
+          <Box sx={style}>
+            <Typography style={{ fontSize: 25 }} id="modal-modal-title" variant="h6" component="h2">
+              Update Alert!
+            </Typography>
+            <Typography style={{ fontSize: 20 }} id="modal-modal-description" sx={{ mt: 2 }}>
+              {updateMessage}
+            </Typography>
+          </Box>
+        </Modal>
         {/* Footer */}
         {/* <div className={cx("footer")}>
         <div className={cx("footer-left")}>

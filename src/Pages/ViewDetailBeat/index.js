@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import styles from "./ViewDetailBeat.module.scss";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Avatar, Box, Button, IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
+import { Avatar, Box, Button, IconButton, Menu, MenuItem, Modal, Tooltip, Typography } from "@mui/material";
 import axiosInstance from '../../authorization/axiosInstance';
 import { Link, useParams } from 'react-router-dom';
 import { ShopContext } from '../../context/shop-context';
@@ -38,6 +38,20 @@ function ViewDetailBeat() {
     const [beatSoundDemo, setBeatSoundDemo] = useState("")
     const [page, setPage] = useState(1)
     const [pages, setPages] = useState(1)
+    const [openModalAuthen, setOpenModalAuthen] = useState(false)
+    const [functionError, setFunctionError] = useState("")
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+        fontSize: 25,
+    };
     let userId = ""
     if (token) {
         userId = jwtDecode(token).sub
@@ -139,7 +153,9 @@ function ViewDetailBeat() {
 
     const handleLike = async (id) => {
         if (!token) {
-            navigate("/login")
+            setOpenModalAuthen(true)
+            setFunctionError("Rating star error!")
+            setCheckLike(false)
         } else {
             await axiosInstance.post(`http://localhost:8080/api/v1/beat/like/${jwtDecode(token).sub}/${id}`)
                 .then((res) => {
@@ -174,7 +190,8 @@ function ViewDetailBeat() {
 
     const handleRating = async (e) => {
         if (!token) {
-            navigate("/login")
+            setOpenModalAuthen(true)
+            setFunctionError("Rating star error!")
         } else {
             await axiosInstance.post(`http://localhost:8080/api/v1/rate/beat/rating/${jwtDecode(token).sub}/${beatId}`, { rate: e.target.value })
                 .then((res) => {
@@ -237,18 +254,13 @@ function ViewDetailBeat() {
                                     <div className={cx('container')}>
 
                                         <img className={cx('image')} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} />
-                                        <div className={cx('middle-image')}>
-                                            {/* <div className={cx('text')}>Click</div> */}
-                                            <Button variant="contained" className={cx('button-1')} onClick={() => loadSoundDemo()}>
-                                                <div>PLay</div>
-                                            </Button>
-                                        </div>
+                                        
                                     </div>
 
                                     <div className={cx('information')}>
                                         {console.log(beatDetail)}
                                         <h1><b style={{ color: 'white' }}>{beatDetail.beatName}</b></h1>
-                                        <Link to={`/viewdetailsmusician/${beatDetail.user.id}`}><h4 style={{ fontWeight: 500, color: 'white', fontSize: '2.2rem' }}> {beatDetail.user.fullName} &#x2022; 2023 </h4></Link>
+                                        <h4 style={{ fontWeight: 500, color: 'white', fontSize: '2.2rem' }}> {beatDetail.user.fullName} &#x2022; 2023 </h4>
 
                                     </div>
                                     {/* <div className={cx('button-submit')}>
@@ -276,7 +288,7 @@ function ViewDetailBeat() {
                             </div>
 
                             <div className={cx('mid-detail-right')}>
-                                <h3><b style={{ fontSize: '3rem' }}>Musician information</b></h3>
+                            <Link style={{color:"white"}} to={`/viewdetailsmusician/${beatDetail.user.id}`}><h3><b style={{ fontSize: '3rem' }}>Musician information</b></h3></Link>
                                 <div className={cx('info-musician')}>
                                     <span style={{ fontSize: '2rem' }} >&#x2022; Name: {beatDetail.user.fullName} </span>
                                     <span style={{ fontSize: '2rem' }} >&#x2022; Contact: {beatDetail.user.mail}</span>
@@ -344,11 +356,9 @@ function ViewDetailBeat() {
                                         </Button>
                                     </div>
                                         : <div className={cx('mid-button')}>
-                                            <Link to={"/login"}>
-                                                <Button variant="contained" className={cx('button-1')} style={{ borderRadius: 15, outline: '3px solid white', marginTop: 40 }}>
+                                                <Button variant="contained" className={cx('button-1')} style={{ borderRadius: 15, outline: '3px solid white', marginTop: 40 }} onClick={() => [setOpenModalAuthen(true),setFunctionError("Add to cart error!")]}>
                                                     <div>Add to cart</div>
                                                 </Button>
-                                            </Link>
                                         </div>
                                     }
                                     </div>
@@ -566,6 +576,21 @@ function ViewDetailBeat() {
                     <audio id="audio" ref={audioRef} src={music}></audio>
 
                 </div> */}
+                <Modal
+                open={openModalAuthen}
+                onClose={() => setOpenModalAuthen(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <Typography style={{ fontSize: 25 }} id="modal-modal-title" variant="h6" component="h2">
+                        {functionError}
+                    </Typography>
+                    <Typography style={{ fontSize: 20 }} id="modal-modal-description" sx={{ mt: 2 }}>
+                        You need to login before using this function
+                    </Typography>
+                </Box>
+            </Modal>
             </div>
 
         );

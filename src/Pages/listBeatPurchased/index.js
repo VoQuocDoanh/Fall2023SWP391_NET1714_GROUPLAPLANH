@@ -85,6 +85,7 @@ function ListBeatPurchased() {
         }
         await axiosInstance.get(`http://localhost:8080/api/v1/beat/user/${jwtDecode(token).sub}/${page}`)
             .then(res => {
+                console.log(page)
                 console.log(res.data.dtoList)
                 setList(res.data.dtoList)
                 setPages(res.data.max)

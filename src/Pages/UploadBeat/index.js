@@ -105,12 +105,7 @@ function UploadBeat() {
       },
     })
       .then((res) => {
-        setOpen(false)
-        setOpenModal(true)
-        setUploadMessage("Upload Successfully")
-        setTimeout(() => {
-          navigate('/viewbeat'); // Replace '/login' with the actual login route
-        }, 3000);
+        navigate('/viewbeat');
       })
       .catch((error) => {
         setOpen(false)
@@ -303,7 +298,6 @@ function UploadBeat() {
           <Backdrop
             sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
             open={open}
-            onClick={handleClose}
           >
             <CircularProgress color="inherit" />
           </Backdrop>
