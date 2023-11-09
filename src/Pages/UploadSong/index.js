@@ -339,7 +339,7 @@ function UploadSong() {
                             </div>
                         </div>
 
-                        <div className={cx('page-content-right')}> {/* trang tổng bên phải*/}
+                        <div className={cx('page-content-right')} style={{marginLeft:100}}> {/* trang tổng bên phải*/}
                             <div className={cx('white-box-final')}>
                                 <div className={cx('white-box')}>
                                     <div className={cx('white-box-text')}>

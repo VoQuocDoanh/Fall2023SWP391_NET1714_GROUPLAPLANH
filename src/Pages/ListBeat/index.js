@@ -226,21 +226,23 @@ function ListBeat() {
 
             </div>
             {list.length !== 0 ?
-                <div>
+                <div style={{height:900}}>
                     <div className={cx("listbeat")}>
                         {list.map((item) => {
                             return <ListBeatBox id={item.id} name={item.beatName} genre={item.genre} price={item.price} view={(item.view / 2).toFixed()} like={item.totalLike} handleLike={() => handleLike(item.id)} rating={item.rating} vocalRange={item.vocalRange} fullName={item.user.fullName} setOpenFailedSnackBar={setOpenFailedSnackBar} setMessageFailed={setMessageFailed} setOpenSuccessSnackBar={setOpenSuccessSnackBar} setMessageSuccess={setMessageSuccess} />
                         })}
 
                     </div>
-                    {pages !== 1 ?
+                    
+                </div>
+                
+
+                : <div className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 600 }}> All Beat are sold out!<div> Thank you for your visiting on our website </div> </div>}
+                {pages !== 1 ?
                         <div className={cx("pagination")}>
                             <Pagination pages={pages} page={page} setPage={setPage} />
                         </div>
                         : <div></div>}
-                </div>
-
-                : <div className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 600 }}> All Beat are sold out!<div> Thank you for your visiting on our website </div> </div>}
 
             {/* <div className={cx("list-beat")}>
                 {list.map((item, index) => {
