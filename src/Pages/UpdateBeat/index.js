@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./UpdateBeat.module.scss";
 import { useEffect, useState } from "react";
-import { Button } from "@mui/material";
+import { Backdrop, Box, Button, CircularProgress, Modal, Typography } from "@mui/material";
 import axios from "axios";
 import videoBg from '../../assets/video/video (2160p).mp4'
 import ValidationUpload from "../../Validation/ValidationUpload";
@@ -25,12 +25,32 @@ function UploadBeat() {
   }
   const [inputGenres, setInputGenres] = useState("");
   const [genres, setGenres] = useState([])
-  const [uploadMessage, setUploadMessage] = useState('')
+  const [updateMessage, setUpdateMessage] = useState('')
   const [beatSoundDemo, setBeatSoundDemo] = useState("")
   const [beatSoundFull, setBeatSoundFull] = useState("")
   const [vocalRange, setVocalRange] = useState(null)
   const [listGenres, setListGenres] = useState(null)
 
+  const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+    fontSize: 25,
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
   const beat = { beatName, price, userId, genres, vocalRange }
   const navigate = useNavigate();
   const formData = new FormData();
@@ -51,17 +71,20 @@ function UploadBeat() {
       genres.push(values[i])
     }
     if (!beatName || !price || !userId || genres.length === 0 || !price || !vocalRange) {
-      alert("Please fill in all fields!")
+      setOpen(false)
+      setOpenModal(true)
+      setUpdateMessage("All fields must not be null!")
       return;
     } else if (price < 0) {
-      alert("Price must be equal or higher than 0!")
+      setOpen(false)
+      setOpenModal(true)
+      setUpdateMessage("Price must be higher than 0!")
       return;
     }
 
     formData.append('json', new Blob([JSON.stringify(beat)], { type: 'application/json' }));
     formData.append('file1', beatSoundFull);
     formData.append('file2', beatSoundDemo)
-    setUploadMessage()
     formData.forEach((value, key) => {
       console.log(key, value);
     });
@@ -71,13 +94,17 @@ function UploadBeat() {
       },
     })
       .then((res) => {
-        alert("Upload Successfully")
-        console.log(res.data)
-        navigate(`/viewdetailbeatmusician/${beatId}`);
+        setOpen(false)
+      setOpenModal(true)
+      setUpdateMessage("Update Successfully")
+      setTimeout(() => {
+        navigate(`/viewdetailbeatmusician/${beatId}`);      
+      }, 3000);
       })
       .catch((error) => {
-        console.log(error)
-        setUploadMessage("Error")
+        setOpen(false)
+        setOpenModal(true)
+        setUpdateMessage("Update Failed")
       })
   }
 
@@ -330,6 +357,29 @@ function UploadBeat() {
             />
           </Button>
         </div>
+        <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={open}
+            onClick={handleClose}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
+          <Modal
+            open={openModal}
+            onClose={() => setOpenModal(false)}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+
+            <Box sx={style}>
+              <Typography style={{ fontSize: 25 }} id="modal-modal-title" variant="h6" component="h2">
+                Update Alert!
+              </Typography>
+              <Typography style={{ fontSize: 20 }} id="modal-modal-description" sx={{ mt: 2 }}>
+                {updateMessage}
+              </Typography>
+            </Box>
+          </Modal>
         {/* Footer */}
         {/* <div className={cx("footer")}>
         <div className={cx("footer-left")}>

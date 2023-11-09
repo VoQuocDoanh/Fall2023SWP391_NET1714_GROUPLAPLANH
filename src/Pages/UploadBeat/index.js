@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./UploadBeat.module.scss";
 import { useEffect, useState } from "react";
-import { Backdrop, Button, CircularProgress } from "@mui/material";
+import { Backdrop, Box, Button, CircularProgress, Modal, Typography } from "@mui/material";
 import axios from "axios";
 import videoBg from '../../assets/video/video (2160p).mp4'
 import ValidationUpload from "../../Validation/ValidationUpload";
@@ -26,12 +26,25 @@ function UploadBeat() {
   const [inputGenres, setInputGenres] = useState("");
   let genres = []
   const [description, setDescription] = useState("");
-  const [uploadMessage, setUploadMessage] = useState('')
+  const [uploadMessage, setUploadMessage] = useState("")
   const [beatSoundDemo, setBeatSoundDemo] = useState("")
   const [beatSoundFull, setBeatSoundFull] = useState("")
   const [vocalRange, setVocalRange] = useState(null)
   const [listGenres, setListGenres] = useState(null)
   const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+    fontSize: 25,
+  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -47,8 +60,19 @@ function UploadBeat() {
     loadGenres()
   }, [])
 
+  const fileSelected = (e) => {
+    if (e.target.files.length > 0) {
+      var fileName = e.target.files[0].name;
+      alert("You have selected the file: " + fileName)
+    }
+    else {
+      alert("No file selected!")
+    }
+  }
+
 
   const handleUpload = async () => {
+    setOpen(true)
     const values = inputGenres.split(',');
     console.log(values)
     for (let i = 0; i < values.length; i++) {
@@ -58,20 +82,20 @@ function UploadBeat() {
       navigate("/login")
     }
     if (!beatName || !price || !username || !beatSoundDemo || !beatSoundFull || genres.length === 0 || !vocalRange || !description) {
-      console.log(beat)
-      console.log(beatSoundDemo)
-      console.log(beatSoundFull)
-      alert("Please fill in all fields!")
+      setOpen(false)
+      setOpenModal(true)
+      setUploadMessage("All fields must not be null!")
       return;
     } else if (price < 0) {
-      alert("Price must be equal or higher than 0!")
+      setOpen(false)
+      setOpenModal(true)
+      setUploadMessage("Price must be higher than 0!")
       return;
     }
 
     formData.append('json', new Blob([JSON.stringify(beat)], { type: 'application/json' }));
     formData.append('file1', beatSoundFull);
     formData.append('file2', beatSoundDemo)
-    setUploadMessage()
     formData.forEach((value, key) => {
       console.log(key, value);
     });
@@ -82,13 +106,16 @@ function UploadBeat() {
     })
       .then((res) => {
         setOpen(false)
-        console.log(res.data)
-        alert("Upload Successfully")
-        navigate("/viewbeat");
+        setOpenModal(true)
+        setUploadMessage("Upload Successfully")
+        setTimeout(() => {
+          navigate('/viewbeat'); // Replace '/login' with the actual login route
+        }, 3000);
       })
       .catch((error) => {
-        console.log(error)
-        setUploadMessage("Update Failed")
+        setOpen(false)
+        setOpenModal(true)
+        setUploadMessage("Upload Failed")
       })
   }
   const loadGenres = async () => {
@@ -126,11 +153,6 @@ function UploadBeat() {
               />
             </div>
           </div>
-          {/* {error.beatname && (
-          <p style={{ color: "red", marginTop: 10, paddingLeft: 5 }}>
-            {error.beatname}
-          </p>
-        )} */}
           {/*Price */}
           <div>
             <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price*</td>
@@ -156,56 +178,6 @@ function UploadBeat() {
               />
             </div>
           </div>
-          {/* {error.price && (
-          <p style={{ color: "red", marginTop: 10, paddingLeft: 5 }}>
-            {error.price}
-          </p>
-        )} */}
-
-          {/* OrderID*/}
-          {/* <div className={cx("input")}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
-            <path d="M24.0991 5.10425H27.7085C28.0953 5.10425 28.4662 5.25789 28.7397 5.53138C29.0132 5.80487 29.1668 6.17581 29.1668 6.56258V30.6251C29.1668 31.0119 29.0132 31.3828 28.7397 31.6563C28.4662 31.9298 28.0953 32.0834 27.7085 32.0834H7.29183C6.90506 32.0834 6.53412 31.9298 6.26063 31.6563C5.98714 31.3828 5.8335 31.0119 5.8335 30.6251V6.56258C5.8335 6.17581 5.98714 5.80487 6.26063 5.53138C6.53412 5.25789 6.90506 5.10425 7.29183 5.10425H12.396V7.29175H22.6043V5.10425H24.0991Z" stroke="black" stroke-width="4" stroke-linejoin="round" />
-            <path d="M19.6877 13.8542L13.8543 19.6883H21.1489L15.3127 25.5216M12.396 2.91675H22.6043V7.29175H12.396V2.91675Z" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-          <input
-            type="text"
-            placeholder="OrderID"
-            className={cx("input-text")}
-            value={orderID}
-            onChange={(e) => setOrderID(e.target.value)}
-          />
-        </div> */}
-          {/* {error.beatsound && (
-          <p style={{ color: "red", marginTop: 10, paddingLeft: 5 }}>
-            {error.beatsound}
-          </p>
-        )} */}
-          {/* Username*/}
-          {/* <div className={cx("input")}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="45"
-            height="45"
-            viewBox="0 0 45 45"
-            fill="none"
-          >
-            <path
-              d="M33.75 35.625V33.2812C33.75 29.3981 30.1519 26.25 25.7137 26.25H19.2863C14.8481 26.25 11.25 29.3981 11.25 33.2812V35.625M28.125 15C28.125 16.4918 27.5324 17.9226 26.4775 18.9775C25.4226 20.0324 23.9918 20.625 22.5 20.625C21.0082 20.625 19.5774 20.0324 18.5225 18.9775C17.4676 17.9226 16.875 16.4918 16.875 15C16.875 13.5082 17.4676 12.0774 18.5225 11.0225C19.5774 9.96763 21.0082 9.375 22.5 9.375C23.9918 9.375 25.4226 9.96763 26.4775 11.0225C27.5324 12.0774 28.125 13.5082 28.125 15Z"
-              stroke="black"
-            // stroke-width="2"
-            // stroke-linecap="round"
-            // stroke-linejoin="round"
-            />
-          </svg>
-          <input
-            type="text"
-            placeholder="UserName"
-            className={cx("input-text")}
-            value={username}
-            onChange={(e) => setUserName(e.target.value)}
-          />
-        </div> */}
           {/* {Genre} */}
           <div>
             <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Genres*</td>
@@ -293,7 +265,7 @@ function UploadBeat() {
                   type="file"
                   placeholder="BeatSound"
                   className={cx("input-text", "img-click")}
-                  onChange={(e) => setBeatSoundDemo(e.target.files[0])}
+                  onChange={(e) => [setBeatSoundDemo(e.target.files[0]), fileSelected(e)]}
                 />
                 <span className={cx("file-custom")}></span>
               </label>
@@ -314,14 +286,14 @@ function UploadBeat() {
                   type="file"
                   placeholder="BeatSound"
                   className={cx("input-text", "img-click")}
-                  onChange={(e) => setBeatSoundFull(e.target.files[0])}
+                  onChange={(e) => [setBeatSoundFull(e.target.files[0]), fileSelected(e)]}
                 />
                 <span className={cx("file-custom")}></span>
               </label>
             </div>
           </div>
 
-          <Button variant="contained" className={cx("input-upload", "submit")} onClick={() => [handleUpload(), handleOpen()]} >
+          <Button variant="contained" className={cx("input-upload", "submit")} onClick={() => [handleUpload()]} >
             <input
               type="submit"
               value="Upload"
@@ -335,6 +307,22 @@ function UploadBeat() {
           >
             <CircularProgress color="inherit" />
           </Backdrop>
+          <Modal
+            open={openModal}
+            onClose={() => setOpenModal(false)}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+
+            <Box sx={style}>
+              <Typography style={{ fontSize: 25 }} id="modal-modal-title" variant="h6" component="h2">
+                Upload Alert!
+              </Typography>
+              <Typography style={{ fontSize: 20 }} id="modal-modal-description" sx={{ mt: 2 }}>
+                {uploadMessage}
+              </Typography>
+            </Box>
+          </Modal>
         </div>
         {/* Footer */}
         {/* <div className={cx("footer")}>

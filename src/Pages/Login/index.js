@@ -50,11 +50,11 @@ function Login() {
         console.log(res.data.token)
         localStorage.setItem("token", res.data.token);
         if (jwtDecode(res.data.token).role === "CUS") {
-          navigate("/myprofile")
+          navigate("/")
         } else if (jwtDecode(res.data.token).role === "MS") {
-          navigate("/musicianprofile")
+          navigate("/listbeat")
         } else {
-          navigate("/adminprofile")
+          navigate("/listuser")
         }
       })
       .catch((error) => {

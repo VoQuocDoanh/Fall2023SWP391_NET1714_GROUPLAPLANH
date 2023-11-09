@@ -21,7 +21,6 @@ function Register() {
   const [registrationMessage, setRegistrationMessage] = useState(null)
   const user = { userName, password, email, fullName, role }
   const [open, setOpen] = useState(false);
-  const [error, setError] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
@@ -46,56 +45,69 @@ function Register() {
   };
 
   const handleSubmit = async (e) => {
+    setOpen(true)
     setRegistrationMessage()
     console.log(userName, password, email, fullName, role);
-
+    if (!userName || !password || !email || !fullName || !role) {
+      setRegistrationMessage("All fields must not be null!")
+      setOpenModal(true)
+      setOpen(false)
+      return
+    }
+    if (password !== checkPassword) {
+      setRegistrationMessage("Confirm Password not match Password!")
+      setOpenModal(true)
+      setOpen(false)
+      return;
+    }
+    if (userName.length < 6) {
+      setRegistrationMessage("Username must be at least 6 characters!")
+      setOpenModal(true)
+      setOpen(false)
+      return
+    }
+    if (!email.match("^[A-Za-z0-9+_.-]+@(gmail\\.com|gmail\\.com\\.vn|fpt\\.edu\\.vn)$")) {
+      setRegistrationMessage("Invalid Email!")
+      setOpenModal(true)
+      setOpen(false)
+      return
+    }
+    if (password.length < 6) {
+      setRegistrationMessage("Quick Password!")
+      setOpenModal(true)
+      setOpen(false)
+      return
+    }
+    if (password !== checkPassword) {
+      setRegistrationMessage("Password not matched Confirm password")
+      setOpenModal(true)
+      setOpen(false)
+      return
+    }
     await axios.post("http://localhost:8080/api/auth/register", user)
       .then((res) => {
         console.log(userName, password, email, fullName, role);
-        setRegistrationMessage("Register Successfully. Please go to your mail to activate your account!")
+        setUserName("")
+        setEmail("")
+        setFullName("")
+        setPassWord("")
+        setCheckPassword("")
+        setRegistrationMessage("Register Successfully.")
         setOpenModal(true)
-        setError(false)
         setOpen(false)
-
+        setTimeout(() => {
+          navigate('/mailactivation'); // Replace '/login' with the actual login route
+        }, 3000);
+        
       })
       .catch((error) => {
-        if (!userName || !password || !email || !fullName || !role) {
-          setRegistrationMessage("All fields must not be null!")
-          setOpenModal(true)
-          setOpen(false)
-          return
-        }
-        if (password !== checkPassword) {
-          setRegistrationMessage("Confirm Password not match Password!")
-          setOpenModal(true)
-          setOpen(false)
-          return;
-        }
-        if (userName.length < 6) {
-          setRegistrationMessage("Username must be at least 6 characters!")
-          setOpenModal(true)
-          setOpen(false)
-          return
-        }
-        if (password.length < 6) {
-          setRegistrationMessage("Quick Password!")
-          setOpenModal(true)
-          setOpen(false)
-          return
-        }
-        if (!email.match("^[A-Za-z0-9+_.-]+@(gmail\\.com|gmail\\.com\\.vn|fpt\\.edu\\.vn)$")) {
-          setRegistrationMessage("Invalid Email!")
-          setOpenModal(true)
-          setOpen(false)
-          return
-        }
-        if(error.response.data){
+        if (error.response.data) {
           setRegistrationMessage("Username or Email has been used!")
-        setOpenModal(true)
-        setOpen(false)
-        return
+          setOpenModal(true)
+          setOpen(false)
+          return
         }
-        
+
       })
 
   }
@@ -110,7 +122,7 @@ function Register() {
       <div className={cx("form")}>
         {/* Username*/}
         <div>
-          <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px',fontFamily: 'fredoka one' }}>User Name*</td>
+          <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>User Name*</td>
           <div className={cx("input")}>
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
               <path d="M17.4999 5.83325C19.047 5.83325 20.5307 6.44783 21.6247 7.5418C22.7187 8.63576 23.3333 10.1195 23.3333 11.6666C23.3333 13.2137 22.7187 14.6974 21.6247 15.7914C20.5307 16.8853 19.047 17.4999 17.4999 17.4999C15.9528 17.4999 14.4691 16.8853 13.3751 15.7914C12.2812 14.6974 11.6666 13.2137 11.6666 11.6666C11.6666 10.1195 12.2812 8.63576 13.3751 7.5418C14.4691 6.44783 15.9528 5.83325 17.4999 5.83325ZM17.4999 20.4166C23.9458 20.4166 29.1666 23.027 29.1666 26.2499V29.1666H5.83325V26.2499C5.83325 23.027 11.0541 20.4166 17.4999 20.4166Z" fill="black" />
@@ -126,7 +138,7 @@ function Register() {
         </div>
         {/*Email */}
         <div>
-        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px',fontFamily: 'fredoka one' }}>Email*</td>
+          <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Email*</td>
           <div className={cx("input")}>
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
               <path d="M17.4999 5.83325C19.047 5.83325 20.5307 6.44783 21.6247 7.5418C22.7187 8.63576 23.3333 10.1195 23.3333 11.6666C23.3333 13.2137 22.7187 14.6974 21.6247 15.7914C20.5307 16.8853 19.047 17.4999 17.4999 17.4999C15.9528 17.4999 14.4691 16.8853 13.3751 15.7914C12.2812 14.6974 11.6666 13.2137 11.6666 11.6666C11.6666 10.1195 12.2812 8.63576 13.3751 7.5418C14.4691 6.44783 15.9528 5.83325 17.4999 5.83325ZM17.4999 20.4166C23.9458 20.4166 29.1666 23.027 29.1666 26.2499V29.1666H5.83325V26.2499C5.83325 23.027 11.0541 20.4166 17.4999 20.4166Z" fill="black" />
@@ -142,7 +154,7 @@ function Register() {
         </div>
         {/* FullName*/}
         <div>
-        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px',fontFamily: 'fredoka one' }}>Full Name*</td>
+          <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Full Name*</td>
           <div className={cx("input")}>
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
               <path d="M17.4999 5.83325C19.047 5.83325 20.5307 6.44783 21.6247 7.5418C22.7187 8.63576 23.3333 10.1195 23.3333 11.6666C23.3333 13.2137 22.7187 14.6974 21.6247 15.7914C20.5307 16.8853 19.047 17.4999 17.4999 17.4999C15.9528 17.4999 14.4691 16.8853 13.3751 15.7914C12.2812 14.6974 11.6666 13.2137 11.6666 11.6666C11.6666 10.1195 12.2812 8.63576 13.3751 7.5418C14.4691 6.44783 15.9528 5.83325 17.4999 5.83325ZM17.4999 20.4166C23.9458 20.4166 29.1666 23.027 29.1666 26.2499V29.1666H5.83325V26.2499C5.83325 23.027 11.0541 20.4166 17.4999 20.4166Z" fill="black" />
@@ -157,8 +169,8 @@ function Register() {
           </div>
         </div>
         {/* Role */}
-        <div style={{marginLeft: 30}}>
-        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px',fontFamily: 'fredoka one' }}>Role*</td>
+        <div style={{ marginLeft: 30 }}>
+          <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Role*</td>
           <div className={cx("input-select")}>
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
               <path d="M17.4999 5.83325C19.047 5.83325 20.5307 6.44783 21.6247 7.5418C22.7187 8.63576 23.3333 10.1195 23.3333 11.6666C23.3333 13.2137 22.7187 14.6974 21.6247 15.7914C20.5307 16.8853 19.047 17.4999 17.4999 17.4999C15.9528 17.4999 14.4691 16.8853 13.3751 15.7914C12.2812 14.6974 11.6666 13.2137 11.6666 11.6666C11.6666 10.1195 12.2812 8.63576 13.3751 7.5418C14.4691 6.44783 15.9528 5.83325 17.4999 5.83325ZM17.4999 20.4166C23.9458 20.4166 29.1666 23.027 29.1666 26.2499V29.1666H5.83325V26.2499C5.83325 23.027 11.0541 20.4166 17.4999 20.4166Z" fill="black" />
@@ -184,7 +196,7 @@ function Register() {
         </div>
         {/* Password */}
         <div>
-        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px',fontFamily: 'fredoka one' }}>Password*</td>
+          <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Password*</td>
           <div className={cx("input")}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -209,7 +221,7 @@ function Register() {
         </div>
         {/* Confirm Password*/}
         <div>
-        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px',fontFamily: 'fredoka one'}}>Confirm Password*</td>
+          <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Confirm Password*</td>
           <div className={cx("input")}>
             <svg className={cx("icon-input")}
               xmlns="http://www.w3.org/2000/svg"
@@ -233,7 +245,7 @@ function Register() {
           </div>
         </div>
 
-        <Button variant="contained" className={cx("input-regis", "submit")} onClick={() => [handleSubmit(), handleOpen()]}>
+        <Button variant="contained" className={cx("input-regis", "submit")} onClick={() => [handleSubmit()]}>
           <input
             type="submit"
             value="Sign up"
@@ -243,7 +255,7 @@ function Register() {
         <div className={cx("heading")}>
           <span className={cx("title")}>Have an account ?</span>
           <Link to="/login" className={cx("link")}>
-            <span className={cx("title-link")} style={{fontFamily: 'fredoka one'}}>Login here!!!</span>
+            <span className={cx("title-link")} style={{ fontFamily: 'fredoka one' }}>Login here!!!</span>
           </Link>
         </div>
         <Backdrop
@@ -260,7 +272,7 @@ function Register() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        
+
         <Box sx={style}>
           <Typography style={{ fontSize: 25 }} id="modal-modal-title" variant="h6" component="h2">
             Register Alert!

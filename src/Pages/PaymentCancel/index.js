@@ -25,6 +25,7 @@ function PaymentCancel() {
   };
   const activateMessage = useParams();
   const login = () => {
+    navigate("/listbeat")
   }
   return (
     <div>

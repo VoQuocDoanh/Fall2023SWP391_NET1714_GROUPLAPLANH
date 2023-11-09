@@ -76,8 +76,6 @@ function MyProfile() {
             return
         }
         const userProfile = { fullName, gender, id };
-
-
         await axiosInstance.patch("http://localhost:8080/api/v1/admin", userProfile)
             .then((res) => {
                 setCheckEdit("Edit Successfully")
