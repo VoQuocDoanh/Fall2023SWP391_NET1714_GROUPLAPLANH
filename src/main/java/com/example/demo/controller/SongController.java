@@ -30,8 +30,8 @@ public class SongController {
     }
 
     // Update Song
-    @PatchMapping("/user/{userid}")
-    public ResponseEntity<String> updateSong (@RequestParam("songid") Long songid , @RequestBody SongDTO songDTO, @PathVariable Long userid){
+    @PatchMapping("/user/{userid}/{songid}")
+    public ResponseEntity<String> updateSong (@PathVariable("songid") Long songid , @RequestBody SongDTO songDTO, @PathVariable Long userid){
         return this.songService.updateSong(songDTO, userid, songid);
     }
 
