@@ -67,6 +67,7 @@ function ChordsDetails() {
     const [openModal, setOpenModal] = useState(false);
     const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
     const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
+    const [openModalAuthen, setOpenModalAuthen] = useState(false)
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
     const handleOpenSuccessSnackBar = () => setOpenSuccessSnackBar(true);
@@ -241,18 +242,20 @@ function ChordsDetails() {
                 {listChord.map((item) => {
                     return (<div>
                         <img className={cx("detail-img")} style={{ width: 220, height: 220 }} key={item.type} src={item.image} alt={item.chordName} />
-                        <p className={cx("img__description")} style={{ paddingTop: 60, fontWeight: "bold" }}>{item.chordName} {item.description}<p style={{ marginTop: -20, fontWeight: "normal" }}>{item.type}</p><Popup trigger={<button className={cx("button-popup")} style={{ padding: 3 }}> Add to collection </button>} {...{ contentStyle }} position="right center" >
+                        <p className={cx("img__description")} style={{ paddingTop: 60, fontWeight: "bold" }}>{item.chordName} {item.description}<p style={{ marginTop: -20, fontWeight: "normal" }}>{item.type}</p><Popup trigger={<button className={cx("button-popup")} style={{ padding: 3, cursor:"pointer" }}> Add to collection </button>} {...{ contentStyle }} position="right center" >
                             <div className={cx("text-all")} >
 
                                 <div style={{ marginTop: 50, marginBottom: 40 }}>
-                                    <a style={{ background: 'none', marginLeft: 58, fontSize: 18 }} className={cx("button-popup-add")} onClick={() => [setOpenModal(true), setId(item.id)]}> Add to Collection</a>
+                                    {token ? 
+                                    <a style={{ background: 'none', marginLeft: 58, fontSize: 18, cursor:"pointer" }} className={cx("button-popup-add")} onClick={() => [setOpenModal(true), setId(item.id)]}> Add to Collection</a>
+                                    : <a style={{ background: 'none', marginLeft: 58, fontSize: 18, cursor:"pointer" }} className={cx("button-popup-add")} onClick={() => [setOpenModalAuthen(true)]}> Add to Collection</a>}
                                     {listCollectionChord.length !== 0 && listCollectionChord.map((collectionChord) => {
                                         return (
                                             <div className={cx("link-text")} style={{ display: 'flex', fontSize: 18, fontWeight: 400, gap: 20, justifyContent: 'center', marginRight: 38, marginTop: 30 }} onClick={() => addChordToCollection(collectionChord.name, item.id)}>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                                     <path d="M21 15V6M12 12H3M16 6H3M12 18H3M18.5 18C19.163 18 19.7989 17.7366 20.2678 17.2678C20.7366 16.7989 21 16.163 21 15.5C21 14.837 20.7366 14.2011 20.2678 13.7322C19.7989 13.2634 19.163 13 18.5 13C17.837 13 17.2011 13.2634 16.7322 13.7322C16.2634 14.2011 16 14.837 16 15.5C16 16.163 16.2634 16.7989 16.7322 17.2678C17.2011 17.7366 17.837 18 18.5 18Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                                 </svg>
-                                                <a>{collectionChord.name}</a>
+                                                <a style={{cursor:"pointer"}}>{collectionChord.name}</a>
                                             </div>)
                                     })}
                                 </div>
@@ -263,6 +266,21 @@ function ChordsDetails() {
                     </div>)
                 })}
             </div>
+            <Modal
+        open={openModalAuthen}
+        onClose={() => setOpenModalAuthen(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography style={{ fontSize: 25 }} id="modal-modal-title" variant="h6" component="h2">
+            Add to collection failed
+          </Typography>
+          <Typography style={{ fontSize: 20 }} id="modal-modal-description" sx={{ mt: 2 }}>
+            You need to login before using this function
+          </Typography>
+        </Box>
+      </Modal>
             <Modal
                 open={openModal}
                 onClose={handleCloseModal}
