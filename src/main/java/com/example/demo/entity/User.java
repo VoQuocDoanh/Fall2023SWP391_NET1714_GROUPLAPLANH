@@ -186,12 +186,13 @@ public class User implements UserDetails {
         return "Customer{Id=" + this.Id + ", username='" + this.username + "', pass='" + this.password + "', fullName='" + this.fullName + "', mail='" + this.mail + "', roleID='" + this.role + "', status=" + this.status + ", address='" + this.address + "', phoneNumber='" + this.phoneNumber + "'}";
     }
 
-    public User(String username, String password, String fullName, String mail, String role, int status, int report) {
+    public User(String username, String password, String fullName, String mail, String role, Gender gender, int status, int report) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
         this.mail = mail;
         this.role = role;
+        this.gender = gender;
         this.status = status;
         this.report = report;
     }

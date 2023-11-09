@@ -97,6 +97,7 @@ public class UserService {
                             registerDTO.getFullName(),
                             registerDTO.getEmail(),
                             registerDTO.getRole(),
+                            User.Gender.MALE,
                             -1, 0);
                     ActivationToken activationToken = new ActivationToken(token, LocalDateTime.now().plusHours(12), user);
                     user.setActivationToken(activationToken);

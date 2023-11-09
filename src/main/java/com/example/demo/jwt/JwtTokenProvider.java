@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,8 +22,7 @@ public class JwtTokenProvider {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenRequest.getUsername(), authenRequest.getPassword()));
         User user = userRepository.findUserByUsernameAndStatus(authenRequest.getUsername(), 1).orElseThrow(() -> new UsernameNotFoundException("Customer not found or Customer is banned"));
         var jwtToken = jwtService.generateToken(user);
-//        var refreshToken = jwtService.refreshToken(user);
 
-        return AuthenRespone.builder().token(jwtToken).msg("ĐƯỢC RỒI ĐÓ EM IU <3").build();
+        return AuthenRespone.builder().token(jwtToken).msg("Login Successfully!").build();
     }
 }
