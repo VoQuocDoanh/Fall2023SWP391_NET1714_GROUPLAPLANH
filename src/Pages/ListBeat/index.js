@@ -1,7 +1,7 @@
 
 import classNames from "classnames/bind";
 import styles from "./ListBeat.module.scss";
-import { Button } from "@mui/material";
+import { Box, Button, Modal, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import ListBeatBox from "../../components/ListBeatBox";
@@ -34,6 +34,20 @@ function ListBeat() {
     const [checkLike, setCheckLike] = useState();
     const [page, setPage] = useState(1)
     const [pages, setPages] = useState(1)
+    const [openModalAuthen, setOpenModalAuthen] = useState(false)
+    const [functionError, setFunctionError] = useState("")
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+        fontSize: 25,
+    };
     const pageRole = 1
     // 
     // const handleClickAudio = (value) => {
@@ -152,22 +166,13 @@ function ListBeat() {
             await axiosInstance.get(`http://localhost:8080/api/v1/beat/name/${search}`)
                 .then((res) => {
                     setList(res.data)
+                    setPages(1)
                 })
                 .catch((error) => {
                     console.log(error)
                 })
         } else {
-            await axiosInstance.get(`http://localhost:8080/api/v1/beat/all/${page}`)
-                .then(res => {
-                    setList(res.data.dtoList)
-                    setPages(res.data.max)
-                    console.log(pages)
-                })
-                .catch((error) => {
-                    if (error.message.includes("Network")) {
-                        navigate("/login")
-                    }
-                })
+            loadBeats()
         }
         // setList(data);
     }
@@ -222,7 +227,7 @@ function ListBeat() {
                 <div>
                     <div className={cx("listbeat")}>
                         {list.map((item) => {
-                            return <ListBeatBox id={item.id} name={item.beatName} genre={item.genre} price={item.price} view={(item.view / 2).toFixed()} like={item.totalLike} handleLike={() => handleLike(item.id)} rating={item.rating} vocalRange={item.vocalRange} fullName={item.user.fullName} />
+                            return <ListBeatBox id={item.id} name={item.beatName} genre={item.genre} price={item.price} view={(item.view / 2).toFixed()} like={item.totalLike} handleLike={() => handleLike(item.id)} rating={item.rating} vocalRange={item.vocalRange} fullName={item.user.fullName} setFunctionError={setFunctionError} setOpenModalAuthen={setOpenModalAuthen} />
                         })}
 
                     </div>
@@ -270,6 +275,21 @@ function ListBeat() {
             </div> */}
             {/* <audio style={{ borderRadius: 10 }} id="audio" ref={audioRef} src={srcMusic}>
             </audio> */}
+            <Modal
+                open={openModalAuthen}
+                onClose={() => setOpenModalAuthen(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <Typography style={{ fontSize: 25 }} id="modal-modal-title" variant="h6" component="h2">
+                        {functionError}
+                    </Typography>
+                    <Typography style={{ fontSize: 20 }} id="modal-modal-description" sx={{ mt: 2 }}>
+                        You need to login before using this function
+                    </Typography>
+                </Box>
+            </Modal>
         </div>
     );
 }

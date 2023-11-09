@@ -13,7 +13,7 @@ import axiosInstance from "../../authorization/axiosInstance";
 
 const cx = classNames.bind(styles);
 
-function ListBeatBox({ id, name, genre, price, view, like, onClick, handleLike, rating, vocalRange, fullName }) {
+function ListBeatBox({ id, name, genre, price, view, like, onClick, handleLike, rating, vocalRange, fullName, setFunctionError, setOpenModalAuthen }) {
     const token = useToken()
     const audioRef = useRef()
     const { addToCart } = useContext(ShopContext)
@@ -48,7 +48,7 @@ function ListBeatBox({ id, name, genre, price, view, like, onClick, handleLike, 
             <div className={cx("content-right")}>
                 {token ?
                     <Button className={cx("action")} onClick={() => addToCart(id)}><FontAwesomeIcon icon={faCartShopping} className={cx("shop")} /></Button>
-                    : <Link to={"/login"}><Button className={cx("action")}><FontAwesomeIcon icon={faCartShopping} className={cx("shop")} /></Button></Link>
+                    : <Button className={cx("action")} onClick={() => [setOpenModalAuthen(true), setFunctionError("Add to cart error!")] }><FontAwesomeIcon icon={faCartShopping} className={cx("shop")} /></Button>
                 }
                 <span style={{ width: 30, height: 30,textWrap: 'nowrap' }} className={cx("like")}>
                     <FontAwesomeIcon icon={faHeart}/>
