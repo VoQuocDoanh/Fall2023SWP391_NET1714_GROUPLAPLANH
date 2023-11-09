@@ -29,10 +29,10 @@ function ListBeatSoldOut() {
 
   useEffect(() => {
     loadIncome()
-  },[])
+  }, [])
 
   const loadBeatSoldOut = async () => {
-    if(!token){
+    if (!token) {
       navigate("/login")
       return
     }
@@ -48,57 +48,85 @@ function ListBeatSoldOut() {
 
   const loadIncome = async () => {
     await axiosInstance.get(`http://localhost:8080/api/v1/beat/musician/beatSoldOut/income/${userId}`)
-    .then((res) => {
-      setIncome(res.data)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+      .then((res) => {
+        setIncome(res.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   return (
-    <div style={{ marginTop: 100, marginBottom:600 }}>
-      <div className={cx("text-header")} >
-        <h1 className={cx("text-welcome")}>
+    <div style={{ marginTop: 100, marginBottom: 600, display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "column" }}>
+      <div style={{ margin: "0px" }} className={cx("text-header")} >
+        <h1 style={{ margin: "0px" }} className={cx("text-welcome")}>
           My Beats Sold Out
         </h1>
       </div>
+      {/* <div className={cx("card-header")}> */}
+      {/* <h2 className={cx("cart-heading")}>Beat Sold Out</h2> */}
+      <h1>Income: ${income}</h1>
+      {/* </div> */}
       {/* <section className={cx("card-wrapper")}> */}
       {/* Shop cart */}
       <section className={cx("shop-card")}>
         {/* Header */}
-        <header className={cx("card-header")}>
-          <h2 className={cx("cart-heading")}>Beat Sold Out</h2>
-          <h3>Income: ${income}</h3>
-        </header>
+
         {/* Content */}
-        <div className={cx("card-names")}>
-          <div className={cx("card-product", "card-title")}>PRODUCT</div>
+        {/* <div className={cx("card-names")}> */}
+        {/* <div className={cx("card-product", "card-title")}>PRODUCT</div>
           <div className={cx("card-genre", "card-title")}>DATE</div>
           <div className={cx("card-author", "card-title")}>CUSTOMER</div>
-          <div className={cx("card-price", "card-title")}>PRICE</div>
-          {/* <div className={cx("card-quantity", "card-title")}>QUANTITY</div> */}
-          {/* <div className={cx("card-sub", "card-title")}>TOTAL</div> */}
-        </div>
+          <div className={cx("card-price", "card-title")}>PRICE</div> */}
+        {/* <div className={cx("card-quantity", "card-title")}>QUANTITY</div> */}
+        {/* <div className={cx("card-sub", "card-title")}>TOTAL</div> */}
+        {/* <table>
+            <tr>
+              <th>PRODUCT</th>
+              <th>DATE</th>
+              <th>CUSTOMER</th>
+              <th>PRICE</th>
+            </tr>
+          </table> */}
+        
 
         {beatSoldOut.length !== 0 ?
-          <div className={cx("list-card")}>
+          <div>
+
+            <div className={cx("card-names")}>
+                  {/* <div className={cx("card-product", "card-title")}>PRODUCT</div>
+              <div className={cx("card-genre", "card-title")}>DATE</div>
+              <div className={cx("card-author", "card-title")}>CUSTOMER</div>
+              <div className={cx("card-price", "card-title")}>PRICE</div> */}
+                  {/* <div className={cx("card-quantity", "card-title")}>QUANTITY</div> */}
+                  {/* <div className={cx("card-sub", "card-title")}>TOTAL</div> */}
+              <table>
+                <tr>
+                  <th>PRODUCT</th>
+                  <th>DATE</th>
+                  <th>CUSTOMER</th>
+                  <th>PRICE</th>
+                </tr>
+              </table>
+            </div>
+            <div className={cx("list-card")}>
 
 
-            {beatSoldOut.map((item) => {
-              return (
-                <CardBeatItem
-                  id={item.id}
-                  name={item.beatName}
-                  author={item.orderInformation.userId.fullName}
-                  date={item.orderInformation.createAt}
-                  price={item.price}
-                  beatId={item.id}
-                />
-              );
+              {beatSoldOut.map((item) => {
+                return (
+                  <CardBeatItem
+                    id={item.id}
+                    name={item.beatName}
+                    author={item.orderInformation.userId.fullName}
+                    date={item.orderInformation.createAt}
+                    price={item.price}
+                    beatId={item.id}
+                  />
+                );
 
 
-            })}
+              })}
+            </div>
           </div> : <div>Your Beats are not sold out</div>}
       </section>
     </div>

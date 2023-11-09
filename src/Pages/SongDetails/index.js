@@ -31,7 +31,6 @@ import useToken from "@/authorization/useToken";
 import jwtDecode from "jwt-decode";
 import axiosInstance from "@/authorization/axiosInstance";
 
-
 export const SongContext = createContext();
 
 function highlightRedWords(line) {
@@ -198,6 +197,8 @@ function SongDetail() {
 
   return (
     <SongContext.Provider value={{ information, setReload }}>
+      <div >
+
       <AddSongAndPlaylist
         userId={userId}
         isOpen={newListStatus}
@@ -358,6 +359,7 @@ function SongDetail() {
           {/* style={containerStyle} */}
         </Flex>
       </Box>
+      </div>
 
     </SongContext.Provider>
   );
