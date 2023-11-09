@@ -105,4 +105,14 @@ public class UserResponeDTO {
         this.phone = phoneNumber;
         this.mail = mail;
     }
+
+    public UserResponeDTO(Long id, String username, String fullName, String role, String mail, int status, String avatar) {
+        this.id = id;
+        this.username = username;
+        this.fullName = fullName;
+        this.role = role;
+        this.status = status;
+        this.mail = mail;
+        this.avatar = avatar;
+    }
 }
