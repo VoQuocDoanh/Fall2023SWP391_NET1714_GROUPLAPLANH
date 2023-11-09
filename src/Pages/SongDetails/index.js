@@ -110,24 +110,33 @@ function SongDetail() {
       console.log(error);
     }
   };
-  
-  const handleDeleteSong = async() => {
+
+  const handleDeleteSong = async () => {
     await axiosInstance.delete(`http://localhost:8080/api/v1/song/user/${userId}?${songData.id}`)
-    .then((res) => {
-      navigate("/songs")
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+      .then((res) => {
+        navigate("/songs")
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   const iconStyle = {
     position: "absolute",
     top: "125px", // Adjust the position as needed
-    right: "140px", // Adjust the position as needed
+    right: "350px", // Adjust the position as needed
     padding: "5px",
 
   }
+
+  // const iconStyle1 = {
+  //   position: "absolute",
+  //   top: "125px", // Adjust the position as needed
+  //   right: "500px", // Adjust the position as needed
+  //   padding: "5px",
+
+  // }
+
   const boxStyle = {
     position: "absolute",
     top: "110px", // Adjust the position as needed
@@ -138,8 +147,16 @@ function SongDetail() {
     maginRight: "5px",
     display: "flex",
     gap: "5px",
-    
+
   }
+
+  // const containerStyle = {
+  //   backgroundImage: 'url("../assets/images/Other/download (1).jpg")', 
+  //   backgroundSize: 'cover',
+  //   backgroundRepeat: 'no-repeat',
+  // };
+
+
   const addSongToPlayList = (name) => {
     const formData = {
       name: name,
@@ -202,7 +219,7 @@ function SongDetail() {
 
       >
       </BannerTitle>
-      
+
       <Box mb={10} mt={6} >
         <Flex m={"0 auto 1%"} w={"68%"} justifyContent={"flex-end"} mb={4}>
           <Box display={"flex"}>
@@ -239,33 +256,56 @@ function SongDetail() {
                   Update
                 </Button>
               </div>
-              : admin ? 
-              <div style={boxStyle}>
-                <Button
-                  height="40px"
-                  width="100px"
-                  onClick={() => setModalView(true)}
-                  colorScheme="teal"
-                  variant="outline"
-                  color="black"
-                >
-                  View report
-                </Button>
-                <Button
-                  height="40px"
-                  width="100px"
-                  onClick={() => setModalView(true)}
-                  colorScheme="teal"
-                  variant="outline"
-                  color="black"
-                >
-                  Ban
-                </Button>
-              </div> : <div style={boxStyle}>
-                <Button height="40px" width="100px" onClick={onOpen} colorScheme="red" variant="outline" color="black" ml={2}>
-                  Report
-                </Button>
-              </div>
+              : admin ?
+                <div style={boxStyle}>
+                  <Button
+                    height="40px"
+                    width="100px"
+                    onClick={() => setModalView(true)}
+                    colorScheme="teal"
+                    variant="outline"
+                    color="black"
+                  >
+                    View report
+                  </Button>
+                  <Button
+                    height="40px"
+                    width="100px"
+                    onClick={() => setModalView(true)}
+                    colorScheme="teal"
+                    variant="outline"
+                    color="black"
+                  >
+                    Ban
+                  </Button>
+                </div> : <div style={boxStyle}>
+                  <Button height="40px" width="100px" onClick={onOpen} colorScheme="red" variant="outline" color="black" ml={2}>
+                    Report
+                  </Button>
+                  {/* <Menu>
+                    <MenuButton
+                      as={IconButton}
+                      aria-label="Options"
+                      icon={<FiMoreHorizontal />}
+                      variant="outline"
+                      ml={2}
+                      colorScheme={""}
+                      style={iconStyle1}
+                    />
+                    <MenuList>
+                      <MenuItem
+                        icon={<AddIcon />}
+                        fontSize={"14px"}
+                        onClick={() => {
+                          setNewListStatus(true);
+                        }}
+                      >
+                        Add New Playlist
+                      </MenuItem>
+                      {MenuItemHTML}
+                    </MenuList>
+                  </Menu> */}
+                </div>
             }
             <Menu>
               <MenuButton
@@ -315,6 +355,7 @@ function SongDetail() {
 
             overflowY={"scroll"}
           />
+          {/* style={containerStyle} */}
         </Flex>
       </Box>
 

@@ -19,7 +19,7 @@ const cx = classNames.bind(styles);
 
 const KEY = ["All", "C", "D", "E", "F", "G", "A", "B", "A#", "C#", "D#", "F#", "G#"];
 const SUFFIX = ["All", "major", "minor", "7", "m7", "maj7"];
-const INSTRUMENT = ["ukulele", "guitar", "piano"];
+const INSTRUMENT = ["Ukulele", "Guitar", "Piano"];
 
 
 // const DATA = [
@@ -241,7 +241,7 @@ function ChordsDetails() {
                 {listChord.map((item) => {
                     return (<div>
                         <img className={cx("detail-img")} style={{ width: 220, height: 220 }} key={item.type} src={item.image} alt={item.chordName} />
-                        <p className={cx("img__description")} style={{ paddingTop: 50, fontWeight: "bold" }}>{item.chordName} {item.description}<p style={{ marginTop: -50, fontWeight: "normal" }}>{item.type}</p><Popup trigger={<button className={cx("button-popup")} style={{ padding: 10 }}> More Options </button>} {...{ contentStyle }} position="right center" >
+                        <p className={cx("img__description")} style={{ paddingTop: 60, fontWeight: "bold" }}>{item.chordName} {item.description}<p style={{ marginTop: -20, fontWeight: "normal" }}>{item.type}</p><Popup trigger={<button className={cx("button-popup")} style={{ padding: 3 }}> Add to collection </button>} {...{ contentStyle }} position="right center" >
                             <div className={cx("text-all")} >
 
                                 <div style={{ marginTop: 50, marginBottom: 40 }}>
