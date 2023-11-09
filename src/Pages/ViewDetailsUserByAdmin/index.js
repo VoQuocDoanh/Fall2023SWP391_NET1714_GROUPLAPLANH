@@ -85,7 +85,7 @@ function ViewDetailsUserByAdmin() {
     }
 
     return (
-        <div>
+        <div style={{marginBottom:300}}>
             <div>
                 <h2 className={cx("title-myprofile")}>
                     My Profile

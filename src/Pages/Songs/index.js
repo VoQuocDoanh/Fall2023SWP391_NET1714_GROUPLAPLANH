@@ -173,7 +173,7 @@ function Songs() {
                                             </div>
                                         </div>
 
-                                        <Popup trigger={<button className={cx("button-page")}>...</button>} position="bottom centers">
+                                        {/* <Popup trigger={<button className={cx("button-page")}>...</button>} position="bottom centers">
                                             <div className={cx("text-all")}>
                                                 <div style={{ fontWeight: 500, fontSize: '2rem', padding: 5, display: 'flex', justifyContent: 'center', background: 'white' }}>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
@@ -182,7 +182,7 @@ function Songs() {
                                                     <a>Add to Playlist</a>
                                                 </div>
                                             </div>
-                                        </Popup>
+                                        </Popup> */}
                                     </div></Link>
                                 ))}
 

@@ -167,10 +167,10 @@ function UploadSong() {
             <div className={cx('page-content')}> {/* trang tổng */}
                 {console.log(songInput)}
                 <div className={cx('container-16')}>
-                    <div className={cx('title')}>Upload new song</div>
+                    <div className={cx('title')}>Upload new chords of song</div>
                     <div className={cx('grid-9')}> {/* trang tổng gổm 2 div trái phải*/}
                         <div className={cx('page-content-left')}> {/* trang tổng bên trái*/}
-                            <h2 style={{ marginBottom: "20px"}}><b>Song name: </b></h2>
+                            <h2 style={{ marginBottom: "20px"}}><b> chords of song's name: </b></h2>
                             <input
                                 type="text"
                                 placeholder="Ex: Silent Night"

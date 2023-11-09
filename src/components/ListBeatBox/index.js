@@ -47,7 +47,7 @@ function ListBeatBox({ id, name, genre, price, view, like, onClick, handleLike, 
             {/* Content right  */}
             <div className={cx("content-right")}>
                 {token ?
-                    <Button className={cx("action")} onClick={() => [addToCart(id), setOpenSuccessSnackBar(true), setMessageSuccess("Add to cart success")]}><FontAwesomeIcon icon={faCartShopping} className={cx("shop")} /></Button>
+                    <Button className={cx("action")} onClick={() => [addToCart(id), setOpenSuccessSnackBar(true), setMessageSuccess("Add to cart successfully")]}><FontAwesomeIcon icon={faCartShopping} className={cx("shop")} /></Button>
                     : <Button className={cx("action")} onClick={() => [setOpenFailedSnackBar(true), setMessageFailed("You need to login before using this function!")] }><FontAwesomeIcon icon={faCartShopping} className={cx("shop")} /></Button>
                 }
                 <span style={{ width: 30, height: 30,textWrap: 'nowrap' }} className={cx("like")}>

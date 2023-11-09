@@ -60,7 +60,7 @@ function HeaderCustomer() {
               <div className={cx("text-all-page")}>
                 <Link to="/listbeat"><div className={cx("link-text")}>Beat</div></Link>
                 <Link to="/chordsdetails"><div className={cx("link-text")}>Chords</div></Link>
-                <Link to="/songs"><div className={cx("link-text")}> Songs</div></Link>
+                <Link to="/songs"><div className={cx("link-text")}> Chords of Songs</div></Link>
               </div>
             </Popup>
           </div>
@@ -93,7 +93,7 @@ function HeaderCustomer() {
                 <Link to="/myprofile"><div className={cx("link-text")}>Account</div></Link>
                 <Link to="/listBeatPurchased"><div className={cx("link-text")}>Beat Purchased</div></Link>
                 <Link to="/MyCollection"><div className={cx("link-text")}>My Collection</div></Link>
-                <Link to="/usersong"><div className={cx("link-text")}> My Songs</div></Link>
+                <Link to="/usersong"><div className={cx("link-text")}> My Chords of Songs</div></Link>
                 <Link to="/"><div className={cx("link-text")} onClick={handleLogout}> Log out</div></Link>
               </div>
             </Popup>

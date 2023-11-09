@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import styles from "./ViewDetailBeatMusician.module.scss";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Avatar, Box, Button, IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
+import { Alert, Avatar, Box, Button, IconButton, Menu, MenuItem, Snackbar, Tooltip } from "@mui/material";
 import axiosInstance from '../../authorization/axiosInstance';
 import { Link, useParams } from 'react-router-dom';
 import { ShopContext } from '../../context/shop-context';
@@ -25,6 +25,10 @@ function ViewDetailBeatMusician() {
     const [beatSoundDemo, setBeatSoundDemo] = useState("")
     const [checkFeedBack, setCheckFeedBack] = useState(null)
     const [checkSell, setCheckSell] = useState(true)
+    const [messageSuccess, setMessageSuccess] = useState("")
+    const [messageFailed, setMessageFailed] = useState("")
+    const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
+    const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
     let userId = ""
     if (token) {
         userId = jwtDecode(token).sub
@@ -77,6 +81,8 @@ function ViewDetailBeatMusician() {
     const handleUnsell = async () => {
         await axiosInstance.delete(`http://localhost:8080/api/v1/beat/${beatId}`)
             .then((res) => {
+                setOpenSuccessSnackBar(true)
+                setMessageSuccess("Unsell the beat")
                 setCheckSell(false)
             })
             .catch((error) => {
@@ -87,6 +93,8 @@ function ViewDetailBeatMusician() {
     const handleSell = async () => {
         await axiosInstance.put(`http://localhost:8080/api/v1/beat/${beatId}`)
             .then((res) => {
+                setOpenSuccessSnackBar(true)
+                setMessageSuccess("Continue to sell the beat")
                 setCheckSell(true)
             })
             .catch((error) => {
@@ -284,6 +292,16 @@ function ViewDetailBeatMusician() {
                     <audio id="audio" ref={audioRef} src={music}></audio>
 
                 </div> */}
+                <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+                <Alert onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {messageSuccess}
+                </Alert>
+            </Snackbar>
+            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+                <Alert onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {messageFailed}
+                </Alert>
+            </Snackbar>
             </div>
 
         );

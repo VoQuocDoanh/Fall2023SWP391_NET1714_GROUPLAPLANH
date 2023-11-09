@@ -43,6 +43,8 @@ function Login() {
     await axios.post("http://localhost:8080/api/auth/login", user)
       .then((res) => {
         console.log(res.data.token)
+        setOpenSuccessSnackBar(true)
+        setMessageSuccess("Login successfully")
         localStorage.setItem("token", res.data.token);
         if (jwtDecode(res.data.token).role === "CUS") {
           navigate("/")
@@ -51,6 +53,7 @@ function Login() {
         } else {
           navigate("/listuser")
         }
+
       })
       .catch((error) => {
         setOpenFailedSnackBar(true)
@@ -157,12 +160,12 @@ function Login() {
         </div>
         {/* Footer */}
       </div>
-      <Snackbar open={openSuccessSnackBar} autoHideDuration={6000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+      <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
         <Alert onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
           {messageSuccess}
         </Alert>
       </Snackbar>
-      <Snackbar open={openFailedSnackBar} autoHideDuration={6000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+      <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
         <Alert onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
           {messageFailed}
         </Alert>

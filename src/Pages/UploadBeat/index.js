@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./UploadBeat.module.scss";
 import { useEffect, useState } from "react";
-import { Backdrop, Box, Button, CircularProgress, Modal, Typography } from "@mui/material";
+import { Alert, Backdrop, Box, Button, CircularProgress, Modal, Snackbar, Typography } from "@mui/material";
 import axios from "axios";
 import videoBg from '../../assets/video/video (2160p).mp4'
 import ValidationUpload from "../../Validation/ValidationUpload";
@@ -31,8 +31,13 @@ function UploadBeat() {
   const [beatSoundFull, setBeatSoundFull] = useState("")
   const [vocalRange, setVocalRange] = useState(null)
   const [listGenres, setListGenres] = useState(null)
-  const [open, setOpen] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
+  const [beatSoundDemoUrl, setBeatSoundDemoUrl] = useState("")
+  const [beatSoundFullUrl, setBeatSoundFullUrl] = useState("")
+  const [open,setOpen] = useState(false)
+  const [messageSuccess, setMessageSuccess] = useState("")
+    const [messageFailed, setMessageFailed] = useState("")
+    const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
+    const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
   const style = {
     position: 'absolute',
     top: '50%',
@@ -60,14 +65,49 @@ function UploadBeat() {
     loadGenres()
   }, [])
 
-  const fileSelected = (e) => {
-    if (e.target.files.length > 0) {
-      var fileName = e.target.files[0].name;
-      alert("You have selected the file: " + fileName)
+  const handleBeatSoundDemoChange = (e) => {
+    const MIN_FILE_SIZE = 102400
+    const MAX_FILE_SIZE = 1048576 
+    const selectedFile = e.target.files[0];
+    const allowedTypes = ["audio/mpeg"];
+    if (!allowedTypes.includes(selectedFile?.type)) {
+      setOpenFailedSnackBar(true)
+      setMessageFailed("Only audio/mpeg files are allowed!")
+      return;
     }
-    else {
-      alert("No file selected!")
+    if(selectedFile?.size < MIN_FILE_SIZE || selectedFile?.size > MAX_FILE_SIZE){
+      console.log(selectedFile?.size < MIN_FILE_SIZE)
+      setOpenFailedSnackBar(true)
+      console.log(selectedFile?.size)
+      setMessageFailed("File size is in 100KB to 1MB!")
+      return;
     }
+    setOpenSuccessSnackBar(true)
+    setMessageSuccess("Selected file successfully")
+    setBeatSoundDemo(selectedFile)
+    setBeatSoundDemoUrl(selectedFile?.name)
+  }
+
+  const handleBeatSoundFullChange = (e) => {
+    const MIN_FILE_SIZE = 1048576 
+    const MAX_FILE_SIZE = 10485760
+    const selectedFile = e.target.files[0];
+    const allowedTypes = ["audio/mpeg"];
+    if(selectedFile?.size < MIN_FILE_SIZE || selectedFile?.size > MAX_FILE_SIZE){
+      setOpenFailedSnackBar(true)
+      console.log(selectedFile.size)
+      setMessageFailed("File size is in 1MB to 10MB!")
+      return;
+    }
+    if (!allowedTypes.includes(selectedFile?.type)) {
+      setOpenFailedSnackBar(true)
+      setMessageFailed("Only audio/mpeg files are allowed!")
+      return;
+    }
+    setOpenSuccessSnackBar(true)
+    setMessageSuccess("Selected file successfully")
+    setBeatSoundFull(selectedFile)
+    setBeatSoundFullUrl(selectedFile?.name)
   }
 
 
@@ -83,13 +123,13 @@ function UploadBeat() {
     }
     if (!beatName || !price || !username || !beatSoundDemo || !beatSoundFull || genres.length === 0 || !vocalRange || !description) {
       setOpen(false)
-      setOpenModal(true)
-      setUploadMessage("All fields must not be null!")
+      setOpenFailedSnackBar(true)
+      setMessageFailed("All fields must not be null!")
       return;
     } else if (price < 0) {
       setOpen(false)
-      setOpenModal(true)
-      setUploadMessage("Price must be higher than 0!")
+      setOpenFailedSnackBar(true)
+      setMessageFailed("Price must be higher than 0!")
       return;
     }
 
@@ -105,12 +145,18 @@ function UploadBeat() {
       },
     })
       .then((res) => {
-        navigate('/viewbeat');
+        setOpen(false)
+        setOpenSuccessSnackBar(true)
+        setMessageSuccess("Upload successfully")
+        setTimeout(() => {
+          navigate('/viewbeat');
+        },1000)
+        
       })
       .catch((error) => {
         setOpen(false)
-        setOpenModal(true)
-        setUploadMessage("Upload Failed")
+        setOpenFailedSnackBar(true)
+        setMessageFailed("Upload Failed")
       })
   }
   const loadGenres = async () => {
@@ -260,9 +306,9 @@ function UploadBeat() {
                   type="file"
                   placeholder="BeatSound"
                   className={cx("input-text", "img-click")}
-                  onChange={(e) => [setBeatSoundDemo(e.target.files[0]), fileSelected(e)]}
+                  onChange={(e) => handleBeatSoundDemoChange(e)}
                 />
-                <span className={cx("file-custom")}></span>
+                <span className={cx("file-custom")}>{beatSoundDemoUrl}</span>
               </label>
             </div>
           </div>
@@ -281,9 +327,9 @@ function UploadBeat() {
                   type="file"
                   placeholder="BeatSound"
                   className={cx("input-text", "img-click")}
-                  onChange={(e) => [setBeatSoundFull(e.target.files[0]), fileSelected(e)]}
+                  onChange={(e) => handleBeatSoundFullChange(e)}
                 />
-                <span className={cx("file-custom")}></span>
+                <span className={cx("file-custom")}>{beatSoundFullUrl}</span>
               </label>
             </div>
           </div>
@@ -301,22 +347,16 @@ function UploadBeat() {
           >
             <CircularProgress color="inherit" />
           </Backdrop>
-          <Modal
-            open={openModal}
-            onClose={() => setOpenModal(false)}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-
-            <Box sx={style}>
-              <Typography style={{ fontSize: 25 }} id="modal-modal-title" variant="h6" component="h2">
-                Upload Alert!
-              </Typography>
-              <Typography style={{ fontSize: 20 }} id="modal-modal-description" sx={{ mt: 2 }}>
-                {uploadMessage}
-              </Typography>
-            </Box>
-          </Modal>
+          <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+                <Alert onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {messageSuccess}
+                </Alert>
+            </Snackbar>
+            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+                <Alert onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {messageFailed}
+                </Alert>
+            </Snackbar>
         </div>
         {/* Footer */}
         {/* <div className={cx("footer")}>

@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import styles from "./ViewDetailBeat.module.scss";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Avatar, Box, Button, IconButton, Menu, MenuItem, Modal, Tooltip, Typography } from "@mui/material";
+import { Alert, Avatar, Box, Button, IconButton, Menu, MenuItem, Modal, Snackbar, Tooltip, Typography } from "@mui/material";
 import axiosInstance from '../../authorization/axiosInstance';
 import { Link, useParams } from 'react-router-dom';
 import { ShopContext } from '../../context/shop-context';
@@ -38,8 +38,10 @@ function ViewDetailBeat() {
     const [beatSoundDemo, setBeatSoundDemo] = useState("")
     const [page, setPage] = useState(1)
     const [pages, setPages] = useState(1)
-    const [openModalAuthen, setOpenModalAuthen] = useState(false)
-    const [functionError, setFunctionError] = useState("")
+    const [messageSuccess, setMessageSuccess] = useState("")
+    const [messageFailed, setMessageFailed] = useState("")
+    const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
+    const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
     const style = {
         position: 'absolute',
         top: '50%',
@@ -77,6 +79,23 @@ function ViewDetailBeat() {
     useEffect(() => {
         loadSoundDemo()
     }, [beatId])
+
+    useEffect(() => {
+        loadCheckLike()
+    },[beatId])
+
+    const loadCheckLike = async() => {
+        if(!token){
+            return
+        }
+        await axiosInstance.get(`http://localhost:8080/api/v1/beat/check/${userId}/${beatId}`)
+        .then((res) => {
+            setCheckLike(res.data)
+        })
+        .catch((error) => {
+            setCheckLike(error.message.data)
+        })
+    }
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -148,20 +167,22 @@ function ViewDetailBeat() {
             })
         setPlay(false)
         setCheckRating("")
-        setCheckLike(false)
     }
 
     const handleLike = async (id) => {
         if (!token) {
-            setOpenModalAuthen(true)
-            setFunctionError("Rating star error!")
+            setOpenFailedSnackBar(true)
+            setMessageFailed("You need to login before using this function!")
             setCheckLike(false)
         } else {
             await axiosInstance.post(`http://localhost:8080/api/v1/beat/like/${jwtDecode(token).sub}/${id}`)
                 .then((res) => {
+                    setOpenSuccessSnackBar(true)
                     if (res.data.includes("Ok")) {
+                        setMessageSuccess("Like Successfully")
                         setCheckLike(true)
                     } else {
+                        setMessageSuccess("Unlike Successfully")
                         setCheckLike(false)
                     }
                 })
@@ -190,12 +211,13 @@ function ViewDetailBeat() {
 
     const handleRating = async (e) => {
         if (!token) {
-            setOpenModalAuthen(true)
-            setFunctionError("Rating star error!")
+            setOpenFailedSnackBar(true)
+            setMessageFailed("You need to login before using this function!")
         } else {
             await axiosInstance.post(`http://localhost:8080/api/v1/rate/beat/rating/${jwtDecode(token).sub}/${beatId}`, { rate: e.target.value })
                 .then((res) => {
-                    setCheckRating("Rating Successfully")
+                    setOpenSuccessSnackBar(true)
+                    setMessageSuccess("Rating Successfully")
                 })
                 .catch((error) => {
                     console.log(error)
@@ -279,11 +301,11 @@ function ViewDetailBeat() {
                                                 <Rating className={cx("start-icon")} name="size-large" defaultValue={0} size="large" onChange={handleRating} />
                                             </Stack>
                                             <button className={cx("button")} onClick={() => handleLikeClick(beatDetail.id)}>
+                                                {console.log(checkLike)}
                                                 <Heart id={checkLike ? cx('favorite-stroke') : cx('favorite-filled')} />
                                             </button>
                                         </div>
                                     </div>
-                                    <div className={cx("check-rating")}>{checkRating}</div>
                                 </div>
                             </div>
 
@@ -351,12 +373,12 @@ function ViewDetailBeat() {
                                     {beatDetail.status === 1 ?
                                     <div>
                                     {token ? <div className={cx('mid-button')}>
-                                        <Button variant="contained" className={cx('button-1')} style={{ borderRadius: 15, outline: '3px solid white', marginTop: 40 }} onClick={() => addToCart(beatId)}>
+                                        <Button variant="contained" className={cx('button-1')} style={{ borderRadius: 15, outline: '3px solid white', marginTop: 40 }} onClick={() => [addToCart(beatId), setOpenSuccessSnackBar(true), setMessageSuccess("Add to cart successfully")]}>
                                             <div style={{ fontSize: '1.4rem', textWrap: 'nowrap' }} >Add to cart</div>
                                         </Button>
                                     </div>
                                         : <div className={cx('mid-button')}>
-                                                <Button variant="contained" className={cx('button-1')} style={{ borderRadius: 15, outline: '3px solid white', marginTop: 40 }} onClick={() => [setOpenModalAuthen(true),setFunctionError("Add to cart error!")]}>
+                                                <Button variant="contained" className={cx('button-1')} style={{ borderRadius: 15, outline: '3px solid white', marginTop: 40 }} onClick={() => [setOpenFailedSnackBar(true),setMessageFailed("You need to login before using this function!")]}>
                                                     <div>Add to cart</div>
                                                 </Button>
                                         </div>
@@ -576,21 +598,16 @@ function ViewDetailBeat() {
                     <audio id="audio" ref={audioRef} src={music}></audio>
 
                 </div> */}
-                <Modal
-                open={openModalAuthen}
-                onClose={() => setOpenModalAuthen(false)}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <Typography style={{ fontSize: 25 }} id="modal-modal-title" variant="h6" component="h2">
-                        {functionError}
-                    </Typography>
-                    <Typography style={{ fontSize: 20 }} id="modal-modal-description" sx={{ mt: 2 }}>
-                        You need to login before using this function
-                    </Typography>
-                </Box>
-            </Modal>
+                <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+                <Alert onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {messageSuccess}
+                </Alert>
+            </Snackbar>
+            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+                <Alert onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {messageFailed}
+                </Alert>
+            </Snackbar>
             </div>
 
         );

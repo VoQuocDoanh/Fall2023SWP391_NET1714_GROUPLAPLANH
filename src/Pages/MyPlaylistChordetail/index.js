@@ -137,8 +137,8 @@ function MyPlayListChordDetail() {
 
   return (
     <>
-    <Box h={"100px"}></Box>
-    <Box minH={"80vh"}>
+    <Box style={{marginTop:-100}} h={"100px"}></Box>
+    <Box style={{marginTop:100}} minH={"80vh"}>
       <Box w={"60%"} m={"0 auto"} p={"0"}>
         {playListDetail?.chords?.length ? (
           <>
@@ -152,7 +152,7 @@ function MyPlayListChordDetail() {
                 {/* <SimpleGrid columns={3} spacing={9} justifyItems={"center"}>
                   {SongItemsHTML}
                 </SimpleGrid> */}
-                <TabChordList chords={playListDetail?.chords} setTabSelected={setTabSelected}/>
+                <TabChordList chords={playListDetail?.chords} setTabSelected={setTabSelected} removeSong={removeSong}/>
               </CardBody>
               <Divider />
               <CardFooter>{PaginationHTML}</CardFooter>

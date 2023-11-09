@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import styles from "./ViewDetailBeatPurchased.module.scss";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Avatar, Box, Button, IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
+import { Alert, Avatar, Box, Button, IconButton, Menu, MenuItem, Snackbar, Tooltip } from "@mui/material";
 import axiosInstance from '../../authorization/axiosInstance';
 import { Link, useParams } from 'react-router-dom';
 import { ShopContext } from '../../context/shop-context';
@@ -27,6 +27,10 @@ function ViewDetailBeatPurchased() {
     const [feedBack, setFeedBack] = useState()
     const [feedBackContent, setFeedBackContent] = useState("")
     const [idFeedback, setIdFeedback] = useState("")
+    const [messageSuccess, setMessageSuccess] = useState("")
+    const [messageFailed, setMessageFailed] = useState("")
+    const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
+    const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
     const contentStyle = { background: 'white', width: 460, height: 370, borderRadius: 20 };
     let userId = ""
     if (token) {
@@ -76,7 +80,8 @@ function ViewDetailBeatPurchased() {
     const handleFeedback = async () => {
         await axiosInstance.post("http://localhost:8080/api/v1/beat/feedback", { userId: userId, beatId: beatId, content: feedBackContent })
             .then((res) => {
-                alert("Feedback Successfully")
+                setOpenSuccessSnackBar(true)
+                setMessageSuccess("Feedback successfully")
                 setCheckFeedBack(true)
             })
             .catch((error) => {
@@ -118,7 +123,8 @@ function ViewDetailBeatPurchased() {
         }
         await axiosInstance.put(`http://localhost:8080/api/v1/beat/feedback`, { id: feedBack.id, content: feedBackContent })
             .then((res) => {
-                alert("Updated Successfully")
+                setOpenSuccessSnackBar(true)
+                setMessageSuccess("Update feedback successfully")
             })
     }
 
@@ -151,13 +157,13 @@ function ViewDetailBeatPurchased() {
                                     <div className={cx('container')}>
 
                                         <img className={cx('image')} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} />
-                                        
+
                                     </div>
 
                                     <div className={cx('information')}>
                                         {console.log(beatDetail)}
                                         <h1><b style={{ color: 'white', fontFamily: 'fredoka one' }}>{beatDetail.beatName}</b></h1>
-                                        <h4> {beatDetail.user.fullName} &#x2022; 2023 </h4>
+                                        <Link style={{color:"white"}} to={`/viewdetailsmusician/${beatDetail.user.id}`}><h4> {beatDetail.user.fullName} &#x2022; 2023 </h4></Link>
 
                                     </div>
                                     {/* <div className={cx('button-submit')}>
@@ -307,6 +313,16 @@ function ViewDetailBeatPurchased() {
                     <audio id="audio" ref={audioRef} src={music}></audio>
 
                 </div> */}
+                <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+                    <Alert onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                        {messageSuccess}
+                    </Alert>
+                </Snackbar>
+                <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+                    <Alert onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                        {messageFailed}
+                    </Alert>
+                </Snackbar>
             </div>
 
         );

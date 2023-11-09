@@ -112,10 +112,10 @@ function UserSong() {
     return (
 
         <div className={cx("list-songs")}>
-            <h1 className={cx("title")}> MY CHORD OF SONG</h1>
+            <h1 className={cx("title")}> MY CHORDS OF SONGS</h1>
 
             <footer className={cx("Add-Songs")}>
-                <Link to="/UploadSong" className={cx("Add-Songs-body", "card-action")}>Add new song</Link>
+                <Link to="/UploadSong" className={cx("Add-Songs-body", "card-action")}>Add new chords of song</Link>
             </footer>
             {/* <div className={cx("button-chords")}>
                 <Link to="/chordsdetails">
@@ -173,8 +173,8 @@ function UserSong() {
                         <div>
                             <div className={cx('scroll-container')}>
                                 {listSongs.map((song, index) => (
-                                    <div className={cx('song')} key={index}>
-                                        <Link style={{ color: "black" }} to={`/song/${song.id}`}>
+                                    <Link style={{ color: "black" }} to={`/song/${song.id}`}>
+                                        <div className={cx('song')} key={index}>
                                             <div className={cx("name-and-musician")}>
                                                 <div className={cx('number-song')}>
                                                     <span>{index + 1}.</span>
@@ -183,9 +183,8 @@ function UserSong() {
                                                     <span style={{ fontWeight: 500 }}>{song.songName}</span>
                                                     <span>{song.author}</span>
                                                 </div>
-                                            </div>
-                                        </Link>
-                                        <Popup trigger={<button className={cx("button-page")}>...</button>} position="bottom centers">
+                                            </div>     
+                                        {/* <Popup trigger={<button className={cx("button-page")}>...</button>} position="bottom centers">
                                             <div className={cx("text-all")}>
                                                 <div style={{ fontWeight: 500, fontSize: '2rem', padding: 5, display: 'flex', justifyContent: 'center', background: 'white' }}>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
@@ -194,18 +193,18 @@ function UserSong() {
                                                     <a>Add to Playlist</a>
                                                 </div>
                                             </div>
-                                        </Popup>
-                                    </div>
+                                        </Popup> */}
+                                    </div></Link>
                                 ))}
-                            </div>
-                            {pages !== 1 ?
-                                <div className={cx("pagination")}>
-                                    <Pagination pages={pages} page={page} setPage={setPage} />
-                                </div>
-                                : <div></div>}
                         </div>
-                        : <h1 style={{ textAlign: "center" }}> There are no songs in your list! </h1>}
-                    {/* <div className={cx('pagination')}>
+                            {pages !== 1 ?
+                        <div className={cx("pagination")}>
+                            <Pagination pages={pages} page={page} setPage={setPage} />
+                        </div>
+                        : <div></div>}
+                </div>
+                : <h1 style={{ textAlign: "center" }}> There are no songs in your list! </h1>}
+                {/* <div className={cx('pagination')}>
                         <button onClick={handlePrevPage} disabled={currentPage === 1}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                 <path d="M4 10L13 19L14.4 17.5L7 10L14.4 2.5L13 1L4 10Z" fill="black" />
@@ -218,9 +217,9 @@ function UserSong() {
                             </svg>
                         </button>
                     </div> */}
-                </div>
             </div>
         </div>
+        </div >
     );
 }
 

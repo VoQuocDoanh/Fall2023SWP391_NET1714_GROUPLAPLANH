@@ -100,8 +100,8 @@ function MyPLayListDetail() {
   }, [reload]);
 
   return (
-    <Box style={{marginTop:-70, marginBottom:300}}>
-      <Box w={"60%"} m={"3% auto"} p={"0"}>
+    <Box style={{marginTop:-100, marginBottom:500}}>
+      <Box style={{marginTop:100}} w={"60%"} m={"3% auto"} p={"0"}>
         <EditForm 
           userId={user_id}
           isOpen={isOpen}
@@ -111,7 +111,7 @@ function MyPLayListDetail() {
         />
         <Flex alignItems={"flex-end"}>
           <Box style={{marginTop:250}}>
-            <Text>Collection</Text>
+            <Text style={{fontSize:'1.8rem'}}>Collection</Text>
             <Heading>{playListName}</Heading>
           </Box>
           <IconButton icon={<EditIcon />} ml={2} onClick={onOpen} />
@@ -129,6 +129,7 @@ function MyPLayListDetail() {
           </Card>
         )}
       </Box>
+      <div style={{marginBottom:500, color:"white"}}>...</div>
     </Box>
   );
 }
