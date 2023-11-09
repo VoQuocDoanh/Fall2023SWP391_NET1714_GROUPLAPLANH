@@ -1,8 +1,10 @@
-{
-"beatName": "Shadow Eyes",
-"username": "minhhien",
-"price": 29,
-"description" :"New Beat By MinhHien",
-"genres": ["POP","HipHop"],
-"vocalRange":"C(Man)"
-}
+1.
+beatName: Shadow Eyes
+price: 29
+description : New Beat By MinhHien
+genres: POP, HipHop
+vocalRange: C(Man)
+
+2.
+
+
