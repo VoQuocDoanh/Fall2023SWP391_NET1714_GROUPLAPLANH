@@ -113,40 +113,8 @@ export default function Footer() {
             </Box>
           </Stack>
           <Stack align={'flex-start'} w={'8%'}>
-            <ListHeader>Legal</ListHeader>
-            <Box color={'white'} as='a' href={'#'}>
-              Cookies Policy
-            </Box>
-            <Box color={'white'} as='a' href={'#'}>
-              Privacy Policy
-            </Box>
-            <Box color={'white'} as='a' href={'#'}>
-              Terms of Service
-            </Box>
-            <Box color={'white'} as='a' href={'#'}>
-              Law Enforcement
-            </Box>
-            <Box color={'white'} as='a' href={'#'}>
-              Status
-            </Box>
-          </Stack>
-          <Stack align={'flex-start'} w={'8%'}>
-            <ListHeader>Follow Us</ListHeader>
-            <Box color={'white'} as='a' href={'#'}>
-              Facebook
-            </Box>
-            <Box color={'white'} as='a' href={'#'}>
-              Twitter
-            </Box>
-            <Box color={'white'} as='a' href={'#'}>
-              Dribbble
-            </Box>
-            <Box color={'white'} as='a' href={'#'}>
-              Instagram
-            </Box>
-            <Box color={'white'} as='a' href={'#'}>
-              LinkedIn
-            </Box>
+            <ListHeader>About us</ListHeader>
+            <Text style={{fontSize: '1.4rem'}}>Unlock your musical potential at Chords & Beats Hub. Explore top-tier chords and premium beats, ideal for producers of all levels. With a user-friendly interface and a vibrant community, turn your creative vision into reality. Join us today and make history with every note and beat.</Text>
           </Stack>
         </Flex>
       </Container>
@@ -175,13 +143,13 @@ export default function Footer() {
             justify={{ md: 'space-between' }}
             align={{ md: 'center' }}
           >
-            <Text display={'flex'} justifyContent={'center'} marginLeft={"650px"}>© 2022 Chakra Templates. All rights reserved</Text>
+            <Text display={'flex'} justifyContent={'center'} marginLeft={"650px"}>© 2022  YourChords Templates. All rights reserved</Text>
             <Stack direction={'row'} spacing={6}>
               <SocialButton width={"30px"} height={'30px'} label={'Twitter'} href={'#'}>
                 <FaTwitter color={'white'} />
               </SocialButton>
               <SocialButton width={"30px"} height={'30px'} label={'YouTube'} href={'#'}>
-                <FaYoutube color={'white'}/>
+                <FaYoutube color={'white'} />
               </SocialButton>
               <SocialButton width={"30px"} height={'30px'} label={'Instagram'} href={'#'}>
                 <FaInstagram color={'white'} />

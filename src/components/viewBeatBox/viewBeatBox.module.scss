@@ -1,19 +1,26 @@
 .list-box {
-    width: 270px;
     color: white;
+    width: 300px;
+    filter: drop-shadow(0 0 0.8rem rgb(146, 143, 144));
+    padding-left: 22px;
+
+    &:hover {
+        transform: scale(1.05);
+        transition: all 0.7s ease;
+    }
 }
 
 
 .card-item {
     position: relative;
     width: 100%;
-    
+
     .play-btn {
         display: none;
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
         color: #0066CC;
         width: 50px;
         height: 50px;
@@ -39,6 +46,7 @@
         border-top-left-radius: 13px;
         outline: 3px solid white;
     }
+
     &:hover {
         transform: scale(1.05);
         transition: all 0.5s ease;
@@ -55,7 +63,7 @@
 .content {
     padding-top: 10px;
     background-color: #000000c9;
-    padding: 4px;
+    padding: 10px;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -79,11 +87,11 @@
         margin-left: 10px;
     }
 
-    .check{
+    .check {
         padding-left: 10px;
     }
 
-    .rating{
+    .rating {
         padding-left: 10px;
     }
 }
@@ -103,7 +111,7 @@
     .box {
         width: 10px;
         height: 10px;
-        
+
     }
 
     .number {}
@@ -125,11 +133,14 @@
 .type-beat:hover {
     color: #0066CC;
 }
-.type-beat{
+
+.type-beat {
     font-size: 2rem;
+    cursor: pointer;
 }
-.shop{
-    margin-left: 15px;
+
+.shop {
+    margin-left: 14px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -139,7 +150,7 @@
     border-radius: 100px;
 }
 
-.follow{
+.follow {
     margin-top: 20px;
     margin-left: 15px;
     display: flex;
@@ -192,7 +203,8 @@
     justify-content: center;
     background-color: var(--primary-color);
 }
-.audio{
+
+.audio {
     width: 280px;
     margin-left: 7px;
 }

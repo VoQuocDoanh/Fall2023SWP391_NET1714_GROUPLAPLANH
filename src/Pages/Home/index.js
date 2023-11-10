@@ -294,7 +294,7 @@ function Home() {
                 <img className={cx("trending-ellipse-songs")} src={require("../../assets/images/ChordsOfSongs/nganh-piano.webp")}>
                 </img>
                 <div className={cx("text-role-2")}>
-                  <div className={cx("text-ellipse1")}>
+                  <div style={{fontSize: '2.5rem'}} className={cx("text-ellipse1")}>
                     ABC
                   </div>
                   <div className={cx("text-ellipse2")}>
@@ -350,7 +350,7 @@ function Home() {
                 <img className={cx("trending-ellipse-songs")} src={require("../../assets/images//ChordsOfSongs/top-8-thuong-hieu-ukulele-tot-nhat-nam-2019-cho-nguoi-moi-bat-dau.jpg")}>
                 </img>
                 <div className={cx("text-role-2")}>
-                  <div className={cx("text-ellipse1")}>
+                  <div style={{fontSize: '2.5rem'}} className={cx("text-ellipse1")}>
                     ABC
                   </div>
                   <div className={cx("text-ellipse2")}>
@@ -406,7 +406,7 @@ function Home() {
                 <img className={cx("trending-ellipse-songs")} src={require("../../assets/images/ChordsOfSongs/hq720.jpg")}>
                 </img>
                 <div className={cx("text-role-2")}>
-                  <div className={cx("text-ellipse1")}>
+                  <div style={{fontSize: '2.5rem'}} className={cx("text-ellipse1")}>
                     ABC
                   </div>
                   <div className={cx("text-ellipse2")}>
