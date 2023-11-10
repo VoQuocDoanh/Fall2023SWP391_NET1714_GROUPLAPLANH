@@ -37,7 +37,7 @@ function ViewBeatBox({ id, name, genre, price, view, like, onClick, handleLike, 
                         <span className={cx("number")}>{rating}</span>
                     </span>
                 </div>
-                <div style={{marginTop: -20}} className={cx("footer")}>
+                <div style={{marginTop: -20, display: 'flex'}} className={cx("footer")}>
                     <span className={cx("price")}>${price}</span>
                     <div className={cx("number-sell")}>
                         <span className={cx("box")}></span>
@@ -46,9 +46,9 @@ function ViewBeatBox({ id, name, genre, price, view, like, onClick, handleLike, 
                     </div>
                 </div>
                 {status === 1 ?
-                    <div style={{ background: "green", padding: 12, height: 45, color: 'white', fontSize: '1.8rem', borderRadius: 18, marginBottom: 10, marginRight: 110 }}>Active</div>
+                    <div style={{ background: "green", padding: 12, height: 45, color: 'white', fontSize: '1.8rem', borderRadius: 18, marginBottom: 10, marginRight: 110, marginTop: 10, display: 'flex', justifyContent: 'center' }}>Active</div>
                     :
-                    <div style={{ background: "red", padding: 12, height: 45, color: 'white', fontSize: '1.8rem', borderRadius: 18, marginBottom: 20, marginRight: 110 }}>UnSell</div>
+                    <div style={{ background: "red", padding: 12, height: 45, color: 'white', fontSize: '1.8rem', borderRadius: 18, marginBottom: 20, marginRight: 110, marginTop: 10, display : 'flex', justifyContent: 'center' }}>UnSell</div>
                 }
 
             </div>

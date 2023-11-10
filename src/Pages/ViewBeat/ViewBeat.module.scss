@@ -14,7 +14,7 @@
 }
 
 .listbeat {
-    margin-top: 12px;   
+    margin-top: -110px;   
     display: grid;
     grid-gap: 36px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -22,6 +22,10 @@
     margin-right: 50px;
     padding-bottom: 100px;
     height: 865px;
+    padding: 15px;
+    background: white;
+    filter: drop-shadow(0 0 0.8rem rgb(146, 143, 144));
+    border-radius: 12px;
     
     .sold-out{
         text-align: center;
