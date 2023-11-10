@@ -48,7 +48,7 @@ public class UserController {
 
     // Update Musician Info
     @PatchMapping("/musician")
-    public ResponseEntity<String> updateMusicianInfo(@RequestPart("file")MultipartFile image, @Validated(UpdateValidation.Musician.class) @RequestPart("json") UserDTO userDTO){
+    public ResponseEntity<String> updateMusicianInfo(@RequestPart(value = "file", required = false)MultipartFile image, @Validated(UpdateValidation.Musician.class) @RequestPart("json") UserDTO userDTO){
         return this.userService.updateMusicianInfo(userDTO, image);
     }
 
