@@ -69,7 +69,6 @@ function ChordsDetails() {
     const [openModal, setOpenModal] = useState(false);
     const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
     const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
-    const [openModalAuthen, setOpenModalAuthen] = useState(false)
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
     const handleOpenSuccessSnackBar = () => setOpenSuccessSnackBar(true);
@@ -82,7 +81,7 @@ function ChordsDetails() {
     const [pages, setPages] = useState(1)
     const [checkKey, setCheckKey] = useState(false)
     const [checkSuffix, setCheckSuffix] = useState(false)
-    const [checkInstrument, setCheckInstrument] = useState(false)
+    const [checkInstrument, setCheckInstrument] = useState(true)
     const style = {
         position: 'absolute',
         top: '50%',
@@ -181,6 +180,7 @@ function ChordsDetails() {
         async function fetchData() {
             let data = await axiosInstance.get(`http://localhost:8080/chord/searchChord/${instrument}`);
             setDATA(data.data);
+            console.log("Test: " + data.data)
             // let list = data.data.filter((item) => item.key === key && item.suffix === suffix);
             // setListChord(list);
             const newGroup = ListSplitter({ data: data.data, groupSize: 8 })
@@ -334,7 +334,7 @@ function ChordsDetails() {
                                 <div style={{ marginTop: 50, marginBottom: 40 }}>
                                     {token ?
                                         <a style={{ background: 'none', marginLeft: 58, fontSize: 18, cursor: "pointer" }} className={cx("button-popup-add")} onClick={() => [setOpenModal(true), setId(item.id)]}> Add to Collection</a>
-                                        : <a style={{ background: 'none', marginLeft: 58, fontSize: 18, cursor: "pointer" }} className={cx("button-popup-add")} onClick={() => [setOpenModalAuthen(true)]}> Add to Collection</a>}
+                                        : <a style={{ background: 'none', marginLeft: 58, fontSize: 18, cursor: "pointer" }} className={cx("button-popup-add")} onClick={() => [setOpenFailedSnackBar(true), setMessageFailed("You need to login before using this function!")]}> Add to Collection</a>}
                                     {listCollectionChord.length !== 0 && listCollectionChord.map((collectionChord) => {
                                         return (
                                             <div className={cx("link-text")} style={{ display: 'flex', fontSize: 18, fontWeight: 400, gap: 20, justifyContent: 'center', marginRight: 38, marginTop: 30 }} onClick={() => addChordToCollection(collectionChord.name, item.id)}>
@@ -369,6 +369,7 @@ function ChordsDetails() {
                     </div> : <div></div>}
                 {checkInstrument === true ?
                     <div>
+                        {console.log(pages)}
                         {pages !== 1 ?
                             <div className={cx("pagination")}>
                                 <Pagination pages={pages} page={pageInstrument} setPage={setPageInstrument} />
@@ -376,21 +377,6 @@ function ChordsDetails() {
                             : <div></div>}
                     </div> : <div></div>}
             </div>
-            <Modal
-                open={openModalAuthen}
-                onClose={() => setOpenModalAuthen(false)}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <Typography style={{ fontSize: 25 }} id="modal-modal-title" variant="h6" component="h2">
-                        Add to collection failed
-                    </Typography>
-                    <Typography style={{ fontSize: 20 }} id="modal-modal-description" sx={{ mt: 2 }}>
-                        You need to login before using this function
-                    </Typography>
-                </Box>
-            </Modal>
             <Modal
                 open={openModal}
                 onClose={handleCloseModal}
@@ -410,12 +396,12 @@ function ChordsDetails() {
                     </Typography>
                 </Box>
             </Modal>
-            <Snackbar open={openSuccessSnackBar} autoHideDuration={6000} onClose={handleCloseSuccessSnackBar} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+            <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={handleCloseSuccessSnackBar} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
                 <Alert onClose={handleCloseSuccessSnackBar} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                     {messageSuccess}
                 </Alert>
             </Snackbar>
-            <Snackbar open={openFailedSnackBar} autoHideDuration={6000} onClose={handleCloseFailedSnackBar} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={handleCloseFailedSnackBar} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
                 <Alert onClose={handleCloseFailedSnackBar} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                     {messageFailed}
                 </Alert>
