@@ -75,7 +75,7 @@ const SongItem = ({
             <Image src='https://photo-resize-zmp3.zmdcdn.me/w320_r1x1_jpeg/cover/8/3/e/8/83e83c4a068f0b994a99735e440b76df.jpg' />
           </Box>
           <Box w={'1%'}></Box>
-          <Box w={'19%'}>
+          <Box w={'30%'}>
             <Stack>
               <Text
                 overflow={'hidden'}
@@ -86,6 +86,7 @@ const SongItem = ({
                 style={{
                   WebkitLineClamp: 2,
                   WebkitBoxOrient: 'vertical',
+                  fontSize: "30px"
                 }}
               >
                 {data?.songName}
@@ -95,7 +96,7 @@ const SongItem = ({
                 whiteSpace={'nowrap'}
                 display={'-webkit-box'}
                 textOverflow={'ellipsis'}
-                fontSize={'12px'}
+                fontSize={'20px'}
                 style={{
                   WebkitLineClamp: 2,
                   WebkitBoxOrient: 'vertical',
@@ -112,16 +113,16 @@ const SongItem = ({
             justifyContent={'space-around'}
           >
             <Flex alignItems={'center'}>
-              <FcLike style={{ marginRight: '5px' }} />
-              <Text>{data?.totalLike}</Text>
+              <FcLike style={{ marginRight: '5px', fontSize: "30px" }} />
+              <Text style={{ fontSize: "35px", marginTop: "10px"}}>{data?.totalLike}</Text>
             </Flex>
             {/* <Flex alignItems={'center'}>
               <FcHeadset style={{ marginRight: '5px' }} />
               <Text>{data?.view}</Text>
             </Flex> */}
             <Flex alignItems={'center'}>
-              <FcRating style={{ marginRight: '5px' }} />
-              <Text>{data?.rating}</Text>
+              <FcRating style={{ marginRight: '5px', fontSize: "30px"}} />
+              <Text style={{ fontSize: "35px", marginTop: "10px"}}>{data?.rating}</Text>
             </Flex>
           </Box>
           <Box

@@ -76,7 +76,7 @@ function MyPLayListDetail() {
 
   const PaginationHTML = (
     <Flex justifyContent={"space-between"} alignItems={"center"}>
-      <Text>
+      <Text style={{fontSize: "2.5rem"}}>
         Showing {dynamicPlaylist?.length} out of {playListDetail?.songs?.length}{" "}
         entires
       </Text>
@@ -111,10 +111,10 @@ function MyPLayListDetail() {
         />
         <Flex alignItems={"flex-end"}>
           <Box style={{marginTop:250}}>
-            <Text style={{fontSize:'1.8rem'}}>Collection</Text>
-            <Heading>{playListName}</Heading>
+            <Text style={{fontSize: "5rem", display: "flex", justifyContent: "center", alignItems: "center", marginRight: "-750px"}}>Collection</Text>
+            <Heading style={{fontSize: "4rem"}}>{playListName}</Heading>
           </Box>
-          <IconButton icon={<EditIcon />} ml={2} onClick={onOpen} />
+          <IconButton icon={<EditIcon />} ml={5} fontSize={25} marginBottom={3} onClick={onOpen} />
         </Flex>
         {playListDetail?.songs?.length ? (
           <>

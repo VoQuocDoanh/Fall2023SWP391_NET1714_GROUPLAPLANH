@@ -216,12 +216,14 @@ function UploadBeat() {
                 className={cx("input-text")}
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
+
               />
             </div>
           </div>
           {/* {Genre} */}
           <div>
             <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Genres*</td>
+
             <div className={cx("input")}>
 
               <svg
@@ -233,19 +235,53 @@ function UploadBeat() {
               >
                 <path d="M14.5834 26.25C15.7986 26.25 16.8316 25.8246 17.6823 24.9739C18.533 24.1232 18.9584 23.0902 18.9584 21.875V11.6666H23.3334V8.74996H16.7709V18.0833C16.4306 17.8888 16.0781 17.743 15.7136 17.6458C15.349 17.5486 14.9722 17.5 14.5834 17.5C13.3681 17.5 12.3351 17.9253 11.4844 18.776C10.6337 19.6267 10.2084 20.6597 10.2084 21.875C10.2084 23.0902 10.6337 24.1232 11.4844 24.9739C12.3351 25.8246 13.3681 26.25 14.5834 26.25ZM17.5 32.0833C15.4827 32.0833 13.5868 31.7002 11.8125 30.9341C10.0382 30.168 8.49481 29.1292 7.18231 27.8177C5.86981 26.5052 4.83099 24.9618 4.06585 23.1875C3.30071 21.4132 2.91766 19.5173 2.91669 17.5C2.91669 15.4826 3.29974 13.5868 4.06585 11.8125C4.83197 10.0382 5.87078 8.49475 7.18231 7.18225C8.49481 5.86975 10.0382 4.83093 11.8125 4.06579C13.5868 3.30065 15.4827 2.9176 17.5 2.91663C19.5174 2.91663 21.4132 3.29968 23.1875 4.06579C24.9618 4.8319 26.5052 5.87072 27.8177 7.18225C29.1302 8.49475 30.1695 10.0382 30.9356 11.8125C31.7018 13.5868 32.0843 15.4826 32.0834 17.5C32.0834 19.5173 31.7003 21.4132 30.9342 23.1875C30.1681 24.9618 29.1293 26.5052 27.8177 27.8177C26.5052 29.1302 24.9618 30.1695 23.1875 30.9356C21.4132 31.7017 19.5174 32.0843 17.5 32.0833ZM17.5 29.1666C20.757 29.1666 23.5156 28.0364 25.7761 25.776C28.0365 23.5156 29.1667 20.7569 29.1667 17.5C29.1667 14.243 28.0365 11.4843 25.7761 9.22392C23.5156 6.9635 20.757 5.83329 17.5 5.83329C14.2431 5.83329 11.4844 6.9635 9.22398 9.22392C6.96356 11.4843 5.83335 14.243 5.83335 17.5C5.83335 20.7569 6.96356 23.5156 9.22398 25.776C11.4844 28.0364 14.2431 29.1666 17.5 29.1666Z" fill="black" />
               </svg>
+              
+              <div>
+                
+                <Popup trigger={<input
+                  type="Text"
+                  placeholder="Select beat genre"
+                  className={cx("input-text")}
+                  value={inputGenres}
+                  onChange={(e) => setInputGenres(e.target.value)}
+                  onClick={(e) => e.stopPropagation()}
+                />}
 
-              <Popup trigger={<input
-                type="Text"
-                placeholder="Genres"
-                className={cx("input-text")}
-                value={inputGenres}
-                onChange={(e) => setInputGenres(e.target.value)}
-              />} position="right center">
-                {listGenres.map((item) => {
-                  return <div style={{ background: 'black', padding: 10 }} >{item.name}</div>
-                })}
-              </Popup>
+                  position="right center"
+                
+                >
+                  {(close) => (
 
+                    <>
+                      {listGenres.map((item) => {
+                        return <div
+                          key={item.id}
+                          style={{
+                            padding: '8px',
+                            cursor: 'pointer',
+                            transition: 'background-color 0.3s ease',
+                            backgroundColor: '#3498db',
+                            border: '1px solid #fff',
+                            borderRadius: '5px',
+                          }}
+                          onClick={() => {
+                            setInputGenres((prevGenres) => {
+                              if (prevGenres.includes(item.name)) {
+                                return prevGenres.filter((genre) => genre !== item.name);
+                              } else {
+                                return [...prevGenres, item.name];
+                              }
+                            });
+                            close();
+                          }}
+                        >
+                          {item.name}
+                        </div>
+                      })}
+                    </>
+                  )}
+                </Popup>
+              </div>
             </div>
           </div>
 
@@ -293,44 +329,46 @@ function UploadBeat() {
           </div>
 
           {/* BeatSoundDemo*/}
-          <div>
-            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>ChooseFileDemo*</td>
+          <div className={cx('choosefile')}>
+            <td style={{ fontSize: '1.5rem', fontWeight: 'bold', marginLeft: '30px', fontFamily: 'fredoka one' }}>ChooseFileDemo*</td>
             <div className={cx("input")}>
               <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                 <path d="M1.25 17.6999H6.725C6.95553 17.6972 7.18121 17.6333 7.3789 17.5147C7.57659 17.3961 7.73918 17.227 7.85 17.0249L12.35 8.02488C12.4609 7.8008 12.6377 7.61602 12.8567 7.49536C13.0757 7.3747 13.3263 7.32393 13.575 7.34988C13.8227 7.36662 14.0591 7.45976 14.2516 7.61647C14.4441 7.77318 14.5833 7.98575 14.65 8.22488L20.225 26.7749C20.2982 27.0265 20.4485 27.2488 20.6549 27.4103C20.8613 27.5718 21.1132 27.6643 21.375 27.6749C21.6204 27.6667 21.8579 27.5865 22.0579 27.4443C22.258 27.302 22.4118 27.104 22.5 26.8749L25.925 18.4999C26.0193 18.2649 26.1814 18.0634 26.3907 17.9209C26.5999 17.7785 26.8469 17.7015 27.1 17.6999H33.75" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
               <div>DemoBeat: </div>
-
-              <label style={{ marginLeft: 120 }} className={cx("file")}>
-                <input
-                  type="file"
-                  placeholder="BeatSound"
-                  className={cx("input-text", "img-click")}
-                  onChange={(e) => handleBeatSoundDemoChange(e)}
-                />
-                <span className={cx("file-custom")}>{beatSoundDemoUrl}</span>
-              </label>
+              <div className={cx("file")}>
+                <label>
+                  <input
+                    type="file"
+                    placeholder="BeatSound"
+                    className={cx("input-text", "img-click")}
+                    onChange={(e) => handleBeatSoundDemoChange(e)}
+                  />
+                  <span className={cx("file-custom")}>{beatSoundDemoUrl}</span>
+                </label>
+              </div>
             </div>
           </div>
 
           {/* BeatSoundFull*/}
-          <div>
-            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>ChooseFileFullBeat*</td>
+          <div className={cx('choosefile')}>
+            <td style={{ fontSize: '1.5rem', fontWeight: 'bold', marginLeft: '30px', fontFamily: 'fredoka one' }}>ChooseFileFullBeat*</td>
             <div className={cx("input")}>
               <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                 <path d="M1.25 17.6999H6.725C6.95553 17.6972 7.18121 17.6333 7.3789 17.5147C7.57659 17.3961 7.73918 17.227 7.85 17.0249L12.35 8.02488C12.4609 7.8008 12.6377 7.61602 12.8567 7.49536C13.0757 7.3747 13.3263 7.32393 13.575 7.34988C13.8227 7.36662 14.0591 7.45976 14.2516 7.61647C14.4441 7.77318 14.5833 7.98575 14.65 8.22488L20.225 26.7749C20.2982 27.0265 20.4485 27.2488 20.6549 27.4103C20.8613 27.5718 21.1132 27.6643 21.375 27.6749C21.6204 27.6667 21.8579 27.5865 22.0579 27.4443C22.258 27.302 22.4118 27.104 22.5 26.8749L25.925 18.4999C26.0193 18.2649 26.1814 18.0634 26.3907 17.9209C26.5999 17.7785 26.8469 17.7015 27.1 17.6999H33.75" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
               <div>FullBeat: </div>
-
-              <label style={{ marginLeft: 120 }} className={cx("file")}>
-                <input
-                  type="file"
-                  placeholder="BeatSound"
-                  className={cx("input-text", "img-click")}
-                  onChange={(e) => handleBeatSoundFullChange(e)}
-                />
-                <span className={cx("file-custom")}>{beatSoundFullUrl}</span>
-              </label>
+              <div className={cx("file")}>
+                <label>
+                  <input
+                    type="file"
+                    placeholder="BeatSound"
+                    className={cx("input-text", "img-click")}
+                    onChange={(e) => handleBeatSoundFullChange(e)}
+                  />
+                  <span className={cx("file-custom")}>{beatSoundFullUrl}</span>
+                </label>
+              </div>
             </div>
           </div>
 

@@ -3,7 +3,7 @@
 @import "@fontsource/newsreader"; // Defaults to weight 400
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800&display=swap');
 @import url('https://fonts.cdnfonts.com/css/sono');
-
+@import url('https://fonts.cdnfonts.com/css/fredoka-one');
 
 .main {
     top: 0;
@@ -175,7 +175,8 @@ video {
         font-weight: 400;
         word-wrap: break-word;
         cursor: pointer;
-        padding-left: 110px;
+        display: flex;
+        justify-content: center;
         font-weight: 600;
 
     }
@@ -183,16 +184,16 @@ video {
     .content-2 {
         color: white;
         font-size: 12px;
-        font-family: Inter;
+        font-family: fredoka one;
         font-weight: 400;
         word-wrap: break-word;
-        padding-left: 10px;
+        padding: 6px;
         background: #0066CC;
         border-radius: 30px;
         display: flex;
         justify-content: center;
-        margin-left: 110px;
-        margin-right: 125px;
+        width: 180px;
+        margin-left: 90px;
     }
 }
 
@@ -210,7 +211,7 @@ video {
     padding-right: 189px;
     gap: 42px;
     padding-bottom: 53px;
-    margin-top: 60px;
+    margin-top: 40px;
 
     .chords-details {
         background-color: white;
@@ -219,14 +220,8 @@ video {
         border: 2px solid #00CC99;
         width: 100%;
         overflow: hidden;
-        transition: all 0.3s ease;
-        box-shadow:
-            0 0 0 2px white,
-            0.3em 0.3em 1em rgba(134, 134, 134, 0.6);
+        padding: 10px;
 
-        &:hover {
-            transform: scale(1.05);
-        }
 
 
     }
@@ -236,13 +231,21 @@ video {
         height: 200px;
         background: linear-gradient(0deg, #D9D9D9 0%, #D9D9D9 100%);
         border-radius: 50px;
-        margin-top: 33px;
+        margin-top: 23px;
         background-repeat: no-repeat;
-        margin-left: 10px;
         margin-right: 10px;
         flex-shrink: 0;
         margin-left: 80px;
         object-fit: cover;
+        transition: all 0.3s ease;
+        box-shadow:
+            0 0 0 2px white,
+            0.3em 0.3em 1em rgba(134, 134, 134, 0.6);
+
+        &:hover {
+            transform: scale(1.05);
+        }
+        
     }
 
     .content-3 {
@@ -332,13 +335,7 @@ video {
         border-radius: 30px;
         padding-left: 20px;
         outline: 2px solid #00C896;
-        transition: all 0.3s ease;
-
-        &:hover {
-            transform: scale(1.05);
-        }
-
-
+        
     }
 
     .trending-details-img {
@@ -349,6 +346,10 @@ video {
         padding-bottom: 10px;
         border-radius: 30px;
         object-fit: cover;
+        transition: all 0.3s ease;
+        &:hover {
+            transform: scale(1.05);
+        }
     }
 
     .trending-subcribe {
@@ -359,10 +360,14 @@ video {
         width: 142px;
         height: 36px;
         border-radius: 30px;
-        padding-top: 5px;
+        padding-top: 10px;
         color: white;
         cursor: pointer;
         text-wrap: nowrap;
+        transition: all 0.3s ease;
+        &:hover {
+            transform: scale(1.05);
+        }
     }
 
     .icon-trending {
@@ -414,15 +419,15 @@ video {
     margin-right: 40px;
 
     .text-ellipse1 {
-        font-size: 20px;
-        font-family: Sono;
+        font-size: 22px;
+        font-family: fredoka one;
         font-weight: 300;
     }
 
     .text-ellipse2 {
         font-size: 15px;
-        font-family: Sono;
-        font-weight: bold;
+        font-family: sono;
+        font-weight: 500;
     }
 }
 
