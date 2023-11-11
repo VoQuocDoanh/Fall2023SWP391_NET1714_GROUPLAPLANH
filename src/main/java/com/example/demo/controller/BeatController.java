@@ -27,7 +27,7 @@ public class BeatController {
 
     // List own Beats in MS
     @GetMapping("/user/{id}/all/{page}")
-    public ResponseEntity<PaginationResponseDTO> findAllOwnBeat(@PathVariable Long id, @PathVariable int page) {
+    public ResponseEntity<List<BeatResponseDTO>> findAllOwnBeat(@PathVariable Long id, @PathVariable int page) {
         return ResponseEntity.ok(this.beatService.findAllOwnBeat(id,page));
     }
 
