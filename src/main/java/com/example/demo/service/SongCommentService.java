@@ -119,7 +119,8 @@ public class SongCommentService {
                             value.getCommentByUsers().getUsername(),
                             value.getSongOfComment().getId(),
                             value.getCreatedAt(),
-                            getSubComment(value)
+                            getSubComment(value),
+                            value.getCommentByUsers().getAvatar()
                     );
                     dtoList.add(parentComment);
                 }
@@ -143,7 +144,8 @@ public class SongCommentService {
                         value.getCommentByUsers().getUsername(),
                         value.getSongOfComment().getId(),
                         value.getCreatedAt(),
-                        getSubComment(value));
+                        getSubComment(value),
+                        value.getCommentByUsers().getAvatar());
                 subCommentDtos.add(dto);
             }
             return subCommentDtos;

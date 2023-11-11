@@ -19,5 +19,6 @@ public class CommentSongResponseDTO {
     private Long songId;
     private LocalDateTime localDateTime;
     private List<CommentSongResponseDTO> subComment;
+    private String avatar;
 
 }

@@ -28,6 +28,7 @@ public class SongResponseDTO {
     private int view;
     private double rating;
     private int reports;
+    private int status;
 
     public SongResponseDTO(Long id, String songName, String singer, LocalDateTime createAt, Long userid, int totalLike, int view, double rating) {
         this.id = id;
@@ -40,7 +41,7 @@ public class SongResponseDTO {
         this.rating = rating;
     }
 
-    public SongResponseDTO(Long id, String songName, String singer, LocalDateTime createAt, Long userid, String userfullname, int totalLike, int view, double rating) {
+    public SongResponseDTO(Long id, String songName, String singer, LocalDateTime createAt, Long userid, String userfullname, int totalLike, int view, double rating, int statuss) {
         this.id = id;
         this.songName = songName;
         this.singer = singer;
@@ -50,5 +51,6 @@ public class SongResponseDTO {
         this.view = view;
         this.totalLike = totalLike;
         this.rating = rating;
+        this.status = status;
     }
 }

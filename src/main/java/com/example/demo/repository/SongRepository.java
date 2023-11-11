@@ -43,6 +43,9 @@ public interface SongRepository extends JpaRepository<Song, Long> {
     @Query("select s from Song s join s.likedByUsers sl where s.status = 1 and sl.Id = :iduser and s.Id = :idsong")
     Song findSongLikeByUser(Long iduser, long idsong);
 
+    @Query("select s from Song s where s.status = -1")
+    List<Song> findSongBanned();
+
     Optional<Song> findSongByIdAndStatus(Long id, int status);
 
     // Song report

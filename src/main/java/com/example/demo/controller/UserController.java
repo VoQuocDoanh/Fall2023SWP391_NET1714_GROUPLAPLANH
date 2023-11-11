@@ -7,6 +7,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserResponeDTO;
+import com.example.demo.service.EmailService;
 import com.example.demo.service.UserService;
 import com.example.demo.validationgroups.UpdateValidation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping("/active")
     public ResponseEntity<String> activeAccount(@RequestParam("activetoken") String token){
@@ -55,6 +59,11 @@ public class UserController {
     @GetMapping("/musician/name")
     public ResponseEntity<List<String>> viewAllMusicianName(){
         return ResponseEntity.ok(this.userService.viewallnamemusician());
+    }
+
+    @PostMapping("/contactus")
+    public ResponseEntity<String> contactUs(@RequestBody UserDTO userDTO){
+        return this.emailService.sendEmailContact(userDTO.getEmail(), "Contact From User", userDTO.getFullName(), userDTO.getPhone(), userDTO.getEmail(), userDTO.getContent());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

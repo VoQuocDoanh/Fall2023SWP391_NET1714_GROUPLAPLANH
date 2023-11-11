@@ -39,6 +39,8 @@ public class UserDTO {
     @NotBlank(message = "Address must be not blank", groups = {UpdateValidation.Customer.class, UpdateValidation.Musician.class})
     private String address;
 
+    private String email;
+
     private String role;
 
     // Musician
@@ -51,7 +53,7 @@ public class UserDTO {
     private String prize;
 
     @NotNull(message = "Year must be not null", groups = {UpdateValidation.Musician.class})
-    @NotBlank(message = "Year must be not blank", groups = {UpdateValidation.Musician.class})
+
     @YearMax(groups = {UpdateValidation.Musician.class})
     private int year;
 

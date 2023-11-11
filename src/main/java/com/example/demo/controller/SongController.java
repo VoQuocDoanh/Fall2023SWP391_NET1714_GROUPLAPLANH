@@ -65,6 +65,12 @@ public class SongController {
         return ResponseEntity.ok(this.songService.listAllSong());
     }
 
+    // List all song banned
+    @GetMapping("/banned")
+    public ResponseEntity<List<SongResponseDTO>> findAllSongBanned (){
+        return ResponseEntity.ok(this.songService.findSongBanned());
+    }
+
     // Get detail Song
     @GetMapping("/{songid}")
     public ResponseEntity<SongResponseDTO> getDetailsSong (@PathVariable Long songid){

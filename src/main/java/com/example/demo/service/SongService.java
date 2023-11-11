@@ -139,7 +139,8 @@ public class SongService {
                         value.getUserUploadSong().getFullName(),
                         value.getTotalLike(),
                         value.getView(),
-                        value.getRating());
+                        value.getRating(),
+                        value.getStatus());
                 songResponseDTOS.add(dto);
             }
             return songResponseDTOS;
@@ -261,6 +262,8 @@ public class SongService {
             dto.setView(s.getView());
             dto.setTotalLike(s.getTotalLike());
             dto.setRating(s.getRating());
+            dto.setStatus(s.getStatus());
+
             return dto;
         }
         return null;
@@ -287,6 +290,12 @@ public class SongService {
     // view song by username
     public List<SongResponseDTO> findSongByUserName(String name) {
         List<Song> songs = this.songRepository.findSongByUserUploadSongName(name);
+        return getSongResponseDTOS(songs);
+    }
+
+    // view all song banned
+    public List<SongResponseDTO> findSongBanned() {
+        List<Song> songs = this.songRepository.findSongBanned();
         return getSongResponseDTOS(songs);
     }
 
