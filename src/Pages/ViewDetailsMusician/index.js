@@ -138,7 +138,7 @@ function MyProfile() {
                                         : <img className={cx("box-img")} alt="" src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVhcVcxgW8LzmIu36MCeJb81AHXlI8CwikrHNh5vzY8A&s"} />}
                                 </div>
                                 <div className={cx("info-user")}>
-                                    <td style={{ fontSize: 30, display: 'flex', justifyContent: 'center',fontFamily: 'fredoka one' }}>
+                                    <td style={{ fontSize: 30, display: 'flex', justifyContent: 'center', fontFamily: 'fredoka one' }}>
                                         {username}
                                     </td>
                                     <td style={{ fontSize: 20, display: 'flex', justifyContent: 'center' }}>
@@ -147,7 +147,7 @@ function MyProfile() {
                                 </div>
                             </div>
                         </div>
-                    </div>  
+                    </div>
                 </div>
                 <Tabs style={{ marginTop: -120, marginBottom: 250 }}>
                     <TabList>
@@ -262,7 +262,7 @@ function MyProfile() {
                         </div>
                     </TabPanel>
                     {/* Feedback */}
-                    <TabPanel>
+                    <TabPanel style={{ marginBottom: "200px"}}>
                         <div className={cx("volt8A")}>
                             <div style={{ color: '#06c', fontWeight: 'bold' }} className={cx("title-feedback")}> Beat Review</div>
                             {console.log(feedBacks)}
@@ -275,12 +275,12 @@ function MyProfile() {
                                                 <div className={cx("part0")}>
                                                     <td>
                                                         <div className={cx("text-username0")}>
-                                                            <td>                                                          
+                                                            <td>
                                                                 <label style={{ fontFamily: 'sono', fontWeight: 400, marginLeft: -2 }} className={cx("login-text")}>{feedback.user.fullName}</label>
                                                                 <label style={{ marginLeft: 20, fontFamily: 'Sono', fontWeight: 400 }} className={cx("login-text")}>{feedback.beat.beatName}</label>
                                                             </td>
                                                             <div>
-                                                                <input className={cx("input-username0")} type="text" placeholder value={feedback.content} readOnly />
+                                                                <input className={cx("input-username1")} type="text" placeholder value={feedback.content} readOnly />
                                                             </div>
                                                         </div>
                                                     </td>
@@ -297,25 +297,36 @@ function MyProfile() {
                         </div>
 
                     </TabPanel>
-                    <TabPanel>
+                    <TabPanel style={{ marginBottom: "200px"}}>
                         <div className={cx("volt8A")}>
                             <div style={{ color: '#06c', fontWeight: 'bold' }} className={cx("title-feedback")}> All Beats</div>
                             {console.log(feedBacks)}
                             {listMusicianBeat.length !== 0 ?
 
-                                <form style={{ marginTop: 20 }}>
+                                <form style={{ marginTop: 20}}>
                                     {listMusicianBeat.map((beat) => {
                                         return (
                                             <table className={classNames("profile-2")}>
                                                 <div className={cx("part0")}>
                                                     <td>
-                                                        <div className={cx("text-username0")}>
-                                                            <td>
+                                                        <div className={cx("text-allbeat")}>
+                                                            {/* <td>
                                                                 <Link style={{color:"black"}} to={`/viewdetailbeat/${beat.id}`}><label style={{ fontFamily: 'sono', fontWeight: 400, marginLeft: -2 }} className={cx("login-text")}>{beat.beatName}</label></Link>
-                                                            </td>
+                                                            </td> */}
                                                             {beat.status === 1 ?
-                                                            <div>Active</div>
-                                                            : <div>Sold out</div>
+                                                                <div className={cx("text-allbeat")}>
+                                                                    <Link style={{ color: "black" }} to={`/viewdetailbeat/${beat.id}`}>
+                                                                        <label style={{ fontFamily: 'sono', fontWeight: 600, marginLeft: -2 }} className={cx("login-text")}>{beat.beatName}</label>
+                                                                    </Link>
+                                                                    <div className={cx("active")}>Active</div>
+                                                                </div>
+                                                                :
+                                                                <div className={cx("text-allbeat")}>
+                                                                    <Link style={{ color: "black" }} to={`/viewdetailbeat/${beat.id}`}>
+                                                                        <label style={{ fontFamily: 'sono', fontWeight: 600, marginLeft: -2 }} className={cx("login-text")}>{beat.beatName}</label>
+                                                                    </Link>
+                                                                    <div className={cx("sold-out")}>Sold out</div>
+                                                                </div>
                                                             }
                                                         </div>
                                                     </td>
