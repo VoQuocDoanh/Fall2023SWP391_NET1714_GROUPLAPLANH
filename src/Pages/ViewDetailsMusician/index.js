@@ -262,7 +262,7 @@ function MyProfile() {
                         </div>
                     </TabPanel>
                     {/* Feedback */}
-                    <TabPanel>
+                    <TabPanel style={{ marginBottom: "200px"}}>
                         <div className={cx("volt8A")}>
                             <div style={{ color: '#06c', fontWeight: 'bold' }} className={cx("title-feedback")}> Beat Review</div>
                             {console.log(feedBacks)}
@@ -297,13 +297,13 @@ function MyProfile() {
                         </div>
 
                     </TabPanel>
-                    <TabPanel>
+                    <TabPanel style={{ marginBottom: "200px"}}>
                         <div className={cx("volt8A")}>
                             <div style={{ color: '#06c', fontWeight: 'bold' }} className={cx("title-feedback")}> All Beats</div>
                             {console.log(feedBacks)}
                             {listMusicianBeat.length !== 0 ?
 
-                                <form style={{ marginTop: 20 }}>
+                                <form style={{ marginTop: 20}}>
                                     {listMusicianBeat.map((beat) => {
                                         return (
                                             <table className={classNames("profile-2")}>
