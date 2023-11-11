@@ -148,6 +148,27 @@ public class BeatService {
         return dtos;
     }
 
+    private List<BeatResponseDTO> getBeatResponse(Optional<User> foundUser, List<Beat> beats) {
+        List<BeatResponseDTO> dtos = new ArrayList<>();
+        for(Beat value: beats){
+            List<GenreResponseDTO> genres = getGenres(value.getId());
+            BeatResponseDTO dto = new BeatResponseDTO(value.getId(),
+                    value.getBeatName(),
+                    new UserResponeDTO(foundUser.get().getFullName()),
+                    value.getPrice(),
+                    value.getCreatedAt(),
+                    genres,
+                    value.getView(),
+                    value.getTotalLike(),
+                    value.getVocalRange(),
+                    value.getTotalRating(),
+                    value.getRating(),
+                    value.getStatus());
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
     public List<BeatResponseDTO> findAllBeat(){
         List<Beat> b = beatRepository.findAllListBeat();
         List<BeatResponseDTO> responseDTOS = new ArrayList<>();
@@ -161,22 +182,16 @@ public class BeatService {
         }
     }
 
-    public PaginationResponseDTO findAllOwnBeat(Long id,int page) {
+    public List<BeatResponseDTO> findAllOwnBeat(Long id) {
         Optional<User> foundUser = this.userRepository.findById(id);
-        Pageable pageable = PageRequest.of(page-1,8);
+
         List<BeatResponseDTO> responseDTOS = new ArrayList<>();
         if(foundUser.isPresent()){
-            Page<Beat> beats = this.beatRepository.findUserBeatByUsername(foundUser.get().getId(), pageable);
+         //   Page<Beat> beats = this.beatRepository.findUserBeatByUsername(foundUser.get().getId(), pageable);
             List<Beat> b = beatRepository.listUserBeatByUsername(foundUser.get().getId());
-            int pagecount = pageable.getPageNumber();
-            responseDTOS = getBeatResponseDTOS(foundUser,beats);
-            int max = 0;
-            if (responseDTOS.size() % 8 != 0) {
-                max = b.size() / 8 + 1;
-            } else {
-                max = b.size() / 8;
-            }
-            return new PaginationResponseDTO(responseDTOS,pagecount,max);
+          //  int pagecount = pageable.getPageNumber();
+            responseDTOS = getBeatResponse(foundUser,b);
+            return responseDTOS;
         } else {
             return null;
         }
@@ -410,22 +425,19 @@ public class BeatService {
         return new ResponseEntity<>(totalPrice,HttpStatus.OK);
     }
 
-    public PaginationResponseDTO listBeatPurchased(Long id, int page) {
+    public List<BeatResponseDTO> listBeatPurchased(Long id) {
        List<Order> order = orderService.findOrder(id);
-        Pageable pageable = PageRequest.of(page-1,8);
+
         List<BeatResponseDTO> beat = new ArrayList<>();
         if (order.isEmpty()){
             return null;
         } else{
-            int tmp=0;
             for (Order o:order){
-                Page<Beat> beatEntity = (beatRepository.findBeatByOrderBeat(o,pageable));
                 List<Beat> be =beatRepository.findBeatByOrderBeat(o);
-                tmp += be.size();
-                if (beatEntity.isEmpty()){
+                if (be.isEmpty()){
                     return null;
                 }
-                for (Beat i : beatEntity){
+                for (Beat i : be){
                     BeatResponseDTO b = new BeatResponseDTO();
                     b.setId(i.getId());
                     b.setBeatName(i.getBeatName());
@@ -435,14 +447,7 @@ public class BeatService {
                     beat.add(b);
                 }
             }
-            int pagecount = pageable.getPageNumber();
-            int max = 0;
-            if (tmp % 8 != 0) {
-                max = tmp / 8 + 1;
-            } else {
-                max = tmp / 8;
-            }
-            return new PaginationResponseDTO(beat,pagecount,max);
+            return  beat;
         }
 
     }

@@ -26,9 +26,9 @@ public class BeatController {
     private BeatService beatService;
 
     // List own Beats in MS
-    @GetMapping("/user/{id}/all/{page}")
-    public ResponseEntity<PaginationResponseDTO> findAllOwnBeat(@PathVariable Long id, @PathVariable int page) {
-        return ResponseEntity.ok(this.beatService.findAllOwnBeat(id,page));
+    @GetMapping("/user/{id}/all")
+    public ResponseEntity<List<BeatResponseDTO>> findAllOwnBeat(@PathVariable Long id) {
+        return ResponseEntity.ok(this.beatService.findAllOwnBeat(id));
     }
 
     // List ms Beats in US
@@ -116,9 +116,9 @@ public class BeatController {
     }
 
     //list beat that user bought
-    @GetMapping ("user/{id}/{page}")
-    public ResponseEntity<PaginationResponseDTO> beatPurchased (@PathVariable Long id,@PathVariable int page){
-        return ResponseEntity.ok( this.beatService.listBeatPurchased(id,page));
+    @GetMapping ("user/{id}")
+    public ResponseEntity<List<BeatResponseDTO>> beatPurchased (@PathVariable Long id){
+        return ResponseEntity.ok( this.beatService.listBeatPurchased(id));
     }
 
     @GetMapping("user/beat/{id}")
