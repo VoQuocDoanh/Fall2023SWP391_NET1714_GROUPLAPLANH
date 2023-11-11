@@ -6,5 +6,5 @@ public class UpdateValidation {
 
     public interface Customer {}
 
-    public interface Musician{}
+    public interface Musician {}
 }

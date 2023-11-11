@@ -182,7 +182,7 @@ public class BeatService {
         }
     }
 
-    public List<BeatResponseDTO> findAllOwnBeat(Long id,int page) {
+    public List<BeatResponseDTO> findAllOwnBeat(Long id) {
         Optional<User> foundUser = this.userRepository.findById(id);
 
         List<BeatResponseDTO> responseDTOS = new ArrayList<>();
