@@ -19,6 +19,7 @@ import {
   Input,
   FormControl,
   FormLabel,
+  useToast,
 } from "@chakra-ui/react";
 import { useContext, useEffect, useState, createContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -63,6 +64,27 @@ function SongDetail() {
   const [singer, setSinger] = useState("")
   const [tone, setTone] = useState("")
   const [vocalRange, setVocalRange] = useState("")
+  const toast = useToast();
+  const showSuccessToast = (e) => {
+    toast({
+      title: "Message",
+      description: e,
+      status: "success",
+      duration: 3000,
+      position: "bottom-right", // Set the position here
+      isClosable: true,
+    });
+  };
+  const showFailedToast = (e) => {
+    toast({
+      title: "Message",
+      description: e,
+      status: "warning",
+      duration: 3000,
+      position: "bottom-right", // Set the position here
+      isClosable: true,
+    });
+  };
   const navigate = useNavigate()
   const admin = JSON.parse(sessionStorage.getItem("Admin"))
   const token = useToken()
@@ -84,13 +106,16 @@ function SongDetail() {
   }
 
   const handleRating = async (score) => {
+    if (!token) {
+      return
+    }
     axios
       .get(
         `${BACK_END_PORT}/api/v1/song/rate?userid=${userId}&songid=${id}&rating=${score}`
       )
       .then((response) => {
         if (response.data === "Rating Successfully") {
-          alert(response.data);
+          showSuccessToast("Rating Successfully")
           setReload(true)
           setTimeout(() => {
             setReload(false)
@@ -98,7 +123,7 @@ function SongDetail() {
         }
       })
       .catch((error) => {
-        alert("Can not rate", error);
+        showFailedToast("Rating Failed!")
       });
   };
 
@@ -129,31 +154,53 @@ function SongDetail() {
   };
 
   const handleDeleteSong = async () => {
+    if(!token){
+      showFailedToast("You need to login before using this function!")
+      return
+    }
     await axiosInstance.delete(`http://localhost:8080/api/v1/song/user/${userId}`, {
       params: { songid: songData.id }
     })
       .then((res) => {
-        alert("Delete successfully")
-        navigate("/songs")
+        showSuccessToast("Delete Successfully")
+        setTimeout(() => {
+          navigate("/songs")
+        },1000)     
       })
       .catch((error) => {
-        console.log(error)
+        showFailedToast("Delete Failed")
       })
   }
 
   const handleUpdateSong = async () => {
+    if(!token){
+      showFailedToast("You need to login before using this function!")
+      return
+    }
     await axiosInstance.patch(`http://localhost:8080/api/v1/song/user/${userId}/${songData.id}`, {
-        singer: singer,
-        tone: tone,
-        vocalRange: vocalRange
-      }
+      singer: singer,
+      tone: tone,
+      vocalRange: vocalRange
+    }
     )
+      .then((res) => {
+        showSuccessToast("Update Successfully")
+        setReload(true)
+      })
+      .catch((error) => {
+        showFailedToast("Update Failed!")
+        setReload(true)
+        console.log(error)
+      })
+  }
+
+  const handleBanSong = async() => {
+    await axiosInstance.post(`http://localhost:8080/api/v1/admin/ban/song/${songData.id}`)
     .then((res) => {
-      alert("Update successfully")
-      setReload(true)
+      showSuccessToast("Ban Successfully")
     })
-    .then((error) => {
-      console.log(error)
+    .catch((error) => {
+      showFailedToast("Ban Failed!")
     })
   }
 
@@ -182,6 +229,7 @@ function SongDetail() {
     padding: "5px",
     borderRadius: "10px",
     maginRight: "5px",
+    marginLeft:"200px",
     display: "flex",
     gap: "5px",
     marginTop: 50
@@ -196,19 +244,23 @@ function SongDetail() {
 
 
   const addSongToPlayList = (name) => {
+    if(!token){
+      showFailedToast("You need to login before using this function!")
+      return
+    }
     const formData = {
       name: name,
       songid: id,
     };
     axios
-      .post(`${BACK_END_PORT}/api/v1/playlist/user/3`, formData)
+      .post(`${BACK_END_PORT}/api/v1/playlist/user/${userId}`, formData)
       .then((response) => {
         if (response.data === "Add successfully!") {
-          alert(response.data);
+          showSuccessToast("Add Successfully")
         }
       })
       .catch((error) => {
-        alert("Can not rate", error);
+        showFailedToast("Add Failed!")
       });
   };
 
@@ -263,7 +315,7 @@ function SongDetail() {
         </BannerTitle>
 
         <Box mb={10} mt={6} >
-          <Flex m={"0 auto 1%"} w={"68%"} justifyContent={"flex-end"} mb={4}>
+          <Flex m={"0 auto 1%"} w={"68%"} justifyContent={"flex-end"} mb={4} >
             <Box display={"flex"}>
               {((userId.includes(songData.userid))) ?
                 <div style={boxStyle}>
@@ -349,6 +401,7 @@ function SongDetail() {
                   </Menu> */}
                   </div>
               }
+              {admin === false ?
               <Menu>
                 <MenuButton
                   as={IconButton}
@@ -371,7 +424,7 @@ function SongDetail() {
                   </MenuItem>
                   {MenuItemHTML}
                 </MenuList>
-              </Menu>
+              </Menu> : <div></div>}
             </Box>
           </Flex>
           <Flex justifyContent={"center"}>
@@ -384,12 +437,13 @@ function SongDetail() {
                 userId={songData?.userid}
 
               />
+              {admin === false ? 
               <CommentComponent
                 mt={8}
                 maxH={"780px"}
                 overflowY={"scroll"}
                 songCommentData={songCommentData}
-              />
+              /> : <div></div>}
             </Stack>
             <ChordsComponent
               songData={songData}
@@ -401,6 +455,22 @@ function SongDetail() {
           </Flex>
         </Box>
       </div>
+      <Modal isOpen={checkDelete} onClose={() => setCheckDelete(false)}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader style={{ fontSize: 20 }}>Are you sure to delete this song?</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={() => [setCheckDelete(false), handleDeleteSong()]}>
+              Yes
+            </Button>
+            <Button variant='ghost'>No</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <Modal isOpen={checkDelete} onClose={() => setCheckDelete(false)}>
         <ModalOverlay />
         <ModalContent>

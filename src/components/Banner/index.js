@@ -14,6 +14,7 @@ function BannerTitle({
 }) {
   
   const [liked, setLiked] = useState(false);
+  const admin = JSON.parse(sessionStorage.getItem("Admin"))
   const handleLikeSong = async () => {
     axios
       .get(
@@ -60,7 +61,7 @@ function BannerTitle({
           <Image src={DVDimage} />
         </Box>
         <Flex justifyContent={'flex-start'} flexDirection={'column'}>
-          <Text fontSize={'4rem'} fontWeight={'700'}>
+          <Text fontSize={'3.5rem'} fontWeight={'700'}>
             {songData?.songName}
           </Text>
           <Text fontSize={'3rem'} fontWeight={'400'}>
@@ -72,6 +73,7 @@ function BannerTitle({
               ? ' ' + songData?.genres?.map((item) => item?.name)
               : ' null'}
           </Text>
+          {admin === false ?
           <Flex mt={2} alignItems={'center'}>
             <Text
               mr={2}
@@ -97,13 +99,14 @@ function BannerTitle({
               <AiFillEye style={{ marginRight: '5px' }} />
               {songData?.view}
             </Text> */}
-          </Flex>
+          </Flex> : <div></div>}
+            {admin === false ? 
           <Flex mt={2} alignItems={'center'}>
             <Rating fontSize={'4rem'} maxRating={5} handleRating={handleRating} />
             <Text fontSize={'3rem'} ml={2}>
               {songData?.rating}
             </Text>
-          </Flex>
+          </Flex> : <div></div>}
         </Flex>
       </Flex>
     </Box>

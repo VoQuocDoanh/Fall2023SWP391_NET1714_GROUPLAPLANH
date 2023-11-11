@@ -11,6 +11,7 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import axiosInstance from "../../authorization/axiosInstance";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
+import { Alert, Snackbar } from "@mui/material";
 const cx = classNames.bind(styles);
 const DATA = [
     {
@@ -33,6 +34,10 @@ function ViewDetailsUserByAdmin() {
     const [contentBan, setContentBan] = useState("")
     const [checkBan, setCheckBan] = useState("")
     const [listReport, setListReport] = useState()
+    const [messageSuccess, setMessageSuccess] = useState("")
+    const [messageFailed, setMessageFailed] = useState("")
+    const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
+    const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
     const contentStyle = { background: 'white', width: 460, height: 370, borderRadius: 20 };
 
     useEffect(() => {
@@ -53,23 +58,35 @@ function ViewDetailsUserByAdmin() {
     }
 
     const handleBanUser = async () => {
+        setOpen(true)
         await axiosInstance.post("http://localhost:8080/api/v1/admin/user/ban", { id, content: contentBan })
             .then((res) => {
+                setOpenSuccessSnackBar(true)
+                setMessageSuccess("Ban User Successfully")
                 setCheckBan("Ban User Successfully")
                 setOpen(false)
             })
             .catch((error) => {
+                setOpenFailedSnackBar(true)
+                setMessageFailed("Ban Failed!")
+                setOpen(false)
                 console.log(error)
             })
     }
 
     const handleUnbanUser = async () => {
+        setOpen(true)
         await axiosInstance.post("http://localhost:8080/api/v1/admin/user/unban", { id })
             .then((res) => {
-                setCheckBan("Unban User Successfully")
+                setOpenSuccessSnackBar(true)
+                setMessageSuccess("Unban User Successfully")
                 setOpen(false)
+                setCheckBan("Unban User Successfully")
             })
             .catch((error) => {
+                setOpenFailedSnackBar(true)
+                setMessageFailed("Unban Failed!")
+                setOpen(false)
                 console.log(error)
             })
     }
@@ -85,7 +102,7 @@ function ViewDetailsUserByAdmin() {
     }
 
     return (
-        <div style={{marginBottom:300}}>
+        <div style={{ marginBottom: 300 }}>
             <div>
                 <h2 className={cx("title-myprofile")}>
                     My Profile
@@ -190,11 +207,10 @@ function ViewDetailsUserByAdmin() {
                                                         </div>
                                                         <textarea className={cx("text-des")} style={{ resize: 'none', width: '385px', border: 1, height: 150, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12 }} onChange={(e) => setContentBan(e.target.value)} />
                                                         <td className={cx("button-type")}>
-                                                            <button type="button" className={cx("button-send")} aria-disabled="false" onClick={() => { handleBanUser(); handleOpen(); }} >Send</button>
+                                                            <button type="button" className={cx("button-send")} aria-disabled="false" onClick={() => { handleBanUser()}} >Send</button>
                                                             <Backdrop
                                                                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                                                                open={open}
-                                                                onClick={handleClose}
+                                                                open={open}                                              
                                                             >
                                                                 <CircularProgress color="inherit" />
                                                             </Backdrop>
@@ -209,11 +225,10 @@ function ViewDetailsUserByAdmin() {
                                                             <td style={{ fontWeight: '500', fontSize: "2.5rem", marginLeft: 0, color: 'black', textAlign: 'center', marginTop: 60 }}>Are you sure you want to unban this user?</td>
                                                         </div>
                                                         <td className={cx("button-type")}>
-                                                            <button type="button" className={cx("button-send-2")} aria-disabled="false" onClick={() => { handleUnbanUser(); handleOpen(); }} >Accept</button>
+                                                            <button type="button" className={cx("button-send-2")} aria-disabled="false" onClick={() => { handleUnbanUser()}} >Accept</button>
                                                             <Backdrop
                                                                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                                                                 open={open}
-                                                                onClick={handleClose}
                                                             >
                                                                 <CircularProgress color="inherit" />
                                                             </Backdrop>
@@ -257,7 +272,17 @@ function ViewDetailsUserByAdmin() {
                                     : <div style={{ display: 'flex', justifyContent: 'center', marginTop: 30 }}>There are no report</div>}
                             </div>
                         </TabPanel>
-                    </Tabs>     
+                    </Tabs>
+                    <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+                        <Alert onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                            {messageSuccess}
+                        </Alert>
+                    </Snackbar>
+                    <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+                        <Alert onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                            {messageFailed}
+                        </Alert>
+                    </Snackbar>
 
                 </div> : <div></div>}
         </div>
