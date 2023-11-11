@@ -192,7 +192,7 @@ function ListBeatPurchased() {
                             <Pagination pages={pages} page={page} setPage={setPage} />
                         </div>
                     </div>
-                    : <div className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 600 }}> All of your beats are sold out or you have not upload any beats<div> You can upload a new beat whenver you want </div> </div>}
+                    : <div className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 650 }}> All of your beats are sold out or you have not upload any beats<div> You can upload a new beat whenver you want </div> </div>}
 
                 {/* <div className={cx("audio")}>
 
