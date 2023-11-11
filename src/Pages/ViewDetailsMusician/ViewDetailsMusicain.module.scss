@@ -144,12 +144,32 @@
     flex-shrink: 0;
 }
 
+.input-username1 {
+    padding: 22px 20px;
+    font-size: 1.8rem;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    width: 600px;
+    height: 1px;
+    flex-shrink: 0;
+}
+
 .text-username {
     margin-left: 30px;
 }
 
 .text-username0 {
     margin-left: 35px;
+    
+}
+
+.text-allbeat{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-left: 10px;
 }
 
 .input-text {
@@ -355,3 +375,12 @@
 }
 
 //line
+.active{
+    color: rgb(15, 211, 126);
+    margin-left: 10px;
+}
+
+.sold-out{
+color: red;
+margin-left: 10px;
+}
