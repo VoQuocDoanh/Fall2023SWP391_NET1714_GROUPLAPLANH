@@ -242,7 +242,7 @@ public class SongService {
 
     // view detail song
     public SongResponseDTO getDetailSong(Long id) {
-        Optional<Song> foundSong = this.songRepository.findSongByIdAndStatus(id, 1);
+        Optional<Song> foundSong = this.songRepository.findById(id);
         if (foundSong.isPresent()) {
             Song s = foundSong.get();
             s.setView(s.getView() + 1);

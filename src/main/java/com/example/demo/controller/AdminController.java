@@ -72,8 +72,8 @@ public class AdminController {
     }
 
     @GetMapping("/report/song")
-    public ResponseEntity<List<SongReportResponseDTO>> viewSongBeenReport(){
-        return ResponseEntity.ok(this.songReportService.viewSongReported());
+    public ResponseEntity<List<SongReportResponseDTO>> viewSongsBeenReport(){
+        return ResponseEntity.ok(this.songReportService.viewSongsReported());
     }
 
     @PostMapping("/ban/song/{id}")

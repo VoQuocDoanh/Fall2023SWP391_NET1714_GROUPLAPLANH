@@ -74,7 +74,7 @@ public class SongReportService {
     }
 
     // view song been reported
-    public List<SongReportResponseDTO> viewSongReported (){
+    public List<SongReportResponseDTO> viewSongsReported (){
         List<Song> foundSongs = this.songRepository.findSongBeenReport();
         if(!foundSongs.isEmpty()){
             List<SongReportResponseDTO> dtos = new ArrayList<>();
@@ -84,6 +84,7 @@ public class SongReportService {
                         value.getUserUploadSong().getId(),
                         value.getUserUploadSong().getFullName(),
                         value.getCreatedAt(),
+                        value.getStatus(),
                         value.getSongReports().size());
                 dtos.add(dto);
             }

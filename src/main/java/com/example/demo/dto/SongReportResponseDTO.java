@@ -13,5 +13,6 @@ public class SongReportResponseDTO {
     private Long userid;
     private String userfullname;
     private LocalDateTime createAt;
+    private int status;
     private int reports;
 }

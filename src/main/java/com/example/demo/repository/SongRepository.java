@@ -50,7 +50,7 @@ public interface SongRepository extends JpaRepository<Song, Long> {
 
     // Song report
 
-    @Query("select distinct s from Song s join fetch s.songReports sr where s.status = 1")
+    @Query("select distinct s from Song s join fetch s.songReports sr where s.status = 1 or s.status = -1 order by s.status desc")
     List<Song> findSongBeenReport();
 
 }
