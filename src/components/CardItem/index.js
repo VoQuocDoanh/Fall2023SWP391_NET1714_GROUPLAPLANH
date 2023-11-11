@@ -62,6 +62,7 @@ function CartItem({
       <div className={cx("card-author")}>{author}</div>
       <div className={cx("card-price")}>${price}</div>
     </div>
+     
   );
 }
 

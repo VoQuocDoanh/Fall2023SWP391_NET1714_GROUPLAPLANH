@@ -72,19 +72,20 @@
   flex-direction: column;
   align-items: center;
   row-gap: 39px;
-
+  
   .input {
     margin-top: 13px;
     width: 100%;
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 5px;
     background-color: white;
     padding-left: 16px;
     border-radius: 20px;
-    margin-left: 28px;
+    // margin-left: 28px;
     outline: 2px solid rgb(165, 164, 164);
     filter: drop-shadow(0 0.8rem rgb(167, 166, 166));
+    
   }
 }
 
@@ -98,6 +99,7 @@
   filter: drop-shadow(0 0 0.8rem rgb(146, 143, 144));
   left: 20px;
   margin-top: 18px;
+  
 }
 
 .input-text {
@@ -196,8 +198,69 @@
 
 .img-click:active {
   outline: 0;
+
 }
 
 .img-click:active::before {
   background: -webkit-lin
+}
+
+.file-custom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  flex-direction: row;
+}
+
+
+.file {
+  position: relative;
+}
+
+
+.file input {
+  position: absolute;
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+}
+
+
+.file>label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+
+.file>label::after {
+  content: 'Choose File';
+  display: inline-block;
+  background-color: #3498db;
+  
+  color: white;
+  padding: 10px 25px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+
+}
+
+
+.file>label:hover::after {
+  background-color: #2980b9;
+  
+}
+
+
+.file-custom {
+  margin-left: 10px;
+  
+}
+
+.choosefile{
+  margin-left: 30px;
 }

@@ -54,7 +54,7 @@ function HeaderCustomer() {
       <div className={cx("header-right")}>
         <div className={cx("navigation")}>
         <Link to={"/"}><div className={cx("nav-item")}>Home</div></Link>
-        <Link to="/myprofile"><div className={cx("nav-item")}>Account</div></Link>
+        {/* <Link to="/myprofile"><div className={cx("nav-item")}>Account</div></Link> */}
           <div>
             <Popup trigger={<button className={cx("button-page")}>Pages</button>} position="bottom centers" closeOnDocumentClick on={['hover', 'focus']}>
               <div className={cx("text-all-page")}>

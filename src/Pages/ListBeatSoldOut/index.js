@@ -63,49 +63,26 @@ function ListBeatSoldOut() {
           My Beats Sold Out
         </h1>
       </div>
-      {/* <div className={cx("card-header")}> */}
-      {/* <h2 className={cx("cart-heading")}>Beat Sold Out</h2> */}
+      
       <h1>Income: ${income}</h1>
-      {/* </div> */}
-      {/* <section className={cx("card-wrapper")}> */}
-      {/* Shop cart */}
+      
       <section className={cx("shop-card")}>
         {/* Header */}
 
-        {/* Content */}
-        {/* <div className={cx("card-names")}> */}
-        {/* <div className={cx("card-product", "card-title")}>PRODUCT</div>
-          <div className={cx("card-genre", "card-title")}>DATE</div>
-          <div className={cx("card-author", "card-title")}>CUSTOMER</div>
-          <div className={cx("card-price", "card-title")}>PRICE</div> */}
-        {/* <div className={cx("card-quantity", "card-title")}>QUANTITY</div> */}
-        {/* <div className={cx("card-sub", "card-title")}>TOTAL</div> */}
-        {/* <table>
-            <tr>
-              <th>PRODUCT</th>
-              <th>DATE</th>
-              <th>CUSTOMER</th>
-              <th>PRICE</th>
-            </tr>
-          </table> */}
-        
+
+
 
         {beatSoldOut.length !== 0 ?
           <div>
 
             <div className={cx("card-names")}>
-                  {/* <div className={cx("card-product", "card-title")}>PRODUCT</div>
-              <div className={cx("card-genre", "card-title")}>DATE</div>
-              <div className={cx("card-author", "card-title")}>CUSTOMER</div>
-              <div className={cx("card-price", "card-title")}>PRICE</div> */}
-                  {/* <div className={cx("card-quantity", "card-title")}>QUANTITY</div> */}
-                  {/* <div className={cx("card-sub", "card-title")}>TOTAL</div> */}
-              <table>
+
+              <table className={cx("table-frame")}>
                 <tr>
-                  <th>PRODUCT</th>
-                  <th>DATE</th>
-                  <th>CUSTOMER</th>
-                  <th>PRICE</th>
+                  <th className={cx("th-frame")}>PRODUCT</th>
+                  <th className={cx("th-frame")}>DATE</th>
+                  <th className={cx("th-frame")}>CUSTOMER</th>
+                  <th className={cx("th-frame")}>PRICE</th>
                 </tr>
               </table>
             </div>
@@ -121,6 +98,7 @@ function ListBeatSoldOut() {
                     date={item.orderInformation.createAt}
                     price={item.price}
                     beatId={item.id}
+                    
                   />
                 );
 

@@ -329,7 +329,7 @@ function MyProfile() {
                         </div>
                     </TabPanel>
                     {/* Feedback */}
-                    <TabPanel>
+                    <TabPanel style={{ marginBottom: "400px"}}>
                         <div className={cx("volt8A")}>
                             <div style={{ color: '#06c', fontWeight: 'bold' }} className={cx("title-feedback")}> Beat Review</div>
                             {console.log(feedBacks)}
@@ -347,7 +347,7 @@ function MyProfile() {
                                                                 <label style={{ marginLeft: 20, fontFamily: 'Sono', fontWeight: 400 }} className={cx("login-text")}>{feedback.beat.beatName}</label>
                                                             </td>
                                                             <div>
-                                                                <input className={cx("input-username0")} type="text" placeholder value={feedback.content} readOnly />
+                                                                <input className={cx("input-username1")} type="text" placeholder value={feedback.content} readOnly />
                                                             </div>
                                                         </div>
                                                     </td>
