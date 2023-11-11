@@ -117,8 +117,8 @@ public class BeatController {
 
     //list beat that user bought
     @GetMapping ("user/{id}/{page}")
-    public ResponseEntity<PaginationResponseDTO> beatPurchased (@PathVariable Long id,@PathVariable int page){
-        return ResponseEntity.ok( this.beatService.listBeatPurchased(id,page));
+    public ResponseEntity<List<BeatResponseDTO>> beatPurchased (@PathVariable Long id){
+        return ResponseEntity.ok( this.beatService.listBeatPurchased(id));
     }
 
     @GetMapping("user/beat/{id}")

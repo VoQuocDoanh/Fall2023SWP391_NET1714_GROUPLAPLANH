@@ -410,22 +410,19 @@ public class BeatService {
         return new ResponseEntity<>(totalPrice,HttpStatus.OK);
     }
 
-    public PaginationResponseDTO listBeatPurchased(Long id, int page) {
+    public List<BeatResponseDTO> listBeatPurchased(Long id) {
        List<Order> order = orderService.findOrder(id);
-        Pageable pageable = PageRequest.of(page-1,8);
+
         List<BeatResponseDTO> beat = new ArrayList<>();
         if (order.isEmpty()){
             return null;
         } else{
-            int tmp=0;
             for (Order o:order){
-                Page<Beat> beatEntity = (beatRepository.findBeatByOrderBeat(o,pageable));
                 List<Beat> be =beatRepository.findBeatByOrderBeat(o);
-                tmp += be.size();
-                if (beatEntity.isEmpty()){
+                if (be.isEmpty()){
                     return null;
                 }
-                for (Beat i : beatEntity){
+                for (Beat i : be){
                     BeatResponseDTO b = new BeatResponseDTO();
                     b.setId(i.getId());
                     b.setBeatName(i.getBeatName());
@@ -435,14 +432,7 @@ public class BeatService {
                     beat.add(b);
                 }
             }
-            int pagecount = pageable.getPageNumber();
-            int max = 0;
-            if (tmp % 8 != 0) {
-                max = tmp / 8 + 1;
-            } else {
-                max = tmp / 8;
-            }
-            return new PaginationResponseDTO(beat,pagecount,max);
+            return  beat;
         }
 
     }
