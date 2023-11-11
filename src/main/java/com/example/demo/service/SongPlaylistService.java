@@ -35,7 +35,8 @@ public class SongPlaylistService {
                     value.getUserUploadSong().getFullName(),
                     value.getTotalLike(),
                     value.getView(),
-                    value.getRating());
+                    value.getRating(),
+                    value.getStatus());
             dtos.add(dto);
         }
         return dtos;
