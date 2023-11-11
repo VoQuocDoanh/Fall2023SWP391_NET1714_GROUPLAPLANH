@@ -10,7 +10,7 @@ import jwtDecode from "jwt-decode";
 import { TabList, TabPanel, Tabs } from "react-tabs";
 import 'react-tabs/style/react-tabs.scss';
 import 'react-tabs/style/react-tabs.css';
-import { Box, TextField } from "@mui/material";
+import { Alert, Box, Snackbar, TextField } from "@mui/material";
 const cx = classNames.bind(styles);
 const DATA = [
     {
@@ -34,6 +34,10 @@ function MyProfile() {
     const [gender, setGender] = useState(SEX[0].value);
     const [checkEdit, setCheckEdit] = useState("")
     const [username, setUserName] = useState("")
+    const [messageSuccess, setMessageSuccess] = useState("")
+    const [messageFailed, setMessageFailed] = useState("")
+    const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
+    const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
     let id = ""
     const token = useToken()
     if (token) {
@@ -72,16 +76,19 @@ function MyProfile() {
 
     const handleEdit = async () => {
         if (!fullName || !gender || !id) {
-            alert("Please fill in all fields!")
+            setOpenFailedSnackBar(true)
+            setMessageFailed("All fields must not be null!")
             return
         }
         const userProfile = { fullName, gender, id };
         await axiosInstance.patch("http://localhost:8080/api/v1/admin", userProfile)
             .then((res) => {
-                setCheckEdit("Edit Successfully")
+                setOpenSuccessSnackBar(true)
+                setMessageSuccess("Edit successfully.")
             })
             .catch((error) => {
-                setCheckEdit("Edit Failed!")
+                setOpenFailedSnackBar(true)
+                setMessageFailed("Edit failed!")
                 console.log(error)
             })
     }
@@ -111,17 +118,16 @@ function MyProfile() {
                             </div>
 
                             <div className={cx("part2")}>
-                                <td>
-                                    <div className={cx('text-username0')}>
-                                        <td >
-                                            <label className={cx("login-text")}>Email*</label>
-                                        </td>
-                                        <div>
-                                            <input className={cx("input-username0")} type="text" placeholder value={mail} onChange={(e) => setMail(e.target.value)} autoFocus />
+                                            <td>
+                                                <div style={{ fontWeight: 500 }} className={cx("email-text")}>
+                                                    Email*
+                                                </div>
+                                                <div className={cx("email-change")}>
+                                                    {mail}
+                                                </div>
+                                            </td>
+
                                         </div>
-                                    </div>
-                                </td>
-                            </div>
 
                             <div className={cx("part4")} style={{ marginLeft: 65 }}>
                                 <td style= {{fontWeight: '500'}} className={cx("sex")}>
@@ -179,8 +185,6 @@ function MyProfile() {
                                     <button type="button" className={cx("button-save-details")} aria-disabled="false" onClick={() => handleEdit()}>Edit</button>
                                 </td>
                             </div>
-                            <div style={{ color: "green" }}>{checkEdit}</div>
-
                         </table>
                     </form>
                 </div>
@@ -203,6 +207,16 @@ function MyProfile() {
                     </div>
                 </div>
             </div>
+            <Snackbar open={openSuccessSnackBar} autoHideDuration={500} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+                <Alert onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {messageSuccess}
+                </Alert>
+            </Snackbar>
+            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+                <Alert onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {messageFailed}
+                </Alert>
+            </Snackbar>
         </div>
     );
 }

@@ -15,6 +15,7 @@ import jwtDecode from "jwt-decode";
 import useToken from "../../authorization/useToken";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { ShopContext } from "../../context/shop-context";
+import { Alert, Snackbar } from "@mui/material";
 
 
 const cx = classNames.bind(styles);
@@ -24,6 +25,10 @@ function HeaderGuest() {
 
   const navigate = useNavigate()
   const { checkOut } = useContext(ShopContext)
+  const [messageSuccess, setMessageSuccess] = useState("")
+  const [messageFailed, setMessageFailed] = useState("")
+  const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
+  const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
   const token = useToken()
   let userRole = ''
   let name = ''
@@ -54,13 +59,13 @@ function HeaderGuest() {
       <div className={cx("header-right")}>
         <div className={cx("navigation")}>
           <Link to={"/"}><div className={cx("nav-item")}>Home</div></Link>
-          <Link to={"/login"}><div className={cx("nav-item")}>Account</div></Link>
+          <div className={cx("nav-item")} onClick={() => [setOpenFailedSnackBar(true), setMessageFailed("You need to login before using this function!")]}>Account</div>
           <div>
             <Popup trigger={<button className={cx("button-page")}>Pages</button>} position="bottom centers" closeOnDocumentClick on={['hover', 'focus']}>
               <div className={cx("text-all")}>
                 <Link to="/listbeat"><div className={cx("link-text")}>Beat</div></Link>
                 <Link to="/chordsdetails"><div className={cx("link-text")}>Chords</div></Link>
-                <Link to="/songs"><div className={cx("link-text")}>Songs</div></Link>
+                <Link to="/songs"><div className={cx("link-text")}>Chords of Songs</div></Link>
               </div>
             </Popup>
           </div>
@@ -73,6 +78,16 @@ function HeaderGuest() {
           </button>
         </Link>
       </div>
+      <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+        <Alert onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+          {messageSuccess}
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+        <Alert onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+          {messageFailed}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

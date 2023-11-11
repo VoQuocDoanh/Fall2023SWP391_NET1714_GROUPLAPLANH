@@ -74,7 +74,7 @@ function Register() {
       return
     }
     if (password.length < 6) {
-      setMessageFailed("Quick Password!")
+      setMessageFailed("Password must be equal or highter than 6 characters!")
       setOpenFailedSnackBar(true)
       setOpen(false)
       return

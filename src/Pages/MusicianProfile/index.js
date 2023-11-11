@@ -11,6 +11,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.scss';
 import 'react-tabs/style/react-tabs.css';
 import Pagination from "../../components/Pagination";
+import { Alert, Snackbar } from "@mui/material";
 const cx = classNames.bind(styles);
 const DATA = [
     {
@@ -45,6 +46,11 @@ function MyProfile() {
     const [page, setPage] = useState(1)
     const [pages, setPages] = useState(1)
     const [feedBacks, setFeedBacks] = useState([]);
+    const [messageSuccess, setMessageSuccess] = useState("")
+    const [messageFailed, setMessageFailed] = useState("")
+    const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
+    const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
+    const [checkChooseFile, setCheckChooseFile] = useState(false);
 
     let id = ""
     const token = useToken()
@@ -101,31 +107,61 @@ function MyProfile() {
             })
     }
 
+    const handleUserImgChange = (e) => {
+        const selectedFile = e.target.files[0];
+        const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
+        if (selectedFile) {
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                setAvatar(e.target.result);
+            };
+            reader.readAsDataURL(selectedFile);
+        }
+        if (!allowedTypes.includes(selectedFile?.type)) {
+            setOpenFailedSnackBar(true)
+            setMessageFailed("Only (image/png or image/jpeg or image/jpg) files are allowed!")
+            return;
+        }
+        setOpenSuccessSnackBar(true)
+        setMessageSuccess("Selected file successfully")
+        setUserImg(selectedFile)
+    }
+
     const handleEdit = async () => {
         if (!fullName || !address || !phone || !gender || !id || !prize || !professional || !year) {
-            alert("Please fill in all fields!")
+            setOpenFailedSnackBar(true)
+            setMessageFailed("All fields must not be null!")
             return
         } else if (phone.length < 10) {
-            alert("Phone must be equal or higher than 10 numbers!")
+            setOpenFailedSnackBar(true)
+            setMessageFailed("Phone number length must be 10 or 11 characters!")
+        } else if (year < 0 || year > 100) {
+            setOpenFailedSnackBar(true)
+            setMessageFailed("Year must higher than 0!")
         }
-        const userProfile = { fullName, address, phone, gender, id };
+        const userProfile = { fullName, address, phone, gender, id, prize, professional, year };
         const formData = new FormData();
         formData.append('json', new Blob([JSON.stringify(userProfile)], { type: 'application/json' }));
         console.log(userImg)
         formData.append('file', userImg);
 
 
-        await axiosInstance.patch("http://localhost:8080/api/v1/user/customer", formData, {
+        await axiosInstance.patch("http://localhost:8080/api/v1/user/musician", formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
         })
             .then((res) => {
-                setCheckEdit("Edit Successfully")
+                setOpenSuccessSnackBar(true)
+                setMessageSuccess("Edit Successfully")
+                setCheckEdit(true)
             })
             .catch((error) => {
-                setCheckEdit("Edit Failed!")
+                setOpenFailedSnackBar(true)
+                setMessageFailed("Edit failed")
                 console.log(error)
+                setCheckEdit(false)
             })
     }
 
@@ -165,7 +201,7 @@ function MyProfile() {
                                 </td>
                             </div>
                             <label style={{ marginLeft: 120 }} className={cx("file")}>
-                                <input className={cx("img-click")} style={{ marginLeft: 155, marginTop: -5 }} type="file" accept=".jpg,.jpeg,.png" onChange={(e) => setUserImg(e.target.files[0])} />
+                                <input className={cx("img-click")} style={{ marginLeft: 155, marginTop: -5 }} type="file" accept=".jpg,.jpeg,.png" onChange={(e) => handleUserImgChange(e)} />
                                 <span className={cx("file-custom")}></span>
                             </label>
                         </div>
@@ -286,7 +322,7 @@ function MyProfile() {
                                                     <label className={cx("login-text")}>Prize*</label>
                                                 </td>
                                                 <div >
-                                                    <input className={cx("input-username0")} type="text" placeholder value={prize} onChange={(e) => setPhone(e.target.value)} />
+                                                    <input className={cx("input-username0")} type="text" placeholder value={prize} onChange={(e) => setPrize(e.target.value)} />
                                                 </div>
                                             </div>
                                         </td>
@@ -298,7 +334,7 @@ function MyProfile() {
                                                     <label className={cx("login-text")}>Professional*</label>
                                                 </td>
                                                 <div >
-                                                    <input className={cx("input-username0")} type="text" placeholder value={professional} onChange={(e) => setPhone(e.target.value)} />
+                                                    <input className={cx("input-username0")} type="text" placeholder value={professional} onChange={(e) => setProfessional(e.target.value)} />
                                                 </div>
                                             </div>
                                         </td>
@@ -310,7 +346,7 @@ function MyProfile() {
                                                     <label className={cx("login-text")}>Year of Operation*</label>
                                                 </td>
                                                 <div >
-                                                    <input className={cx("input-username0")} type="text" placeholder value={year} onChange={(e) => setPhone(e.target.value)} />
+                                                    <input className={cx("input-username0")} type="number" placeholder value={year} onChange={(e) => setYear(e.target.value)} />
                                                 </div>
                                             </div>
                                         </td>
@@ -322,8 +358,6 @@ function MyProfile() {
                                             <button type="button" className={cx("button-save-details")} aria-disabled="false" onClick={() => handleEdit()}>Edit</button>
                                         </td>
                                     </div>
-                                    <div style={{ color: "green" }}>{checkEdit}</div>
-
                                 </table>
                             </form>
                         </div>
@@ -366,6 +400,16 @@ function MyProfile() {
                 </Tabs>
 
             </div>
+            <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+                <Alert onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {messageSuccess}
+                </Alert>
+            </Snackbar>
+            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+                <Alert onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {messageFailed}
+                </Alert>
+            </Snackbar>
         </div>
     );
 }

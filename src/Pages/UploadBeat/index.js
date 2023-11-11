@@ -33,11 +33,11 @@ function UploadBeat() {
   const [listGenres, setListGenres] = useState(null)
   const [beatSoundDemoUrl, setBeatSoundDemoUrl] = useState("")
   const [beatSoundFullUrl, setBeatSoundFullUrl] = useState("")
-  const [open,setOpen] = useState(false)
+  const [open, setOpen] = useState(false)
   const [messageSuccess, setMessageSuccess] = useState("")
-    const [messageFailed, setMessageFailed] = useState("")
-    const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
-    const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
+  const [messageFailed, setMessageFailed] = useState("")
+  const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
+  const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
   const style = {
     position: 'absolute',
     top: '50%',
@@ -67,7 +67,7 @@ function UploadBeat() {
 
   const handleBeatSoundDemoChange = (e) => {
     const MIN_FILE_SIZE = 102400
-    const MAX_FILE_SIZE = 1048576 
+    const MAX_FILE_SIZE = 1048576
     const selectedFile = e.target.files[0];
     const allowedTypes = ["audio/mpeg"];
     if (!allowedTypes.includes(selectedFile?.type)) {
@@ -75,11 +75,11 @@ function UploadBeat() {
       setMessageFailed("Only audio/mpeg files are allowed!")
       return;
     }
-    if(selectedFile?.size < MIN_FILE_SIZE || selectedFile?.size > MAX_FILE_SIZE){
+    if (selectedFile?.size < MIN_FILE_SIZE || selectedFile?.size > MAX_FILE_SIZE) {
       console.log(selectedFile?.size < MIN_FILE_SIZE)
       setOpenFailedSnackBar(true)
       console.log(selectedFile?.size)
-      setMessageFailed("File size is in 100KB to 1MB!")
+      setMessageFailed("File beatDemo size is in 100KB to 1MB!")
       return;
     }
     setOpenSuccessSnackBar(true)
@@ -89,14 +89,14 @@ function UploadBeat() {
   }
 
   const handleBeatSoundFullChange = (e) => {
-    const MIN_FILE_SIZE = 1048576 
+    const MIN_FILE_SIZE = 1048576
     const MAX_FILE_SIZE = 10485760
     const selectedFile = e.target.files[0];
     const allowedTypes = ["audio/mpeg"];
-    if(selectedFile?.size < MIN_FILE_SIZE || selectedFile?.size > MAX_FILE_SIZE){
+    if (selectedFile?.size < MIN_FILE_SIZE || selectedFile?.size > MAX_FILE_SIZE) {
       setOpenFailedSnackBar(true)
       console.log(selectedFile.size)
-      setMessageFailed("File size is in 1MB to 10MB!")
+      setMessageFailed("File beatFull size is in 1MB to 10MB!")
       return;
     }
     if (!allowedTypes.includes(selectedFile?.type)) {
@@ -150,8 +150,8 @@ function UploadBeat() {
         setMessageSuccess("Upload successfully")
         setTimeout(() => {
           navigate('/viewbeat');
-        },1000)
-        
+        }, 1000)
+
       })
       .catch((error) => {
         setOpen(false)
@@ -348,15 +348,15 @@ function UploadBeat() {
             <CircularProgress color="inherit" />
           </Backdrop>
           <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
-                <Alert onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
-                    {messageSuccess}
-                </Alert>
-            </Snackbar>
-            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
-                <Alert onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
-                    {messageFailed}
-                </Alert>
-            </Snackbar>
+            <Alert onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+              {messageSuccess}
+            </Alert>
+          </Snackbar>
+          <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+            <Alert onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+              {messageFailed}
+            </Alert>
+          </Snackbar>
         </div>
         {/* Footer */}
         {/* <div className={cx("footer")}>

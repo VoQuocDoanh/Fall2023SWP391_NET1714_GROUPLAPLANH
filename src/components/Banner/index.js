@@ -12,6 +12,7 @@ function BannerTitle({
   information,
   setReload,
 }) {
+  
   const [liked, setLiked] = useState(false);
   const handleLikeSong = async () => {
     axios

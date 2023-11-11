@@ -168,7 +168,7 @@ import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import styles from "./ViewCart.module.scss";
-import { Backdrop, Button, CircularProgress } from "@mui/material";
+import { Alert, Backdrop, Button, CircularProgress, Snackbar } from "@mui/material";
 import { useReducer, useRef } from "react";
 import CardItem from "../../components/CardItem";
 import { ShopContext } from "../../context/shop-context";
@@ -204,6 +204,10 @@ const cx = classNames.bind(styles);
 
 function ViewCart() {
     const { getTotalCartAmount, checkOut, listBeatContext } = useContext(ShopContext)
+    const [messageSuccess, setMessageSuccess] = useState("")
+    const [messageFailed, setMessageFailed] = useState("")
+    const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
+    const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
     const cartItems = JSON.parse(localStorage.getItem("Cart"))
     console.log(JSON.parse(localStorage.getItem("Cart")))
     const totalAmount = getTotalCartAmount()
@@ -238,10 +242,11 @@ function ViewCart() {
     const token = useToken()
     const [checkoutMessage, setCheckoutMessage] = useState()
     const handleCheckout = async () => {
+        setOpen(true)
         if (beatCheckout.length === 0) {
-            setCheckoutMessage("You have not chosen anything to buy")
+            setOpenFailedSnackBar(true)
+            setMessageFailed("You have not chosen anything to buy")
             setOpen(false)
-            console.log(open)
             return
         }
         if (token) {
@@ -394,18 +399,7 @@ function ViewCart() {
                         </span>
                     </div>
 
-                    <Button className={cx("card-action")} onClick={() => [handleCheckout(), handleOpen()]}>Proceed to Checkout</Button>
-                    {beatCheckout.length !== 0 ?
-                        <Backdrop
-                            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                            open={open}
-                            onClick={handleClose}
-                        >
-                            <CircularProgress color="inherit" />
-                        </Backdrop>
-                        : <div></div>
-                    }
-
+                    <Button className={cx("card-action")} onClick={() => handleCheckout()}>Proceed to Checkout</Button>
                 </footer>
                 <div className={cx("card-payment")}>
                     Payment Method
@@ -422,6 +416,23 @@ function ViewCart() {
                     Your Check out is Safe and Secure With PayPal
                 </div>
             </section>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={open}
+                onClick={handleClose}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+            <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+                <Alert onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {messageSuccess}
+                </Alert>
+            </Snackbar>
+            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+                <Alert onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {messageFailed}
+                </Alert>
+            </Snackbar>
         </section>
     );
 }

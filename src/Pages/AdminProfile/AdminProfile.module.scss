@@ -230,32 +230,27 @@
 
 .part2 {
     margin-bottom: 40px;
+    margin-left:40px;
 }
 
-// .part2>td {
-//     margin-top: 20px;
-//     display: flex;
-//     justify-content: center;
-//     margin-left: -270px;
-//     // margin-top: 100px;
-//     display: flex;
-// }
+.part2>td {
+    display: flex;
+    justify-content: center;
+    margin-left: -400px;
+    margin-top: 45px;
+    display: flex;
+}
 
 .email-change {
-    padding: 22px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: 1px solid rgb(65, 65, 65);
-    width: 700px;
-    margin-top: 30px;
-    height: 1px;
-    flex-shrink: 0;
+    margin-left: 50px;
+    text-decoration: underline;
 }
 
 .email-text {
-    font-family: inter;
-    margin-left: 4px;
-    font-size: 25px;
+    margin-left: 111px;
+    font-size: 20px;
+    font-family: fredoka one;
+
 }
 
 .part5 {

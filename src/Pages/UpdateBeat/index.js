@@ -77,7 +77,7 @@ function UploadBeat() {
       console.log(selectedFile?.size < MIN_FILE_SIZE)
       setOpenFailedSnackBar(true)
       console.log(selectedFile?.size)
-      setMessageFailed("File size is in 100KB to 1MB!")
+      setMessageFailed("File beatDemo size is in 100KB to 1MB!")
       return;
     }
     if (!allowedTypes.includes(selectedFile?.type)) {
@@ -99,7 +99,7 @@ function UploadBeat() {
     if(selectedFile?.size < MIN_FILE_SIZE || selectedFile?.size > MAX_FILE_SIZE){
       setOpenFailedSnackBar(true)
       console.log(selectedFile.size)
-      setMessageFailed("File size is in 1MB to 10MB!")
+      setMessageFailed("File beatFull size is in 1MB to 10MB!")
       return;
     }
     if (!allowedTypes.includes(selectedFile?.type)) {

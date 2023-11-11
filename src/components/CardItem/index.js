@@ -53,7 +53,7 @@ function CartItem({
       <div className={cx("card-genre")}>
         {
           genre.map((item) => {
-            return <div> {item.name},</div>
+            return <div> {item.name}</div>
           })
 
         }

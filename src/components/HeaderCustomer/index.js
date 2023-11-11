@@ -60,7 +60,7 @@ function HeaderCustomer() {
               <div className={cx("text-all-page")}>
                 <Link to="/listbeat"><div className={cx("link-text")}>Beat</div></Link>
                 <Link to="/chordsdetails"><div className={cx("link-text")}>Chords</div></Link>
-                <Link to="/songs"><div className={cx("link-text")}> Chords of Songs</div></Link>
+                <Link to="/songs"><div className={cx("link-text")}>Chords of Songs</div></Link>
               </div>
             </Popup>
           </div>

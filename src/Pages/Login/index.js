@@ -49,7 +49,7 @@ function Login() {
         if (jwtDecode(res.data.token).role === "CUS") {
           navigate("/")
         } else if (jwtDecode(res.data.token).role === "MS") {
-          navigate("/listbeat")
+          navigate("/viewbeat")
         } else {
           navigate("/listuser")
         }

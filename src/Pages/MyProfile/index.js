@@ -10,6 +10,7 @@ import jwtDecode from "jwt-decode";
 import { TabList, TabPanel, Tabs } from "react-tabs";
 import 'react-tabs/style/react-tabs.scss';
 import 'react-tabs/style/react-tabs.css';
+import { Alert, Snackbar } from "@mui/material";
 const cx = classNames.bind(styles);
 const DATA = [
     {
@@ -38,6 +39,10 @@ function MyProfile() {
     const [avatar, setAvatar] = useState("")
     const [checkEdit, setCheckEdit] = useState("")
     const [username, setUserName] = useState("")
+    const [messageSuccess, setMessageSuccess] = useState("")
+    const [messageFailed, setMessageFailed] = useState("")
+    const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
+    const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
     let id = ""
     const token = useToken()
     if (token) {
@@ -79,12 +84,35 @@ function MyProfile() {
             })
     }
 
+    const handleUserImgChange = (e) => {
+        const selectedFile = e.target.files[0];
+        const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
+        if (selectedFile) {
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                setAvatar(e.target.result);
+            };
+            reader.readAsDataURL(selectedFile);
+        }
+        if (!allowedTypes.includes(selectedFile?.type)) {
+            setOpenFailedSnackBar(true)
+            setMessageFailed("Only (image/png or image/jpeg or image/jpg) files are allowed!")
+            return;
+        }
+        setOpenSuccessSnackBar(true)
+        setMessageSuccess("Selected file successfully")
+        setUserImg(selectedFile)
+    }
+
     const handleEdit = async () => {
         if (!fullName || !address || !phone || !gender || !id) {
-            alert("Please fill in all fields!")
+            setOpenFailedSnackBar(true)
+            setMessageFailed("All fields must not be null!")
             return
         } else if (phone.length < 10) {
-            alert("Phone must be equal or higher than 10 numbers!")
+            setOpenFailedSnackBar(true)
+            setMessageFailed("Phone number length must be 10 or 11 characters!")
         }
         const userProfile = { fullName, address, phone, gender, id };
         const formData = new FormData();
@@ -99,11 +127,15 @@ function MyProfile() {
             },
         })
             .then((res) => {
-                setCheckEdit("Edit Successfully")
+                setOpenSuccessSnackBar(true)
+                setMessageSuccess("Edit Successfully")
+                setCheckEdit(true)
             })
             .catch((error) => {
-                setCheckEdit("Edit Failed!")
+                setOpenFailedSnackBar(true)
+                setMessageFailed("Edit Failed!")
                 console.log(error)
+                setCheckEdit(false)
             })
     }
 
@@ -220,7 +252,6 @@ function MyProfile() {
                                     <button type="button" className={cx("button-save-details")} aria-disabled="false" onClick={() => handleEdit()}>Edit</button>
                                 </td>
                             </div>
-                            <div style={{ color: "green" }}>{checkEdit}</div>
 
                         </table>
                     </form>
@@ -244,13 +275,23 @@ function MyProfile() {
                                 </td>
                             </div>
                             <label className={cx("file")}>
-                                <input className={cx("img-click")} style={{ marginLeft: 155, marginTop: -5 }} type="file" accept=".jpg,.jpeg,.png" onChange={(e) => setUserImg(e.target.files[0])} />
+                                <input className={cx("img-click")} style={{ marginLeft: 155, marginTop: -5 }} type="file" accept=".jpg,.jpeg,.png" onChange={(e) => handleUserImgChange(e)} />
                                 <span className={cx("file-custom")}></span>
                             </label>
                         </div>
                     </div>
                 </div>
             </div>
+            <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+                <Alert onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {messageSuccess}
+                </Alert>
+            </Snackbar>
+            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+                <Alert onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {messageFailed}
+                </Alert>
+            </Snackbar>
         </div>
     );
 }
