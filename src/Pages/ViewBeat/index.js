@@ -16,6 +16,7 @@ import ListBeatPurchasedBox from "../../components/listBeatPurchasedBox";
 import PaginationControlled from "../../components/Pagination";
 import ViewBeatBox from "../../components/viewBeatBox";
 import Pagination from "../../components/Pagination";
+import ListSplitter from "@/components/ListSplitter";
 
 const cx = classNames.bind(styles);
 
@@ -69,7 +70,7 @@ function ListBeatPurchased() {
 
     useEffect(() => {
         loadBeats()
-    }, [checkLike])
+    }, [checkLike, page])
 
     useEffect(() => {
         loadGenres()
@@ -86,10 +87,20 @@ function ListBeatPurchased() {
             navigate("/login")
             return
         }
-        await axiosInstance.get(`http://localhost:8080/api/v1/beat/user/${jwtDecode(token).sub}/all/${page}`)
+        await axiosInstance.get(`http://localhost:8080/api/v1/beat/user/${jwtDecode(token).sub}/all`)
             .then(res => {
-                setList(res.data.dtoList)
-                setPage(res.data.max)
+                if (res.data.length === 0) {
+                    setList(res.data)
+                }
+                else {
+                    const newGroup = ListSplitter({ data: res.data, groupSize: 8 })
+                    for (let i = 0; i < newGroup.length; i++) {
+                        if (page === i + 1) {
+                            setList(newGroup[i])
+                        }
+                    }
+                    setPages(newGroup.length)
+                } 
             })
             .catch((error) => {
                 if (error.message.includes("Network")) {
@@ -182,17 +193,19 @@ function ListBeatPurchased() {
                 })}
             </div> */}
                 {list.length !== 0  ?
-                    <div>
+                    <div style={{height:900}}>
                         <div className={cx("listbeat")}>
                             {list.map((item) => {
                                 return <ViewBeatBox id={item.id} name={item.beatName} genre={item.genre} price={item.price} view={(item.view / 2).toFixed()} like={item.totalLike} handleLike={() => handleLike(item.id)} rating={item.rating} vocalRange={item.vocalRange} fullName={item.user.fullName} status={item.status} page={2} />
                             })}
                         </div>
+                    </div>
+                    : <div className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 600 }}> All of your beats are sold out or you have not upload any beats<div> You can upload a new beat whenver you want </div> </div>}
+                    {pages !== 1 ?
                         <div className={cx("pagination")}>
                             <Pagination pages={pages} page={page} setPage={setPage} />
                         </div>
-                    </div>
-                    : <div className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 600 }}> All of your beats are sold out or you have not upload any beats<div> You can upload a new beat whenver you want </div> </div>}
+                        : <div></div>}
 
                 {/* <div className={cx("audio")}>
 

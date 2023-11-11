@@ -61,6 +61,7 @@ function SongDetail() {
   const [listPlaylist, setListPlayList] = useState([]);
   const [checkDelete, setCheckDelete] = useState(false)
   const [checkUpdate, setCheckUpdate] = useState(false)
+  const [checkBan, setCheckBan] = useState(false)
   const [singer, setSinger] = useState("")
   const [tone, setTone] = useState("")
   const [vocalRange, setVocalRange] = useState("")
@@ -185,6 +186,7 @@ function SongDetail() {
     )
       .then((res) => {
         showSuccessToast("Update Successfully")
+        console.log(reload)
         setReload(true)
       })
       .catch((error) => {
@@ -365,7 +367,7 @@ function SongDetail() {
                     <Button
                       height="40px"
                       width="100px"
-                      onClick={() => setModalView(true)}
+                      onClick={() => setCheckBan(true)}
                       colorScheme="teal"
                       variant="outline"
                       color="black"
@@ -455,19 +457,19 @@ function SongDetail() {
           </Flex>
         </Box>
       </div>
-      <Modal isOpen={checkDelete} onClose={() => setCheckDelete(false)}>
+      <Modal isOpen={checkBan} onClose={() => setCheckBan(false)}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader style={{ fontSize: 20 }}>Are you sure to delete this song?</ModalHeader>
+          <ModalHeader style={{ fontSize: 20 }}>Are you sure to ban this song?</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={() => [setCheckDelete(false), handleDeleteSong()]}>
+            <Button colorScheme='blue' mr={3} onClick={() => [setCheckBan(false), handleBanSong()]}>
               Yes
             </Button>
-            <Button variant='ghost'>No</Button>
+            <Button onClick={() => setCheckBan(false)} variant='ghost'>No</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
@@ -483,7 +485,7 @@ function SongDetail() {
             <Button colorScheme='blue' mr={3} onClick={() => [setCheckDelete(false), handleDeleteSong()]}>
               Yes
             </Button>
-            <Button variant='ghost'>No</Button>
+            <Button onClick={() => setCheckBan(false)} variant='ghost'>No</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

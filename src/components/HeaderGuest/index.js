@@ -59,7 +59,6 @@ function HeaderGuest() {
       <div className={cx("header-right")}>
         <div className={cx("navigation")}>
           <Link to={"/"}><div className={cx("nav-item")}>Home</div></Link>
-          <div className={cx("nav-item")} onClick={() => [setOpenFailedSnackBar(true), setMessageFailed("You need to login before using this function!")]}>Account</div>
           <div>
             <Popup trigger={<button className={cx("button-page")}>Pages</button>} position="bottom centers" closeOnDocumentClick on={['hover', 'focus']}>
               <div className={cx("text-all")}>

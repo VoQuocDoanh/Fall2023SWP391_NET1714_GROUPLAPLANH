@@ -15,6 +15,7 @@ import jwtDecode from "jwt-decode";
 import ListBeatPurchasedBox from "../../components/listBeatPurchasedBox";
 import PaginationControlled from "../../components/Pagination";
 import Pagination from "../../components/Pagination";
+import ListSplitter from "@/components/ListSplitter";
 
 const cx = classNames.bind(styles);
 
@@ -38,7 +39,7 @@ function ListBeatPurchased() {
 
     useEffect(() => {
         loadBeats()
-    }, [checkLike])
+    }, [checkLike, page])
 
     useEffect(() => {
         loadGenres()
@@ -83,12 +84,20 @@ function ListBeatPurchased() {
             navigate("/login")
             return
         }
-        await axiosInstance.get(`http://localhost:8080/api/v1/beat/user/${jwtDecode(token).sub}/${page}`)
+        await axiosInstance.get(`http://localhost:8080/api/v1/beat/user/${jwtDecode(token).sub}`)
             .then(res => {
-                console.log(page)
-                console.log(res.data.dtoList)
-                setList(res.data.dtoList)
-                setPages(res.data.max)
+                if (res.data.length === 0) {
+                    setList(res.data)
+                }
+                else {
+                    const newGroup = ListSplitter({ data: res.data, groupSize: 8 })
+                    for (let i = 0; i < newGroup.length; i++) {
+                        if (page === i + 1) {
+                            setList(newGroup[i])
+                        }
+                    }
+                    setPages(newGroup.length)
+                }
             })
             .catch((error) => {
                 if (error.message.includes("Network")) {
@@ -138,19 +147,19 @@ function ListBeatPurchased() {
                 })}
             </div> */}
             {list ?
-                <div>
+                <div style={{height:900}}>
                     <div className={cx("listbeat")}>
                         {list.map((item) => {
                             return <ListBeatPurchasedBox id={item.id} name={item.beatName} genre={item.genre} price={item.price} view={(item.view / 2).toFixed()} like={item.totalLike} rating={item.rating} vocalRange={item.vocalRange} fullName={item.user.fullName} page={2} />
                         })}
                     </div>
-                    {pages !== 1 ?
+                </div>
+                : <div className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 600 }}> You are not buying any beats<div> Visiting our website to buy the beats </div> </div>}
+                {pages !== 1 ?
                         <div className={cx("pagination")}>
                             <Pagination pages={pages} page={page} setPage={setPage} />
                         </div>
                         : <div></div>}
-                </div>
-                : <div className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 600 }}> You are not buying any beats<div> Visiting our website to buy the beats </div> </div>}
 
             {/* <div className={cx("audio")}>
 

@@ -29,7 +29,7 @@ function ViewBeatBox({ id, name, genre, price, view, like, onClick, handleLike, 
                 <span style={{textwrap:'nowrap'}} className={cx("type-beat")}>{vocalRange}</span>
                 <div style={{ display: 'grid', justifyContent: 'flex-end', marginLeft: 80, rowGap: 10, width: 200, marginTop: -30 }}>
                     <span className={cx("like")}>
-                        <FontAwesomeIcon icon={faHeart} onClick={() => handleLike(id)} />
+                        <FontAwesomeIcon icon={faHeart}/>
                         <span className={cx("number")}>{like}</span>
                     </span>
                     <span className={cx("rating")}>

@@ -27,7 +27,7 @@ function BannedSong() {
     }, [page])
 
     const loadSongs = async () => {
-        await axiosInstance.get("http://localhost:8080/api/v1/admin/report/song")
+        await axiosInstance.get("http://localhost:8080/api/v1/song/banned")
             .then((res) => {
                 if (res.data.length === 0) {
                     setListSongs(res.data)
@@ -50,7 +50,7 @@ function BannedSong() {
     return (
 
         <div className={cx("list-songs")}>
-            <h1 className={cx("title")}> LIST OF SONGS REPORTED</h1>
+            <h1 className={cx("title")}> LIST OF SONGS BANNED</h1>
             {/* <div className={cx("button-chords")}>
                 <Link to="/chordsdetails">
                     <button variant="contained" className={cx("button")}>
@@ -106,7 +106,7 @@ function BannedSong() {
                                 <Pagination pages={pages} page={page} setPage={setPage} />
                             </div>
                         </div>
-                        : <div> There are no songs in the system! </div>}
+                        : <div> There are no songs banned in the system! </div>}
 
                     {/* <div className={cx('pagination')}>
                         <button onClick={handlePrevPage} disabled={currentPage === 1}>

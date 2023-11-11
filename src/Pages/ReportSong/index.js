@@ -75,6 +75,7 @@ function ReportSong() {
                 <div className={cx('body-right')}>
                     {listSongs.length !== 0 ?
                         <div>
+                            {console.log(listSongs)}
                             <div className={cx('scroll-container')}>
                                 {listSongs.map((song, index) => (
                                     <div className={cx('song')} key={index}>
@@ -106,7 +107,7 @@ function ReportSong() {
                                 <Pagination pages={pages} page={page} setPage={setPage} />
                             </div>
                         </div>
-                        : <div> There are no songs in the system! </div>}
+                        : <div> {console.log(listSongs)} There are no reportted songs in the system! </div>}
 
                     {/* <div className={cx('pagination')}>
                         <button onClick={handlePrevPage} disabled={currentPage === 1}>

@@ -14,6 +14,7 @@ import {
   ModalContent,
   ModalBody,
   ModalCloseButton,
+  useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useContext, useState } from 'react';
@@ -21,22 +22,43 @@ import { useContext, useState } from 'react';
 export default function ReportForm({ isOpen, onClose }) {
   const { information } = useContext(SongContext);
   const { BACK_END_PORT } = useContext(GlobalContext);
+  const toast = useToast();
   const [formData, setFormData] = useState({
     userId: information?.userId,
     songId: information?.songId,
     content: '',
   });
+  const showSuccessToast = (e) => {
+    toast({
+      title: "Message",
+      description: e,
+      status: "success",
+      duration: 3000,
+      position: "bottom-right", // Set the position here
+      isClosable: true,
+    });
+  };
+  const showFailedToast = (e) => {
+    toast({
+      title: "Message",
+      description: e,
+      status: "warning",
+      duration: 3000,
+      position: "bottom-right", // Set the position here
+      isClosable: true,
+    });
+  };
   const handleSendReport = () => {
     axios
       .post(`${BACK_END_PORT}/api/v1/report`, formData)
       .then((response) => {
         if (response.data === 'Report Successfully!') {
-          alert(response.data);
+          showSuccessToast("Report Successfully")
           onClose();
         }
       })
       .catch((error) => {
-        alert('Cant send report', error.message);
+        showFailedToast("Report Failed!")
       });
   };
   return (

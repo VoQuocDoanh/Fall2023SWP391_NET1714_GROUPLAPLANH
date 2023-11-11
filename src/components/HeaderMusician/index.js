@@ -54,7 +54,6 @@ function HeaderMusician() {
       <div className={cx("header-right")}>
         <div className={cx("navigation")}>
           <Link to={"/"}><div className={cx("nav-item")}>Home</div></Link>
-          <Link to="/musicianprofile"><div className={cx("nav-item")}>Account</div></Link>
           <div>
                 <Link to="/viewbeat"><div className={cx("nav-item")}>Beat</div></Link>        
           </div>
