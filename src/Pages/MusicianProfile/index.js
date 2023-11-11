@@ -329,7 +329,7 @@ function MyProfile() {
                         </div>
                     </TabPanel>
                     {/* Feedback */}
-                    <TabPanel>
+                    <TabPanel style={{ marginBottom: "400px"}}>
                         <div className={cx("volt8A")}>
                             <div style={{ color: '#06c', fontWeight: 'bold' }} className={cx("title-feedback")}> Beat Review</div>
                             {console.log(feedBacks)}
