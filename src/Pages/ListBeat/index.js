@@ -237,7 +237,7 @@ function ListBeat() {
                 </div>
                 
 
-                : <div className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 600 }}> All Beat are sold out!<div> Thank you for your visiting on our website </div> </div>}
+                : <div className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 800 }}> All Beat are sold out!<div> Thank you for your visiting on our website </div> </div>}
                 {pages !== 1 ?
                         <div className={cx("pagination")}>
                             <Pagination pages={pages} page={page} setPage={setPage} />

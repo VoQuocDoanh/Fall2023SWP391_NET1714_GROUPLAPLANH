@@ -63,9 +63,9 @@ function ListBeatSoldOut() {
           My Beats Sold Out
         </h1>
       </div>
-      
+
       <h1>Income: ${income}</h1>
-      
+
       <section className={cx("shop-card")}>
         {/* Header */}
 
@@ -75,36 +75,59 @@ function ListBeatSoldOut() {
         {beatSoldOut.length !== 0 ?
           <div>
 
-            <div className={cx("card-names")}>
+            {/* <div className={cx("card-names")}> */}
 
               <table className={cx("table-frame")}>
-                <tr>
+                <tr className={cx("table-header")} >
+                <th className={cx("th-frame")}>IMAGE</th>
                   <th className={cx("th-frame")}>PRODUCT</th>
                   <th className={cx("th-frame")}>DATE</th>
                   <th className={cx("th-frame")}>CUSTOMER</th>
                   <th className={cx("th-frame")}>PRICE</th>
                 </tr>
-              </table>
-            </div>
-            <div className={cx("list-card")}>
+            {/* </div> */}
+            {/* <div className={cx("list-card")}> */}
+              <tbody>
 
 
-              {beatSoldOut.map((item) => {
-                return (
-                  <CardBeatItem
-                    id={item.id}
-                    name={item.beatName}
-                    author={item.orderInformation.userId.fullName}
-                    date={item.orderInformation.createAt}
-                    price={item.price}
-                    beatId={item.id}
+                {beatSoldOut.map((item) => {
+                  const dateReleasing = new Date(item.orderInformation.createAt);
+                  const month = dateReleasing.getUTCMonth() + 1;
+                  const day = dateReleasing.getUTCDate();
+                  const year = dateReleasing.getUTCFullYear();
+                
+                  return (<tr >
                     
-                  />
-                );
+                      <td>
+                    <img src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} className={cx("card-img")} alt="anh dep" />
+
+                      </td>
+
+                      <td>
+
+                      {item.beatName}
+                      </td>
+                    <td>{`${day}/${month}/${year}`}</td>
+                    <td>{item.orderInformation.userId.fullName}</td>
+                    <td>{item.price}$</td>
+                  </tr>
+                    // <CardBeatItem
+                    //   id={item.id}
+                    //   name={item.beatName}
+                    //   author={item.orderInformation.userId.fullName}
+                    //   date={item.orderInformation.createAt}
+                    //   price={item.price}
+                    //   beatId={item.id}
+
+                    // />
+                  );
 
 
-              })}
-            </div>
+                })}
+              </tbody>
+              </table>
+
+            {/* </div> */}
           </div> : <div>Your Beats are not sold out</div>}
       </section>
     </div>

@@ -272,7 +272,7 @@ function UploadSong() {
                             <div className={cx('blue-header')}>
                                 <h4>Preview</h4>
                             </div>
-                            <div className={cx('review-panel')} style={{ width: '80%' }}>
+                            <div className={cx('review-panel')} style={{ width: '80%',height: 300 }}>
                                 <hr />
                                 <MarkdownPreview inputProps={{ maxLength: 1200 }} markdown={description} />
                             </div>

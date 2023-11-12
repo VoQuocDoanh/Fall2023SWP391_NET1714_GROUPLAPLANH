@@ -336,8 +336,8 @@ function ChordsDetails() {
 
                                 <div style={{ marginTop: 50, marginBottom: 40 }}>
                                     {token ?
-                                        <a style={{ background: 'none', marginLeft: 58, fontSize: 18, cursor: "pointer" }} className={cx("button-popup-add")} onClick={() => [setOpenModal(true), setId(item.id)]}> Add to Collection</a>
-                                        : <a style={{ background: 'none', marginLeft: 58, fontSize: 18, cursor: "pointer" }} className={cx("button-popup-add")} onClick={() => [setOpenFailedSnackBar(true), setMessageFailed("You need to login before using this function!")]}> Add to Collection</a>}
+                                        <a style={{ background: 'none', marginLeft: 58, fontSize: 18, cursor: "pointer" }} className={cx("button-popup-add")} onClick={() => [setOpenModal(true), setId(item.id)]}> Create New Collection</a>
+                                        : <a style={{ background: 'none', marginLeft: 58, fontSize: 18, cursor: "pointer" }} className={cx("button-popup-add")} onClick={() => [setOpenFailedSnackBar(true), setMessageFailed("You need to login before using this function!")]}> Add To Collection</a>}
                                     {listCollectionChord.length !== 0 && listCollectionChord.map((collectionChord) => {
                                         return (
                                             <div className={cx("link-text")} style={{ display: 'flex', fontSize: 18, fontWeight: 400, gap: 20, justifyContent: 'center', marginRight: 38, marginTop: 30 }} onClick={() => addChordToCollection(collectionChord.name, item.id)}>
