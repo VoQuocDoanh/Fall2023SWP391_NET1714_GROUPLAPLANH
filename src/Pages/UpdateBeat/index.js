@@ -117,11 +117,9 @@ function UploadBeat() {
     if (!token) {
       navigate("/login")
     }
-    const values = inputGenres.split(',');
-    console.log(values[0])
-    console.log(values.length)
-    for (let i = 0; i < values.length; i++) {
-      genres.push(values[i])
+  
+    for (let i = 0; i < inputGenres.length; i++) {
+      genres.push(inputGenres[i])
     }
     console.log(genres.length)
     if (!beatName || !price || !userId || genres.length === 0 || !vocalRange) {
@@ -186,8 +184,10 @@ function UploadBeat() {
           setPrice(res.data.price)
         }
         if (res.data.genres.length !== 0) {
-          const genreNames = res.data.genres.map(genre => genre.name).join(', ');
-          setInputGenres(genreNames);
+          setInputGenres([])
+          for (let i = 0; i < res.data.genres.length; i++) {
+            setInputGenres(prevGenres => [...prevGenres, res.data.genres[i].name]);
+          }
         }
         if (res.data.vocalRange !== null) {
           setVocalRange(res.data.vocalRange)
@@ -253,7 +253,7 @@ function UploadBeat() {
                 </defs>
               </svg>
               <input
-                type="Text"
+                type="number"
                 placeholder="Price"
                 className={cx("input-text")}
                 value={price}
@@ -334,6 +334,7 @@ function UploadBeat() {
                   value={inputGenres}
                   onChange={(e) => setInputGenres(e.target.value)}
                   onClick={(e) => e.stopPropagation()}
+                  readOnly
                 />}
 
                   position="right center"
@@ -371,8 +372,10 @@ function UploadBeat() {
                   )}
                 </Popup>
               </div>
-
             </div>
+            {inputGenres.length !== 0 ?
+            <Button variant={"contained"} style={{marginTop:20, marginRight:200, backgroundColor:"#1976D2"}} onClick={() => setInputGenres([])}>Clear all</Button>
+            : <></>}
           </div>
 
           {/*Tone*/}
@@ -459,16 +462,16 @@ function UploadBeat() {
         >
           <CircularProgress color="inherit" />
         </Backdrop>
-        <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
-          <Alert onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
-            {messageSuccess}
-          </Alert>
-        </Snackbar>
-        <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
-          <Alert onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
-            {messageFailed}
-          </Alert>
-        </Snackbar>
+        <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
+                <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {messageSuccess}
+                </Alert>
+            </Snackbar>
+            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
+                <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {messageFailed}
+                </Alert>
+            </Snackbar>
         {/* Footer */}
         {/* <div className={cx("footer")}>
         <div className={cx("footer-left")}>

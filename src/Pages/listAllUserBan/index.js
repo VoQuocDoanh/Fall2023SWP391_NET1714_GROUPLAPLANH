@@ -118,27 +118,12 @@ function ListAllUserBan( ) {
                         })}
 
                     </tbody>
-                <div className={cx("pagination-header")} style={{ marginTop: 50 }}>
-                    {page > 1 ?
-                        <span onClick={() => setPage(page - 1)}><button className={cx('button-pagi')}>Previous</button></span>
-                        : <span><button className={cx('button-pagi')}>Previous</button> </span>
-                    }
-
-                    {list.map((item, index) => {
-                        return <span key={index} className={cx("number-pagi")} onClick={() => setPage(item)}>
-                            <ul>
-                                <li className={cx("link", {
-                                    "active": active === index
-                                })} onClick={() => setActive(index)}>{item}</li>
-                            </ul>
-                        </span>
-                    })}
-                    {page < list.length ?
-                        <span onClick={() => setPage(page + 1)}><button className={cx('button-pagi')}>Next</button></span>
-                        : <span><button className={cx('button-pagi')}>Next</button> </span>
-                    }
-                </div>
-            </div>: <div style={{display:"flex", justifyContent:"center", marginBottom:500, fontSize:25}}> There are no user who has banned </div>}
+                    {pages !== 1 ?
+                    <div className={cx("pagination")}>
+                        <Pagination pages={pages} page={page} setPage={setPage} />
+                    </div>
+                    : <div></div>}
+            </div>: <div style={{display:"flex", justifyContent:"center", marginBottom:1000, fontSize:25}}> There are no user who has banned </div>}
         </div>
     );
 }

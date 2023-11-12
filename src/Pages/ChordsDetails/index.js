@@ -135,6 +135,7 @@ function ChordsDetails() {
     }
 
     const addAndCreateChordToCollection = async () => {
+        setMessageSuccess("")
         if (!token) {
             navigate("/login")
             return
@@ -150,6 +151,8 @@ function ChordsDetails() {
                 setMessageSuccess("Add Successfully")
                 setOpenModal(false)
                 setOpenSuccessSnackBar(true)
+                setCollectionName("")
+                setCollectionDescription("")
             })
             .catch((error) => {
                 setMessageFailed("Collection Name has been used!")
@@ -396,13 +399,13 @@ function ChordsDetails() {
                     </Typography>
                 </Box>
             </Modal>
-            <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={handleCloseSuccessSnackBar} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
-                <Alert onClose={handleCloseSuccessSnackBar} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+            <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
+                <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                     {messageSuccess}
                 </Alert>
             </Snackbar>
-            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={handleCloseFailedSnackBar} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
-                <Alert onClose={handleCloseFailedSnackBar} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
+                <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                     {messageFailed}
                 </Alert>
             </Snackbar>

@@ -10,6 +10,7 @@ import Popup from "reactjs-popup";
 import axiosInstance from "../../authorization/axiosInstance";
 import useToken from "../../authorization/useToken";
 import jwtDecode from "jwt-decode";
+import { Alert, Snackbar } from "@mui/material";
 const cx = classNames.bind(styles);
 const DATA = [
     {
@@ -24,6 +25,10 @@ function ViewDetailsUser() {
     const [user, setUser] = useState();
     const [report, setReport] = useState("")
     const [checkReport, setCheckReport] = useState("")
+    const [messageSuccess, setMessageSuccess] = useState("")
+    const [messageFailed, setMessageFailed] = useState("")
+    const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
+    const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
     const navigate = useNavigate()
     const token = useToken()
     let userId = ""
@@ -48,7 +53,14 @@ function ViewDetailsUser() {
         }
         await axiosInstance.post("http://localhost:8080/api/v1/report/user", { userId: userId, userReported: id, content: report })
             .then((res) => {
-                setCheckReport("Report Successfully")
+                setOpenSuccessSnackBar(true)
+                setMessageSuccess("Report successfully")
+                setCheckReport("Report successfully")
+            })
+            .catch((error) => {
+                setOpenFailedSnackBar(true)
+                setMessageFailed("Report failed!")
+                setCheckReport("Report failed!")
             })
     }
 
@@ -121,30 +133,28 @@ function ViewDetailsUser() {
                                         </div>
                                     </td>
                                 </div>
-                                {(!userId.includes(user.id)) ? 
-                                <div className={cx("part5")}>
-                                    <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<button type="button" className={cx("button-save-details")} aria-disabled="false" >Report</button>}  {...{ contentStyle }} position="top center">
-                                        <div className={cx("text-all")} style={{ padding: 10 }}>
-                                            <div style={{ display: 'grid' }}>
-                                                <td style={{ fontWeight: 'bold', fontSize: "2.2rem", marginLeft: 120, color: 'red' }}>Report</td>
-                                                <td style={{ paddingTop: 15, paddingLeft: 30 }}>
-                                                    {user.avatar !== null ?
-                                                        <img className={cx("img-user")} src={user.avatar} />
-                                                        : <img className={cx("img-user")} src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVhcVcxgW8LzmIu36MCeJb81AHXlI8CwikrHNh5vzY8A&s"} />}
-                                                    <a href="#" style={{ fontWeight: 'bold' }}>{user.username}</a>
+                                {(!userId.includes(user.id)) ?
+                                    <div className={cx("part5")}>
+                                        <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<button type="button" className={cx("button-save-details")} aria-disabled="false" >Report</button>}  {...{ contentStyle }} position="top center">
+                                            <div className={cx("text-all")} style={{ padding: 10 }}>
+                                                <div style={{ display: 'grid' }}>
+                                                    <td style={{ fontWeight: 'bold', fontSize: "2.2rem", marginLeft: 120, color: 'red' }}>Report</td>
+                                                    <td style={{ paddingTop: 15, paddingLeft: 30 }}>
+                                                        {user.avatar !== null ?
+                                                            <img className={cx("img-user")} src={user.avatar} />
+                                                            : <img className={cx("img-user")} src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVhcVcxgW8LzmIu36MCeJb81AHXlI8CwikrHNh5vzY8A&s"} />}
+                                                        <a href="#" style={{ fontWeight: 'bold' }}>{user.username}</a>
+                                                    </td>
+                                                </div>
+                                                <textarea className={cx("text-des")} style={{ resize: 'none', width: '385px', border: 1, height: 150, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12 }} onChange={(e) => setReport(e.target.value)} />
+                                                <td className={cx("button-type")}>
+                                                    <button type="button" className={cx("button-send")} aria-disabled="false" onClick={() => handleReport()}>Send</button>
                                                 </td>
+
                                             </div>
-                                            <textarea className={cx("text-des")} style={{ resize: 'none', width: '385px', border: 1, height: 150, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12 }} onChange={(e) => setReport(e.target.value)} />
-                                            <td className={cx("button-type")}>
-                                                <button type="button" className={cx("button-send")} aria-disabled="false" onClick={() => handleReport()}>Send</button>
-                                            </td>
-
-                                        </div>
-                                    </Popup>
-                                </div>
-                                : <div></div>}
-                                <div style={{ fontSize: 15, color: "green", marginLeft: 50, marginTop: 20 }}>{checkReport}</div>
-
+                                        </Popup>
+                                    </div>
+                                    : <div></div>}
                             </table>
                         </form>
                     </div>
@@ -159,16 +169,26 @@ function ViewDetailsUser() {
                                 </div>
                                 {/* <input className={cx("img-click")} type="file" accept=".jpg,.jpeg,.png" /> */}
                                 <div className={cx("info-user")}>
-                                    <td style={{ marginLeft: 10, fontWeight: 300, fontSize:30}}>
+                                    <td style={{ marginLeft: 10, fontWeight: 300, fontSize: 30 }}>
                                         {user.username}
                                     </td>
-                                    <td style={{ marginLeft: 10, fontSize:15 }}>
+                                    <td style={{ marginLeft: 10, fontSize: 15 }}>
                                         Customer
                                     </td>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
+                        <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                            {messageSuccess}
+                        </Alert>
+                    </Snackbar>
+                    <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
+                        <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                            {messageFailed}
+                        </Alert>
+                    </Snackbar>
                 </div> : <div></div>}
         </div>
     );

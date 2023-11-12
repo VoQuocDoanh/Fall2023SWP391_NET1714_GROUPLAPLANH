@@ -18,7 +18,7 @@ const cx = classNames.bind(styles);
 function ListUserReport() {
     const [page, setPage] = useState(1)
     const [pages, setPages] = useState(1)
-    const [listUser, setListUser] = useState();
+    const [listUser, setListUser] = useState([]);
     useEffect(() => {
         loadListUser()
     }, [page])
@@ -44,7 +44,7 @@ function ListUserReport() {
             <h1 className={cx("login-wrapper")}>List User Reported</h1>
             <div className={cx("line")}>
             </div>
-            {listUser ? <div className={cx("listuser-header")}>
+            {listUser.length !== 0 ? <div className={cx("listuser-header")}>
                 <thead>
                     <tr>
                         <th><span style={{ paddingRight: 150 }}>User</span></th>
@@ -107,7 +107,7 @@ function ListUserReport() {
                     </div>
                     : <div></div>}
             </div>
-                : <div> </div>}
+                : <div style={{ display: "flex", justifyContent: "center", marginBottom: 1000, fontSize: 25 }}> There are no user who has reportted </div>}
         </div>
     );
 }

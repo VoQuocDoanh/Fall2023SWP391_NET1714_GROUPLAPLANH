@@ -89,24 +89,17 @@ function BannedSong() {
                                                 </div>
                                             </div>
                                         </Link>
-                                        <Popup trigger={<button className={cx("button-page")}>...</button>} position="bottom centers">
-                                            <div className={cx("text-all")}>
-                                                <div style={{ fontWeight: 500, fontSize: '2rem', padding: 5, display: 'flex', justifyContent: 'center', background: 'white' }}>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
-                                                        <path d="M6.25016 19.7917C6.25016 20.9375 7.18766 21.875 8.3335 21.875H16.6668C17.8127 21.875 18.7502 20.9375 18.7502 19.7917V7.29167H6.25016V19.7917ZM19.7918 4.16667H16.146L15.1043 3.125H9.896L8.85433 4.16667H5.2085V6.25H19.7918V4.16667Z" fill="black" />
-                                                    </svg>
-                                                    <a>Add to Playlist</a>
-                                                </div>
-                                            </div>
-                                        </Popup>
                                     </div>
                                 ))}
 
-                            </div><div className={cx("pagination")}>
-                                <Pagination pages={pages} page={page} setPage={setPage} />
                             </div>
+                            {pages !== 1 ?
+                                <div className={cx("pagination")}>
+                                    <Pagination pages={pages} page={page} setPage={setPage} />
+                                </div>
+                                : <div></div>}
                         </div>
-                        : <div> There are no songs banned in the system! </div>}
+                        : <div style={{ display: "flex", justifyContent: "center", marginBottom: 1000, fontSize: 25 }}> There are no songs banned in the system! </div>}
 
                     {/* <div className={cx('pagination')}>
                         <button onClick={handlePrevPage} disabled={currentPage === 1}>

@@ -10,6 +10,7 @@ import {
   IconButton,
   Button,
   ChakraProvider,
+  useToast,
 } from "@chakra-ui/react";
 import MusicCardItem from "@/components/MusicCard";
 
@@ -18,7 +19,6 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { GlobalContext } from "@/Provider";
-import { useToast } from "react-toastify";
 import jwtDecode from "jwt-decode";
 import useToken from "@/authorization/useToken";
 import axiosInstance from "@/authorization/axiosInstance";
@@ -39,6 +39,27 @@ function MyCollection() {
   const [nextPage, setNextPage] = useState(false);
   const [previosPage, setPreviosPage] = useState(false);
   const [dynamicPlaylist, setDynamicPlaylist] = useState([]);
+  const toast = useToast();
+  const showSuccessToast = (e) => {
+    toast({
+      title: "Message",
+      description: e,
+      status: "success",
+      duration: 2000,
+      position: "top-right", // Set the position here
+      isClosable: true,
+    });
+  };
+  const showFailedToast = (e) => {
+    toast({
+      title: "Message",
+      description: e,
+      status: "warning",
+      duration: 2000,
+      position: "top-right", // Set the position here
+      isClosable: true,
+    });
+  };
 
   const getPaginationListOfMyPlaylistSong = (status, list) => {
     let value = 0;
@@ -84,6 +105,9 @@ function MyCollection() {
   const handleCloseSuccessSnackBar = () => setOpenSuccessSnackBar(false);
   const handleOpenFailedSnackBar = () => setOpenFailedSnackBar(true);
   const handleCloseFailedSnackBar = () => setOpenFailedSnackBar(false);
+  const [checkDeteleChord, setCheckDeleteChord] = useState(false)
+  const [checkDeleteSong, setCheckDeleteSong] = useState(false)
+  
   const token = useToken()
   let userId = ""
   let username = ""
@@ -148,9 +172,10 @@ function MyCollection() {
       }
     };
     fetchData();
-  }, [BACK_END_PORT, messageSuccess]);
+  }, [BACK_END_PORT, checkDeleteSong, checkDeteleChord]);
 
   const handleDeleteChordCollection = async (name) => {
+    setCheckDeleteChord(false)
     console.log(name)
     console.log(username)
     await axiosInstance.delete("http://localhost:8080/api/v1/chordcollection/delete",{
@@ -160,24 +185,25 @@ function MyCollection() {
       }
     })
       .then((res) => {
-        setMessageSuccess("Delete Successfully")
-        setOpenSuccessSnackBar(true)
+        showSuccessToast("Delete Successfully")
+        setCheckDeleteChord(true)
       })
       .catch((error) => {
-        setMessageFailed("Delete Failed!")
-        setOpenFailedSnackBar(true)
+        showFailedToast("Delete Failed!")
+        setCheckDeleteChord(false)
       })
   }
 
   const handleDeleteSongCollection = async (name) => {
+    setCheckDeleteSong(false)
     await axiosInstance.delete(`http://localhost:8080/api/v1/playlist/user/${userId}/${name}`)
       .then((res) => {
-        setMessageSuccess("Delete Successfully")
-        setOpenSuccessSnackBar(true)
+        showSuccessToast("Delete Successfully")
+        setCheckDeleteSong(true)
       })
       .catch((error) => {
-        setMessageFailed("Delete Failed!")
-        setOpenFailedSnackBar(true)
+        showFailedToast("Delete Failed!")
+        setCheckDeleteSong(false)
       })
   }
 

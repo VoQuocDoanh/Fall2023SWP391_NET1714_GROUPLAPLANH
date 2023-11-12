@@ -65,14 +65,15 @@ function SongDetail() {
   const [singer, setSinger] = useState("")
   const [tone, setTone] = useState("")
   const [vocalRange, setVocalRange] = useState("")
+  const [user,setUser] = useState({})
   const toast = useToast();
   const showSuccessToast = (e) => {
     toast({
       title: "Message",
       description: e,
       status: "success",
-      duration: 3000,
-      position: "bottom-right", // Set the position here
+      duration: 2000,
+      position: "top-right", // Set the position here
       isClosable: true,
     });
   };
@@ -81,8 +82,8 @@ function SongDetail() {
       title: "Message",
       description: e,
       status: "warning",
-      duration: 3000,
-      position: "bottom-right", // Set the position here
+      duration: 2000,
+      position: "top-right", // Set the position here
       isClosable: true,
     });
   };
@@ -130,11 +131,12 @@ function SongDetail() {
 
   const fetchData = async () => {
     try {
-      const [getSongDetail, getSongComment, getListPlaylist] =
+      const [getSongDetail, getSongComment, getListPlaylist,getDetailsUser] =
         await Promise.all([
           axios.get(`${BACK_END_PORT}/api/v1/song/${id}`),
           axios.get(`${BACK_END_PORT}/api/v1/comment/song/${id}`),
           axios.get(`${BACK_END_PORT}/api/v1/playlist/user/${userId}`),
+          axios.get(`${BACK_END_PORT}/api/v1/user/${userId}`),
         ]);
 
       if (getSongDetail) {
@@ -148,6 +150,9 @@ function SongDetail() {
       }
       if (getListPlaylist) {
         setListPlayList(getListPlaylist.data);
+      }
+      if(getDetailsUser){
+        setUser(getDetailsUser.data)
       }
     } catch (error) {
       console.log(error);
@@ -174,6 +179,7 @@ function SongDetail() {
   }
 
   const handleUpdateSong = async () => {
+    setReload(false)
     if(!token){
       showFailedToast("You need to login before using this function!")
       return
@@ -364,6 +370,7 @@ function SongDetail() {
                     >
                       View report
                     </Button>
+                    {songData.status !== -1 ? 
                     <Button
                       height="40px"
                       width="100px"
@@ -373,7 +380,16 @@ function SongDetail() {
                       color="black"
                     >
                       Ban
-                    </Button>
+                    </Button> : <Button
+                      height="40px"
+                      width="100px"
+                      colorScheme="teal"
+                      variant="outline"
+                      color="red"
+                      cursor={"not-allowed"}
+                    >
+                      Banned
+                    </Button>}
                   </div> : <div style={boxStyle}>
                     <Button height="40px" width="100px" onClick={onOpen} colorScheme="red" variant="outline" color="black" ml={2}>
                       Report
@@ -422,7 +438,7 @@ function SongDetail() {
                       setNewListStatus(true);
                     }}
                   >
-                    Add New Playlist
+                    Add New Collection
                   </MenuItem>
                   {MenuItemHTML}
                 </MenuList>
@@ -445,6 +461,7 @@ function SongDetail() {
                 maxH={"780px"}
                 overflowY={"scroll"}
                 songCommentData={songCommentData}
+                avatarUser={user.avatar}
               /> : <div></div>}
             </Stack>
             <ChordsComponent

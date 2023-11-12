@@ -33,8 +33,8 @@ export default function ReportForm({ isOpen, onClose }) {
       title: "Message",
       description: e,
       status: "success",
-      duration: 3000,
-      position: "bottom-right", // Set the position here
+      duration: 2000,
+      position: "top-right", // Set the position here
       isClosable: true,
     });
   };
@@ -43,8 +43,8 @@ export default function ReportForm({ isOpen, onClose }) {
       title: "Message",
       description: e,
       status: "warning",
-      duration: 3000,
-      position: "bottom-right", // Set the position here
+      duration: 2000,
+      position: "top-right", // Set the position here
       isClosable: true,
     });
   };

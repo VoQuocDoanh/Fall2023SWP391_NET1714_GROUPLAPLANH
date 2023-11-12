@@ -11,6 +11,7 @@ import {
   CardHeader,
   Divider,
   CardFooter,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useContext, useState, useEffect } from "react";
@@ -30,6 +31,27 @@ function MyPlayListChordDetail() {
   const [dynamicPlaylist, setDynamicPlaylist] = useState([]);
   const itemsPerPage = 6;
   const [tabSelected, setTabSelected] = useState("Guitar")
+  const toast = useToast();
+  const showSuccessToast = (e) => {
+    toast({
+      title: "Message",
+      description: e,
+      status: "success",
+      duration: 2000,
+      position: "top-right", // Set the position here
+      isClosable: true,
+    });
+  };
+  const showFailedToast = (e) => {
+    toast({
+      title: "Message",
+      description: e,
+      status: "warning",
+      duration: 2000,
+      position: "top-right", // Set the position here
+      isClosable: true,
+    });
+  };
   const totalPages = Math.ceil(
     playListDetail?.chords?.length
       ? playListDetail?.chords?.filter(item=>item?.type === tabSelected).length / itemsPerPage
@@ -59,13 +81,14 @@ function MyPlayListChordDetail() {
       );
 
       if (response.data === "Remove successfully") {
-        alert(response.data);
+        showSuccessToast("Remove successfully")
         setReload(true);
         setTimeout(() => {
           setReload(false);
         }, 500);
       }
     } catch (error) {
+      showFailedToast("Remove failed!")
       console.error("Error fetching data:", error);
     }
   };

@@ -9,6 +9,7 @@ import {
   InputGroup,
   InputRightElement,
   Text,
+  useToast,
 } from '@chakra-ui/react';
 import { IoSend } from 'react-icons/io5';
 import { useState } from 'react';
@@ -21,9 +22,31 @@ function ReplyItem({
   handleDelete,
   index,
   BACK_END_PORT,
-  setReload
+  setReload,
+  avatarUser
 }) {
   const [showBox, setShowBox] = useState(false);
+  const toast = useToast();
+  const showSuccessToast = (e) => {
+    toast({
+      title: "Message",
+      description: e,
+      status: "success",
+      duration: 2000,
+      position: "top-right", // Set the position here
+      isClosable: true,
+    });
+  };
+  const showFailedToast = (e) => {
+    toast({
+      title: "Message",
+      description: e,
+      status: "warning",
+      duration: 2000,
+      position: "top-right", // Set the position here
+      isClosable: true,
+    });
+  };
   const [formData, setFormData] = useState({
     userId: information?.userId,
     songId: information?.songId,
@@ -46,10 +69,10 @@ function ReplyItem({
           }
         })
         .catch((err) => {
-          alert('Error when upload your comment' + err);
+          showFailedToast("Upload comment failed!")
         });
     } else {
-      alert('Please input your comment');
+      showFailedToast("Please input your comment!")    
     }
   };
 
@@ -57,9 +80,9 @@ function ReplyItem({
     <Flex w={'100%'} my={1}>
       <Avatar
         src={
-          item?.avatar
-            ? item?.avatar
-            : 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=334&q=80'
+          avatarUser
+            ? avatarUser
+            : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVhcVcxgW8LzmIu36MCeJb81AHXlI8CwikrHNh5vzY8A&s'
         }
         height={'40px'}
         width={'40px'}
@@ -77,7 +100,7 @@ function ReplyItem({
           }
         />
         <InputRightElement width='3.5rem' color={'#1877F2'} fontSize={'20px'}>
-          <IoSend style={{ cursor: 'pointer' }} onClick={handleComment} />
+          <IoSend style={{ cursor: 'pointer' }} onClick={() => handleComment()} />
         </InputRightElement>
       </InputGroup>
     </Flex>
@@ -91,6 +114,7 @@ function ReplyItem({
        setReload={setReload}
        BACK_END_PORT={BACK_END_PORT}
        handleDelete={handleDelete}
+       avatarUser={avatarUser}
      />
    ));
   return (

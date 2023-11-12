@@ -12,6 +12,7 @@ import {
   IconButton,
   Image,
   CardBody,
+  useToast,
 } from '@chakra-ui/react';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { DeleteIcon } from '@chakra-ui/icons';
@@ -28,6 +29,27 @@ const SongItem = ({
   setReload,
 }) => {
   const navigator = useNavigate();
+  const toast = useToast();
+  const showSuccessToast = (e) => {
+    toast({
+      title: "Message",
+      description: e,
+      status: "success",
+      duration: 2000,
+      position: "top-right", // Set the position here
+      isClosable: true,
+    });
+  };
+  const showFailedToast = (e) => {
+    toast({
+      title: "Message",
+      description: e,
+      status: "warning",
+      duration: 2000,
+      position: "top-right", // Set the position here
+      isClosable: true,
+    });
+  };
 
   const handleSongDetail = (id) => {
     navigator(`/song/${id}`);
@@ -44,7 +66,7 @@ const SongItem = ({
       })
       .then((response) => {
         if (response.data === 'Remove Successfully!') {
-          alert(response.data);
+          showSuccessToast("Remove successfully")
           setReload(true);
           setTimeout(() => {
             setReload(false);
@@ -56,7 +78,7 @@ const SongItem = ({
       })
       .catch((err) => {
         console.log(err);
-        alert("Can't remove song from playlist", err);
+        showFailedToast("Remove failed!")
       });
   };
   return (

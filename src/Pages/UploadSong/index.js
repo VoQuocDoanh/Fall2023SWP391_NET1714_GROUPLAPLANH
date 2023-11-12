@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Alert, Button, Snackbar } from "@mui/material";
 import styles from "./UploadSong.module.scss";
 import classNames from "classnames/bind";
 import { Link, useNavigate } from "react-router-dom";
@@ -38,6 +38,10 @@ function UploadSong() {
     const [description, setDescription] = useState("");
     const [listGenres, setListGenres] = useState(null)
     const [listChords, setListChords] = useState(null)
+    const [messageSuccess, setMessageSuccess] = useState("")
+    const [messageFailed, setMessageFailed] = useState("")
+    const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
+    const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
     const token = useToken()
     let userid = "";
     if (token) {
@@ -72,23 +76,26 @@ function UploadSong() {
         if (!token) {
             navigate("/login")
         }
-        console.log(inputGenres)
-        const values = inputGenres.split(',');
-        console.log(values[0])
-        for (let i = 0; i < values.length; i++) {
-            genres.push(values[i])
+        for (let i = 0; i < inputGenres.length; i++) {
+            genres.push(inputGenres[i])
         }
         console.log(genres)
         if (description === "" || songName === "" || userid === "" || singer === "" || tone === "" || songUrl === "" || genres[0] === "" || vocalRange === "") {
-            alert("Please fill in all fields!")
+            setOpenFailedSnackBar(true)
+            setMessageFailed("All fields must not be null!")
             return;
         }
         await axiosInstance.post("http://localhost:8080/api/v1/song/user", songInput)
             .then((res) => {
-                alert("Upload Successfully")
-                navigate("/songs")
+                setOpenSuccessSnackBar(true)
+                setMessageSuccess("Upload successfully")
+                setTimeout(() => {
+                    navigate("/songs")
+                }, 2000)
             })
             .catch((error) => {
+                setOpenFailedSnackBar(true)
+                setMessageFailed("Upload failed!")
                 console.log(error)
             })
     }
@@ -505,6 +512,16 @@ function UploadSong() {
                         </div>
                     </div>
                 </div>
+                <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
+                    <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                        {messageSuccess}
+                    </Alert>
+                </Snackbar>
+                <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
+                    <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                        {messageFailed}
+                    </Alert>
+                </Snackbar>
             </div>
         )
     }

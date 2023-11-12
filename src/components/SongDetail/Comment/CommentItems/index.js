@@ -10,6 +10,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  useToast,
 } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 import ReplyItem from './ReplyItem';
@@ -23,14 +24,37 @@ function TestimonialCard(props) {
     id,
     username,
     content,
-    avatar = 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=334&q=80',
+    avatar,
     subComment = [],
     handleDelete,
     index,
     BACK_END_PORT,
+    avatarUser
   } = props;
+  console.log(username)
   const [showBox, setShowBox] = useState(false);
   const { information, setReload } = useContext(SongContext);
+  const toast = useToast();
+  const showSuccessToast = (e) => {
+    toast({
+      title: "Message",
+      description: e,
+      status: "success",
+      duration: 2000,
+      position: "top-right", // Set the position here
+      isClosable: true,
+    });
+  };
+  const showFailedToast = (e) => {
+    toast({
+      title: "Message",
+      description: e,
+      status: "warning",
+      duration: 2000,
+      position: "top-right", // Set the position here
+      isClosable: true,
+    });
+  };
   const [formData, setFormData] = useState({
     userId: information?.userId,
     songId: information?.songId,
@@ -53,22 +77,32 @@ function TestimonialCard(props) {
           }
         })
         .catch((err) => {
-          alert('Error when upload your comment' + err);
+          showFailedToast("Upload comment failed!")
         });
     } else {
-      alert('Please input your comment');
+      showFailedToast("Please input your comment!")
     }
   };
 
   const ReplyInput = (
     <Flex w={'100%'} mb={4} justifyContent={'flex-start'}>
+      {console.log(avatarUser)}
+      {avatarUser ? 
       <Avatar
-        src={avatar}
+        src={avatarUser}
+        height={'40px'}
+        width={'40px'}
+        alignSelf={'start'}
+        m={{ base: '0 0 15px 0', md: '0 15px 0 0' }}
+      /> :
+      <Avatar
+        src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVhcVcxgW8LzmIu36MCeJb81AHXlI8CwikrHNh5vzY8A&s"}
         height={'40px'}
         width={'40px'}
         alignSelf={'start'}
         m={{ base: '0 0 15px 0', md: '0 15px 0 0' }}
       />
+}
       <InputGroup size='md'>
         <Input
           pr='4.5rem'
@@ -96,6 +130,7 @@ function TestimonialCard(props) {
       setReload={setReload}
       BACK_END_PORT={BACK_END_PORT}
       handleDelete={handleDelete}
+      avatarUser={avatarUser}
     />
   ));
   return (
@@ -186,6 +221,7 @@ export default function CommentItems({
   handleDelete = handleDelete,
   songCommentData = [],
   BACK_END_PORT,
+  avatarUser,
 }) {
   return (
     <Flex
@@ -204,6 +240,7 @@ export default function CommentItems({
             BACK_END_PORT={BACK_END_PORT}
             handleDelete={handleDelete}
             w={'100%'}
+            avatarUser={avatarUser}
           />
         ))}
       </Flex>

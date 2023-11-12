@@ -53,53 +53,53 @@ function Contact() {
     }
 
 
-    useEffect(() => {
-        loadDetailUser()
-    }, [checkEdit])
+    // useEffect(() => {
+    //     loadDetailUser()
+    // }, [checkEdit])
 
-    useEffect(() => {
-        loadFeedBack()
-    }, [page])
+    // useEffect(() => {
+    //     loadFeedBack()
+    // }, [page])
 
-    const loadDetailUser = async () => {
-        await axiosInstance.get(`http://localhost:8080/api/v1/user/${id}`)
-            .then((res) => {
-                if (res.data.fullName !== null) {
-                    setFullname(res.data.fullName)
-                }
-                if (res.data.username !== null) {
-                    setUserName(res.data.username)
-                }
-                if (res.data.address !== null) {
-                    console.log(123)
-                    setAddress(res.data.address)
-                }
-                if (res.data.mail !== null) {
-                    setMail(res.data.mail)
-                }
-                if (res.data.phone !== null) {
-                    setPhone(res.data.phone)
-                }
-                if (res.data.gender !== null) {
-                    setGender(res.data.gender)
-                }
-                if (res.data.avatar !== null) {
-                    setAvatar(res.data.avatar)
-                }
-                if (res.data.prize !== null) {
-                    setPrize(res.data.prize)
-                }
-                if (res.data.professional !== null) {
-                    setProfessional(res.data.professional)
-                }
-                if (res.data.year !== null) {
-                    setYear(res.data.year)
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }
+    // const loadDetailUser = async () => {
+    //     await axiosInstance.get(`http://localhost:8080/api/v1/user/${id}`)
+    //         .then((res) => {
+    //             if (res.data.fullName !== null) {
+    //                 setFullname(res.data.fullName)
+    //             }
+    //             if (res.data.username !== null) {
+    //                 setUserName(res.data.username)
+    //             }
+    //             if (res.data.address !== null) {
+    //                 console.log(123)
+    //                 setAddress(res.data.address)
+    //             }
+    //             if (res.data.mail !== null) {
+    //                 setMail(res.data.mail)
+    //             }
+    //             if (res.data.phone !== null) {
+    //                 setPhone(res.data.phone)
+    //             }
+    //             if (res.data.gender !== null) {
+    //                 setGender(res.data.gender)
+    //             }
+    //             if (res.data.avatar !== null) {
+    //                 setAvatar(res.data.avatar)
+    //             }
+    //             if (res.data.prize !== null) {
+    //                 setPrize(res.data.prize)
+    //             }
+    //             if (res.data.professional !== null) {
+    //                 setProfessional(res.data.professional)
+    //             }
+    //             if (res.data.year !== null) {
+    //                 setYear(res.data.year)
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             console.log(error)
+    //         })
+    // }
 
     const handleEdit = async () => {
         if (!fullName || !address || !phone || !gender || !id || !prize || !professional || !year) {
@@ -162,16 +162,6 @@ function Contact() {
                                         </td>
                                         <div className={cx("input-username0")}>
                                             <input className={cx("input-user")} type="text" placeholder="Your Name" value={fullName} onChange={(e) => setFullname(e.target.value)} />
-                                        </div>
-                                    </div>
-                                </td>
-                                <td className={cx("")}>
-                                    <div className={cx("text-username0")}>
-                                        <td>
-                                            <label style={{ fontWeight: 500 }} className={cx("text-name")}>Address*</label>
-                                        </td>
-                                        <div className={cx("input-username0")} >
-                                            <input className={cx("input-user")} type="text" placeholder="Your Address" value={address} onChange={(e) => setAddress(e.target.value)} />
                                         </div>
                                     </div>
                                 </td>

@@ -9,12 +9,34 @@ import {
   ModalCloseButton,
   Input,
   Button,
+  useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useContext, useState } from 'react';
 
 function AddSongAndPlaylist({ isOpen, onClose, songId, userId, setReload }) {
   const { BACK_END_PORT } = useContext(GlobalContext);
+  const toast = useToast();
+  const showSuccessToast = (e) => {
+    toast({
+      title: "Message",
+      description: e,
+      status: "success",
+      duration: 2000,
+      position: "top-right", // Set the position here
+      isClosable: true,
+    });
+  };
+  const showFailedToast = (e) => {
+    toast({
+      title: "Message",
+      description: e,
+      status: "warning",
+      duration: 2000,
+      position: "top-right", // Set the position here
+      isClosable: true,
+    });
+  };
   const [formData, setFormData] = useState({
     name: '',
     songid: songId,
@@ -25,7 +47,7 @@ function AddSongAndPlaylist({ isOpen, onClose, songId, userId, setReload }) {
       .post(`${BACK_END_PORT}/api/v1/playlist/user/${userId}/newadd`, formData)
       .then((response) => {
         if (response.data === 'Playlist is created successfully') {
-          alert(response.data);
+          showSuccessToast("Collection is created successfully")
           setFormData({ ...formData, name: '' });
           setReload(true);
           setTimeout(() => {
@@ -35,7 +57,7 @@ function AddSongAndPlaylist({ isOpen, onClose, songId, userId, setReload }) {
         }
       })
       .catch((error) => {
-        alert('Cant create playlist', error);
+        showFailedToast("Collection name has been used!")
       });
   };
 
@@ -43,7 +65,7 @@ function AddSongAndPlaylist({ isOpen, onClose, songId, userId, setReload }) {
     <Modal isOpen={isOpen} onClose={onClose} >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Create Playlist</ModalHeader>
+        <ModalHeader>Create Collection</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Input

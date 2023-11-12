@@ -65,7 +65,6 @@ function HeaderAdmin() {
               <Link to="/reportsong"><div className={cx("link-text")} >Song</div></Link>
             </div>
           </Popup>
-          <div className={cx("nav-item")}>Contact</div>
           <div className={cx("nav-item")}>
           </div>
         </div>
