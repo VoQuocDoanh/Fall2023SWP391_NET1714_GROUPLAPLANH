@@ -61,7 +61,7 @@ public class UserReportService {
         List<User> users= new ArrayList<>();
         for (Long u:list){
             User user = new User();
-            user = userRepository.findByIdOrderByStatus(u);
+            user = userRepository.findByIdOrderByCreatedAt(u);
             users.add(user);
         }
         if (users!=null){

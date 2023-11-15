@@ -274,6 +274,26 @@ public class BeatService {
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
+    public BeatCartResponseDTO cart(BeatCartResponseDTO response){
+        List<Long> list = response.getBeat();
+        List<Beat> beatEntity = new ArrayList<>();
+
+        Double amount = 0.0;
+        for (long i:list){
+            Beat b = new Beat();
+            b = beatRepository.findBeatById(i);
+            amount += b.getPrice();
+            beatEntity.add(b);
+        }
+        response.setTotalAmount(amount);
+        response.setBeatList(beatEntity);
+
+        return  response;
+    }
+
+    /*public Double totalCart(List<Beat> beat){
+
+    }*/
 
 
     public ResponseEntity<String> likeBeat(Long id1, Long id2) {

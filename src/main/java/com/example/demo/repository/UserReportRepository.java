@@ -15,7 +15,7 @@ public interface UserReportRepository extends JpaRepository<UserReport,Long> {
 
     Page<UserReport> findAll(Pageable pageable);
 
-    @Query("select distinct r.idReportedUser from UserReport r")
+    @Query("select distinct r.idReportedUser from UserReport r ")
     List<Long> findReportedUser();
 
     UserReport findUserReportsByIdReportedUser(Long id);

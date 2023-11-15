@@ -24,8 +24,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Page<User> findAllByOrderByStatusDesc(Pageable pageable);
     List<User> findAllByOrderByStatusDesc();
 
-    @Query("SELECT u from User u where u.Id =:id and (u.status=1 or u.status =0)")
-    User findByIdOrderByStatus(Long id);
+    @Query("SELECT u from User u where u.Id =:id and (u.status=1 or u.status =0) order by u.createdAt DESC ")
+    User findByIdOrderByCreatedAt(Long id);
 
     List<User> findAllByStatus (int status);
 
