@@ -64,19 +64,22 @@ public class UserReportService {
             user = userRepository.findByIdOrderByStatus(u);
             users.add(user);
         }
-        for (User us : users){
-            UserResponeDTO dto = new UserResponeDTO(
-                    us.getId(),
-                    us.getUsername(),
-                    us.getFullName(),
-                    us.getRole(),
-                    us.getMail(),
-                    us.getStatus(),
-                    us.getAvatar()
+        if (users!=null){
+            for (User us : users){
+                UserResponeDTO dto = new UserResponeDTO(
+                        us.getId(),
+                        us.getUsername(),
+                        us.getFullName(),
+                        us.getRole(),
+                        us.getMail(),
+                        us.getStatus(),
+                        us.getAvatar()
 
-            );
-            dtos.add(dto);
+                );
+                dtos.add(dto);
+            }
         }
+
         return dtos;
     }
 
