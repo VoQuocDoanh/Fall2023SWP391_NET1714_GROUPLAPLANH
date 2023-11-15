@@ -29,7 +29,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findAllByStatus (int status);
 
-    @Query("SELECT u.fullName from User u where u.Id =:id")
+    @Query("SELECT u.fullName from User u where u.Id =:id and u.status = 1")
     String findUserName(Long id);
     @Query("select u.mail from User u where u.mail = :mail")
     Optional<String> findUserMail(String mail);

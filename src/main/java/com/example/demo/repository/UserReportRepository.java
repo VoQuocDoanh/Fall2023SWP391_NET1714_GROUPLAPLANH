@@ -18,6 +18,8 @@ public interface UserReportRepository extends JpaRepository<UserReport,Long> {
     @Query("select distinct r.idReportedUser from UserReport r")
     List<Long> findReportedUser();
 
+    UserReport findUserReportsByIdReportedUser(Long id);
+
    // List<User> findBy
 
 

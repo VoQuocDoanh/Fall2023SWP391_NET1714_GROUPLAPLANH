@@ -80,6 +80,12 @@ public class UserReportService {
         return dtos;
     }
 
+    public void deleteReport(Long id){
+    //    Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(id, 0);
+        UserReport userReport = this.userReportRepository.findUserReportsByIdReportedUser(id);
+        this.userReportRepository.delete(userReport);
+    }
+
     public List<ReportResponseDTO> viewReport(Long id) {
         Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(id, 1);
         if(foundUser.isPresent()){
