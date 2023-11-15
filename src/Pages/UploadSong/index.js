@@ -1,4 +1,6 @@
-import { Alert, Button, Snackbar } from "@mui/material";
+import { Alert, Button, Checkbox, FormControl, InputLabel, ListItemText, MenuItem, Snackbar } from "@mui/material";
+import Select from "@mui/material/Select";
+import Typography from "@mui/material/Typography";
 import styles from "./UploadSong.module.scss";
 import classNames from "classnames/bind";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,7 +13,7 @@ import jwtDecode from "jwt-decode";
 import IMG_A7 from "../../assets/ImageForChords/Guitar/A/A7.png";
 import IMG_C7 from "../../assets/ImageForChords/Guitar/C/C7.png";
 import IMG_D7 from "../../assets/ImageForChords/Guitar/D/D7.png";
-import Popup from "reactjs-popup";
+// import Popup from "reactjs-popup";
 
 const cx = classNames.bind(styles);
 
@@ -29,7 +31,7 @@ const TONE = [
 ]
 function UploadSong() {
     const [vocalRange, setVocalRange] = useState("");
-    const [inputGenres, setInputGenres] = useState("");
+    const [inputGenres, setInputGenres] = useState([]);
     let genres = []
     const [singer, setSinger] = useState("");
     const [tone, setTone] = useState("");
@@ -72,17 +74,35 @@ function UploadSong() {
         loadChords()
     }, [])
 
+    const isValidName = (name) => {
+        const validNameRegex = /^[a-zA-Z0-9_]+$/;
+        return validNameRegex.test(name);
+    }
+
+    const isURL = (str) => {
+        const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+        return urlRegex.test(str);
+    }
+
     const handleUploadSong = async () => {
         if (!token) {
             navigate("/login")
         }
-        for (let i = 0; i < inputGenres.length; i++) {
-            genres.push(inputGenres[i])
-        }
+        genres = inputGenres;
         console.log(genres)
         if (description === "" || songName === "" || userid === "" || singer === "" || tone === "" || songUrl === "" || genres[0] === "" || vocalRange === "") {
             setOpenFailedSnackBar(true)
             setMessageFailed("All fields must not be null!")
+            return;
+        }
+        if (!isValidName(songName)) {
+            setOpenFailedSnackBar(true)
+            setMessageFailed("Song name do not have special characters")
+            return;
+        }
+        if (!isURL(songUrl)) {
+            setOpenFailedSnackBar(true)
+            setMessageFailed("Link must be a valid URL")
             return;
         }
         await axiosInstance.post("http://localhost:8080/api/v1/song/user", songInput)
@@ -119,6 +139,14 @@ function UploadSong() {
                 console.log(error)
             })
     }
+    const handleChangeGenre = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setInputGenres(
+            typeof value === 'string' ? value.split(',') : value,
+        );
+    };
 
     /* 
         [
@@ -272,7 +300,7 @@ function UploadSong() {
                             <div className={cx('blue-header')}>
                                 <h4>Preview</h4>
                             </div>
-                            <div className={cx('review-panel')} style={{ width: '80%',height: 300 }}>
+                            <div className={cx('review-panel')} style={{ width: '80%', height: 300 }}>
                                 <hr />
                                 <MarkdownPreview inputProps={{ maxLength: 1200 }} markdown={description} />
                             </div>
@@ -289,50 +317,32 @@ function UploadSong() {
                                 </div>
                                 <div style={{ marginTop: "20px" }} className={cx('song-genres')}>
                                     <h2 style={{ marginBottom: "20px" }}><b>Genres:</b></h2>
-                                    <Popup trigger={<input
-                                        type=""
-                                        placeholder="Select beat genre. Ex: Pop"
-                                        value={inputGenres}
-                                        className={cx('input-song-name')}
-                                        onChange={(event) => setInputGenres(event.target.value)}
-                                    />} position="right center">
-                                        {/* {listGenres.map((item) => {
-                                            return <div >{item.name}</div>
-                                        })} */}
-                                        {(close) => (
-
-                                            <>
-                                                {listGenres.map((item) => {
-                                                    return <div
-                                                        key={item.id}
-                                                        style={{
-                                                            padding: '8px',
-                                                            cursor: 'pointer',
-                                                            transition: 'background-color 0.3s ease',
-                                                            backgroundColor: '#3498db',
-                                                            border: '1px solid #fff',
-                                                            borderRadius: '5px',
-                                                        }}
-                                                        onClick={() => {
-                                                            setInputGenres((prevGenres) => {
-                                                                if (prevGenres.includes(item.name)) {
-                                                                    return prevGenres.filter((genre) => genre !== item.name);
-                                                                } else {
-                                                                    return [...prevGenres, item.name];
-                                                                }
-                                                            });
-                                                            close();
-                                                        }}
-                                                    >
-                                                        {item.name}
-                                                    </div>
-                                                })}
-                                            </>
-                                        )}
-                                    </Popup>
+                                    <FormControl fullWidth style={{ width: '300px', backgroundColor: 'white' }}>
+                                        <Select
+                                            labelId="demo-simple-select-label"
+                                            id="demo-simple-select"
+                                            placeholder="Select beat genres"
+                                            multiple
+                                            value={inputGenres}
+                                            onChange={(event) => (handleChangeGenre(event))}
+                                            renderValue={(selected) => selected.join(', ')}
+                                            style={{ fontSize: '1.3rem', boxShadow: '1px 1px 5px #E6E6E6 inset'}}
+                                        >
+                                            {listGenres.map((item) => (
+                                                <MenuItem key={item.name} value={item.name} >
+                                                    <Checkbox checked={inputGenres.indexOf(item.name) > -1} />
+                                                    <ListItemText>
+                                                        <Typography variant="body1" style={{ fontSize: '20px' }}>
+                                                            {item.name}
+                                                        </Typography>
+                                                    </ListItemText>
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
 
                                     <br></br>
-                                    {/* <button onClick={handleAddToList}>Add to list genre</button> */}
+
                                 </div>
                                 <div className={cx('tone-info')}>
                                     <h2 style={{ marginTop: "20px", marginBottom: "20px" }}><b>Tone:</b></h2>
@@ -471,16 +481,16 @@ function UploadSong() {
                                     </div>
                                     <div className={cx('check-failed-pass')}>
                                         <div className={cx('icon-times-left')}>
-                                            {inputGenres === "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                            {inputGenres.length === 0 && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                                 <path d="M14.1667 5.83301L5.83337 14.1663M5.83337 5.83301L14.1667 14.1663" stroke="#FF0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                             </svg>}
 
                                         </div>
                                         <div className={cx('text-failed')}>
                                             <div>
-                                                {inputGenres === "" && <span>Existed 1 Genres</span>}
-                                                {inputGenres !== "" && <span style={{ color: "green" }}>Existed 1 Genres </span>}
-                                                {inputGenres !== "" && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                {inputGenres.length === 0 && <span>Existed 1 Genres</span>}
+                                                {inputGenres.length !== 0 && <span style={{ color: "green" }}>Existed 1 Genres </span>}
+                                                {inputGenres.length !== 0 && <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                                     <path d="M4.16663 9.99967L8.33329 14.1663L16.6666 5.83301" stroke="#4ECB71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                                 </svg>}
                                             </div>
