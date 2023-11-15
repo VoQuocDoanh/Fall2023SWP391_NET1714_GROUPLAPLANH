@@ -93,7 +93,7 @@ public class BeatController {
             return this.beatService.updateBeat(sound, sound2, newBeat, id);
     }
 
-    @GetMapping({"/cart/view"})
+    @PostMapping({"/cart/view"})
     public ResponseEntity<BeatCartResponseDTO> viewBeat(@RequestBody BeatCartResponseDTO responseDTO){
         return ResponseEntity.ok(this.beatService.cart(responseDTO));
     }
