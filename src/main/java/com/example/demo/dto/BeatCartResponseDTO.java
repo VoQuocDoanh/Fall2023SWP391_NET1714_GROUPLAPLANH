@@ -14,6 +14,6 @@ import java.util.List;
 
 public class BeatCartResponseDTO {
     private List<Long> beat;
-    private List<Beat> beatList;
+    private List<BeatResponseDTO> beatList;
     private Double totalAmount;
 }

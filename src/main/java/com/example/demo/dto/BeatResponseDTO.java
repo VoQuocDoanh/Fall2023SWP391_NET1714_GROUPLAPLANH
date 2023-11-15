@@ -31,6 +31,7 @@ public class BeatResponseDTO {
     private Double rating;
     private String description;
     private int status;
+    private List<BeatResponseDTO> list;
 
     private String prize;
     private int year;

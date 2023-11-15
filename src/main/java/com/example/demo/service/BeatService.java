@@ -276,19 +276,19 @@ public class BeatService {
 
     public BeatCartResponseDTO cart(BeatCartResponseDTO response){
         List<Long> list = response.getBeat();
-        List<Beat> beatEntity = new ArrayList<>();
+        List<BeatResponseDTO> beatEntity = new ArrayList<>();
 
         Double amount = 0.0;
         for (long i:list){
             Beat b = new Beat();
             b = beatRepository.findBeatById(i);
             amount += b.getPrice();
-            beatEntity.add(b);
+            beatEntity.add(getDetailBeatResponseDTO(b));
         }
         response.setTotalAmount(amount);
         response.setBeatList(beatEntity);
 
-        return  response;
+        return response;
     }
 
     /*public Double totalCart(List<Beat> beat){
