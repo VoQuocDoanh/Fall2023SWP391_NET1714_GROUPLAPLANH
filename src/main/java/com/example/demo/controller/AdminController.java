@@ -42,9 +42,9 @@ public class AdminController {
     }
 
     //List all Customer in Admin
-    @GetMapping("{page}/10")
-    public ResponseEntity<PaginationResponseDTO> getAllUsers(@PathVariable int page) {
-        return ResponseEntity.ok(this.userService.getAllUsers(page));
+    @GetMapping("")
+    public ResponseEntity<List<UserResponeDTO>> getAllUsers() {
+        return ResponseEntity.ok(this.userService.getAllUsers());
     }
 
     //Get detail Customer
