@@ -52,10 +52,6 @@ public class UserService {
     @Autowired
     private GoogleCloudService service;
 
-    //@Autowired
-    public UserReportService reportService;
-
-
 
     private ResponseEntity<String> getStringResponseEntity(MultipartFile image, User user) {
         if(image != null && !image.isEmpty()) {
@@ -186,7 +182,6 @@ public class UserService {
 
     public ResponseEntity<String> unbanUser(UserDTO userDTO) {
         Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userDTO.getId(), 0);
-        reportService.deleteReport(foundUser.get().getId());
         if (foundUser.isPresent()) {
             User user = foundUser.get();
             user.setStatus(1);
