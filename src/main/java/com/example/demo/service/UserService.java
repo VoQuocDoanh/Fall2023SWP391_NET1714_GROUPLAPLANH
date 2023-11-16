@@ -9,16 +9,15 @@ import com.example.demo.dto.PaginationResponseDTO;
 import com.example.demo.dto.RegisterDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserResponeDTO;
+import com.example.demo.entity.ActivationToken;
 import com.example.demo.entity.MusicianInformation;
 import com.example.demo.entity.User;
-import com.example.demo.entity.ActivationToken;
-import com.example.demo.entity.UserReport;
-import com.example.demo.repository.UserReportRepository;
 import com.example.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -54,7 +53,7 @@ public class UserService {
 
 
     private ResponseEntity<String> getStringResponseEntity(MultipartFile image, User user) {
-        if(image != null && !image.isEmpty()) {
+        if (image != null && !image.isEmpty()) {
             if (uploadFile(image, user)) return new ResponseEntity<>("Update Failed!", HttpStatus.NOT_IMPLEMENTED);
             this.userRepository.save(user);
             return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
@@ -65,7 +64,7 @@ public class UserService {
 
     private boolean uploadFile(MultipartFile image, User user) {
         String path = this.service.uploadFile(image, user.getId(), "avatar", "full", user.getObjectName());
-        if(path == null){
+        if (path == null) {
             return true;
         }
         String fileName = this.extractObjectNameFromUrl(path);
@@ -91,33 +90,42 @@ public class UserService {
     public ResponseEntity<String> signup(RegisterDTO registerDTO) {
         Optional<User> foundUser = this.userRepository.findUserByUsername(registerDTO.getUserName());
         if (foundUser.isEmpty()) {
-            Optional<String> mail = this.userRepository.findUserMail(registerDTO.getEmail());
-            if (mail.isEmpty()) {
-                    String token = RandomStringUtils.randomAlphanumeric(64);
-                    User user = new User(registerDTO.getUserName(),
-                            this.passwordEncoder.encode(registerDTO.getPassword()),
-                            registerDTO.getFullName(),
-                            registerDTO.getEmail(),
-                            registerDTO.getRole(),
-                            User.Gender.MALE,
-                            -1, 0);
-                    ActivationToken activationToken = new ActivationToken(token, LocalDateTime.now().plusHours(12), user);
-                    user.setActivationToken(activationToken);
-                    this.userRepository.save(user);
-                    this.emailService.sendEmail(registerDTO.getEmail(),
-                            "Activate Your Account",
-                            "http://localhost:3000/registeractivation?activetoken=" + token);
-                    if (user.getRole().equals("MS")) {
-                        MusicianInformation information = new MusicianInformation();
-                        user.setInformation(information);
-                        this.userRepository.save(user);
-                    }
-                    return new ResponseEntity<>("Signup Successfully", HttpStatus.OK);
+            Optional<User> foundMail = this.userRepository.findUserMail(registerDTO.getEmail());
+            if (foundMail.isPresent()) {
+                if (foundMail.get().getStatus() == -1 && !isTokenValid(foundMail.get().getActivationToken().getExpiryDate())) {
+                    return getStringResponseEntity(registerDTO);
                 }
-            return new ResponseEntity<>("Email is already signed up", HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<>("Email is already signed up", HttpStatus.NOT_IMPLEMENTED);
             }
-        return new ResponseEntity<>("Username is already signed up", HttpStatus.NOT_IMPLEMENTED);
+            return getStringResponseEntity(registerDTO);
         }
+        return new ResponseEntity<>("Username is already signed up", HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    @NotNull
+    private ResponseEntity<String> getStringResponseEntity(RegisterDTO registerDTO) {
+        String token = RandomStringUtils.randomAlphanumeric(64);
+        User user = new User(registerDTO.getUserName(),
+                this.passwordEncoder.encode(registerDTO.getPassword()),
+                registerDTO.getFullName(),
+                registerDTO.getEmail(),
+                registerDTO.getRole(),
+                User.Gender.MALE,
+                -1, 0);
+        ActivationToken activationToken = new ActivationToken(token, LocalDateTime.now().plusMinutes(30), user);
+        user.setActivationToken(activationToken);
+        this.userRepository.save(user);
+        this.emailService.sendEmail(registerDTO.getEmail(),
+                "Activate Your Account",
+                "http://localhost:3000/registeractivation?activetoken=" + token);
+        if (user.getRole().equals("MS")) {
+            MusicianInformation information = new MusicianInformation();
+            user.setInformation(information);
+            this.userRepository.save(user);
+        }
+        return new ResponseEntity<>("Signup Successfully", HttpStatus.OK);
+    }
+
 
     // Active Account
     public ResponseEntity<String> activateUserAccount(String token) {
@@ -191,7 +199,6 @@ public class UserService {
         }
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
-
 
 
     // Update Admin Info
@@ -290,9 +297,9 @@ public class UserService {
     }
 
     // View all name of musician
-    public List<String> viewallnamemusician (){
+    public List<String> viewallnamemusician() {
         List<String> names = this.userRepository.findAllNameOfMusician();
-        if(!names.isEmpty()){
+        if (!names.isEmpty()) {
             return names;
         }
         return null;
@@ -300,8 +307,8 @@ public class UserService {
 
     public List<UserResponeDTO> listUserBanned() {
         List<User> users = userRepository.findAllByStatus(0);
-        List<UserResponeDTO> dtos =new ArrayList<>();
-        for (User us : users){
+        List<UserResponeDTO> dtos = new ArrayList<>();
+        for (User us : users) {
             UserResponeDTO dto = new UserResponeDTO(
                     us.getId(),
                     us.getUsername(),
@@ -317,7 +324,7 @@ public class UserService {
     }
 
     // Get User to check Login
-    public int checkLogin (String username){
+    public int checkLogin(String username) {
         Optional<User> foundUser = Optional.ofNullable(this.userRepository.findByUsername(username));
         return foundUser.map(User::getStatus).orElse(-2);
     }
