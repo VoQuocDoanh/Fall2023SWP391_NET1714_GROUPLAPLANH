@@ -55,12 +55,6 @@ function Register() {
       setOpen(false)
       return
     }
-    if (password !== checkPassword) {
-      setMessageFailed("Confirm Password not match Password!")
-      setOpenFailedSnackBar(true)
-      setOpen(false)
-      return;
-    }
     if (userName.length < 6) {
       setMessageFailed("Username must be at least 6 characters!")
       setOpenFailedSnackBar(true)
