@@ -176,9 +176,17 @@ public class SongService {
             Optional<Song> foundSong = this.songRepository.findUserSongByUser(songid, foundUser.get().getId());
             if (foundSong.isPresent()) {
                 Song song = foundSong.get();
+                song.getGenresofsong().clear();
+                song.getChordsofsong().clear();
+                this.songRepository.save(song);
+
                 song.setSinger(songDTO.getSinger());
                 song.setTone(songDTO.getTone());
                 song.setVocalRange(songDTO.getVocalRange());
+                song.setDescription(songDTO.getDescription());
+
+                song.setGenresofsong(genreSet(songDTO));
+                song.setChordsofsong(chordBasicSet(songDTO));
 
                 this.songRepository.save(song);
                 return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
