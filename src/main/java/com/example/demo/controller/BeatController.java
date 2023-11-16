@@ -95,8 +95,8 @@ public class BeatController {
         return ResponseEntity.ok(this.beatService.cart(responseDTO));
     }
 
-    @GetMapping("/rate/user")
-    public ResponseEntity<RatingResponseDTO> viewRateOfSongByUser (@RequestParam("userid") Long userid, @RequestParam("beatId") Long beatId){
+    @GetMapping("/rate/user/{userid}/{beatId}")
+    public ResponseEntity<RatingResponseDTO> viewRateOfSongByUser (@PathVariable Long userid, @PathVariable Long beatId){
         return ResponseEntity.ok(this.beatService.checkRating(userid, beatId));
     }
 
