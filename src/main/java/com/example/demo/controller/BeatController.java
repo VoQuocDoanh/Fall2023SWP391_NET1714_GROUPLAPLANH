@@ -5,9 +5,8 @@
 
 package com.example.demo.controller;
 
-import com.example.demo.dto.BeatDTO;
-import com.example.demo.dto.BeatResponseDTO;
-import com.example.demo.dto.PaginationResponseDTO;
+import com.example.demo.dto.*;
+import com.example.demo.entity.Beat;
 import com.example.demo.service.BeatService;
 import com.example.demo.validationgroups.BeatValidation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +88,16 @@ public class BeatController {
     @PatchMapping({"/{id}"})
     public ResponseEntity<String> updateBeat(@RequestPart(value = "file1", required = false)MultipartFile sound, @RequestPart(value = "file2", required = false)MultipartFile sound2, @Validated(BeatValidation.UpdateBeat.class) @RequestPart("json") BeatDTO newBeat, @PathVariable Long id) {
             return this.beatService.updateBeat(sound, sound2, newBeat, id);
+    }
+
+    @PostMapping({"/cart/view"})
+    public ResponseEntity<BeatCartResponseDTO> viewBeat(@RequestBody BeatCartResponseDTO responseDTO){
+        return ResponseEntity.ok(this.beatService.cart(responseDTO));
+    }
+
+    @GetMapping("/rate/user")
+    public ResponseEntity<RatingResponseDTO> viewRateOfSongByUser (@RequestParam("userid") Long userid, @RequestParam("beatId") Long beatId){
+        return ResponseEntity.ok(this.beatService.checkRating(userid, beatId));
     }
 
     //like beat

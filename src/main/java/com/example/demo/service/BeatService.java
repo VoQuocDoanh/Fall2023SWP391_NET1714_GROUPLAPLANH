@@ -7,6 +7,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.*;
 import com.example.demo.entity.*;
+import com.example.demo.repository.BeatRatingRepository;
 import com.example.demo.repository.BeatRepository;
 import com.example.demo.repository.GenreRepository;
 import com.example.demo.repository.UserRepository;
@@ -36,6 +37,8 @@ public class BeatService {
     private OrderService orderService;
     @Autowired
     private GoogleCloudService service;
+    @Autowired
+    private BeatRatingRepository beatRatingRepository;
 
     private String extractObjectNameFromUrl(String fullUrl) {
         if (fullUrl.startsWith("https://storage.googleapis.com/mychordproject/")) {
@@ -274,6 +277,37 @@ public class BeatService {
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
+    public BeatCartResponseDTO cart(BeatCartResponseDTO response){
+        List<Long> list = response.getBeat();
+        List<BeatResponseDTO> beatEntity = new ArrayList<>();
+
+        Double amount = 0.0;
+        for (long i:list){
+            Beat b = new Beat();
+            b = beatRepository.findBeatById(i);
+            amount += b.getPrice();
+            beatEntity.add(getDetailBeatResponseDTO(b));
+        }
+        response.setTotalAmount(amount);
+        response.setBeatList(beatEntity);
+
+        return response;
+    }
+
+    public RatingResponseDTO checkRating(Long userId, Long beatId){
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userId, 1);
+        if(foundUser.isPresent()){
+            Optional<Beat> foundBeat= Optional.ofNullable(beatRepository.findBeatById(beatId));
+            if (foundBeat.isPresent()){
+                Optional<BeatRating> beat = Optional.ofNullable(beatRatingRepository.findBeatRatingByBeatRatingAndUserRatingBeat(foundBeat.get()
+                        , foundUser.get()));
+                if (beat.isPresent()){
+                    return new RatingResponseDTO(beat.get().getRating());
+                }
+            }
+        }
+        return null;
+    }
 
 
     public ResponseEntity<String> likeBeat(Long id1, Long id2) {

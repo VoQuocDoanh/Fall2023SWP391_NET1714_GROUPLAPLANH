@@ -12,6 +12,8 @@ import com.example.demo.dto.UserResponeDTO;
 import com.example.demo.entity.MusicianInformation;
 import com.example.demo.entity.User;
 import com.example.demo.entity.ActivationToken;
+import com.example.demo.entity.UserReport;
+import com.example.demo.repository.UserReportRepository;
 import com.example.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

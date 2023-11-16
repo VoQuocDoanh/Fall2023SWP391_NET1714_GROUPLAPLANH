@@ -24,12 +24,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Page<User> findAllByOrderByStatusDesc(Pageable pageable);
     List<User> findAllByOrderByStatusDesc();
 
-    @Query("SELECT u.fullName from User u where u.Id =:id and (u.status=1 or u.status =-1)")
-    User findByIdAndStatusOrderByStatus(Long id);
+    @Query("SELECT u from User u where u.Id =:id and (u.status=1 or u.status =0) order by u.createdAt DESC ")
+    User findByIdOrderByCreatedAt(Long id);
 
     List<User> findAllByStatus (int status);
 
-    @Query("SELECT u.fullName from User u where u.Id =:id")
+    @Query("SELECT u.fullName from User u where u.Id =:id and u.status = 1")
     String findUserName(Long id);
     @Query("select u.mail from User u where u.mail = :mail")
     Optional<String> findUserMail(String mail);

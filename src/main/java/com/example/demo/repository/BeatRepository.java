@@ -57,7 +57,7 @@ public interface BeatRepository extends JpaRepository<Beat, Long> {
     Page<Beat> findAllBeat(Pageable pageable);
 
 
-    @Query("SELECT b FROM Beat b WHERE b.status = 1")
+    @Query("SELECT b FROM Beat b join b.userName u WHERE b.status = 1 and u.status = 1")
     List<Beat> findAllListBeat();
     @Query("SELECT b FROM Beat b join b.userName u where b.status = -1 and u.Id = :id")
     Page<Beat> findAllBeatSoldOut(Long id, Pageable pageable);

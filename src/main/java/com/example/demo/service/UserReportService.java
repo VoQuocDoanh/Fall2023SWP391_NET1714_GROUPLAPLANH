@@ -61,23 +61,32 @@ public class UserReportService {
         List<User> users= new ArrayList<>();
         for (Long u:list){
             User user = new User();
-            user = userRepository.findByIdAndStatusOrderByStatus(u);
+            user = userRepository.findByIdOrderByCreatedAt(u);
             users.add(user);
         }
-        for (User us : users){
-            UserResponeDTO dto = new UserResponeDTO(
-                    us.getId(),
-                    us.getUsername(),
-                    us.getFullName(),
-                    us.getRole(),
-                    us.getMail(),
-                    us.getStatus(),
-                    us.getAvatar()
+        if (users!=null){
+            for (User us : users){
+                UserResponeDTO dto = new UserResponeDTO(
+                        us.getId(),
+                        us.getUsername(),
+                        us.getFullName(),
+                        us.getRole(),
+                        us.getMail(),
+                        us.getStatus(),
+                        us.getAvatar()
 
-            );
-            dtos.add(dto);
+                );
+                dtos.add(dto);
+            }
         }
+
         return dtos;
+    }
+
+    public void deleteReport(Long id){
+    //    Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(id, 0);
+        UserReport userReport = this.userReportRepository.findUserReportsByIdReportedUser(id);
+        this.userReportRepository.delete(userReport);
     }
 
     public List<ReportResponseDTO> viewReport(Long id) {
