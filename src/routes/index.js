@@ -39,6 +39,8 @@ import RegisterActivation from "@/Pages/RegisterActivation";
 import MailActivation from "@/Pages/MailActivation";
 import PaymentCancel from "@/Pages/PaymentCancel";
 import BannedSong from "@/Pages/BannedSong";
+import ListBeatAll from "@/Pages/listBeatAll";
+import ListSongAll from "@/Pages/ListSongAll";
 const publicRoutes = [
   {
     path: "/",
@@ -178,6 +180,14 @@ const publicRoutes = [
   {
     path: "/Contact",
     component: Contact,
+  },
+  {
+    path: "/listbeatall",
+    component: ListBeatAll,
+  },
+  {
+    path: "/listsongall",
+    component: ListSongAll,
   },
   //////////////////////
   {

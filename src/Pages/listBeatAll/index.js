@@ -1,6 +1,6 @@
 
 import classNames from "classnames/bind";
-import styles from "./ListBeat.module.scss";
+import styles from "./ListBeatAll.module.scss";
 import { Alert, Box, Button, Modal, Snackbar, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
@@ -18,11 +18,10 @@ import ListSplitter from "@/components/ListSplitter";
 
 const cx = classNames.bind(styles);
 
-function ListBeat() {
-
+function ListBeatAll({search}) {
+    console.log(search)
     //Comment lai cho nay
     const navigate = useNavigate()
-    const [search, setSearch] = useState("");
     const [list, setList] = useState([]);
     const [listGenres, setListGenres] = useState(null);
     const [listMusicianName, setListMusicianName] = useState(null);
@@ -37,7 +36,7 @@ function ListBeat() {
         
     useEffect(() => {
         loadBeats()
-    }, [checkLike, page])
+    }, [checkLike, page, search])
 
     useEffect(() => {
         loadGenres()
@@ -48,7 +47,8 @@ function ListBeat() {
     }, [])
 
     const loadBeats = async () => {
-        await axiosInstance.get(`http://localhost:8080/api/v1/beat/all`)
+        if(search !== ""){
+        await axiosInstance.get(`http://localhost:8080/api/v1/beat/name/${search}`)
             .then(res => {
                 if (res.data.length === 0) {
                     setList(res.data)
@@ -68,6 +68,28 @@ function ListBeat() {
                     navigate("/login")
                 }
             })
+        } else{
+            await axiosInstance.get(`http://localhost:8080/api/v1/beat/all`)
+            .then(res => {
+                if (res.data.length === 0) {
+                    setList(res.data)
+                }
+                else {
+                    const newGroup = ListSplitter({ data: res.data, groupSize: 8 })
+                    for (let i = 0; i < newGroup.length; i++) {
+                        if (page === i + 1) {
+                            setList(newGroup[i])
+                        }
+                    }
+                    setPages(newGroup.length)
+                }
+            })
+            .catch((error) => {
+                if (error.message.includes("Network")) {
+                    navigate("/login")
+                }
+            })
+        }
     }
 
     //
@@ -146,26 +168,13 @@ function ListBeat() {
     return (
         <div className={cx("list-header")}>
             {console.log(list)}
-            {listGenres && listMusicianName ?
+            {/* {listGenres && listMusicianName ?
                 <Sidebar listGenres={listGenres} listMusicianName={listMusicianName} handleSearchByGenres={handleSearchByGenres} handleSearchByMusicianName={handleSearchByMusicianName} page={1}></Sidebar>
-                : <div></div>}
+                : <div></div>} */}
             <div className={cx("text-header")}>
                 <h1 className={cx("text-welcome")}>
                     Welcome To Our Beats
                 </h1>
-
-            </div>
-            <div className={cx("icon-shopping")}>
-                <div className={cx("searchBox")}>
-                    <input className={cx("searchInput")} type="text" placeholder="Search Beat..." value={search} onChange={(e) => setSearch(e.target.value)} />
-                    <button className={cx("searchButton")} href="#">
-                        <i className={cx("material-icons")} >
-                            <svg className={cx("icon-search")} xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 35 35" fill="none" onClick={() => handleSearch()}>
-                                <path d="M15.5 14H14.71L14.43 13.73C15.4439 12.554 16.0011 11.0527 16 9.5C16 8.21442 15.6188 6.95772 14.9046 5.8888C14.1903 4.81988 13.1752 3.98676 11.9874 3.49479C10.7997 3.00282 9.49279 2.87409 8.23192 3.1249C6.97104 3.3757 5.81285 3.99477 4.90381 4.90381C3.99477 5.81285 3.3757 6.97104 3.1249 8.23192C2.87409 9.49279 3.00282 10.7997 3.49479 11.9874C3.98676 13.1752 4.81988 14.1903 5.8888 14.9046C6.95772 15.6188 8.21442 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z" fill="black" />
-                            </svg>
-                        </i>
-                    </button>
-                </div>
 
             </div>
             {list.length !== 0 ?
@@ -180,7 +189,7 @@ function ListBeat() {
                 </div>
                 
 
-                : <div className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 800 }}> All Beat are sold out!<div> Thank you for your visiting on our website </div> </div>}
+                : <div className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 800 }}> Can not find beat that matches your search!<div> Thank you for your visiting on our website </div> </div>}
                 {pages !== 1 ?
                         <div className={cx("pagination")}>
                             <Pagination pages={pages} page={page} setPage={setPage} />
@@ -201,4 +210,4 @@ function ListBeat() {
     );
 }
 
-export default ListBeat;
+export default ListBeatAll;

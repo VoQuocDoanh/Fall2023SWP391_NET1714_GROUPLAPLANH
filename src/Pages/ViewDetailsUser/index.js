@@ -135,6 +135,7 @@ function ViewDetailsUser() {
                                 </div>
                                 {!(userId == user.id) ?
                                     <div className={cx("part5")}>
+                                        {token ? 
                                         <Popup  className={cx("part-5")} style={{ width: "120%" }} trigger={<button type="button" className={cx("button-save-details")} aria-disabled="false" >Report</button>}  {...{ contentStyle }} position="top center">
                                             <div className={cx("text-all")} style={{ padding: 10 }}>
                                                 <div style={{ display: 'grid' }}>
@@ -152,6 +153,9 @@ function ViewDetailsUser() {
                                                 </td>
                                             </div>
                                         </Popup>
+                                        :
+                                        <button type="button" className={cx("button-save-details")} aria-disabled="false" onClick={() => [setOpenFailedSnackBar(true), setMessageFailed("You need to login before using this function!")]} >Report</button>
+                                                   }
                                     </div>
                                     : <div></div>}
                             </table>

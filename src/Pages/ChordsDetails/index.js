@@ -186,14 +186,55 @@ function ChordsDetails() {
             console.log("Test: " + data.data)
             // let list = data.data.filter((item) => item.key === key && item.suffix === suffix);
             // setListChord(list);
-            const newGroup = ListSplitter({ data: data.data, groupSize: 8 })
-            for (let i = 0; i < newGroup.length; i++) {
-                if (pageInstrument === i + 1) {
-                    setListChord(newGroup[i])
+            // const newGroup = ListSplitter({ data: data.data, groupSize: 8 })
+            // for (let i = 0; i < newGroup.length; i++) {
+            //     if (pageInstrument === i + 1) {
+            //         setListChord(newGroup[i])
+            //     }
+            // }
+            // setPages(newGroup.length);
+            if (key !== 'All' && suffix !== "All") {
+                let list = data.data.filter((item) => item.key === key && item.suffix === suffix);
+                const newGroup = ListSplitter({ data: list, groupSize: 8 })
+                for (let i = 0; i < newGroup.length; i++) {
+                    if (pageKey === i + 1) {
+                        setListChord(newGroup[i])
+                    }
+                }
+                setPages(newGroup.length)
+            } else {
+                if (key === "All" && suffix !== "All") {
+                    let list = data.data.filter((item) => item.suffix === suffix);
+                    const newGroup = ListSplitter({ data: list, groupSize: 8 })
+                    for (let i = 0; i < newGroup.length; i++) {
+                        if (pageKey === i + 1) {
+                            setListChord(newGroup[i])
+                        }
+                    }
+                    setPages(newGroup.length)
+                } else if (key !== "All" && suffix === "All") {
+                    let list = data.data.filter((item) => item.key === key);
+                    const newGroup = ListSplitter({ data: list, groupSize: 8 })
+                    for (let i = 0; i < newGroup.length; i++) {
+                        if (pageKey === i + 1) {
+                            setListChord(newGroup[i])
+                        }
+                    }
+                    setPages(newGroup.length)
+                }
+                else if (key === "All" && suffix === "All") {
+                    let list = data.data.filter((item) => item.key === key && item.suffix === suffix);
+                    const newGroup = ListSplitter({ data: data.data, groupSize: 8 })
+                    for (let i = 0; i < newGroup.length; i++) {
+                        if (pageInstrument === i + 1) {
+                            setListChord(newGroup[i])
+                        }
+                    }
+                    setPages(newGroup.length);
                 }
             }
-            setPages(newGroup.length)
         }
+
         fetchData();
     }, [instrument, pageInstrument])
 

@@ -294,7 +294,8 @@ function ViewDetailsMusician() {
                             </form>
                             {(!(userId == id)) ?
                                 <div className={cx("part5")}>
-                                    <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<button type="button" className={cx("button-save-details")} aria-disabled="false" >Report</button>}  {...{ contentStyle }} position="top center">
+                                    {token ?
+                                        <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<button type="button" className={cx("button-save-details")} aria-disabled="false" >Report</button>}  {...{ contentStyle }} position="top center">
                                             <div className={cx("text-all")} style={{ padding: 10 }}>
                                                 <div style={{ display: 'grid' }}>
                                                     <td style={{ fontWeight: 'bold', fontSize: "2.2rem", marginLeft: 120, color: 'red' }}>Report</td>
@@ -312,6 +313,9 @@ function ViewDetailsMusician() {
 
                                             </div>
                                         </Popup>
+                                        :
+                                        <button type="button" className={cx("button-save-details")} aria-disabled="false" onClick={() => [setOpenFailedSnackBar(true), setMessageFailed("You need to login before using this function!")]} >Report</button>
+                                    }
                                 </div>
                                 : <div></div>}
                         </div>
@@ -324,16 +328,16 @@ function ViewDetailsMusician() {
                             {feedBacks.length !== 0 ?
 
                                 <form style={{ marginTop: 20 }}>
-                                    {feedBacks.map((feedback,index) => {
+                                    {feedBacks.map((feedback, index) => {
                                         return (
                                             <table className={classNames("profile-2")}>
                                                 <div className={cx("part0")}>
                                                     <td>
                                                         <div className={cx("text-username0")}>
                                                             <td>
-                                                                <label style={{fontFamily: 'sono', fontSize:20, fontWeight: 500}}>{index + 1}. </label>
+                                                                <label style={{ fontFamily: 'sono', fontSize: 20, fontWeight: 500 }}>{index + 1}. </label>
                                                                 <label style={{ fontFamily: 'sono', fontWeight: 500, marginLeft: -2 }} className={cx("login-text")}>{feedback.user.fullName}</label>
-                                                                <label style={{fontFamily: 'sono', fontSize:20, marginLeft: 10}}>-</label>
+                                                                <label style={{ fontFamily: 'sono', fontSize: 20, marginLeft: 10 }}>-</label>
                                                                 <label style={{ marginLeft: 10, fontFamily: 'Sono', fontWeight: 400 }} className={cx("login-text")}>{feedback.beat.beatName}</label>
                                                             </td>
                                                             <div>
@@ -375,7 +379,7 @@ function ViewDetailsMusician() {
                                                                     <Link style={{ color: "black" }} to={`/viewdetailbeat/${beat.id}`}>
                                                                         <label style={{ fontFamily: 'sono', fontWeight: 600, marginLeft: -2 }} className={cx("login-text")}>{beat.beatName}</label>
                                                                     </Link>
-                                                                    <div className={cx("active")}>Active</div>
+                                                                    <div className={cx("active")}>For sale</div>
                                                                 </div>
                                                                 :
                                                                 <div className={cx("text-allbeat")}>

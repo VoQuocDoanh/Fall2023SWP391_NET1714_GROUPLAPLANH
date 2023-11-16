@@ -4,36 +4,26 @@ import { React, useState } from "react";
 import TippyHeadless from '@tippyjs/react/headless';
 import Wrapper from "../Wrapper";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { ShopContext } from "@/context/shop-context";
 
 const cx = classNames.bind(styles);
 
 function Search() {
-  const [valueSearch, setValueSearch] = useState("");
+  const {search, setSearch} = useContext(ShopContext)
   return (
-    <TippyHeadless
-      interactive
-      visible={valueSearch.length > 0}
-      placement="bottom-end"
-      render={attrs => (
-        <div className="box" tabIndex="-1" {...attrs}>
-          <Wrapper className={cx("wrapper-search")}>
-            12312333333333333333333333333333333333
-          </Wrapper>
-        </div>
-      )}
-    >
       <div className={cx("search-wrapper")}>
         <input
           type="text"
           placeholder="Search..."
           className={cx("input")}
-          value={valueSearch}
-          onChange={(event) => setValueSearch(event.target.value)}
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
         />
         {/* <div className={cx("search")}>
         </div> */}
         <div className={cx("submit")}>
-        <Link to="/Chordsdetails">
+        <Link to="/viewbeatsall">
           <svg
             className={cx("icon-search")}
             xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +40,6 @@ function Search() {
           </Link >
         </div>
       </div>
-    </TippyHeadless>
   );
 }
 

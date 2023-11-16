@@ -5,6 +5,7 @@ export const ShopContext = createContext(null);
 
 
 function ShopContextProvider({ children }) {
+    const [search, setSearch] = useState("")
     const [cart, setCart] = useLocalStorage("Cart",[])
     // let count = 0
     const [cartItems, setCartItems] = useState({});
@@ -80,7 +81,9 @@ function ShopContextProvider({ children }) {
         addToCart,
         removeFromCart,
         clearCart,
-        cart
+        cart,
+        search,
+        setSearch,
     };
     return (
         <ShopContext.Provider value={contextValue}>

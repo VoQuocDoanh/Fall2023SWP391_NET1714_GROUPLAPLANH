@@ -60,6 +60,13 @@ function ViewDetailBeat() {
         loadCheckLike()
     }, [beatId])
 
+    // useEffect(() => {
+    //     const loadRating = async() => {
+
+    //     }
+    //     loadRating()
+    // },[])
+
     const loadCheckLike = async () => {
         if (!token) {
             return
@@ -282,7 +289,7 @@ function ViewDetailBeat() {
                                                     <span className={cx("musician-name")} style={{ fontSize: '1.8rem', color: '#FFFFFF90' }}>{item.user.fullName}</span>
                                                 </div>
                                             </div>
-                                            <img style={{ width: 100, marginTop: 50, marginLeft: 70 }} src={require("../../assets/images/Other/pngimg.com - sold_out_PNG43.png")} />
+                                            <img style={{ width: 100, height: 80, marginTop: 20, marginLeft: 70, marginBottom: 20 }} src={require("../../assets/images/Other/pngimg.com - sold_out_PNG43.png")} />
                                         </div>
                                     )
                                 }

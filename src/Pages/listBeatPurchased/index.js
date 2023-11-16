@@ -129,9 +129,9 @@ function ListBeatPurchased() {
     { console.log(list) }
     return (
         <div className={cx("list-header")}>
-            {listGenres && listMusicianName ?
+            {/* {listGenres && listMusicianName ?
                 <Sidebar listGenres={listGenres} listMusicianName={listMusicianName} page={2}></Sidebar>
-                : <div></div>}
+                : <div></div>} */}
             <div className={cx("text-header")} >
                 <h1 className={cx("text-welcome")} style={{ marginBottom: 200 }}>
                     My Beat Purchased

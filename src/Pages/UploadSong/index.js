@@ -74,10 +74,10 @@ function UploadSong() {
         loadChords()
     }, [])
 
-    const isValidName = (name) => {
-        const validNameRegex = /^[a-zA-Z0-9_]+$/;
-        return validNameRegex.test(name);
-    }
+    // const isValidName = (name) => {
+    //     const validNameRegex = /^[a-zA-Z0-9_]+$/;
+    //     return validNameRegex.test(name);
+    // }
 
     const isURL = (str) => {
         const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
@@ -95,11 +95,11 @@ function UploadSong() {
             setMessageFailed("All fields must not be null!")
             return;
         }
-        if (!isValidName(songName)) {
-            setOpenFailedSnackBar(true)
-            setMessageFailed("Song name do not have special characters")
-            return;
-        }
+        // if (!isValidName(songName)) {
+        //     setOpenFailedSnackBar(true)
+        //     setMessageFailed("Song name do not have special characters")
+        //     return;
+        // }
         if (!isURL(songUrl)) {
             setOpenFailedSnackBar(true)
             setMessageFailed("Link must be a valid URL")

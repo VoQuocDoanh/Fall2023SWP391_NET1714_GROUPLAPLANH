@@ -14,9 +14,7 @@ const SideBar = ({listGenres, listMusicianName, handleSearchByGenres, handleSear
                     <Menu className={cx("menu-item")}>
                         <MenuItem className="menu1">
                             <h2>List Beat</h2>
-                        </MenuItem>
-                        <MenuItem> Dashboard </MenuItem>
-                
+                        </MenuItem>                
                         <SubMenu label="Genre">
                             {listGenres.map((item) => {
                                 return <MenuItem onClick={() => handleSearchByGenres(item.name)} > {item.name}</MenuItem>
@@ -41,9 +39,7 @@ const SideBar = ({listGenres, listMusicianName, handleSearchByGenres, handleSear
                     <Menu className={cx("menu-item")}>
                         <MenuItem className="menu1">
                             <h2>List Beat</h2>
-                        </MenuItem>
-                        <MenuItem> Dashboard </MenuItem>
-                
+                        </MenuItem>                
                         <SubMenu label="Genre">
                             {listGenres.map((item) => {
                                 return <MenuItem> {item.name}</MenuItem>

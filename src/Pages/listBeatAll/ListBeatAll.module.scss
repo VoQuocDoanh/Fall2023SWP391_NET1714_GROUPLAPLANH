@@ -2,53 +2,44 @@
 @import url('https://fonts.cdnfonts.com/css/inter');
 @import url('https://fonts.cdnfonts.com/css/sono');
 @import url('https://fonts.cdnfonts.com/css/sono');
-*{
-    font-family: Sono;
-}*{
+
+* {
     font-family: Sono;
 }
+
+* {
+    font-family: Sono;
+}
+
+body {
+    height: 100%;
+}
+
 .list-header {
-    margin-top: 200px;
-    margin-bottom: 260px;
-    
+    margin-bottom: 250px
 }
 
 .listbeat {
-    margin-top: -110px;   
+    margin-top: 12px;
     display: grid;
-    grid-gap: 36px;
+    grid-gap: 15px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     margin-left: 200px;
     margin-right: 200px;
-    padding-bottom: 100px;
     height: auto;
     padding: 15px;
     background: white;
     filter: drop-shadow(0 0 0.8rem rgb(146, 143, 144));
     border-radius: 12px;
-    
-    .sold-out{
+
+    .sold-out {
         text-align: center;
     }
 }
 
-// .search>input {
-//     border-radius: 30px;
-//     width: 320px;
-//     height: 60px;
-//     margin-top: 30px;
-//     margin-bottom: 30px;
-
-//     &::placeholder {
-//         color: #958e8e;
-//         padding-left: 15px;
-//     }
-
-// }
-
-.pagination{
+.pagination {
     margin-left: 1300px;
-  }
+}
 
 .searchBox {
     transform: translate(0%, 100%);
@@ -112,29 +103,25 @@
     margin-top: 20px;
     margin-left: 15px;
 }
-.text-header{
-    margin-bottom: 50px;
 
-}
 .text-header>h1 {
     display: flex;
     justify-content: center;
-    font-size: 50px;
     font-family: 'Sono';
     font-weight: bold;
     text-transform: uppercase;
     text-align: center;
-    font-size: 50px;
     padding-top: 40px;
     padding-bottom: 10px;
     letter-spacing: .15em;
-    font-size: 80px;
+    font-size: 50px;
     margin-right: 200px;
-    border-bottom:  1px solid var(--gray-100, #e4e7e9);
+    border-bottom: 1px solid var(--gray-100, #e4e7e9);
+    margin-bottom:50px
 }
-.image-audio{
-    
-}
+
+.image-audio {}
+
 .text-welcome {
     text-transform: uppercase;
     margin-left: 320px;
@@ -154,7 +141,7 @@
     animation: textclip 2s linear infinite;
     display: inline-block;
     font-size: 100px;
-    margin-bottom: 50px;
+    margin-bottom: -50px;
 }
 
 @keyframes textclip {
@@ -181,7 +168,7 @@
     width: 70%;
     margin-left: auto;
     margin-right: 180px;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 
     .cart-icon {
         margin-top: 25px;
@@ -226,6 +213,7 @@
     .icon-play.play {
         display: block;
     }
+
     .control {
         display: flex;
         align-items: center;
@@ -336,7 +324,7 @@
 //     object-fit: contain;
 // }
 
-.cart-number{
+.cart-number {
     color: red;
     font-size: 1.5rem;
     padding: 3px;
@@ -346,11 +334,11 @@
 }
 
 //sold out
-.list-beat{
-    display:  flex;
+.list-beat {
+    display: flex;
     justify-content: center;
     font-size: 3rem;
-    margin-top: 100px;  
+    margin-top: 100px;
     font-weight: 500;
-        
+    margin-bottom: 250px;
 }
