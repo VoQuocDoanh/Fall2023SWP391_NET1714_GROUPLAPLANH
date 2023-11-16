@@ -24,7 +24,7 @@ function TabChordList({ chords, setTabSelected, removeSong, ...props }) {
       </TabList>
       <TabPanels>
         <TabPanel>
-          <Flex flexWrap={'wrap'} justifyContent={'space-between'} mt={5}>
+          <Flex flexWrap={'wrap'}  mt={5} ml={20}>
             {chords
               ?.filter((item) => item?.type === 'Guitar')
               ?.map((item) => (

@@ -22,14 +22,10 @@ function ListBeat() {
 
     //Comment lai cho nay
     const navigate = useNavigate()
-    const { setListBeatContext, setDefaultCart, setViewBeatFirstTime, viewBeatFirstTime, checkOut } = useContext(ShopContext)
     const [search, setSearch] = useState("");
     const [list, setList] = useState([]);
     const [listGenres, setListGenres] = useState(null);
     const [listMusicianName, setListMusicianName] = useState(null);
-    // const [play, setPlay] = useState(false);
-    // const [srcMusic, setSrcMusic] = useState("");
-    // const audioRef = useRef();
     const token = useToken();
     const [checkLike, setCheckLike] = useState();
     const [page, setPage] = useState(1)
@@ -38,50 +34,7 @@ function ListBeat() {
     const [messageFailed, setMessageFailed] = useState("")
     const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
     const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
-        fontSize: 25,
-    };
-    const pageRole = 1
-    // 
-    // const handleClickAudio = (value) => {
-
-    //     setSrcMusic(`data:audio/mpeg;base64,${atob(value.beatSound)}`);
-    //     console.log(srcMusic)
-
-    // }
-
-    // useEffect(() => {
-    //     const data = DATA.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
-    //     setList(data);
-    // }, [search])
-    // // useEffect(() => {
-    // //     const video = document.querySelector('video');
-    // //     if (video) {
-    // //         video.playbackRate = 1.5;
-    // //     }
-    // // }, []);
-
-    // //Comment lai cho nay
-    // console.log(play);
-    //  UseEffect(() => {
-    //     if (play) {
-    //         audioRef.current.play();
-
-    //     } else {
-
-    //         audioRef.current.pause();
-    //     }
-    // }, [play])
-
+        
     useEffect(() => {
         loadBeats()
     }, [checkLike, page])
@@ -97,7 +50,6 @@ function ListBeat() {
     const loadBeats = async () => {
         await axiosInstance.get(`http://localhost:8080/api/v1/beat/all`)
             .then(res => {
-                setListBeatContext(res.data)
                 if (res.data.length === 0) {
                     setList(res.data)
                 }
@@ -110,10 +62,6 @@ function ListBeat() {
                     }
                     setPages(newGroup.length)
                 }
-                if (viewBeatFirstTime === 0) {
-                    setViewBeatFirstTime(1)
-                }
-
             })
             .catch((error) => {
                 if (error.message.includes("Network")) {
@@ -123,11 +71,6 @@ function ListBeat() {
     }
 
     //
-    if (viewBeatFirstTime === 1) {
-        setViewBeatFirstTime(2)
-        setDefaultCart()
-    }
-
     const loadGenres = async () => {
         await axiosInstance.get("http://localhost:8080/api/v1/genre")
             .then((res) => {
@@ -244,47 +187,12 @@ function ListBeat() {
                         </div>
                         : <div></div>}
 
-            {/* <div className={cx("list-beat")}>
-                {list.map((item, index) => {
-                    return <ListBeatBox key={index} name={item.name} type={item.type} price={item.price} member={item.member} play={play} setPlay={setPlay} />
-                })}
-            </div> */}
-
-
-            {/* <div className={cx("audio")}>
-
-                <div className={cx("control")}>
-                    <div className={cx("btn", "btn-prev")}>
-                        <i className="fas fa-step-backward"></i>
-                        <FontAwesomeIcon icon={faStepBackward} />
-                    </div>
-                    <div className={cx("btn", "btn-toggle-play")} onClick={() => setPlay(!play)}>
-                        <FontAwesomeIcon icon={faPause} className={cx("icon-pause", "icon", {
-                            "play": play === true,
-                        })} />
-                        <FontAwesomeIcon icon={faPlay} className={cx("icon-play", "icon", {
-                            "play": play === false,
-                        })} />
-                    </div>
-                    <div className={cx("btn", "btn-next")}>
-                        <FontAwesomeIcon icon={faStepForward} />
-                    </div>
-
-                </div>
-                <div className={cx("time-audio")}>
-                    <span className={cx("start")}>0:00</span>
-                    <input id="progress" className={cx("progress")} type="range" value="0" step="1" min="0" max="100" />
-                    <span className={cx("end")}>0:00</span>
-                </div>
-            </div> */}
-            {/* <audio style={{ borderRadius: 10 }} id="audio" ref={audioRef} src={srcMusic}>
-            </audio> */}
-            <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
+            <Snackbar open={openSuccessSnackBar} autoHideDuration={500} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
                 <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                     {messageSuccess}
                 </Alert>
             </Snackbar>
-            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
+            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
                 <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                     {messageFailed}
                 </Alert>

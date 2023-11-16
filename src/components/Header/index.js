@@ -27,11 +27,10 @@ const cx = classNames.bind(styles);
 function Header() {
 
   const navigate = useNavigate()
-  const { checkOut } = useContext(ShopContext)
+  const { clearCart } = useContext(ShopContext)
   const token = useToken()
   let userRole = ''
   let name = ''
-  const { setViewBeatFirstTime } = useContext(ShopContext);
   if (token) {
     userRole = jwtDecode(token).role
     name = jwtDecode(token).username
@@ -39,8 +38,7 @@ function Header() {
   const handleLogout = () => {
     if (token) {
       localStorage.removeItem("token")
-      setViewBeatFirstTime(0)
-      checkOut()
+      clearCart()
     }
   }
   const [page, setPage] = useState("Page");  

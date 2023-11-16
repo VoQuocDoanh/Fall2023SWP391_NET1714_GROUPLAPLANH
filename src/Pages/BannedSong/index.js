@@ -33,7 +33,7 @@ function BannedSong() {
                     setListSongs(res.data)
                 }
                 else {
-                    const newGroup = ListSplitter({ data: res.data, groupSize: 5 })
+                    const newGroup = ListSplitter({ data: res.data, groupSize: 8 })
                     for (let i = 0; i < newGroup.length; i++) {
                         if (page === i + 1) {
                             setListSongs(newGroup[i])
@@ -85,9 +85,12 @@ function BannedSong() {
                                                 </div>
                                                 <div className={cx('song-name')}>
                                                     <span style={{ fontWeight: 500 }}>{song.songName}</span>
-                                                    <span>{song.author}</span>
+                                                    <span>{song.singer}</span>
                                                 </div>
                                             </div>
+                                            <td class="text-center" style={{ width: 170, textAlign: "center", marginTop: 20 }}>
+                                                <span style={{ background: "red", padding: 5, height: 5, color: 'white', fontSize: '1.8rem', marginLeft: 10, borderRadius: 18 }} class={cx("label label-default")}>Banned</span>
+                                            </td>
                                         </Link>
                                     </div>
                                 ))}

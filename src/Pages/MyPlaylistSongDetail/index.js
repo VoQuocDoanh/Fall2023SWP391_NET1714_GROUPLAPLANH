@@ -1,4 +1,5 @@
 import { GlobalContext } from "@/Provider";
+import useToken from "@/authorization/useToken";
 import Pagination from "@/components/Pagination2";
 import EditForm from "@/components/PlaylistDetail/EditForm";
 import SongItem from "@/components/SongItem/MyPlaylistSongDetail";
@@ -14,6 +15,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 import { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -21,11 +23,15 @@ function MyPLayListDetail() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { playListName } = useParams();
   const { BACK_END_PORT } = useContext(GlobalContext);
-  const user_id = 3;
   const [currentPage, setCurrentPage] = useState(1);
   const [dynamicPlaylist, setDynamicPlaylist] = useState([]);
   const [playListDetail, setPlayListDetail] = useState({});
   const [reload, setReload] = useState(false);
+  const token = useToken();
+  let userId = ""
+  if(token){
+    userId = jwtDecode(token).sub
+  }
   const itemsPerPage = 6;
   const totalPages = Math.ceil(
     playListDetail?.songs?.length
@@ -47,7 +53,7 @@ function MyPLayListDetail() {
   const fetchData = async () => {
     try {
       const getPlayListDetail = await axios.get(
-        `${BACK_END_PORT}/api/v1/playlist/user/${user_id}/${playListName}/detail`
+        `${BACK_END_PORT}/api/v1/playlist/user/${userId}/${playListName}/detail`
       );
 
       if (getPlayListDetail) {
@@ -66,7 +72,7 @@ function MyPLayListDetail() {
       index={index + 1}
       playListName={playListName}
       BACK_END_PORT={BACK_END_PORT}
-      user_id={user_id}
+      user_id={userId}
       setPlayListDetail={setPlayListDetail}
       playListDetail={playListDetail}
       reload={reload}
@@ -103,7 +109,7 @@ function MyPLayListDetail() {
     <Box style={{marginTop:-100, marginBottom:500}}>
       <Box style={{marginTop:100}} w={"60%"} m={"3% auto"} p={"0"}>
         <EditForm 
-          userId={user_id}
+          userId={userId}
           isOpen={isOpen}
           onClose={onClose}
           playListName={playListName}

@@ -141,14 +141,14 @@ function ChordsDetails() {
             return
         }
         console.log("Id" + id)
-        if (!collectionName || !collectionDescription) {
+        if (!collectionName) {
             setOpenFailedSnackBar(true)
             setMessageFailed("All fields must not be null!")
             return;
         }
         await axiosInstance.post("http://localhost:8080/api/v1/chordcollection/addchord", { userId: userId, flag: "Create new collection", name: collectionName, description: collectionDescription, chordId: [id] })
             .then((res) => {
-                setMessageSuccess("Add Successfully")
+                setMessageSuccess("Create chord collection successfully")
                 setOpenModal(false)
                 setOpenSuccessSnackBar(true)
                 setCollectionName("")
@@ -167,7 +167,7 @@ function ChordsDetails() {
         }
         await axiosInstance.post("http://localhost:8080/api/v1/chordcollection/addchord", { userId: userId, flag: "", name: name, chordId: [id] })
             .then((res) => {
-                setMessageSuccess("Add Successfully")
+                setMessageSuccess("Add chord successfully")
                 setOpenSuccessSnackBar(true)
             })
             .catch((error) => {
@@ -399,12 +399,12 @@ function ChordsDetails() {
                     </Typography>
                 </Box>
             </Modal>
-            <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
+            <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
                 <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                     {messageSuccess}
                 </Alert>
             </Snackbar>
-            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
+            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
                 <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                     {messageFailed}
                 </Alert>

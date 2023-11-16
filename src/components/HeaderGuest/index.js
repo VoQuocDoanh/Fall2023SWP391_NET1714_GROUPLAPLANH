@@ -24,27 +24,13 @@ const cx = classNames.bind(styles);
 function HeaderGuest() {
 
   const navigate = useNavigate()
-  const { checkOut } = useContext(ShopContext)
-  const [messageSuccess, setMessageSuccess] = useState("")
-  const [messageFailed, setMessageFailed] = useState("")
-  const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
-  const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
   const token = useToken()
   let userRole = ''
   let name = ''
-  const { setViewBeatFirstTime } = useContext(ShopContext);
   if (token) {
     userRole = jwtDecode(token).role
     name = jwtDecode(token).username
   }
-  const handleLogout = () => {
-    if (token) {
-      localStorage.removeItem("token")
-      setViewBeatFirstTime(0)
-      checkOut()
-    }
-  }
-  const [page, setPage] = useState("Page");
   return (
     <div className={cx("header-wrapper")}>
       <div className={cx("header-left")}>
@@ -64,7 +50,7 @@ function HeaderGuest() {
               <div className={cx("text-all")}>
                 <Link to="/listbeat"><div className={cx("link-text")}>Beat</div></Link>
                 <Link to="/chordsdetails"><div className={cx("link-text")}>Chords</div></Link>
-                <Link to="/songs"><div className={cx("link-text")}>Chords of Songs</div></Link>
+                <Link to="/songs"><div className={cx("link-text")} style={{textWrap: 'nowrap'}}>Chords of Songs</div></Link>
               </div>
             </Popup>
           </div>
@@ -77,16 +63,6 @@ function HeaderGuest() {
           </button>
         </Link>
       </div>
-      <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
-        <Alert onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
-          {messageSuccess}
-        </Alert>
-      </Snackbar>
-      <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
-        <Alert onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
-          {messageFailed}
-        </Alert>
-      </Snackbar>
     </div>
   );
 }

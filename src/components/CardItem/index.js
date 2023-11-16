@@ -10,6 +10,8 @@ function CartItem({
   author,
   genre,
   price,
+  setOpenSuccessSnackBar,
+  setMessageSuccess,
 }) {
   const { removeFromCart } = useContext(ShopContext)
   return (
@@ -17,7 +19,7 @@ function CartItem({
       {/* Card product */}
       <div className={cx("card-product")}>
         <svg
-          onClick={() => removeFromCart(id)}
+          onClick={() => [removeFromCart(id), setOpenSuccessSnackBar(true), setMessageSuccess("Remove successfully")]}
           className={cx("remove")}
           xmlns="http://www.w3.org/2000/svg"
           width="24"

@@ -90,7 +90,7 @@ function ViewDetailsUser() {
                                     <td>
                                         <div className={cx("text-username0")}>
                                             <td >
-                                                <label style={{ fontWeight: 500 }} className={cx("login-text")}>Full Name</label>
+                                                <label style={{ fontWeight: 500 }} className={cx("login-text")}>Full Name*</label>
                                             </td>
                                             <div>
                                                 <input className={cx("input-username0")} type="text" value={user.fullName} placeholder readOnly />
@@ -102,7 +102,7 @@ function ViewDetailsUser() {
                                     <td>
                                         <div className={cx("text-username0")}>
                                             <td >
-                                                <label style={{ fontWeight: 500 }} className={cx("login-text")}>Address</label>
+                                                <label style={{ fontWeight: 500 }} className={cx("login-text")}>Address*</label>
                                             </td>
                                             <div>
                                                 <input className={cx("input-username0")} type="text" value={user.adress} placeholder readOnly />
@@ -113,7 +113,7 @@ function ViewDetailsUser() {
                                 <div className={cx("part2")}>
                                     <td>
                                         <div className={cx("email-text")}>
-                                            Email:
+                                            Email* 
                                         </div>
                                         <div className={cx("email-change")}>
                                             {user.mail}
@@ -125,7 +125,7 @@ function ViewDetailsUser() {
                                     <td>
                                         <div className={cx("text-username0")}>
                                             <td >
-                                                <label style={{ fontWeight: 500 }} className={cx("login-text")}>Phone Number</label>
+                                                <label style={{ fontWeight: 500 }} className={cx("login-text")}>Phone Number*</label>
                                             </td>
                                             <div>
                                                 <input className={cx("input-username0")} type="text" value={user.phoneNumber} placeholder readOnly />
@@ -133,9 +133,9 @@ function ViewDetailsUser() {
                                         </div>
                                     </td>
                                 </div>
-                                {(!userId.includes(user.id)) ?
+                                {!(userId == user.id) ?
                                     <div className={cx("part5")}>
-                                        <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<button type="button" className={cx("button-save-details")} aria-disabled="false" >Report</button>}  {...{ contentStyle }} position="top center">
+                                        <Popup  className={cx("part-5")} style={{ width: "120%" }} trigger={<button type="button" className={cx("button-save-details")} aria-disabled="false" >Report</button>}  {...{ contentStyle }} position="top center">
                                             <div className={cx("text-all")} style={{ padding: 10 }}>
                                                 <div style={{ display: 'grid' }}>
                                                     <td style={{ fontWeight: 'bold', fontSize: "2.2rem", marginLeft: 120, color: 'red' }}>Report</td>
@@ -150,7 +150,6 @@ function ViewDetailsUser() {
                                                 <td className={cx("button-type")}>
                                                     <button type="button" className={cx("button-send")} aria-disabled="false" onClick={() => handleReport()}>Send</button>
                                                 </td>
-
                                             </div>
                                         </Popup>
                                     </div>
@@ -169,7 +168,7 @@ function ViewDetailsUser() {
                                 </div>
                                 {/* <input className={cx("img-click")} type="file" accept=".jpg,.jpeg,.png" /> */}
                                 <div className={cx("info-user")}>
-                                    <td style={{ marginLeft: 10, fontWeight: 300, fontSize: 30 }}>
+                                    <td style={{ marginLeft: 10, fontWeight: 300, fontSize: 30, fontFamily: 'fredoka one' }}>
                                         {user.username}
                                     </td>
                                     <td style={{ marginLeft: 10, fontSize: 15 }}>
@@ -179,12 +178,12 @@ function ViewDetailsUser() {
                             </div>
                         </div>
                     </div>
-                    <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
+                    <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
                         <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                             {messageSuccess}
                         </Alert>
                     </Snackbar>
-                    <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
+                    <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
                         <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                             {messageFailed}
                         </Alert>

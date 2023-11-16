@@ -79,12 +79,6 @@ function Register() {
       setOpen(false)
       return
     }
-    if (password !== checkPassword) {
-      setMessageFailed("Password not matched Confirm password")
-      setOpenFailedSnackBar(true)
-      setOpen(false)
-      return
-    }
     await axios.post("http://localhost:8080/api/auth/register", user)
       .then((res) => {
         console.log(userName, password, email, fullName, role);
@@ -269,15 +263,15 @@ function Register() {
         {/* Footer */}
       </div>
       <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
-                <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
-                    {messageSuccess}
-                </Alert>
-            </Snackbar>
-            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
-                <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
-                    {messageFailed}
-                </Alert>
-            </Snackbar>
+        <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+          {messageSuccess}
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
+        <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+          {messageFailed}
+        </Alert>
+      </Snackbar>
     </div>
   );
 

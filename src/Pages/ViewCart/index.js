@@ -1,169 +1,3 @@
-// import { Link } from "react-router-dom";
-// import classNames from "classnames/bind";
-// import React, { useEffect, useMemo, useState } from "react";
-// import styles from "./ViewCart.module.scss";
-// import { Button } from "@mui/material";
-
-// const cx = classNames.bind(styles);
-
-
-// const DATA = [
-
-//     {
-
-//         product: "Beat 5",
-//         price: "180.00$",
-//         quantity: "Genre",
-//         total: "1800.00$",
-//         quantity: ""
-
-//     },
-//     {
-
-//         product: "Beat 5",
-//         price: "180.00$",
-//         quantity: "Genre",
-//         total: "1800.00$",
-//         quantity: ""
-
-//     },
-//     {
-
-//         product: "Beat 5",
-//         price: "180.00$",
-//         quantity: "Genre",
-//         total: "1800.00$",
-//         quantity: ""
-
-//     },
-//     {
-
-//         product: "Beat 5",
-//         price: "180.00$",
-//         quantity: "Genre",
-//         total: "1800.00$",
-//         quantity: ""
-
-//     },
-//     {
-
-//         product: "Beat 5",
-//         price: "180.00$",
-//         quantity: "Genre",
-//         total: "1800.00$",
-//         quantity: ""
-
-//     },
-
-
-// ];
-
-// function ViewCart() {
-//     const handleDelete = (id) => {
-//         console.log(id);
-//     };
-
-//     const handleUpdate = (id) => {
-//         console.log(id);
-//     };
-//     const [searchBeat, setSearchBeat] = useState("");
-//     const [listBeat, setListBeat] = useState(DATA);
-
-//     const handleSearchBeat = (event) => {
-//         setSearchBeat(event.target.value);
-
-//     }
-//     // const [quantity, setQuantity] = useState(1);
-//     // //Quantity Decrement,Increment
-//     // const handleDecrement = () => {
-//     //     if (quantity > 1) {
-//     //         setQuantity(prevCount => prevCount - 1);
-//     //     }
-
-//     // }
-//     // const handleIncrement = () => {
-//     //     if (quantity < 10) {
-//     //         setQuantity(prevCount => prevCount + 1);
-//     //     }
-
-//     // }
-
-
-
-//     return (
-
-//         <div className={cx("wrapper-viewBeat")}>
-//             <div className={cx("header-text")}>
-//                 <h1 className={cx("login-wrapper")}>YOUR BAG</h1>
-//                 <Link to="/listbeat" className={cx("continue-shopping")}>Continue Shopping</Link>
-//             </div>
-//             <div className={cx("viewcart-header")}>
-//                 <div className={cx("footer-wrapper")}>
-//                 <div className={cx("viewcart-1")}>
-//                     <div className={cx("navigation-2")}>
-//                           <div className={cx("viewcart-img")}>
-//                           <img className={cx("chords-details-img")} src={require("../../assets/images/Chords/Rectangle 23.png")}/>
-//                           </div>
-//                         </div>
-//                         <div className={cx("viewcart-details")}>
-//                             <div className={cx("navigation-2")}>
-//                                 <div className={cx("nav-item")}>NameBeat</div>
-//                                 <div className={cx("nav-item")}>oalayonthebeat</div>
-//                             </div>
-//                             <div className={cx("navigation-2")}>
-//                             <div className={cx("nav-item")}>Standar</div>
-//                             </div>
-//                             <div className={cx("navigation-2", "footer-contact")}>
-//                                 <div className={cx("title-item")}>Contact</div>
-//                                 <div className={cx("box-contact")}>
-//                                     <div className={cx("contact-item")}>29.5$</div>
-//                                 </div>
-//                             </div>
-//                             <div className={cx("navigation-2", "footer-contact")}>
-//                                 <div className={cx("icon-item")}>Social</div>
-//                             </div>
-//                         </div>
-//                 </div>
-//                 <div className={cx("viewcart-2")}>
-//                     <div className={cx("navigation-2")}>
-//                           <div className={cx("viewcart-img")}>
-//                           <img className={cx("chords-details-img")} src={require("../../assets/images/Chords/Rectangle 23.png")}/>
-//                           </div>
-//                         </div>
-//                         <div className={cx("viewcart-details")}>
-//                             <div className={cx("navigation-2")}>
-//                                 <div className={cx("nav-item")}>NameBeat</div>
-//                                 <div className={cx("nav-item")}>oalayonthebeat</div>
-//                             </div>
-//                             <div className={cx("navigation-2")}>
-//                             <div className={cx("nav-item")}>Standar</div>
-//                             </div>
-//                             <div className={cx("navigation-2", "footer-contact")}>
-//                                 <div className={cx("title-item")}>Contact</div>
-//                                 <div className={cx("box-contact")}>
-//                                     <div className={cx("contact-item")}>29.5$</div>
-//                                 </div>
-//                             </div>
-//                             <div className={cx("navigation-2", "footer-contact")}>
-//                                 <div className={cx("icon-item")}>Social</div>
-//                             </div>
-//                         </div>
-//                 </div>
-//                 </div>
-
-//             </div>
-//         </div>
-
-
-//     );
-// }
-
-// export default ViewCart;
-
-
-
-//  Cart moi
-//  Cart moi
 import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import React, { useContext, useEffect, useMemo, useState } from "react";
@@ -178,41 +12,14 @@ import jwtDecode from "jwt-decode";
 import axios from "axios";
 
 const cx = classNames.bind(styles);
-
-
-// const DATA = [
-
-//     {
-//         name: "Beatname",
-//         author: "Quoc Doanh",
-//         genre: "POP",
-//         price: 70,
-//     },
-//     {
-//         name: "Beatname",
-//         author: "Quoc Doanh",
-//         genre: "POP",
-//         price: 70,
-//     },
-//     {
-//         name: "Beatname",
-//         author: "Quoc Doanh",
-//         genre: "POP",
-//         price: 70,
-//     },
-// ];
-
 function ViewCart() {
-    const { getTotalCartAmount, checkOut, listBeatContext } = useContext(ShopContext)
+    const { cart } = useContext(ShopContext)
     const [messageSuccess, setMessageSuccess] = useState("")
     const [messageFailed, setMessageFailed] = useState("")
     const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
     const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
-    const cartItems = JSON.parse(localStorage.getItem("Cart"))
-    console.log(JSON.parse(localStorage.getItem("Cart")))
-    const totalAmount = getTotalCartAmount()
-    let beatCheckout = []
-    let beatInvoice = []
+    const [listBeatCart, setListBeatCart] = useState([])
+    const [totalAmount, setTotalAmount] = useState(0)
     const [open, setOpen] = React.useState(false);
     const handleClose = () => {
         setOpen(false);
@@ -220,45 +27,19 @@ function ViewCart() {
     const handleOpen = () => {
         setOpen(true);
     };
-    beatCheckout = listBeatContext
-        .filter(item => cartItems && cartItems[item.id] !== 0)
-        .map(item => {
-            // You can also add item to beatInvoice here
-            beatCheckout.push(item);
-            return item.id;
-        });
-    beatInvoice = listBeatContext
-        .filter(item => cartItems && cartItems[item.id] !== 0)
-        .map(item => {
-            // You can also add item to beatInvoice here
-            beatInvoice.push(item);
-            return item;
-        });
-    localStorage.setItem("totalAmount", JSON.stringify(totalAmount))
-    localStorage.setItem("beatCheckout", JSON.stringify(beatCheckout))
-    localStorage.setItem("beatInvoice", JSON.stringify(beatInvoice))
-    console.log(JSON.parse(localStorage.getItem("beatInvoice")))
     const navigate = useNavigate()
     const token = useToken()
-    const [checkoutMessage, setCheckoutMessage] = useState()
     const handleCheckout = async () => {
         setOpen(true)
-        if (beatCheckout.length === 0) {
+        if (cart.length === 0) {
             setOpenFailedSnackBar(true)
             setMessageFailed("You have not chosen anything to buy")
             setOpen(false)
             return
         }
         if (token) {
-            await axiosInstance.post(`http://localhost:8080/api/v1/paypal`, { totalprice: totalAmount, description: "Payment Success" })
+            await axiosInstance.post(`http://localhost:8080/api/v1/paypal`, { totalprice: totalAmount , description: "Payment Success" })
                 .then((res) => {
-                    if (localStorage.getItem("CheckOutPage") !== null) {
-                        localStorage.removeItem("CheckOutPage")
-                    }
-                    if (localStorage.getItem("CheckOutPage") === null) {
-                        localStorage.setItem("CheckOutPage", JSON.stringify("true"))
-                    }
-                    console.log(res.data)
                     setOpen(false)
                     window.location.href = res.data
                 })
@@ -275,43 +56,23 @@ function ViewCart() {
         else {
             navigate("/login")
         }
-
     }
-    // const [listData, setListData] = useState(DATA);
-    // // Remove product
-    // // Remove
-    // const handleRemove = (id) => {
-    //     const data = listData.filter((item) => item.id !== id);
-    //     setListData(data);
-    // };
-
-    // // Decrease quantity
-    // const handleDecrease = (index) => {
-    //     const data = [...listData];
-    //     if (data[index].quantity >= 1) data[index].quantity--;
-    //     setListData(data);
-    // }
-    // // Increase quantity
-    // const handleIncrease = (index) => {
-    //     const data = [...listData];
-    //     data[index].quantity++;
-    //     setListData(data);
-    // };
-
-    // // Sub Total
-    // const subTotal = listData.reduce((total, currentValue) => {
-    //     return total + currentValue.price * currentValue.quantity;
-    // }, 0);
-
-    // // Ship
-    // const ship = useRef(0);
-    // // Discount
-    // const discount = useRef(0);
-    // // Tax
-    // const tax = useRef(0);
-
-
-
+    useEffect(() => {
+        console.log(cart)
+        const loadListBeatCart = async() => {
+            await axiosInstance.post("http://localhost:8080/api/v1/beat/cart/view", {beat: cart})
+            .then((res) => {
+                setListBeatCart(res.data.beatList)
+                console.log(res.data.beatList)
+                setTotalAmount(res.data.totalAmount)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        }
+        loadListBeatCart()
+    },[cart])
+    
     return (
 
         <section className={cx("card-wrapper")}>
@@ -327,17 +88,10 @@ function ViewCart() {
                     <div className={cx("card-genre", "card-title")}>GENRE</div>
                     <div className={cx("card-author", "card-title")}>AUTHOR</div>
                     <div className={cx("card-price", "card-title")}>PRICE</div>
-                    {/* <div className={cx("card-quantity", "card-title")}>QUANTITY</div> */}
-                    {/* <div className={cx("card-sub", "card-title")}>TOTAL</div> */}
                 </div>
-
-                {listBeatContext ?
+                {listBeatCart.length !== 0 ?
                     <div className={cx("list-card")}>
-
-
-                        {listBeatContext.map((item, index) => {
-                            if (cartItems) {
-                                if (cartItems[item.id] !== 0) {
+                        {listBeatCart.map((item, index) => {
                                     return (
                                         <CardItem
                                             id={item.id}
@@ -346,10 +100,11 @@ function ViewCart() {
                                             genre={item.genres}
                                             price={item.price}
                                             beatId={item.id}
+                                            setOpenSuccessSnackBar={setOpenSuccessSnackBar}
+                                            setMessageSuccess={setMessageSuccess}
                                         />
                                     );
-                                }
-                            }
+                                
                         })}
                     </div> : <div></div>}
 
@@ -358,7 +113,6 @@ function ViewCart() {
                     <Link to="/listbeat" className={cx("card-return", "card-action")}>RETURN TO SHOP</Link>
                     {/* <div className={cx("card-update", "card-action")}>UPDATE CART</div> */}
                 </footer>
-                <div>{checkoutMessage}</div>
             </section>
 
             {/* Card total */}
@@ -423,12 +177,12 @@ function ViewCart() {
             >
                 <CircularProgress color="inherit" />
             </Backdrop>
-            <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
+            <Snackbar open={openSuccessSnackBar} autoHideDuration={500} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
                 <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                     {messageSuccess}
                 </Alert>
             </Snackbar>
-            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
+            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
                 <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                     {messageFailed}
                 </Alert>

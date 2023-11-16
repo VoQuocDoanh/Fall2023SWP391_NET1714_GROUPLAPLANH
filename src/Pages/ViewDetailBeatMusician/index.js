@@ -137,7 +137,7 @@ function ViewDetailBeatMusician() {
                                     <div className={cx('information')}>
                                         {console.log(beatDetail)}
                                         <h1><b>{beatDetail.beatName}</b></h1>
-                                        <h4> {beatDetail.user.fullName} &#x2022; 2023 </h4>
+                                        <h4> {beatDetail.description} &#x2022; 2023 </h4>
 
                                     </div>
                                     {/* <div className={cx('button-submit')}>
@@ -292,12 +292,12 @@ function ViewDetailBeatMusician() {
                     <audio id="audio" ref={audioRef} src={music}></audio>
 
                 </div> */}
-                <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
+                <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
                 <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                     {messageSuccess}
                 </Alert>
             </Snackbar>
-            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
+            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
                 <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                     {messageFailed}
                 </Alert>

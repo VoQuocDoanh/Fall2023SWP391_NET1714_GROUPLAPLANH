@@ -22,11 +22,9 @@ const cx = classNames.bind(styles);
 
 function HeaderAdmin() {
   const navigate = useNavigate()
-  const { checkOut } = useContext(ShopContext)
   const token = useToken()
   let userRole = ''
   let name = ''
-  const { setViewBeatFirstTime } = useContext(ShopContext);
   if (token) {
     userRole = jwtDecode(token).role
     name = jwtDecode(token).username
@@ -34,8 +32,6 @@ function HeaderAdmin() {
   const handleLogout = () => {
     if (token) {
       localStorage.removeItem("token")
-      setViewBeatFirstTime(0)
-      checkOut()
     }
   }
   const [page, setPage] = useState("Page");

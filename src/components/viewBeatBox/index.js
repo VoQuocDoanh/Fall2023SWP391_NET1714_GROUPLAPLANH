@@ -14,9 +14,6 @@ import axiosInstance from "../../authorization/axiosInstance";
 const cx = classNames.bind(styles);
 
 function ViewBeatBox({ id, name, genre, price, view, like, onClick, handleLike, rating, vocalRange, fullName, status }) {
-    const token = useToken()
-    const audioRef = useRef()
-    const { addToCart, cartItems } = useContext(ShopContext)
     return (<div className={cx("list-box")} onClick={onClick}>
         <div className={cx("card-item")}>
             <img className={cx("box-img")} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} alt="anh" />

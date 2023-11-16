@@ -49,6 +49,10 @@ export default function ReportForm({ isOpen, onClose }) {
     });
   };
   const handleSendReport = () => {
+    if(formData.content == ''){
+      showFailedToast("Report must not be null!")
+      return;
+    }
     axios
       .post(`${BACK_END_PORT}/api/v1/report`, formData)
       .then((response) => {

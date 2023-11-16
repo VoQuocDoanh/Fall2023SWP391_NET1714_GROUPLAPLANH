@@ -1,4 +1,5 @@
 import { GlobalContext } from '@/Provider';
+import useToken from '@/authorization/useToken';
 import {
   Modal,
   ModalOverlay,
@@ -12,11 +13,14 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 import { useContext, useState } from 'react';
 
 function AddSongAndPlaylist({ isOpen, onClose, songId, userId, setReload }) {
   const { BACK_END_PORT } = useContext(GlobalContext);
   const toast = useToast();
+  const token = useToken()
+
   const showSuccessToast = (e) => {
     toast({
       title: "Message",

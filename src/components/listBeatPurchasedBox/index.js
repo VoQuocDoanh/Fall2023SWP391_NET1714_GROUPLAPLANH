@@ -16,7 +16,6 @@ const cx = classNames.bind(styles);
 function ListBeatPurchasedBox({ id, name, genre, price, view, like, onClick, rating, vocalRange, fullName }) {
     const token = useToken()
     const audioRef = useRef()
-    const { addToCart, cartItems } = useContext(ShopContext)
     const [play, setPlay] = useState(false)
     const [beatSoundFull, setBeatSoundFull] = useState("")
     useEffect(() => {
@@ -40,13 +39,11 @@ function ListBeatPurchasedBox({ id, name, genre, price, view, like, onClick, rat
                     <span className={cx("type-beat")}>{fullName}</span> <br />
                     <span className={cx("type-beat")}>{vocalRange}</span>
                     <div style={{ display: 'grid', justifyContent: 'flex-end', marginLeft: 60, rowGap: 10 }}>
-                        <span style={{textWrap: 'nowrap'}} className={cx("like")}>
-                            <FontAwesomeIcon icon={faHeart} />
-                            <span  className={cx("number")}>{like}</span>
+                        <span style={{ textWrap: 'nowrap' }} className={cx("like")}>
+                            <span style={{color:"black"}}>123</span>
                         </span>
                         <span className={cx("rating")}>
-                            <FontAwesomeIcon icon={faStar} />
-                            <span className={cx("number")}>{rating}</span>
+                            <span style={{color:"black"}}>123</span>
                         </span>
                     </div>
                 </div>

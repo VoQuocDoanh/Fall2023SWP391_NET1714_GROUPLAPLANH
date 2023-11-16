@@ -23,11 +23,9 @@ const cx = classNames.bind(styles);
 function HeaderMusician() {
 
   const navigate = useNavigate()
-  const { checkOut } = useContext(ShopContext)
   const token = useToken()
   let userRole = ''
   let name = ''
-  const { setViewBeatFirstTime } = useContext(ShopContext);
   if (token) {
     userRole = jwtDecode(token).role
     name = jwtDecode(token).username
@@ -35,8 +33,6 @@ function HeaderMusician() {
   const handleLogout = () => {
     if (token) {
       localStorage.removeItem("token")
-      setViewBeatFirstTime(0)
-      checkOut()
     }
   }
   const [page, setPage] = useState("Page");
@@ -57,7 +53,7 @@ function HeaderMusician() {
           <div>
                 <Link to="/viewbeat"><div className={cx("nav-item")}>Beat</div></Link>        
           </div>
-          <div className={cx("nav-item")}>Contact</div>
+          <Link to={"/contact"}><div className={cx("nav-item")}>Contact</div></Link>
           <div className={cx("nav-item")}>
           </div>
         </div>

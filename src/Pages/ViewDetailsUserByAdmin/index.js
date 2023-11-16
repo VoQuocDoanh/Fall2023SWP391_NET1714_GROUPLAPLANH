@@ -207,10 +207,10 @@ function ViewDetailsUserByAdmin() {
                                                         </div>
                                                         <textarea className={cx("text-des")} style={{ resize: 'none', width: '385px', border: 1, height: 150, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12 }} onChange={(e) => setContentBan(e.target.value)} />
                                                         <td className={cx("button-type")}>
-                                                            <button type="button" className={cx("button-send")} aria-disabled="false" onClick={() => { handleBanUser()}} >Send</button>
+                                                            <button type="button" className={cx("button-send")} aria-disabled="false" onClick={() => { handleBanUser() }} >Send</button>
                                                             <Backdrop
                                                                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                                                                open={open}                                              
+                                                                open={open}
                                                             >
                                                                 <CircularProgress color="inherit" />
                                                             </Backdrop>
@@ -225,7 +225,7 @@ function ViewDetailsUserByAdmin() {
                                                             <td style={{ fontWeight: '500', fontSize: "2.5rem", marginLeft: 0, color: 'black', textAlign: 'center', marginTop: 60 }}>Are you sure you want to unban this user?</td>
                                                         </div>
                                                         <td className={cx("button-type")}>
-                                                            <button type="button" className={cx("button-send-2")} aria-disabled="false" onClick={() => { handleUnbanUser()}} >Accept</button>
+                                                            <button type="button" className={cx("button-send-2")} aria-disabled="false" onClick={() => { handleUnbanUser() }} >Accept</button>
                                                             <Backdrop
                                                                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                                                                 open={open}
@@ -252,17 +252,18 @@ function ViewDetailsUserByAdmin() {
                                             <table className={classNames("profile-2")}>
                                                 <div className={cx("part0")}>
                                                     <td>
-                                                        {listReport.map((report => {
+                                                        {listReport.map((report, index) => {
                                                             return (
                                                                 <div className={cx("text-username0")}>
                                                                     <td>
+                                                                        <label style={{ fontFamily: 'sono', fontSize: 20, fontWeight: 500 }}>{index + 1}. </label>
                                                                         <label style={{ fontFamily: 'Sono', fontWeight: 500 }} className={cx("login-text")}>{report.user.fullName}</label>
                                                                     </td>
                                                                     <div>
                                                                         <input className={cx("input-username0")} type="text" placeholder value={report.content} />
                                                                     </div>
                                                                 </div>)
-                                                        }))}
+                                                        })}
 
                                                     </td>
                                                 </div>
@@ -273,16 +274,16 @@ function ViewDetailsUserByAdmin() {
                             </div>
                         </TabPanel>
                     </Tabs>
-                    <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
-                <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
-                    {messageSuccess}
-                </Alert>
-            </Snackbar>
-            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
-                <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
-                    {messageFailed}
-                </Alert>
-            </Snackbar>
+                    <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
+                        <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                            {messageSuccess}
+                        </Alert>
+                    </Snackbar>
+                    <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
+                        <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                            {messageFailed}
+                        </Alert>
+                    </Snackbar>
 
                 </div> : <div></div>}
         </div>

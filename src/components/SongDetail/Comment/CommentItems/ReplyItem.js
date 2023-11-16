@@ -15,6 +15,7 @@ import { IoSend } from 'react-icons/io5';
 import { useState } from 'react';
 import { FaRegComment, FaTrash } from 'react-icons/fa6';
 import axios from 'axios';
+import useToken from '@/authorization/useToken';
 
 function ReplyItem({
   item,
@@ -27,6 +28,7 @@ function ReplyItem({
 }) {
   const [showBox, setShowBox] = useState(false);
   const toast = useToast();
+  const token = useToken();
   const showSuccessToast = (e) => {
     toast({
       title: "Message",
@@ -55,6 +57,10 @@ function ReplyItem({
   });
 
   const handleComment = () => {
+    if(!token){
+      showFailedToast("You need to login before using this function!")
+      return
+    }
     if (formData?.content.length) {
       axios
         .post(`${BACK_END_PORT}/api/v1/comment`, formData)

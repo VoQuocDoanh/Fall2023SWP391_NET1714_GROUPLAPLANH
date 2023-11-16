@@ -15,7 +15,6 @@ function CartBeatItem({
         const month = dateReleasing.getUTCMonth() + 1
         const day = dateReleasing.getUTCDate()
         const year = dateReleasing.getUTCFullYear()
-  const { removeFromCart } = useContext(ShopContext)
   return (
     <div className={cx("card-wrapper")}>
       {/* Card product */}

@@ -24,7 +24,6 @@ function ListBeatPurchased() {
 
     //Comment lai cho nay
     const navigate = useNavigate()
-    const { setListBeatContext, setDefaultCart, setViewBeatFirstTime, viewBeatFirstTime, checkOut } = useContext(ShopContext)
     const [search, setSearch] = useState("");
     const [list, setList] = useState([]);
     const [listGenres, setListGenres] = useState(null);

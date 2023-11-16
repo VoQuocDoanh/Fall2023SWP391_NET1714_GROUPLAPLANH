@@ -11,6 +11,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.scss';
 import 'react-tabs/style/react-tabs.css';
 import Pagination from "../../components/Pagination";
+import axios from "axios";
+import { Alert, Backdrop, CircularProgress, Snackbar } from "@mui/material";
 const cx = classNames.bind(styles);
 const DATA = [
     {
@@ -29,28 +31,15 @@ const SEX = [
     }
 ]
 function Contact() {
-    const [isChecked, setIsChecked] = useState(false);
     const [fullName, setFullname] = useState("");
-    const [address, setAddress] = useState("");
-    const [mail, setMail] = useState("")
+    const [email, setEmail] = useState("")
     const [phone, setPhone] = useState("");
-    const [gender, setGender] = useState(SEX[0].value);
-    const [userImg, setUserImg] = useState()
-    const [avatar, setAvatar] = useState("")
-    const [prize, setPrize] = useState("")
-    const [professional, setProfessional] = useState("")
-    const [year, setYear] = useState("")
-    const [checkEdit, setCheckEdit] = useState("")
-    const [username, setUserName] = useState("")
-    const [page, setPage] = useState(1)
-    const [pages, setPages] = useState(1)
-    const [feedBacks, setFeedBacks] = useState([]);
-
-    let id = ""
-    const token = useToken()
-    if (token) {
-        id = jwtDecode(token).sub
-    }
+    const [content, setContent] = useState("");
+    const [open, setOpen] = useState(false);
+    const [messageSuccess, setMessageSuccess] = useState("")
+    const [messageFailed, setMessageFailed] = useState("")
+    const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
+    const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
 
 
     // useEffect(() => {
@@ -101,41 +90,39 @@ function Contact() {
     //         })
     // }
 
-    const handleEdit = async () => {
-        if (!fullName || !address || !phone || !gender || !id || !prize || !professional || !year) {
-            alert("Please fill in all fields!")
+    const handleContact = async () => {
+        if (!fullName || !email || !phone || !content) {
+            setOpenFailedSnackBar(true)
+            setMessageFailed("All fields must not be null!")
             return
-        } else if (phone.length < 10) {
-            alert("Phone must be equal or higher than 10 numbers!")
         }
-        const userProfile = { fullName, address, phone, gender, id };
-        const formData = new FormData();
-        formData.append('json', new Blob([JSON.stringify(userProfile)], { type: 'application/json' }));
-        console.log(userImg)
-        formData.append('file', userImg);
-
-
-        await axiosInstance.patch("http://localhost:8080/api/v1/user/customer", formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        })
+        else if (!email.match("^[A-Za-z0-9+_.-]+@(gmail\\.com|gmail\\.com\\.vn|fpt\\.edu\\.vn)$")) {
+            setMessageFailed("Invalid Email!")
+            setOpenFailedSnackBar(true)
+            setOpen(false)
+            return
+        }
+        else if (phone.length < 10 || phone.length > 11) {
+            setOpenFailedSnackBar(true)
+            setMessageFailed("Phone number length must be 10 or 11 characters!")
+            return
+        }
+        setOpen(true)
+        await axios.post("http://localhost:8080/api/v1/user/contactus", { fullName: fullName, email: email, phone: phone, content: content })
             .then((res) => {
-                setCheckEdit("Edit Successfully")
+                setOpenSuccessSnackBar(true)
+                setMessageSuccess("Send contact successfully")
+                setOpen(false)
+                setFullname("")
+                setEmail("")
+                setPhone("")
+                setContent("")
+                console.log(res.data)
             })
             .catch((error) => {
-                setCheckEdit("Edit Failed!")
-                console.log(error)
-            })
-    }
-
-    const loadFeedBack = async () => {
-        await axiosInstance.get(`http://localhost:8080/api/v1/beat/feedback/${id}/${page}`)
-            .then((res) => {
-                setFeedBacks(res.data.dtoList)
-                setPages(res.data.max)
-            })
-            .catch((error) => {
+                setOpenFailedSnackBar(true)
+                setMessageFailed("Send contact failed!")
+                setOpen(false)
                 console.log(error)
             })
     }
@@ -151,7 +138,7 @@ function Contact() {
                 {/* Detail musician */}
 
                 <div className={cx("volt8A")}>
-                    <form style={{ marginTop: 20, display: 'flex',marginBottom: 250}}>
+                    <form style={{ marginTop: 20, display: 'flex', marginBottom: 250 }}>
                         <div className={("profile-2")} style={{ backgroundColor: 'white', padding: 50, width: 800 }}>
                             <td style={{ paddingBottom: 30, fontSize: 23, fontWeight: '500', color: '#06c' }}> Send us message</td>
                             <div className={cx("part0")}>
@@ -172,7 +159,7 @@ function Contact() {
                                         Email*
                                     </div>
                                     <div className={cx("email-change")}>
-                                        <input className={cx("input-user")} type="text" placeholder="Your email" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                                        <input className={cx("input-user")} type="text" placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)} />
                                     </div>
                                 </td>
                                 <div className={cx("placeholder-ten")}>
@@ -187,14 +174,14 @@ function Contact() {
                                     <td style={{ fontWeight: 500 }}>
                                         Write your message *
                                     </td>
-                                    <textarea className={cx("input-user-text")} style={{ width: 620, height: 120 }} id="ABC" name="ABC" rows="2" cols="174" ></textarea>
+                                    <textarea className={cx("input-user-text")} style={{ width: 620, height: 120 }} id="ABC" name="ABC" rows="2" cols="174" value={content} onChange={(e) => setContent(e.target.value)} ></textarea>
                                 </div>
                             </div>
                             <div className={cx("part5")}>
                                 <td className={cx("save-button")}>
                                 </td>
                                 <td className={cx("button-type")}>
-                                    <button type="button" className={cx("button-save-details")} aria-disabled="false" onClick={() => handleEdit()}>Send Message</button>
+                                    <button type="button" className={cx("button-save-details")} aria-disabled="false" onClick={() => handleContact()}>Send Message</button>
                                 </td>
                             </div>
                         </div>
@@ -218,7 +205,7 @@ function Contact() {
                                                     <path d="M19.0592 20.1375L21.1592 18.0375C21.442 17.7582 21.7999 17.567 22.1893 17.4871C22.5787 17.4072 22.9829 17.4421 23.3529 17.5875L25.9123 18.6094C26.2862 18.7612 26.6068 19.0202 26.8337 19.3539C27.0606 19.6876 27.1836 20.0809 27.1873 20.4844V25.1719C27.1851 25.4464 27.1274 25.7176 27.0177 25.9692C26.9079 26.2208 26.7484 26.4476 26.5487 26.6359C26.349 26.8242 26.1132 26.9702 25.8556 27.065C25.598 27.1598 25.3239 27.2015 25.0498 27.1875C7.11541 26.0719 3.49666 10.8844 2.81229 5.07191C2.78052 4.78648 2.80955 4.49755 2.89746 4.22414C2.98537 3.95073 3.13018 3.69903 3.32235 3.4856C3.51453 3.27218 3.74971 3.10186 4.01244 2.98585C4.27516 2.86984 4.55947 2.81078 4.84666 2.81254H9.37479C9.77886 2.81373 10.1733 2.93579 10.5075 3.163C10.8416 3.39022 11.1001 3.7122 11.2498 4.08754L12.2717 6.64691C12.4219 7.01542 12.4602 7.42002 12.3819 7.81017C12.3035 8.20033 12.1119 8.55875 11.831 8.84066L9.73104 10.9407C9.73104 10.9407 10.9404 19.125 19.0592 20.1375Z" fill="white" fill-opacity="0.501961" />
                                                 </svg>
                                             </span>
-                                            +84 0909090909  
+                                            +84 0909090909
                                         </span>
                                         <span style={{ fontSize: 20, display: 'flex', alignItems: 'center' }} >
                                             <span style={{ paddingRight: 10, marginTop: 10 }}>
@@ -235,6 +222,22 @@ function Contact() {
                     </form>
                 </div>
             </div>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={open}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+            <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
+                <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {messageSuccess}
+                </Alert>
+            </Snackbar>
+            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
+                <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {messageFailed}
+                </Alert>
+            </Snackbar>
         </div>
     );
 }

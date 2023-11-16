@@ -163,7 +163,7 @@ function ViewDetailBeatPurchased() {
                                     <div className={cx('information')}>
                                         {console.log(beatDetail)}
                                         <h1><b style={{ color: 'white', fontFamily: 'fredoka one' }}>{beatDetail.beatName}</b></h1>
-                                        <Link style={{color:"white"}} to={`/viewdetailsmusician/${beatDetail.user.id}`}><h4> {beatDetail.user.fullName} &#x2022; 2023 </h4></Link>
+                                        <Link style={{color:"white"}} to={`/viewdetailsmusician/${beatDetail.user.id}`}><h4> {beatDetail.description} &#x2022; 2023 </h4></Link>
 
                                     </div>
                                     {/* <div className={cx('button-submit')}>
@@ -252,7 +252,7 @@ function ViewDetailBeatPurchased() {
                                                     </Popup>
                                                     :
                                                     <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<Button variant="contained" className={cx('button-2')}>
-                                                        <div style={{ fontSize: '1.5rem' }}>Update Feedback</div>
+                                                        <div style={{ fontSize: '1.5rem' }}>View Feedback</div>
                                                     </Button>}  {...{ contentStyle }} position="bottom left center">
                                                         <div className={cx("text-all")} style={{ padding: 10 }}>
                                                             <div style={{ display: 'grid' }}>
@@ -261,7 +261,7 @@ function ViewDetailBeatPurchased() {
                                                             </div>
                                                             <textarea className={cx("text-des")} value={feedBackContent} style={{ resize: 'none', width: '385px', border: 1, height: 150, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12 }} onChange={(e) => setFeedBackContent(e.target.value)} />
                                                             <td className={cx("button-type")}>
-                                                                <button type="button" className={cx("button-send")} aria-disabled="false" onClick={(e) => handleUpdateFeedback(e.target.value)} >Send</button>
+                                                                <button type="button" className={cx("button-send")} aria-disabled="false" onClick={(e) => handleUpdateFeedback(e.target.value)} >Update</button>
                                                             </td>
                                                         </div>
                                                     </Popup>
@@ -280,45 +280,12 @@ function ViewDetailBeatPurchased() {
                     </div>
                 </div>
 
-                {/* Comment */}
-                {/* <div className={cx("audio")}>
-                    <div className={cx("image-audio")}>
-                        <img className={cx("trending-ellipse")} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")}>
-                        </img>
-                    </div>
-                    <div className={cx("control")}>
-                        <div className={cx("btn", "btn-prev")}>
-                            <i class="fas fa-step-backward"></i>
-                            <FontAwesomeIcon icon={faStepBackward} />
-                        </div>
-                        <div className={cx("btn", "btn-toggle-play")} onClick={() => setPlay(!play)}>
-                            <FontAwesomeIcon icon={faPause} className={cx("icon-pause", "icon", {
-                                "play": play === true,
-                            })} />
-                            <FontAwesomeIcon icon={faPlay} className={cx("icon-play", "icon", {
-                                "play": play === false,
-                            })} />
-                        </div>
-                        <div className={cx("btn", "btn-next")}>
-                            <FontAwesomeIcon icon={faStepForward} />
-                        </div>
-
-                    </div>
-                    <div className={cx("time-audio")}>
-                        <span className={cx("start")}>0:00</span>
-                        <input id="progress" className={cx("progress")} type="range" value="0" step="1" min="0" max="100" />
-                        <span className={cx("end")}>0:00</span>
-                    </div>
-
-                    <audio id="audio" ref={audioRef} src={music}></audio>
-
-                </div> */}
-                <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
+                <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
                 <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                     {messageSuccess}
                 </Alert>
             </Snackbar>
-            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
+            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
                 <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                     {messageFailed}
                 </Alert>

@@ -1,7 +1,7 @@
 
 import classNames from "classnames/bind";
 import styles from "./ViewDetailsMusicain.module.scss";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "bootstrap";
 import axiosInstance from "../../authorization/axiosInstance";
@@ -11,6 +11,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.scss';
 import 'react-tabs/style/react-tabs.css';
 import Pagination from "../../components/Pagination";
+import Popup from "reactjs-popup";
+import { Alert, Snackbar } from "@mui/material";
 const cx = classNames.bind(styles);
 const DATA = [
     {
@@ -28,7 +30,8 @@ const SEX = [
         value: "FEMALE",
     }
 ]
-function MyProfile() {
+function ViewDetailsMusician() {
+    const navigate = useNavigate()
     const [isChecked, setIsChecked] = useState(false);
     const [fullName, setFullname] = useState("");
     const [address, setAddress] = useState("");
@@ -44,6 +47,18 @@ function MyProfile() {
     const [pages, setPages] = useState(1)
     const [feedBacks, setFeedBacks] = useState([]);
     const [listMusicianBeat, setListMusicianBeat] = useState([])
+    const token = useToken()
+    let userId = ""
+    if (token) {
+        userId = jwtDecode(token).sub
+    }
+    const [report, setReport] = useState("")
+    const [checkReport, setCheckReport] = useState("")
+    const [messageSuccess, setMessageSuccess] = useState("")
+    const [messageFailed, setMessageFailed] = useState("")
+    const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
+    const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
+    const contentStyle = { background: 'white', width: 460, height: 370, borderRadius: 20 };
     const { id } = useParams()
 
     useEffect(() => {
@@ -96,6 +111,24 @@ function MyProfile() {
             })
     }
 
+    const handleReport = async () => {
+        if (!token) {
+            navigate("/login")
+            return
+        }
+        await axiosInstance.post("http://localhost:8080/api/v1/report/user", { userId: userId, userReported: id, content: report })
+            .then((res) => {
+                setOpenSuccessSnackBar(true)
+                setMessageSuccess("Report successfully")
+                setCheckReport("Report successfully")
+            })
+            .catch((error) => {
+                setOpenFailedSnackBar(true)
+                setMessageFailed("Report failed!")
+                setCheckReport("Report failed!")
+            })
+    }
+
     const loadFeedBack = async () => {
         await axiosInstance.get(`http://localhost:8080/api/v1/beat/feedback/${id}/${page}`)
             .then((res) => {
@@ -121,7 +154,7 @@ function MyProfile() {
     }
 
     return (
-        <div style={{ marginTop: 50, marginLeft: 200 }}>
+        <div style={{ marginTop: 50, marginLeft: 200, marginBottom: 400 }}>
             <div>
                 <h2 className={cx("title-myprofile")}>
                     Musician Profile
@@ -149,7 +182,7 @@ function MyProfile() {
                         </div>
                     </div>
                 </div>
-                <Tabs style={{ marginTop: -120, marginBottom: 250 }}>
+                <Tabs style={{ marginTop: -120 }}>
                     <TabList>
                         <Tab ><b>Profile</b></Tab>
                         <Tab ><b>Feedback</b></Tab>
@@ -259,25 +292,49 @@ function MyProfile() {
                                     </div>
                                 </table>
                             </form>
+                            {(!(userId == id)) ?
+                                <div className={cx("part5")}>
+                                    <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<button type="button" className={cx("button-save-details")} aria-disabled="false" >Report</button>}  {...{ contentStyle }} position="top center">
+                                            <div className={cx("text-all")} style={{ padding: 10 }}>
+                                                <div style={{ display: 'grid' }}>
+                                                    <td style={{ fontWeight: 'bold', fontSize: "2.2rem", marginLeft: 120, color: 'red' }}>Report</td>
+                                                    <td style={{ paddingTop: 15, paddingLeft: 30 }}>
+                                                        {avatar !== null ?
+                                                            <img className={cx("img-user")} src={avatar} />
+                                                            : <img className={cx("img-user")} src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVhcVcxgW8LzmIu36MCeJb81AHXlI8CwikrHNh5vzY8A&s"} />}
+                                                        <a href="#" style={{ fontWeight: 'bold' }}>{username}</a>
+                                                    </td>
+                                                </div>
+                                                <textarea className={cx("text-des")} style={{ resize: 'none', width: '385px', border: 1, height: 150, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12 }} onChange={(e) => setReport(e.target.value)} />
+                                                <td className={cx("button-type")}>
+                                                    <button type="button" className={cx("button-send")} aria-disabled="false" onClick={() => handleReport()}>Send</button>
+                                                </td>
+
+                                            </div>
+                                        </Popup>
+                                </div>
+                                : <div></div>}
                         </div>
                     </TabPanel>
                     {/* Feedback */}
-                    <TabPanel style={{ marginBottom: "200px"}}>
+                    <TabPanel>
                         <div className={cx("volt8A")}>
                             <div style={{ color: '#06c', fontWeight: 'bold' }} className={cx("title-feedback")}> Beat Review</div>
                             {console.log(feedBacks)}
                             {feedBacks.length !== 0 ?
 
                                 <form style={{ marginTop: 20 }}>
-                                    {feedBacks.map((feedback) => {
+                                    {feedBacks.map((feedback,index) => {
                                         return (
                                             <table className={classNames("profile-2")}>
                                                 <div className={cx("part0")}>
                                                     <td>
                                                         <div className={cx("text-username0")}>
                                                             <td>
-                                                                <label style={{ fontFamily: 'sono', fontWeight: 400, marginLeft: -2 }} className={cx("login-text")}>{feedback.user.fullName}</label>
-                                                                <label style={{ marginLeft: 20, fontFamily: 'Sono', fontWeight: 400 }} className={cx("login-text")}>{feedback.beat.beatName}</label>
+                                                                <label style={{fontFamily: 'sono', fontSize:20, fontWeight: 500}}>{index + 1}. </label>
+                                                                <label style={{ fontFamily: 'sono', fontWeight: 500, marginLeft: -2 }} className={cx("login-text")}>{feedback.user.fullName}</label>
+                                                                <label style={{fontFamily: 'sono', fontSize:20, marginLeft: 10}}>-</label>
+                                                                <label style={{ marginLeft: 10, fontFamily: 'Sono', fontWeight: 400 }} className={cx("login-text")}>{feedback.beat.beatName}</label>
                                                             </td>
                                                             <div>
                                                                 <input className={cx("input-username1")} type="text" placeholder value={feedback.content} readOnly />
@@ -297,13 +354,13 @@ function MyProfile() {
                         </div>
 
                     </TabPanel>
-                    <TabPanel style={{ marginBottom: "200px"}}>
+                    <TabPanel>
                         <div className={cx("volt8A")}>
                             <div style={{ color: '#06c', fontWeight: 'bold' }} className={cx("title-feedback")}> All Beats</div>
                             {console.log(feedBacks)}
                             {listMusicianBeat.length !== 0 ?
 
-                                <form style={{ marginTop: 20}}>
+                                <form style={{ marginTop: 20 }}>
                                     {listMusicianBeat.map((beat) => {
                                         return (
                                             <table className={classNames("profile-2")}>
@@ -344,9 +401,19 @@ function MyProfile() {
 
                     </TabPanel>
                 </Tabs>
+                <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
+                    <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                        {messageSuccess}
+                    </Alert>
+                </Snackbar>
+                <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
+                    <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                        {messageFailed}
+                    </Alert>
+                </Snackbar>
             </div>
         </div>
     );
 }
 
-export default MyProfile;
+export default ViewDetailsMusician;

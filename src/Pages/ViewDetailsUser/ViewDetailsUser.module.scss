@@ -4,6 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800&display=swap');
 @import url('https://fonts.cdnfonts.com/css/sono');
 @import url('https://fonts.cdnfonts.com/css/inter');
+@import url('https://fonts.cdnfonts.com/css/fredoka-one');
 
 .profile {
     display: flex;
@@ -13,6 +14,7 @@
     padding: 20px;
     width: 70%;
     margin-left: 250px;
+    margin-bottom: 250px;
 }
 
 .line {
@@ -130,14 +132,18 @@
 }
 
 .input-username0 {
-    padding: 22px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: 1px solid rgb(65, 65, 65);
-    width: 700px;
-    margin-top: 30px;
-    height: 1px;
-    flex-shrink: 0;
+    
+        padding: 22px 20px;
+        font-size: 1.8rem;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: none;
+        border-bottom: 1px solid rgb(65, 65, 65);
+        width: 600px;
+        height: 1px;
+        flex-shrink: 0;
+        pointer-events: none;
+    
 }
 
 .text-username {
@@ -157,9 +163,10 @@
 }
 
 .login-text {
-    font-family: inter;
+    font-family: fredoka one;
     margin-left: 4px;
-    font-size: 23px;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .part4 {
@@ -225,21 +232,23 @@
 }
 
 .part2>td {
-    margin-top: 40px;
+    margin-top: 20px;
     display: flex;
     justify-content: center;
-    margin-left: -380px;
-    margin-top: 100px;
+    margin-left: -330px;
     display: flex;
 }
 
 .email-change {
     margin-left: 50px;
+    margin-top: 5px;
 }
 
 .email-text {
-    margin-left: 105px;
-    font-family: inter;
+    margin-left: 175px;
+    font-family: fredoka one;
+    font-size: 20px;
+    font-weight: 500;
 
 }
 

@@ -133,7 +133,7 @@ function MyProfile() {
             setOpenFailedSnackBar(true)
             setMessageFailed("All fields must not be null!")
             return
-        } else if (phone.length < 10) {
+        } else if (phone.length < 10 || phone.length > 11) {
             setOpenFailedSnackBar(true)
             setMessageFailed("Phone number length must be 10 or 11 characters!")
         } else if (year < 0 || year > 100) {
@@ -363,22 +363,24 @@ function MyProfile() {
                         </div>
                     </TabPanel>
                     {/* Feedback */}
-                    <TabPanel style={{ marginBottom: "400px"}}>
+                    <TabPanel style={{ marginBottom: "400px" }}>
                         <div className={cx("volt8A")}>
                             <div style={{ color: '#06c', fontWeight: 'bold' }} className={cx("title-feedback")}> Beat Review</div>
                             {console.log(feedBacks)}
                             {feedBacks.length !== 0 ?
 
                                 <form style={{ marginTop: 20 }}>
-                                    {feedBacks.map((feedback) => {
+                                    {feedBacks.map((feedback, index) => {
                                         return (
                                             <table className={classNames("profile-2")}>
                                                 <div className={cx("part0")}>
                                                     <td>
                                                         <div className={cx("text-username0")}>
                                                             <td>
-                                                                <label style={{ fontFamily: 'sono', fontWeight: 400, marginLeft: -2 }} className={cx("login-text")}>{feedback.user.fullName}</label>
-                                                                <label style={{ marginLeft: 20, fontFamily: 'Sono', fontWeight: 400 }} className={cx("login-text")}>{feedback.beat.beatName}</label>
+                                                                <label style={{ fontFamily: 'sono', fontSize: 20, fontWeight: 500 }}>{index + 1}. </label>
+                                                                <label style={{ fontFamily: 'sono', fontWeight: 500, marginLeft: -2 }} className={cx("login-text")}>{feedback.user.fullName}</label>
+                                                                <label style={{ fontFamily: 'sono', fontSize: 20, marginLeft: 10 }}>-</label>
+                                                                <label style={{ marginLeft: 10, fontFamily: 'Sono', fontWeight: 400 }} className={cx("login-text")}>{feedback.beat.beatName}</label>
                                                             </td>
                                                             <div>
                                                                 <input className={cx("input-username1")} type="text" placeholder value={feedback.content} readOnly />
@@ -400,12 +402,12 @@ function MyProfile() {
                 </Tabs>
 
             </div>
-            <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
+            <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
                 <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                     {messageSuccess}
                 </Alert>
             </Snackbar>
-            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
+            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
                 <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                     {messageFailed}
                 </Alert>

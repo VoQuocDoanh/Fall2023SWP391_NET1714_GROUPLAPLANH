@@ -41,6 +41,7 @@ const Rating = ({ maxRating, handleRating }) => {
   };
 
   useEffect(() => {
+    if (information.userId)
     getRating();
   }, []);
 

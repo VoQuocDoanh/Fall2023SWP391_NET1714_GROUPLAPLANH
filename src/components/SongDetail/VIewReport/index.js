@@ -48,7 +48,7 @@ export default function ViewReport({ isOpen, onClose }) {
     if (information?.songId) {
       getListReport();
     }
-  }, [information]);
+  }, []);
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={'lg'}>
       <ModalOverlay />

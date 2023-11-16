@@ -19,6 +19,7 @@ import jwtDecode from 'jwt-decode';
 
 function Comment({ songCommentData, avatarUser, ...props }) {
   const { information, setReload } = useContext(SongContext);
+  const token = useToken();
   const { BACK_END_PORT } = useContext(GlobalContext);
   const [formData, setFormData] = useState({
     userId: information?.userId,
@@ -48,6 +49,10 @@ function Comment({ songCommentData, avatarUser, ...props }) {
     });
   };
   const handleComment = () => {
+    if(!token){
+      showFailedToast("You need to login before using this function!")
+      return
+    }
     if (formData?.content.length) {
       axios
         .post(`${BACK_END_PORT}/api/v1/comment`, formData)

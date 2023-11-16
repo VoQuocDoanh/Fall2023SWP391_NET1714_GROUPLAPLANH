@@ -62,10 +62,12 @@ function SongDetail() {
   const [checkDelete, setCheckDelete] = useState(false)
   const [checkUpdate, setCheckUpdate] = useState(false)
   const [checkBan, setCheckBan] = useState(false)
+  const [songName, setSongName] = useState("")
   const [singer, setSinger] = useState("")
   const [tone, setTone] = useState("")
+  const [songUrl, setSongUrl] = useState("")
   const [vocalRange, setVocalRange] = useState("")
-  const [user,setUser] = useState({})
+  const [user, setUser] = useState({})
   const toast = useToast();
   const showSuccessToast = (e) => {
     toast({
@@ -109,6 +111,7 @@ function SongDetail() {
 
   const handleRating = async (score) => {
     if (!token) {
+      showFailedToast("You need to login before using this function!")
       return
     }
     axios
@@ -131,36 +134,68 @@ function SongDetail() {
 
   const fetchData = async () => {
     try {
-      const [getSongDetail, getSongComment, getListPlaylist,getDetailsUser] =
-        await Promise.all([
-          axios.get(`${BACK_END_PORT}/api/v1/song/${id}`),
-          axios.get(`${BACK_END_PORT}/api/v1/comment/song/${id}`),
-          axios.get(`${BACK_END_PORT}/api/v1/playlist/user/${userId}`),
-          axios.get(`${BACK_END_PORT}/api/v1/user/${userId}`),
-        ]);
+      if (userId !== "") {
+        const [getSongDetail, getSongComment, getListPlaylist, getDetailsUser] =
+          await Promise.all([
+            axios.get(`${BACK_END_PORT}/api/v1/song/${id}`),
+            axios.get(`${BACK_END_PORT}/api/v1/comment/song/${id}`),
+            axios.get(`${BACK_END_PORT}/api/v1/playlist/user/${userId}`),
+            axios.get(`${BACK_END_PORT}/api/v1/user/${userId}`),
+          ]);
+        if (getSongDetail) {
+          console.log(getSongDetail)
+          setSongData(getSongDetail.data);
+          setSongName(getSongDetail.data.songName)
+          setSinger(getSongDetail.data.singer)
+          setTone(getSongDetail.data.tone)
+          setVocalRange(getSongDetail.data.vocalRange)
+          setSongUrl(getSongDetail.data.songUrl)
+        }
+        if (getSongComment) {
+          setSongCommentData(getSongComment.data);
+        }
+        if (getListPlaylist) {
+          setListPlayList(getListPlaylist.data);
+        }
+        if (getDetailsUser) {
+          setUser(getDetailsUser.data)
+        }
+      }
+      else {
+        const [getSongDetail, getSongComment, getListPlaylist, getDetailsUser] =
+          await Promise.all([
+            axios.get(`${BACK_END_PORT}/api/v1/song/${id}`),
+            axios.get(`${BACK_END_PORT}/api/v1/comment/song/${id}`),
+            // axios.get(`${BACK_END_PORT}/api/v1/playlist/user/${userId}`),
+            // axios.get(`${BACK_END_PORT}/api/v1/user/${userId}`),
+          ]);
+        if (getSongDetail) {
+          console.log(getSongDetail)
+          setSongData(getSongDetail.data);
+          setSongName(getSongDetail.data.songName)
+          setSinger(getSongDetail.data.singer)
+          setTone(getSongDetail.data.tone)
+          setVocalRange(getSongDetail.data.vocalRange)
+          setSongUrl(getSongDetail.data.songUrl)
+        }
+        if (getSongComment) {
+          setSongCommentData(getSongComment.data);
+        }
+        if (getListPlaylist) {
+          setListPlayList(getListPlaylist.data);
+        }
+        if (getDetailsUser) {
+          setUser(getDetailsUser.data)
+        }
+      }
 
-      if (getSongDetail) {
-        setSongData(getSongDetail.data);
-        setSinger(getSongDetail.data.singer)
-        setTone(getSongDetail.data.tone)
-        setVocalRange(getSongDetail.data.vocalRange)
-      }
-      if (getSongComment) {
-        setSongCommentData(getSongComment.data);
-      }
-      if (getListPlaylist) {
-        setListPlayList(getListPlaylist.data);
-      }
-      if(getDetailsUser){
-        setUser(getDetailsUser.data)
-      }
     } catch (error) {
       console.log(error);
     }
   };
 
   const handleDeleteSong = async () => {
-    if(!token){
+    if (!token) {
       showFailedToast("You need to login before using this function!")
       return
     }
@@ -171,7 +206,7 @@ function SongDetail() {
         showSuccessToast("Delete Successfully")
         setTimeout(() => {
           navigate("/songs")
-        },1000)     
+        }, 1000)
       })
       .catch((error) => {
         showFailedToast("Delete Failed")
@@ -180,20 +215,27 @@ function SongDetail() {
 
   const handleUpdateSong = async () => {
     setReload(false)
-    if(!token){
+    if (!token) {
       showFailedToast("You need to login before using this function!")
       return
     }
+    if(!songName || !singer || !tone || !vocalRange || !songUrl ){
+      showFailedToast("All fields must not be null!")
+      return
+    }
     await axiosInstance.patch(`http://localhost:8080/api/v1/song/user/${userId}/${songData.id}`, {
+      songName: songName,
       singer: singer,
       tone: tone,
-      vocalRange: vocalRange
+      vocalRange: vocalRange,
+      songUrl: songUrl,
     }
     )
       .then((res) => {
         showSuccessToast("Update Successfully")
         console.log(reload)
         setReload(true)
+        setCheckUpdate(false)
       })
       .catch((error) => {
         showFailedToast("Update Failed!")
@@ -202,22 +244,36 @@ function SongDetail() {
       })
   }
 
-  const handleBanSong = async() => {
+  const handleBanSong = async () => {
+    setReload(false)
+    if (!token) {
+      showFailedToast("You need to login before using this function!")
+    }
     await axiosInstance.post(`http://localhost:8080/api/v1/admin/ban/song/${songData.id}`)
-    .then((res) => {
-      showSuccessToast("Ban Successfully")
-    })
-    .catch((error) => {
-      showFailedToast("Ban Failed!")
-    })
+      .then((res) => {
+        showSuccessToast("Ban Successfully")
+        setReload(true)
+      })
+      .catch((error) => {
+        showFailedToast("Ban Failed!")
+      })
   }
 
   const iconStyle = {
     position: "absolute",
     top: "125px", // Adjust the position as needed
-    right: "350px", // Adjust the position as needed
     padding: "5px",
-    marginTop: 50
+    marginTop: 50,
+    marginLeft:100
+
+  }
+
+  const iconStyle2 = {
+    position: "absolute",
+    top: "125px", // Adjust the position as needed
+    padding: "5px",
+    marginTop: 50,
+    marginLeft:-100
 
   }
 
@@ -237,7 +293,7 @@ function SongDetail() {
     padding: "5px",
     borderRadius: "10px",
     maginRight: "5px",
-    marginLeft:"200px",
+    marginLeft: "100px",
     display: "flex",
     gap: "5px",
     marginTop: 50
@@ -252,7 +308,7 @@ function SongDetail() {
 
 
   const addSongToPlayList = (name) => {
-    if(!token){
+    if (!token) {
       showFailedToast("You need to login before using this function!")
       return
     }
@@ -264,7 +320,7 @@ function SongDetail() {
       .post(`${BACK_END_PORT}/api/v1/playlist/user/${userId}`, formData)
       .then((response) => {
         if (response.data === "Add successfully!") {
-          showSuccessToast("Add Successfully")
+          showSuccessToast("Add to collection successfully")
         }
       })
       .catch((error) => {
@@ -297,7 +353,7 @@ function SongDetail() {
 
 
   return (
-    <SongContext.Provider value={{ information, setReload }}>
+    <SongContext.Provider value={{ information, setReload, reload }}>
       <div >
 
         <AddSongAndPlaylist
@@ -325,7 +381,7 @@ function SongDetail() {
         <Box mb={10} mt={6} >
           <Flex m={"0 auto 1%"} w={"68%"} justifyContent={"flex-end"} mb={4} >
             <Box display={"flex"}>
-              {((userId.includes(songData.userid))) ?
+              {((userId == songData.userid)) ?
                 <div style={boxStyle}>
                   <Button
                     height="40px"
@@ -350,7 +406,7 @@ function SongDetail() {
                   <Button
                     height="40px"
                     width="100px"
-                    onClick={() => setCheckUpdate(true)}
+                    onClick={() => [setCheckUpdate(true), setReload(true)]}
                     colorScheme="teal"
                     variant="outline"
                     color="black"
@@ -370,30 +426,36 @@ function SongDetail() {
                     >
                       View report
                     </Button>
-                    {songData.status !== -1 ? 
-                    <Button
-                      height="40px"
-                      width="100px"
-                      onClick={() => setCheckBan(true)}
-                      colorScheme="teal"
-                      variant="outline"
-                      color="black"
-                    >
-                      Ban
-                    </Button> : <Button
-                      height="40px"
-                      width="100px"
-                      colorScheme="teal"
-                      variant="outline"
-                      color="red"
-                      cursor={"not-allowed"}
-                    >
-                      Banned
-                    </Button>}
+                    {songData.status !== -1 ?
+                      <Button
+                        height="40px"
+                        width="100px"
+                        onClick={() => setCheckBan(true)}
+                        colorScheme="teal"
+                        variant="outline"
+                        color="black"
+                      >
+                        Ban
+                      </Button> : <Button
+                        height="40px"
+                        width="100px"
+                        colorScheme="teal"
+                        variant="outline"
+                        color="red"
+                        cursor={"not-allowed"}
+                      >
+                        Banned
+                      </Button>}
                   </div> : <div style={boxStyle}>
-                    <Button height="40px" width="100px" onClick={onOpen} colorScheme="red" variant="outline" color="black" ml={2}>
-                      Report
-                    </Button>
+                    {token ?
+                      <Button height="40px" width="100px" onClick={onOpen} colorScheme="red" variant="outline" color="black" ml={2}>
+                        Report
+                      </Button>
+                      :
+                      <Button height="40px" width="100px" onClick={() => showFailedToast("You need to login before using this function!")} colorScheme="red" variant="outline" color="black" ml={2}>
+                        Report
+                      </Button>
+                    }
                     {/* <Menu>
                     <MenuButton
                       as={IconButton}
@@ -419,30 +481,78 @@ function SongDetail() {
                   </Menu> */}
                   </div>
               }
-              {admin === false ?
-              <Menu>
-                <MenuButton
-                  as={IconButton}
-                  aria-label="Options"
-                  icon={<FiMoreHorizontal />}
-                  variant="outline"
-                  ml={2}
-                  colorScheme={""}
-                  style={iconStyle}
-                />
-                <MenuList>
-                  <MenuItem
-                    icon={<AddIcon />}
-                    fontSize={"14px"}
-                    onClick={() => {
-                      setNewListStatus(true);
-                    }}
-                  >
-                    Add New Collection
-                  </MenuItem>
-                  {MenuItemHTML}
-                </MenuList>
-              </Menu> : <div></div>}
+              {((userId == songData.userid)) ?
+                <Menu>
+                  <MenuButton
+                    as={IconButton}
+                    aria-label="Options"
+                    icon={<FiMoreHorizontal />}
+                    variant="outline"
+                    ml={2}
+                    colorScheme={""}
+                    style={iconStyle}
+                  />
+                  <MenuList>
+                    {token ?
+                      <MenuItem
+                        icon={<AddIcon />}
+                        fontSize={"14px"}
+                        onClick={() => {
+                          setNewListStatus(true);
+                        }}
+                      >
+                        Add New Collection
+                      </MenuItem>
+                      :
+                      <MenuItem
+                        icon={<AddIcon />}
+                        fontSize={"14px"}
+                        onClick={() => {
+                          showFailedToast("You need to login before using this function!");
+                        }}
+                      >
+                        Add New Collection
+                      </MenuItem>
+                    }
+                    {MenuItemHTML}
+                  </MenuList>
+                </Menu>
+              : admin === false ?
+                <Menu>
+                  <MenuButton
+                    as={IconButton}
+                    aria-label="Options"
+                    icon={<FiMoreHorizontal />}
+                    variant="outline"
+                    ml={2}
+                    colorScheme={""}
+                    style={iconStyle2}
+                  />
+                  <MenuList>
+                    {token ?
+                      <MenuItem
+                        icon={<AddIcon />}
+                        fontSize={"14px"}
+                        onClick={() => {
+                          setNewListStatus(true);
+                        }}
+                      >
+                        Add New Collection
+                      </MenuItem>
+                      :
+                      <MenuItem
+                        icon={<AddIcon />}
+                        fontSize={"14px"}
+                        onClick={() => {
+                          showFailedToast("You need to login before using this function!");
+                        }}
+                      >
+                        Add New Collection
+                      </MenuItem>
+                    }
+                    {MenuItemHTML}
+                  </MenuList>
+                </Menu> : <div></div>}
             </Box>
           </Flex>
           <Flex justifyContent={"center"}>
@@ -455,14 +565,14 @@ function SongDetail() {
                 userId={songData?.userid}
 
               />
-              {admin === false ? 
-              <CommentComponent
-                mt={8}
-                maxH={"780px"}
-                overflowY={"scroll"}
-                songCommentData={songCommentData}
-                avatarUser={user.avatar}
-              /> : <div></div>}
+              {admin === false ?
+                <CommentComponent
+                  mt={8}
+                  maxH={"780px"}
+                  overflowY={"scroll"}
+                  songCommentData={songCommentData}
+                  avatarUser={user.avatar}
+                /> : <div></div>}
             </Stack>
             <ChordsComponent
               songData={songData}
@@ -513,18 +623,23 @@ function SongDetail() {
           <ModalCloseButton />
           <ModalBody>
             <FormControl>
+              <FormLabel style={{ fontSize: 20 }}>Song Name</FormLabel>
+              <Input style={{ fontSize: 15 }} placeholder='Vocal Range' value={songName} onChange={(e) => setSongName(e.target.value)} />
+              {console.log(songName)}
               <FormLabel style={{ fontSize: 20 }}>Singer</FormLabel>
               <Input style={{ fontSize: 15 }} placeholder='Singer' value={singer} onChange={(e) => setSinger(e.target.value)} />
               <FormLabel style={{ fontSize: 20 }}>Tone</FormLabel>
               <Input style={{ fontSize: 15 }} placeholder='Tone' value={tone} onChange={(e) => setTone(e.target.value)} />
               <FormLabel style={{ fontSize: 20 }}>Vocal Range</FormLabel>
               <Input style={{ fontSize: 15 }} placeholder='Vocal Range' value={vocalRange} onChange={(e) => setVocalRange(e.target.value)} />
+              <FormLabel style={{ fontSize: 20 }}>Song Url</FormLabel>
+              <Input style={{ fontSize: 15 }} placeholder='Vocal Range' value={songUrl} onChange={(e) => setSongUrl(e.target.value)} />
             </FormControl>
 
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={() => [setCheckUpdate(false), handleUpdateSong()]}>
+            <Button colorScheme='blue' mr={3} onClick={() => handleUpdateSong()}>
               Update
             </Button>
             <Button variant='ghost'>Close</Button>

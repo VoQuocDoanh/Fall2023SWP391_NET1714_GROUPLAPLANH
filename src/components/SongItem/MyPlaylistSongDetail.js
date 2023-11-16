@@ -108,7 +108,8 @@ const SongItem = ({
                 style={{
                   WebkitLineClamp: 2,
                   WebkitBoxOrient: 'vertical',
-                  fontSize: "30px"
+                  fontSize: "30px",
+                  width: 500
                 }}
               >
                 {data?.songName}

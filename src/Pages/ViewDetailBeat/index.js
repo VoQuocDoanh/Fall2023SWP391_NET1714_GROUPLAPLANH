@@ -7,9 +7,6 @@ import { Link, useParams } from 'react-router-dom';
 import { ShopContext } from '../../context/shop-context';
 import useToken from '../../authorization/useToken';
 import jwtDecode from 'jwt-decode';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft, faChevronRight, faPause, faPlay, faPlayCircle, faRedo, faStepBackward, faStepForward } from "@fortawesome/free-solid-svg-icons";
-import music from "../../assets/audio/Dont_Coi.mp3";
 import { useNavigate } from "react-router-dom";
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
@@ -21,20 +18,10 @@ function ViewDetailBeat() {
     const { beatId } = useParams();
     const [beatDetail, setBeatDetail] = useState(null)
     const [listMusicianBeat, setListMusicianBeat] = useState(null)
-    const [play, setPlay] = useState(false);
     const audioRef = useRef();
     const token = useToken();
-    const navigate = useNavigate();
-    const [list, setList] = useState([]);
+    const [rating, setRating] = useState(0)
     const [checkLike, setCheckLike] = useState(false)
-    const [checkRating, setCheckRating] = useState("")
-    const [data, setData] = useState(null)
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
-    const [isCommenting, setIsCommenting] = useState(false);
-    const [content, setContent] = useState('');
-    const [listBeatComment, setListBeatComment] = useState([]);
-    const [checkComment, setCheckComment] = useState(null)
     const [beatSoundDemo, setBeatSoundDemo] = useState("")
     const [page, setPage] = useState(1)
     const [pages, setPages] = useState(1)
@@ -42,29 +29,22 @@ function ViewDetailBeat() {
     const [messageFailed, setMessageFailed] = useState("")
     const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
     const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
-        fontSize: 25,
-    };
     let userId = ""
     if (token) {
         userId = jwtDecode(token).sub
     }
-    // Comment Parent
-    const [parentId, setParentId] = useState("0")
-    const commentParent = { beatId, userId, parentId, content }
 
     useEffect(() => {
+        const loadDetailBeat = async () => {
+            await axiosInstance.get(`http://localhost:8080/api/v1/beat/${beatId}`)
+                .then((res) => {
+                    setBeatDetail(res.data)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
         loadDetailBeat()
-
     }, [beatId])
 
 
@@ -73,49 +53,25 @@ function ViewDetailBeat() {
     }, [beatDetail])
 
     useEffect(() => {
-        loadBeatComment()
-    }, [checkComment, beatDetail])
-
-    useEffect(() => {
         loadSoundDemo()
     }, [beatId])
 
     useEffect(() => {
         loadCheckLike()
-    },[beatId])
+    }, [beatId])
 
-    const loadCheckLike = async() => {
-        if(!token){
+    const loadCheckLike = async () => {
+        if (!token) {
             return
         }
         await axiosInstance.get(`http://localhost:8080/api/v1/beat/check/${userId}/${beatId}`)
-        .then((res) => {
-            setCheckLike(res.data)
-        })
-        .catch((error) => {
-            setCheckLike(error.message.data)
-        })
+            .then((res) => {
+                setCheckLike(res.data)
+            })
+            .catch((error) => {
+                setCheckLike(error.message.data)
+            })
     }
-
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-    const handleCommentClick = () => {
-        setIsCommenting(true);
-    };
-
-    const handleInputChange = (event) => {
-        setContent(event.target.value);
-    };
-
-    const handlePostComment = () => {
-        console.log('Posted comment:', content);
-        setIsCommenting(false);
-        setContent('');
-    };
 
     const Heart = ({ id }) => {
         return (<svg className={cx("new-icon-like")} id={id} width="155" height="130" viewBox="0 0 150 130" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -124,18 +80,10 @@ function ViewDetailBeat() {
     }
 
     const handleLikeClick = (id) => {
-        handleConvertLike()
+        setBeatDetail({ ...beatDetail, totalLike: checkLike ? beatDetail.totalLike - 1 : beatDetail.totalLike + 1 })
+        setCheckLike(!checkLike)
         handleLike(id)
     }
-
-    const handleConvertLike = async (id) => {
-        setCheckLike(!checkLike)
-        console.log(checkLike)
-    }
-
-
-
-
     const loadSoundDemo = async () => {
         await axiosInstance(`http://localhost:8080/api/v1/beat/user/demo/${beatId}`)
             .then((res) => {
@@ -146,28 +94,6 @@ function ViewDetailBeat() {
             })
     }
 
-    const loadBeatComment = async () => {
-        await axiosInstance.get(`http://localhost:8080/api/v1/comment/beat/${beatId}`)
-            .then((res) => {
-                setListBeatComment(res.data)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }
-
-    const loadDetailBeat = async () => {
-
-        await axiosInstance.get(`http://localhost:8080/api/v1/beat/${beatId}`)
-            .then((res) => {
-                setBeatDetail(res.data)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-        setPlay(false)
-        setCheckRating("")
-    }
 
     const handleLike = async (id) => {
         if (!token) {
@@ -176,18 +102,11 @@ function ViewDetailBeat() {
             setCheckLike(false)
         } else {
             await axiosInstance.post(`http://localhost:8080/api/v1/beat/like/${jwtDecode(token).sub}/${id}`)
-                .then((res) => {
-                    setOpenSuccessSnackBar(true)
-                    if (res.data.includes("Ok")) {
-                        setMessageSuccess("Like Successfully")
-                        setCheckLike(true)
-                    } else {
-                        setMessageSuccess("Unlike Successfully")
-                        setCheckLike(false)
-                    }
-                })
                 .catch((error) => {
+                    setOpenFailedSnackBar(true)
+                    setMessageFailed("Error when using this function!")
                     console.log(error)
+                    window.location.reload()
                 })
         }
     }
@@ -225,92 +144,57 @@ function ViewDetailBeat() {
         }
     }
 
-    const handleComment = (e) => {
-        setContent(e.target.value)
-        console.log(content)
-    }
-
-    const handlePostCommentParent = async (e) => {
-        console.log(content)
-        console.log(commentParent)
-        await axiosInstance.post("http://localhost:8080/api/v1/comment/beat/addComment", commentParent)
-            .then((res) => {
-                setCheckComment(res.data)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }
-
     if (listMusicianBeat !== null) {
         const dateReleasing = new Date(beatDetail.creatAt)
         const month = dateReleasing.getUTCMonth() + 1
         const day = dateReleasing.getUTCDate()
         const year = dateReleasing.getUTCFullYear()
-
         return (
-
             <div className={cx("first-container")}>
-                {/* <Link to={"/listbeat"}>
-                    <Button variant="contained" className={cx("back-to-shop")}>
-                        <div style={{ fontSize: 15, textWrap: 'nowrap' }}>Back to Shop</div>
-                    </Button>
-                </Link> */}
-                {/* <div className={cx("text-header")}>
-                <h1>
-                    Beats Name
-                </h1>
-                <div className={cx('header-submit')}>
-                    <Button variant="contained" className={cx('button-1')}>
-                        <div>Share Beat</div>
-                    </Button>
-                </div>
-            </div> */}
+                {console.log("Total Like: " + beatDetail.totalLike)}
                 <div className={cx('view-detail')}>
-
-
                     <div className={cx('view-detail-beat')}>
                         <div className={cx('detail-1')}>
                             <div className={cx('mid-detail-left')}>
                                 <div>
                                     <div className={cx('container')}>
-
                                         <img className={cx('image')} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} />
-                                        
                                     </div>
-
                                     <div className={cx('information')}>
                                         {console.log(beatDetail)}
                                         <h1><b style={{ color: 'white' }}>{beatDetail.beatName}</b></h1>
-                                        <h4 style={{ fontWeight: 500, color: 'white', fontSize: '2.2rem' }}> {beatDetail.user.fullName} &#x2022; 2023 </h4>
-
+                                        <h4 style={{ fontWeight: 500, color: 'white', fontSize: '2.2rem' }}> {beatDetail.description} &#x2022; 2023 </h4>
                                     </div>
-                                    {/* <div className={cx('button-submit')}>
-                            <Button variant="contained" className={cx('button-1')}>
-                                <div>Follow</div>
-                            </Button>
-                            <Button variant="contained" className={cx('button-1')}>
-                                <div>Message</div>
-                            </Button>
-                        </div> */}
                                     <div style={{ marginTop: -60 }}>
                                         <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundDemo}>
                                         </audio>
-                                        <div className={cx("container-like")}>
-                                            <Stack className={cx("rating-form")} spacing={1}>
-                                                <Rating className={cx("start-icon")} name="size-large" defaultValue={0} size="large" onChange={handleRating} />
-                                            </Stack>
-                                            <button className={cx("button")} onClick={() => handleLikeClick(beatDetail.id)}>
-                                                {console.log(checkLike)}
-                                                <Heart id={checkLike ? cx('favorite-stroke') : cx('favorite-filled')} />
-                                            </button>
-                                        </div>
+                                        {token ?
+                                            <div className={cx("container-like")}>
+                                                <Stack className={cx("rating-form")} spacing={1}>
+                                                    <Rating className={cx("start-icon")} name="size-large" defaultValue={0} size="large" onChange={(e) => [handleRating(e), setRating(e.target.value)]} />
+                                                </Stack>
+                                                <div style={{ marginTop: 50, fontWeight: "bold", fontSize: 20, marginLeft: 10 }}>{rating}</div>
+                                                <button className={cx("button")} onClick={() => handleLikeClick(beatDetail.id)}>
+                                                    {console.log(checkLike)}
+                                                    <Heart id={checkLike ? cx('favorite-stroke') : cx('favorite-filled')} />
+                                                </button>
+                                                <div style={{ marginTop: 50, fontWeight: "bold", fontSize: 20, marginRight: 200, marginLeft: 10 }}>{beatDetail.totalLike}</div>
+                                            </div>
+                                            :
+                                            <div className={cx("container-like")}>
+                                                <Stack className={cx("rating-form")} spacing={1}>
+                                                    <Rating className={cx("start-icon")} name="size-large" defaultValue={0} size="large" onChange={(e) => [handleRating(e), setRating(e.target.value)]} />
+                                                </Stack>
+                                                <button style={{marginRight:180}} className={cx("button")} onClick={() => handleLikeClick(beatDetail.id)}>
+                                                    {console.log(checkLike)}
+                                                    <Heart id={checkLike ? cx('favorite-stroke') : cx('favorite-filled')} />
+                                                </button>
+                                            </div>}
                                     </div>
                                 </div>
                             </div>
-
                             <div className={cx('mid-detail-right')}>
-                            <Link style={{color:"white"}} to={`/viewdetailsmusician/${beatDetail.user.id}`}><h3><b style={{ fontSize: '3rem' }}>Musician information</b></h3></Link>
+                                <Link style={{ color: "white" }} to={`/viewdetailsmusician/${beatDetail.user.id}`}><h3><b style={{ fontSize: '3rem' }}>Musician information</b></h3></Link>
                                 <div className={cx('info-musician')}>
                                     <span style={{ fontSize: '2rem' }} >&#x2022; Name: {beatDetail.user.fullName} </span>
                                     <span style={{ fontSize: '2rem' }} >&#x2022; Contact: {beatDetail.user.mail}</span>
@@ -320,33 +204,6 @@ function ViewDetailBeat() {
                                     <span style={{ fontSize: '2rem' }} >&#x2022; Prize: {beatDetail.prize}</span>
                                 </div>
                                 <h3 style={{ marginTop: 30, fontSize: '3rem' }} ><b >Beat information</b></h3>
-                                {/* <div className={cx('list-of-beats')}>
-                                <div className={cx('cart')}>
-                                    <span>$25.00</span>
-                                    <span>Standard License</span>
-                                    <span>MP3</span>
-                                </div>
-                                <div className={cx('cart')}>
-                            <span>$25.00</span>
-                            <span>Standard License</span>
-                            <span>MP3</span>
-                        </div>
-                        <div className={cx('cart')}>
-                            <span>$25.00</span>
-                            <span>Standard License</span>
-                            <span>MP3</span>
-                        </div>
-                        <div className={cx('cart')}>
-                            <span>$25.00</span>
-                            <span>Standard License</span>
-                            <span>MP3</span>
-                        </div>
-                        <div className={cx('cart')}>
-                            <span>$25.00</span>
-                            <span>Standard License</span>
-                            <span>MP3</span>
-                        </div>
-                            </div> */}
                                 <div className={cx('list')}>
                                     <div className={cx('genre')}>
                                         <span style={{ fontSize: '2rem' }} >&#x2022; Beat's Name: {beatDetail.beatName}</span>
@@ -354,7 +211,7 @@ function ViewDetailBeat() {
                                             <span style={{ fontSize: '2rem' }} >&#x2022; Genre:
                                                 {
                                                     beatDetail.genres.map((item, index) => {
-                                                        return <span style={{fontSize: '2rem'}} >  {item.name}</span>
+                                                        return <span style={{ fontSize: '2rem' }} >  {item.name}</span>
                                                     })
 
                                                 }
@@ -371,245 +228,84 @@ function ViewDetailBeat() {
                                         <span style={{ fontSize: '2rem' }} >&#x2022; Release date: {day}/{month}/{year}</span>
                                     </div>
                                     {beatDetail.status === 1 ?
-                                    <div>
-                                    {token ? <div className={cx('mid-button')}>
-                                        <Button variant="contained" className={cx('button-1')} style={{ borderRadius: 15, outline: '3px solid white', marginTop: 40 }} onClick={() => [addToCart(beatId), setOpenSuccessSnackBar(true), setMessageSuccess("Add to cart successfully")]}>
-                                            <div style={{ fontSize: '1.4rem', textWrap: 'nowrap' }} >Add to cart</div>
-                                        </Button>
-                                    </div>
-                                        : <div className={cx('mid-button')}>
-                                                <Button variant="contained" className={cx('button-1')} style={{ borderRadius: 15, outline: '3px solid white', marginTop: 40 }} onClick={() => [setOpenFailedSnackBar(true),setMessageFailed("You need to login before using this function!")]}>
-                                                    <div>Add to cart</div>
+                                        <div>
+                                            {token ? <div className={cx('mid-button')}>
+                                                <Button variant="contained" className={cx('button-1')} style={{ borderRadius: 15, outline: '3px solid white', marginTop: 40 }} onClick={() => [addToCart(beatId), setOpenSuccessSnackBar(true), setMessageSuccess("Add to cart successfully")]}>
+                                                    <div style={{ fontSize: '1.4rem', textWrap: 'nowrap' }} >Add to cart</div>
                                                 </Button>
+                                            </div>
+                                                : <div className={cx('mid-button')}>
+                                                    <Button variant="contained" className={cx('button-1')} style={{ borderRadius: 15, outline: '3px solid white', marginTop: 40 }} onClick={() => [setOpenFailedSnackBar(true), setMessageFailed("You need to login before using this function!")]}>
+                                                        <div>Add to cart</div>
+                                                    </Button>
+                                                </div>
+                                            }
                                         </div>
-                                    }
-                                    </div>
-                                    : <h3 style={{marginTop:50}}>Beat is sold out</h3>}
-
-
+                                        : <h3 style={{ color: "#e81f00", marginTop: 100, marginLeft: 100 }}>Beat is sold out!</h3>}
                                 </div>
-
                             </div>
                         </div>
-
                         <div className={cx('total-detail')}>
                             <div className={cx('title-detail')}>
                                 <span style={{ fontSize: '3rem', fontWeight: 'bold', display: 'flex', justifyContent: 'center', marginLeft: -70 }}>Beats List</span>
                             </div>
 
                             {listMusicianBeat.map((item, index) => {
-                                return (
-                                    <div className={cx('detail-2')}>
-                                        <div className={cx('mid-detail-left-2')}>
-                                            <div className={cx('container')}>
-                                                <img className={cx('image-1')} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} />
-                                            </div>
-                                        </div>
-                                        <div className={cx('mid-detail-right-2')}>
-                                            <div className={cx('text-2')}>
-                                                <h4 className={cx("musician-beat")}><b><Link style={{ color: 'white', fontSize: '2rem' }} to={`/viewdetailbeat/${item.id}`}>{item.beatName}</Link></b></h4>
-                                                <span className={cx("musician-name")} style={{ fontSize: '1.8rem', color: '#FFFFFF90' }}>{item.user.fullName}</span>
-                                            </div>
-                                        </div>
+                                if (item.status === 1) {
+                                    return (
 
-                                    </div>)
+                                        <div className={cx('detail-2')}>
+                                            <div className={cx('mid-detail-left-2')}>
+                                                <div className={cx('container')}>
+                                                    <img className={cx('image-1')} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} />
+                                                </div>
+                                            </div>
+                                            <div className={cx('mid-detail-right-2')}>
+                                                <div className={cx('text-2')}>
+                                                    <h4 className={cx("musician-beat")}><b><Link style={{ color: 'white', fontSize: '2rem' }} to={`/viewdetailbeat/${item.id}`}>{item.beatName}</Link></b></h4>
+                                                    <span className={cx("musician-name")} style={{ fontSize: '1.8rem', color: '#FFFFFF90' }}>{item.user.fullName}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                } else {
+                                    return (
+                                        <div className={cx('detail-2')}>
+                                            <div className={cx('mid-detail-left-2')}>
+                                                <div className={cx('container')}>
+                                                    <img className={cx('image-1')} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} />
+                                                </div>
+                                            </div>
+                                            <div className={cx('mid-detail-right-2')}>
+                                                <div className={cx('text-2')}>
+                                                    <h4 className={cx("musician-beat")}><b><Link style={{ color: 'white', fontSize: '2rem' }} to={`/viewdetailbeat/${item.id}`}>{item.beatName}</Link></b></h4>
+                                                    <span className={cx("musician-name")} style={{ fontSize: '1.8rem', color: '#FFFFFF90' }}>{item.user.fullName}</span>
+                                                </div>
+                                            </div>
+                                            <img style={{ width: 100, marginTop: 50, marginLeft: 70 }} src={require("../../assets/images/Other/pngimg.com - sold_out_PNG43.png")} />
+                                        </div>
+                                    )
+                                }
                             })}
                             {pages !== 1 ?
-                            <div className={cx("pagination")}>
-                                <Pagination pages={pages} page={page} setPage={setPage} />
-                            </div>
-                            : <div></div>}
-
-
-
+                                <div className={cx("pagination")}>
+                                    <Pagination pages={pages} page={page} setPage={setPage} />
+                                </div>
+                                : <div></div>}
                         </div>
                     </div>
                 </div>
-
-                {/* Comment
-
-                <div className={cx('comment-all')}>
-                    <h2 style={{ marginLeft: 25, fontSize: 38 }}>Comment</h2>
-                    <div className={cx('comment')}>
-                        <textarea style={{ resize: 'none', height: 300, padding: 10, borderRadius: 12, fontSize: '1.8rem', width: 1850 }} id="ABC" name="ABC" rows="2" cols="174" placeholder=' Comment...' onChange={handleComment} ></textarea>
-                        {!token ?
-                            <Link to={"/login"}>
-                                <div className={cx('post-button')}>
-                                    <button>Post a comment</button>
-                                </div>
-                            </Link>
-                            : <div className={cx('post-button')} onClick={() => handlePostCommentParent()}>
-                                <button className={cx("post-buttonn")} style={{ height: 60, borderRadius: 14, padding: 10, outline: '3px solid white' }}>Post a comment</button>
-                            </div>
-                        }
-                        <div className={cx("select-comment")} style={{ marginTop: -50 }} >
-                            <select style={{ height: 40, padding: 10, borderRadius: 5 }} name="comment" id="comment">
-                                <option value="Latest comments">Latest comments</option>
-                                <option value="Oldest comment">Oldest comment</option>
-                            </select>
-                        </div>
-                        {listBeatComment.length !== 0 ? <div>
-                            {listBeatComment.map((comment, index) => {
-                                return (
-                                    <div className={cx('show-comment-of-cus')}>
-                                        <div className={cx('show-comment-left')}>
-                                            <img className={cx('background-image')} src="https://static.hopamchuan.com/assets/images/default-ava.png" />
-                                        </div>
-                                        <div className={cx('show-comment-right')}>
-                                            <div className={cx('comment-item-username')}>
-                                                <span className={cx('username')}>Toi la Customer</span>
-                                            </div>
-                                            <div className={cx('comment-username')}>
-                                                <div className={cx('text-comment-username')}>
-                                                    <span>{comment.content}</span>
-                                                </div>
-                                                <div className={cx('edit-delete')}>
-                                                    <React.Fragment>
-                                                        <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-                                                            <Tooltip title="Chỉnh sửa hoặc xóa bình luận này">
-                                                                <IconButton
-                                                                    onClick={handleClick}
-                                                                    size="small"
-                                                                    sx={{ ml: 2 }}
-                                                                    aria-controls={open ? 'account-menu' : undefined}
-                                                                    aria-haspopup="true"
-                                                                    aria-expanded={open ? 'true' : undefined}
-                                                                >
-                                                                    <Avatar sx={{
-                                                                        width: 20,
-                                                                        height: 20,
-                                                                        color: 'black',
-                                                                        backgroundColor: 'white',
-                                                                        '&:hover': {
-                                                                            backgroundColor: 'lightgray',
-                                                                            cursor: 'pointer'
-                                                                        },
-                                                                    }}>...</Avatar>
-                                                                </IconButton>
-                                                            </Tooltip>
-                                                        </Box>
-                                                        <Menu
-                                                            anchorEl={anchorEl}
-                                                            id="account-menu"
-                                                            open={open}
-                                                            onClose={handleClose}
-                                                            onClick={handleClose}
-                                                            PaperProps={{
-                                                                elevation: 0,
-                                                                sx: {
-                                                                    overflow: 'visible',
-                                                                    filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                                                                    mt: 1.5,
-                                                                    '& .MuiAvatar-root': {
-                                                                        width: 32,
-                                                                        height: 32,
-                                                                        ml: -0.5,
-                                                                        mr: 1,
-                                                                    },
-                                                                    '&:before': {
-                                                                        content: '""',
-                                                                        display: 'block',
-                                                                        position: 'absolute',
-                                                                        top: 0,
-                                                                        right: 14,
-                                                                        width: 10,
-                                                                        height: 10,
-                                                                        bgcolor: 'background.paper',
-                                                                        transform: 'translateY(-50%) rotate(45deg)',
-                                                                        zIndex: 0,
-                                                                    },
-                                                                },
-                                                            }}
-                                                            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                                                            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                                                        >
-                                                            <MenuItem onClick={handleClose}>
-                                                                Chỉnh sửa
-                                                            </MenuItem>
-                                                            <MenuItem onClick={handleClose}>
-                                                                Xóa
-                                                            </MenuItem>
-                                                        </Menu>
-                                                    </React.Fragment>
-                                                </div>
-                                            </div>
-                                            <div className={cx('reply')}>
-                                                <div className={cx('replay-title')}>
-                                                    <div className={cx('comment-box')}>
-                                                        <span style={{ fontSize: '1.8rem' }}
-                                                            onClick={handleCommentClick}
-                                                        >
-                                                            Trả lời
-                                                        </span>
-                                                        {isCommenting && (
-                                                            <div>
-                                                                <textarea
-                                                                    value={content}
-                                                                    onChange={handleInputChange}
-                                                                    placeholder="Enter your comment..."
-                                                                    rows="2"
-                                                                    cols="50"
-                                                                />
-                                                                <br />
-                                                                <button onClick={handlePostComment}>Post a comment</button>
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            })}</div> : <div></div>}
-                    </div>
-                </div> */}
-
-
-
-                {/* <div className={cx("audio")}>
-                    <div className={cx("image-audio")}>
-                        <img className={cx("trending-ellipse")} src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")}>
-                        </img>
-                    </div>
-                    <div className={cx("control")}>
-                        <div className={cx("btn", "btn-prev")}>
-                            <i class="fas fa-step-backward"></i>
-                            <FontAwesomeIcon icon={faStepBackward} />
-                        </div>
-                        <div className={cx("btn", "btn-toggle-play")} onClick={() => setPlay(!play)}>
-                            <FontAwesomeIcon icon={faPause} className={cx("icon-pause", "icon", {
-                                "play": play === true,
-                            })} />
-                            <FontAwesomeIcon icon={faPlay} className={cx("icon-play", "icon", {
-                                "play": play === false,
-                            })} />
-                        </div>
-                        <div className={cx("btn", "btn-next")}>
-                            <FontAwesomeIcon icon={faStepForward} />
-                        </div>
-
-                    </div>
-                    <div className={cx("time-audio")}>
-                        <span className={cx("start")}>0:00</span>
-                        <input id="progress" className={cx("progress")} type="range" value="0" step="1" min="0" max="100" />
-                        <span className={cx("end")}>0:00</span>
-                    </div>
-
-                    <audio id="audio" ref={audioRef} src={music}></audio>
-
-                </div> */}
-                <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
-                <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
-                    {messageSuccess}
-                </Alert>
-            </Snackbar>
-            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
-                <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
-                    {messageFailed}
-                </Alert>
-            </Snackbar>
+                <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
+                    <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                        {messageSuccess}
+                    </Alert>
+                </Snackbar>
+                <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
+                    <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                        {messageFailed}
+                    </Alert>
+                </Snackbar>
             </div>
-
         );
     }
     else {

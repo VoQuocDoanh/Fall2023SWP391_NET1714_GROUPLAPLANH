@@ -140,12 +140,10 @@
 
 .input-username1 {
     padding: 22px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid rgb(65, 65, 65);
     width: 700px;
-    margin-top: 30px;
     height: 1px;
-    font-size: 1.6rem;
     flex-shrink: 0;
 }
 
