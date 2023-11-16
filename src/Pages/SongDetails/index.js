@@ -214,11 +214,11 @@ function SongDetail() {
 
   const iconStyle = {
     position: "absolute",
-    top: "125px", // Adjust the position as needed
-    right: "350px", // Adjust the position as needed
+    top: "125px", 
+    right: "150px", 
     padding: "5px",
-    marginTop: 50
-
+    marginTop: '50px',
+    
   }
 
   // const iconStyle1 = {
@@ -231,8 +231,8 @@ function SongDetail() {
 
   const boxStyle = {
     position: "absolute",
-    top: "110px", // Adjust the position as needed
-    left: "1200px", // Adjust the position as needed
+    top: "110px", 
+    left: "1200px", 
     fontSize: "40px",
     padding: "5px",
     borderRadius: "10px",
@@ -240,8 +240,7 @@ function SongDetail() {
     marginLeft:"200px",
     display: "flex",
     gap: "5px",
-    marginTop: 50
-
+    marginTop: '50px',
   }
 
   // const containerStyle = {
