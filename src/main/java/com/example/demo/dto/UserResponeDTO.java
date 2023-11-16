@@ -31,6 +31,8 @@ public class UserResponeDTO {
         this.fullName = fullName;
     }
 
+    public UserResponeDTO(int status){ this.status = status; }
+
     public UserResponeDTO(Long id, String fullName, String phone, String mail) {
         this.id = id;
         this.fullName = fullName;

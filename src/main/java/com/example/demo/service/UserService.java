@@ -313,4 +313,10 @@ public class UserService {
         }
         return dtos;
     }
+
+    // Get User to check Login
+    public int checkLogin (String username){
+        Optional<User> foundUser = Optional.ofNullable(this.userRepository.findByUsername(username));
+        return foundUser.map(User::getStatus).orElse(-2);
+    }
 }
