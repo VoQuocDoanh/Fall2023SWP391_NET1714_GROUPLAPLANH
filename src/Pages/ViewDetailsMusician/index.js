@@ -318,7 +318,7 @@ function MyProfile() {
                                                                     <Link style={{ color: "black" }} to={`/viewdetailbeat/${beat.id}`}>
                                                                         <label style={{ fontFamily: 'sono', fontWeight: 600, marginLeft: -2 }} className={cx("login-text")}>{beat.beatName}</label>
                                                                     </Link>
-                                                                    <div className={cx("active")}>Active</div>
+                                                                    <div className={cx("active")}>For sale</div>
                                                                 </div>
                                                                 :
                                                                 <div className={cx("text-allbeat")}>
