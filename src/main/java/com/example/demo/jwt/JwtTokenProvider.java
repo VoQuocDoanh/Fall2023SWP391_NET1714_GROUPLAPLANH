@@ -10,6 +10,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class JwtTokenProvider {
@@ -19,10 +22,25 @@ public class JwtTokenProvider {
     private final JwtService jwtService;
 
     public AuthenRespone authenticate(AuthenRequest authenRequest) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenRequest.getUsername(), authenRequest.getPassword()));
-        User user = userRepository.findUserByUsernameAndStatus(authenRequest.getUsername(), 1).orElseThrow(() -> new UsernameNotFoundException("Customer not found or Customer is banned"));
-        var jwtToken = jwtService.generateToken(user);
+        Optional<User> foundUser = this.userRepository.findUserByUsername(authenRequest.getUsername());
+        if(foundUser.isPresent()){
+            int status = foundUser.get().getStatus();
+            if(status == 1){
+                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenRequest.getUsername(), authenRequest.getPassword()));
+                User user = userRepository.findUserByUsernameAndStatus(authenRequest.getUsername(), 1).orElseThrow(() -> new UsernameNotFoundException("Customer not found or Customer is banned"));
+                var jwtToken = jwtService.generateToken(user);
+                return AuthenRespone.builder().token(jwtToken).msg("Login Successfully!").build();
+            } else if (status == 0){
+                return AuthenRespone.builder().msg("Your account is banned!").build();
+            } else if (status == -1 && isTokenValid(foundUser.get().getActivationToken().getExpiryDate())){
+                return AuthenRespone.builder().msg("Your account is not active!").build();
+            }
+        }
+        return AuthenRespone.builder().msg("Account not exist!").build();
+    }
 
-        return AuthenRespone.builder().token(jwtToken).msg("Login Successfully!").build();
+    private boolean isTokenValid(LocalDateTime expiryDate) {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        return expiryDate != null && expiryDate.isAfter(currentDateTime);
     }
 }
