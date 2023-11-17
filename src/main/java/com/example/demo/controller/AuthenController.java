@@ -39,11 +39,6 @@ public class AuthenController {
         return ResponseEntity.ok(this.jwtTokenProvider.authenticate(authenRequest));
     }
 
-    @GetMapping("/{username}")
-    public ResponseEntity<Integer> checkLogin (@PathVariable String username){
-        return ResponseEntity.ok(this.userService.checkLogin(username));
-    }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)  // Nếu validate fail thì trả về 400
     public ResponseEntity<Map<String, String>> handleBindException(MethodArgumentNotValidException ex) {

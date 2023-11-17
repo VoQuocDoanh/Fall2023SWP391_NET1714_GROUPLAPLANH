@@ -5,7 +5,6 @@
 
 package com.example.demo.service;
 
-import com.example.demo.dto.PaginationResponseDTO;
 import com.example.demo.dto.RegisterDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserResponeDTO;
@@ -19,9 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -312,11 +308,5 @@ public class UserService {
             dtos.add(dto);
         }
         return dtos;
-    }
-
-    // Get User to check Login
-    public int checkLogin(String username) {
-        Optional<User> foundUser = Optional.ofNullable(this.userRepository.findByUsername(username));
-        return foundUser.map(User::getStatus).orElse(-2);
     }
 }
