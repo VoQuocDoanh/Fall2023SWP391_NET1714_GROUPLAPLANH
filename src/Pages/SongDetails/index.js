@@ -287,8 +287,8 @@ function SongDetail() {
 
   const boxStyle = {
     position: "absolute",
-    top: "110px", // Adjust the position as needed
-    left: "1200px", // Adjust the position as needed
+    top: "110px", 
+    left: "1200px", 
     fontSize: "40px",
     padding: "5px",
     borderRadius: "10px",
@@ -296,8 +296,7 @@ function SongDetail() {
     marginLeft: "100px",
     display: "flex",
     gap: "5px",
-    marginTop: 50
-
+    marginTop: '50px',
   }
 
   // const containerStyle = {
