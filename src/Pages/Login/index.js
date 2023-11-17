@@ -10,6 +10,7 @@ import videoBg from '../../assets/video/video (2160p).mp4'
 import axios from "axios";
 import ValidationLogin from "../../Validation/ValidationLogin";
 import jwtDecode from "jwt-decode";
+import { useEffect } from "react";
 const cx = classNames.bind(styles);
 
 function Login() {
@@ -20,6 +21,7 @@ function Login() {
   const [messageFailed, setMessageFailed] = useState("")
   const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
   const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
+  const [listUserLogin, setListUserLogin] = useState([])
   const user = { username, password }
   const style = {
     position: 'absolute',
@@ -40,8 +42,44 @@ function Login() {
       setMessageFailed("All fields must not be null!");
       return;
     }
+
+    
+        // if (listUserLogin[i].status === 0) {
+        //   setOpenFailedSnackBar(true)
+        //   setMessageFailed("Your account is banned by the admin!");
+        //   return;
+        // }
+        
+  
+    // await axios.get(`http://localhost:8080/api/auth/${username}`)
+    //   .then((res) => {
+    //     if (res.data === -1) {
+    //       setOpenFailedSnackBar(true)
+    //       setMessageFailed("Your account is not activated! Please go to your mail to activate!");
+    //       return;
+    //     }
+    //     else if (res.data === 0) {
+    //       setOpenFailedSnackBar(true)
+    //       setMessageFailed("Your account is banned by the admin!");
+    //       return;
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error)
+    //   })
+    
     await axios.post("http://localhost:8080/api/auth/login", user)
       .then((res) => {
+        if(res.data.msg.includes("banned")){
+          setOpenFailedSnackBar(true)
+          setMessageFailed("Your account is banned by the admin!");
+          return;
+        }
+        if(res.data.msg.includes("not active")){
+          setOpenFailedSnackBar(true)
+          setMessageFailed("Your account is not activated! Please go to your mail to activate!");
+          return;
+        }
         console.log(res.data.token)
         setOpenSuccessSnackBar(true)
         setMessageSuccess("Login successfully")
@@ -60,7 +98,20 @@ function Login() {
         setMessageFailed("Wrong Username or Password!");
         console.log(error.message)
       })
-  };
+  }
+
+  useEffect(() => {
+    const loadUserLogin = async () => {
+      await axios.get("http://localhost:8080/api/v1/admin")
+        .then((res) => {
+          setListUserLogin(res.data)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+    loadUserLogin()
+  }, [])
 
   return (
     <div>
@@ -160,12 +211,12 @@ function Login() {
         </div>
         {/* Footer */}
       </div>
-      <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
+      <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
         <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
           {messageSuccess}
         </Alert>
       </Snackbar>
-      <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
+      <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
         <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
           {messageFailed}
         </Alert>

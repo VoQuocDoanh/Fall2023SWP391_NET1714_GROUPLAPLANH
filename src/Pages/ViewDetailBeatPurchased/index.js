@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import styles from "./ViewDetailBeatPurchased.module.scss";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Alert, Avatar, Box, Button, IconButton, Menu, MenuItem, Snackbar, Tooltip } from "@mui/material";
+import { Alert, Avatar, Box, Button, IconButton, Menu, MenuItem, Modal, Snackbar, Tooltip } from "@mui/material";
 import axiosInstance from '../../authorization/axiosInstance';
 import { Link, useParams } from 'react-router-dom';
 import { ShopContext } from '../../context/shop-context';
@@ -31,6 +31,8 @@ function ViewDetailBeatPurchased() {
     const [messageFailed, setMessageFailed] = useState("")
     const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
     const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
+    const [openFeedbackModal, setOpenFeedbackModal] = useState(false);
+    const [openUpdateFeedBackModal, setOpenUpdateFeedBackModal] = useState(false);
     const contentStyle = { background: 'white', width: 460, height: 370, borderRadius: 20 };
     let userId = ""
     if (token) {
@@ -78,13 +80,26 @@ function ViewDetailBeatPurchased() {
     }
 
     const handleFeedback = async () => {
+        if (!token) {
+            navigate("/login")
+            return
+        }
+        if(feedBackContent === ""){
+            setOpenFailedSnackBar(true)
+            setMessageFailed("Feedback's content must not be null!")
+            return
+        }
         await axiosInstance.post("http://localhost:8080/api/v1/beat/feedback", { userId: userId, beatId: beatId, content: feedBackContent })
             .then((res) => {
                 setOpenSuccessSnackBar(true)
                 setMessageSuccess("Feedback successfully")
+                setOpenFeedbackModal(false)
                 setCheckFeedBack(true)
             })
             .catch((error) => {
+                setOpenFailedSnackBar(true)
+                setMessageFailed("Feedback failed!")
+                setOpenFeedbackModal(false)
                 console.log(error)
             })
     }
@@ -116,15 +131,27 @@ function ViewDetailBeatPurchased() {
             })
     }
 
-    const handleUpdateFeedback = async (e) => {
+    const handleUpdateFeedback = async () => {
         if (!token) {
             navigate("/login")
+            return
+        }
+        if(feedBackContent === ""){
+            setOpenFailedSnackBar(true)
+            setMessageFailed("Feedback's content must not be null!")
             return
         }
         await axiosInstance.put(`http://localhost:8080/api/v1/beat/feedback`, { id: feedBack.id, content: feedBackContent })
             .then((res) => {
                 setOpenSuccessSnackBar(true)
                 setMessageSuccess("Update feedback successfully")
+                setOpenUpdateFeedBackModal(false)
+            })
+            .catch((error) => {
+                setOpenFailedSnackBar(true)
+                setMessageFailed("Update feedback failed!")
+                setOpenUpdateFeedBackModal(false)
+                console.log(error)
             })
     }
 
@@ -163,7 +190,7 @@ function ViewDetailBeatPurchased() {
                                     <div className={cx('information')}>
                                         {console.log(beatDetail)}
                                         <h1><b style={{ color: 'white', fontFamily: 'fredoka one' }}>{beatDetail.beatName}</b></h1>
-                                        <Link style={{color:"white"}} to={`/viewdetailsmusician/${beatDetail.user.id}`}><h4> {beatDetail.description} &#x2022; 2023 </h4></Link>
+                                        <Link style={{color:"white"}} to={`/viewdetailsmusician/${beatDetail.user.id}`}><h4> {beatDetail.user.fullName} &#x2022; 2023 </h4></Link>
 
                                     </div>
                                     {/* <div className={cx('button-submit')}>
@@ -236,39 +263,14 @@ function ViewDetailBeatPurchased() {
 
                                             <div>
                                                 {!checkFeedBack ?
-                                                    <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<Button variant="contained" className={cx('button-2')}>
+                                                    <Button variant="contained" className={cx('button-2')} onClick={() => setOpenFeedbackModal(true)}>
                                                         <div style={{ fontSize: '2rem' }}>Feedback</div>
-                                                    </Button>}  {...{ contentStyle }} position="bottom left center">
-                                                        <div className={cx("text-all")} style={{ padding: 10 }}>
-                                                            <div style={{ display: 'grid' }}>
-                                                                <td style={{ fontWeight: 'bold', fontSize: "2.2rem", marginLeft: 80, color: 'red' }}>Feedback Information</td>
-
-                                                            </div>
-                                                            <textarea className={cx("text-des")} value={feedBackContent} style={{ resize: 'none', width: '385px', border: 1, height: 150, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12 }} onChange={(e) => setFeedBackContent(e.target.value)} />
-                                                            <td className={cx("button-type")}>
-                                                                <button type="button" className={cx("button-send")} aria-disabled="false" onClick={() => handleFeedback()} >Send</button>
-                                                            </td>
-                                                        </div>
-                                                    </Popup>
+                                                    </Button>                                                
                                                     :
-                                                    <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<Button variant="contained" className={cx('button-2')}>
+                                                    <Button variant="contained" className={cx('button-2')} onClick={() => setOpenUpdateFeedBackModal(true)}>
                                                         <div style={{ fontSize: '1.5rem' }}>View Feedback</div>
-                                                    </Button>}  {...{ contentStyle }} position="bottom left center">
-                                                        <div className={cx("text-all")} style={{ padding: 10 }}>
-                                                            <div style={{ display: 'grid' }}>
-                                                                <td style={{ fontWeight: 'bold', fontSize: "2.2rem", marginLeft: 80, color: 'red' }}>Feedback Information</td>
-
-                                                            </div>
-                                                            <textarea className={cx("text-des")} value={feedBackContent} style={{ resize: 'none', width: '385px', border: 1, height: 150, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12 }} onChange={(e) => setFeedBackContent(e.target.value)} />
-                                                            <td className={cx("button-type")}>
-                                                                <button type="button" className={cx("button-send")} aria-disabled="false" onClick={(e) => handleUpdateFeedback(e.target.value)} >Update</button>
-                                                            </td>
-                                                        </div>
-                                                    </Popup>
-                                                }
+                                                    </Button>}                                                                                      
                                             </div>
-
-
                                         </div>
                                         <div>
                                         </div>
@@ -290,7 +292,42 @@ function ViewDetailBeatPurchased() {
                     {messageFailed}
                 </Alert>
             </Snackbar>
+            <Modal
+                open={openFeedbackModal}
+                onClose={() => setOpenFeedbackModal(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <div className={cx("text-all")} style={{ padding: 10, marginTop: 300, marginLeft: 750, background: "white", width: 450 }}>
+                    <div style={{ display: 'grid' }}>
+                        <td style={{ fontWeight: 'bold', fontSize: "3rem", marginLeft: 150, color: 'red' }}>Feedback</td>
+                    </div>
+                    <textarea className={cx("text-des")} style={{ resize: 'none', width: '385px', border: 1, height: 150, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12 }} value={feedBackContent} onChange={(e) => setFeedBackContent(e.target.value)} />
+                    <td className={cx("button-type")}>
+                        <button type="button" className={cx("button-send")} aria-disabled="false" onClick={() => handleFeedback()}>Send</button>
+                    </td>
+
+                </div>
+            </Modal>
+            <Modal
+                open={openUpdateFeedBackModal}
+                onClose={() => setOpenUpdateFeedBackModal(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <div className={cx("text-all")} style={{ padding: 10, marginTop: 300, marginLeft: 750, background: "white", width: 450 }}>
+                    <div style={{ display: 'grid' }}>
+                        <td style={{ fontWeight: 'bold', fontSize: "3rem", marginLeft: 150, color: 'red' }}>Feedback</td>
+                    </div>
+                    <textarea className={cx("text-des")} style={{ resize: 'none', width: '385px', border: 1, height: 150, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12 }} value={feedBackContent} onChange={(e) => setFeedBackContent(e.target.value)} />
+                    <td className={cx("button-type")}>
+                        <button type="button" className={cx("button-send")} aria-disabled="false" onClick={() => handleUpdateFeedback()}>Update</button>
+                    </td>
+
+                </div>
+            </Modal>
             </div>
+            
 
         );
     }

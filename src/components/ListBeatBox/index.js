@@ -17,7 +17,6 @@ function ListBeatBox({ id, name, genre, price, view, like, onClick, handleLike, 
     const token = useToken()
     const audioRef = useRef()
     const { addToCart } = useContext(ShopContext)
-    const [play, setPlay] = useState(false)
     const [beatSoundDemo, setBeatSoundDemo] = useState("")
     useEffect(() => {
         loadSoundDemo()

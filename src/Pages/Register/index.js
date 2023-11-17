@@ -247,12 +247,6 @@ function Register() {
               <span className={cx("title-link")} style={{ fontFamily: 'fredoka one' }}>Login here!!!</span>
             </Link>
           </div>
-          <Backdrop
-            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={open}
-          >
-            <CircularProgress color="inherit" />
-          </Backdrop>
         </div>
         {/* Footer */}
       </div>
@@ -266,6 +260,12 @@ function Register() {
           {messageFailed}
         </Alert>
       </Snackbar>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </div>
   );
 

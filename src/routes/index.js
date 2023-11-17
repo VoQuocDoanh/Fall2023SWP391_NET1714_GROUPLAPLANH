@@ -41,6 +41,7 @@ import PaymentCancel from "@/Pages/PaymentCancel";
 import BannedSong from "@/Pages/BannedSong";
 import ListBeatAll from "@/Pages/listBeatAll";
 import ListSongAll from "@/Pages/ListSongAll";
+import UpdateSong from "@/Pages/UpdateSong";
 const publicRoutes = [
   {
     path: "/",
@@ -136,6 +137,10 @@ const publicRoutes = [
   {
     path: "/uploadsong",
     component: Uploadsong,
+  },
+  {
+    path: "/updatesong/:songid",
+    component: UpdateSong,
   },
   {
     path: "/musicianprofile",

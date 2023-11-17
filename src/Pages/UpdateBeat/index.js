@@ -117,7 +117,7 @@ function UploadBeat() {
     if (!token) {
       navigate("/login")
     }
-  
+
     for (let i = 0; i < inputGenres.length; i++) {
       genres.push(inputGenres[i])
     }
@@ -374,8 +374,8 @@ function UploadBeat() {
               </div>
             </div>
             {inputGenres.length !== 0 ?
-            <Button variant={"contained"} style={{marginTop:20, marginRight:200, backgroundColor:"#1976D2"}} onClick={() => setInputGenres([])}>Clear all</Button>
-            : <></>}
+              <Button variant={"contained"} style={{ marginTop: 20, marginRight: 200, backgroundColor: "#1976D2" }} onClick={() => setInputGenres([])}>Clear all</Button>
+              : <></>}
           </div>
 
           {/*Tone*/}
@@ -456,22 +456,16 @@ function UploadBeat() {
             />
           </Button>
         </div>
-        <Backdrop
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={open}
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
         <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
-                <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
-                    {messageSuccess}
-                </Alert>
-            </Snackbar>
-            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
-                <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
-                    {messageFailed}
-                </Alert>
-            </Snackbar>
+          <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+            {messageSuccess}
+          </Alert>
+        </Snackbar>
+        <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
+          <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+            {messageFailed}
+          </Alert>
+        </Snackbar>
         {/* Footer */}
         {/* <div className={cx("footer")}>
         <div className={cx("footer-left")}>
@@ -490,6 +484,12 @@ function UploadBeat() {
         </div>
         <div className={cx("footer-right", "text")}>Forgot password ?</div>
       </div> */}
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
       </div >
     );
   }

@@ -1,9 +1,9 @@
 import { Alert, Button, Checkbox, FormControl, InputLabel, ListItemText, MenuItem, Snackbar } from "@mui/material";
 import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
-import styles from "./UploadSong.module.scss";
+import styles from "./UpdateSong.module.scss";
 import classNames from "classnames/bind";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { React, useState, useRef, useEffect } from "react";
 import MarkdownPreview from '../../MarkdownPreview';
 import axiosInstance from "../../authorization/axiosInstance";
@@ -29,9 +29,10 @@ const TONE = [
         img: IMG_D7,
     }
 ]
-function UploadSong() {
+function UpdateSong() {
     const [vocalRange, setVocalRange] = useState("");
     const [inputGenres, setInputGenres] = useState([]);
+    const { songid } = useParams();
     let genres = []
     const [singer, setSinger] = useState("");
     const [tone, setTone] = useState("");
@@ -73,6 +74,10 @@ function UploadSong() {
         loadChords()
     }, [])
 
+    useEffect(() => {
+        loadDetailSong()
+    }, [])
+
     const isValidName = (name) => {
         const validNameRegex = /^[a-zA-Z0-9_\s]+$/;
         return validNameRegex.test(name);
@@ -87,7 +92,7 @@ function UploadSong() {
         return name.match(regValue.current)
     }
 
-    const handleUploadSong = async () => {
+    const handleUpdateSong = async () => {
         if (!token) {
             navigate("/login")
         }
@@ -114,17 +119,17 @@ function UploadSong() {
             setMessageFailed("Must have at least 1 chord!")
             return
         }
-        await axiosInstance.post("http://localhost:8080/api/v1/song/user", songInput)
+        await axiosInstance.patch(`http://localhost:8080/api/v1/song/user/${userid}/${songid}`, songInput)
             .then((res) => {
                 setOpenSuccessSnackBar(true)
-                setMessageSuccess("Upload successfully")
+                setMessageSuccess("Update successfully")
                 setTimeout(() => {
-                    navigate("/songs")
+                    navigate(`/song/${songid}`)
                 }, 500)
             })
             .catch((error) => {
                 setOpenFailedSnackBar(true)
-                setMessageFailed("Upload failed!")
+                setMessageFailed("Update failed!")
                 console.log(error)
             })
     }
@@ -156,6 +161,39 @@ function UploadSong() {
             typeof value === 'string' ? value.split(',') : value,
         );
     };
+
+    const loadDetailSong = async () => {
+        await axiosInstance.get(`http://localhost:8080/api/v1/song/${songid}`)
+            .then((res) => {
+                if (res.data.songName !== null) {
+                    setSongName(res.data.songName)
+                }
+                if (res.data.singer !== null) {
+                    setSinger(res.data.singer)
+                }
+                if (res.data.genres.length !== 0) {
+                    setInputGenres([])
+                    for (let i = 0; i < res.data.genres.length; i++) {
+                        setInputGenres(prevGenres => [...prevGenres, res.data.genres[i].name]);
+                    }
+                }
+                if (res.data.vocalRange !== null) {
+                    setVocalRange(res.data.vocalRange)
+                }
+                if (res.data.tone !== null) {
+                    setTone(res.data.tone)
+                }
+                if (res.data.songUrl !== null) {
+                    setSongUrl(res.data.songUrl)
+                }
+                if (res.data.description !== null) {
+                    setDescription(res.data.description)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
 
     /* 
         [
@@ -211,7 +249,7 @@ function UploadSong() {
             <div className={cx('page-content')}> {/* trang tổng */}
                 {console.log(songInput)}
                 <div className={cx('container-16')}>
-                    <div className={cx('title')}>Upload new chords of song</div>
+                    <div className={cx('title')}>Update chords of song</div>
                     <div className={cx('grid-9')}> {/* trang tổng gổm 2 div trái phải*/}
                         <div className={cx('page-content-left')}> {/* trang tổng bên trái*/}
                             <h2 style={{ marginBottom: "20px" }}><b> chords of song's name: </b></h2>
@@ -388,9 +426,9 @@ function UploadSong() {
                                     />
                                 </div>
                             </div>
-                            <div className={cx('add-singer')} style={{ width: '80%' }} onClick={() => handleUploadSong()}>
+                            <div className={cx('add-singer')} style={{ width: '80%' }} onClick={() => handleUpdateSong()}>
                                 <div className={cx("Add-Songs")} >
-                                    <Link to="/UploadSong" className={cx("Add-Songs-body", "card-action")}>Add new song</Link>
+                                    <Link to={`/UpdateSong/${songid}`} className={cx("Add-Songs-body", "card-action")}>Update</Link>
                                 </div>
                             </div>
                         </div>
@@ -549,4 +587,4 @@ function UploadSong() {
     }
 }
 
-export default UploadSong;
+export default UpdateSong;

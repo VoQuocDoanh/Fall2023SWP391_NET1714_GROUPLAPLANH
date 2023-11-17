@@ -33,7 +33,7 @@ function Chord({ songData, ...props }) {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <Flex flexWrap={'wrap'} justifyContent={'space-between'}>
+              <Flex flexWrap={'wrap'}>
                 {songData?.chords
                   ?.filter((item) => item?.type === 'Guitar')
                   ?.map((item) => (
@@ -55,7 +55,7 @@ function Chord({ songData, ...props }) {
               </Flex>
             </TabPanel>
             <TabPanel>
-              <Flex flexWrap={'wrap'} justifyContent={'space-between'}>
+              <Flex flexWrap={'wrap'}>
                 {songData?.chords
                   ?.filter((item) => item?.type === 'Ukulele')
                   ?.map((item) => (
@@ -73,7 +73,7 @@ function Chord({ songData, ...props }) {
               </Flex>
             </TabPanel>
             <TabPanel>
-              <Flex flexWrap={'wrap'} justifyContent={'space-between'}>
+              <Flex flexWrap={'wrap'}>
                 {songData?.chords
                   ?.filter((item) => item?.type === 'Piano')
                   ?.map((item) => (

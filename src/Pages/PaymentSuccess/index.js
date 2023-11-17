@@ -16,9 +16,9 @@ function Invoice() {
     const [user, setUser] = useState({})
     const [cartInvoice, setCartInvoice] = useState([])
     const [totalAmount, setTotalAmount] = useState(0)
-    const [messageSuccess, setMessageSuccess] = useState("")
+    const [messageSuccess, setMessageSuccess] = useState("Go to beatPurchased tab to listen to all your beats")
     const [messageFailed, setMessageFailed] = useState("")
-    const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
+    const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(true);
     const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
     let userId = ""
     if (token) {
@@ -146,7 +146,7 @@ function Invoice() {
                     </tbody> : <div></div>}
                 </table>
             </div>
-            <Snackbar open={openSuccessSnackBar} autoHideDuration={500} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
+            <Snackbar open={openSuccessSnackBar} autoHideDuration={5000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
                 <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                     {messageSuccess}
                 </Alert>

@@ -9,6 +9,7 @@ import ReactPaginate from 'react-paginate';
 import Pagination from "../../components/Pagination";
 import axiosInstance from "../../authorization/axiosInstance";
 import { ShopContext } from "../../context/shop-context";
+import ListSplitter from "@/components/ListSplitter";
 
 
 const cx = classNames.bind(styles);
@@ -24,10 +25,20 @@ function ListUser() {
     }, [page])
 
     const loadListUser = async () => {
-        await axiosInstance.get(`http://localhost:8080/api/v1/admin/${page}/10`)
+        await axiosInstance.get(`http://localhost:8080/api/v1/admin`)
             .then((res) => {
-                setListUser(res.data.dtoList)
-                setPages(res.data.max)
+                if (res.data.length === 0) {
+                    setListUser(res.data)
+                }
+                else {
+                    const newGroup = ListSplitter({ data: res.data, groupSize: 10 })
+                    for (let i = 0; i < newGroup.length; i++) {
+                        if (page === i + 1) {
+                            setListUser(newGroup[i])
+                        }
+                    }
+                    setPages(newGroup.length)
+                }
             })
             .catch((error) => {
                 console.log(error)

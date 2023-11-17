@@ -22,7 +22,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useContext, useEffect, useState, createContext } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   ChordsComponent,
   CommentComponent,
@@ -403,16 +403,18 @@ function SongDetail() {
                   >
                     Delete
                   </Button>
+                  <Link to={`/updatesong/${id}`}>
                   <Button
                     height="40px"
                     width="100px"
-                    onClick={() => [setCheckUpdate(true), setReload(true)]}
                     colorScheme="teal"
                     variant="outline"
                     color="black"
+                    marginBottom={50}
                   >
                     Update
                   </Button>
+                  </Link>
                 </div>
                 : admin ?
                   <div style={boxStyle}>

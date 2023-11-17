@@ -6,7 +6,7 @@ export const ShopContext = createContext(null);
 
 function ShopContextProvider({ children }) {
     const [search, setSearch] = useState("")
-    const [cart, setCart] = useLocalStorage("Cart",[])
+    const [cart, setCart] = useLocalStorage("Cart", [])
     // let count = 0
     const [cartItems, setCartItems] = useState({});
 
@@ -25,7 +25,7 @@ function ShopContextProvider({ children }) {
     //     // };
     //     return cart;
     // };
-    
+
     // if(JSON.parse(localStorage.getItem("Cart")) !== null &&  ){
 
     // }
@@ -62,12 +62,19 @@ function ShopContextProvider({ children }) {
 
 
     const addToCart = (itemId) => {
-        
-        setCart([...cart, itemId])
-
-    }
+        // Check if itemId is already in the cart
+        if (!cart.includes(itemId)) {
+            // If not in cart, add it
+            setCart([...cart, itemId]);
+            console.log("Item added to cart:", itemId);
+        } else {
+            // If already in cart, you might want to handle this case
+            console.log("Item is already in the cart:", itemId);
+        }
+    };
+    
     const removeFromCart = (itemId) => {
-        
+
         setCart(cart.filter(x => {
             return x !== itemId
         }))

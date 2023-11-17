@@ -12,7 +12,7 @@ import 'react-tabs/style/react-tabs.scss';
 import 'react-tabs/style/react-tabs.css';
 import Pagination from "../../components/Pagination";
 import Popup from "reactjs-popup";
-import { Alert, Snackbar } from "@mui/material";
+import { Alert, Modal, Snackbar } from "@mui/material";
 const cx = classNames.bind(styles);
 const DATA = [
     {
@@ -58,6 +58,7 @@ function ViewDetailsMusician() {
     const [messageFailed, setMessageFailed] = useState("")
     const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
     const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
     const contentStyle = { background: 'white', width: 460, height: 370, borderRadius: 20 };
     const { id } = useParams()
 
@@ -116,16 +117,23 @@ function ViewDetailsMusician() {
             navigate("/login")
             return
         }
+        if(report === ""){
+            setOpenFailedSnackBar(true)
+            setMessageFailed("Report's content must not be null!")
+            return
+        }
         await axiosInstance.post("http://localhost:8080/api/v1/report/user", { userId: userId, userReported: id, content: report })
             .then((res) => {
                 setOpenSuccessSnackBar(true)
                 setMessageSuccess("Report successfully")
                 setCheckReport("Report successfully")
+                setOpenModal(false)
             })
             .catch((error) => {
                 setOpenFailedSnackBar(true)
                 setMessageFailed("Report failed!")
                 setCheckReport("Report failed!")
+                setOpenModal(false)
             })
     }
 
@@ -295,24 +303,7 @@ function ViewDetailsMusician() {
                             {(!(userId == id)) ?
                                 <div className={cx("part5")}>
                                     {token ?
-                                        <Popup className={cx("part-5")} style={{ width: "120%" }} trigger={<button type="button" className={cx("button-save-details")} aria-disabled="false" >Report</button>}  {...{ contentStyle }} position="top center">
-                                            <div className={cx("text-all")} style={{ padding: 10 }}>
-                                                <div style={{ display: 'grid' }}>
-                                                    <td style={{ fontWeight: 'bold', fontSize: "2.2rem", marginLeft: 120, color: 'red' }}>Report</td>
-                                                    <td style={{ paddingTop: 15, paddingLeft: 30 }}>
-                                                        {avatar !== null ?
-                                                            <img className={cx("img-user")} src={avatar} />
-                                                            : <img className={cx("img-user")} src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVhcVcxgW8LzmIu36MCeJb81AHXlI8CwikrHNh5vzY8A&s"} />}
-                                                        <a href="#" style={{ fontWeight: 'bold' }}>{username}</a>
-                                                    </td>
-                                                </div>
-                                                <textarea className={cx("text-des")} style={{ resize: 'none', width: '385px', border: 1, height: 150, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12 }} onChange={(e) => setReport(e.target.value)} />
-                                                <td className={cx("button-type")}>
-                                                    <button type="button" className={cx("button-send")} aria-disabled="false" onClick={() => handleReport()}>Send</button>
-                                                </td>
-
-                                            </div>
-                                        </Popup>
+                                        <button type="button" className={cx("button-save-details")} aria-disabled="false" onClick={() => setOpenModal(true)} >Report</button>
                                         :
                                         <button type="button" className={cx("button-save-details")} aria-disabled="false" onClick={() => [setOpenFailedSnackBar(true), setMessageFailed("You need to login before using this function!")]} >Report</button>
                                     }
@@ -416,6 +407,23 @@ function ViewDetailsMusician() {
                     </Alert>
                 </Snackbar>
             </div>
+            <Modal
+                open={openModal}
+                onClose={() => setOpenModal(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <div className={cx("text-all")} style={{ padding: 10, marginTop: 300, marginLeft: 750, background: "white", width: 450 }}>
+                    <div style={{ display: 'grid' }}>
+                        <td style={{ fontWeight: 'bold', fontSize: "3rem", marginLeft: 150, color: 'red' }}>Report</td>
+                    </div>
+                    <textarea className={cx("text-des")} style={{ resize: 'none', width: '385px', border: 1, height: 150, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12 }} onChange={(e) => setReport(e.target.value)} />
+                    <td className={cx("button-type")}>
+                        <button type="button" className={cx("button-send")} aria-disabled="false" onClick={() => handleReport()}>Send</button>
+                    </td>
+
+                </div>
+            </Modal>
         </div>
     );
 }

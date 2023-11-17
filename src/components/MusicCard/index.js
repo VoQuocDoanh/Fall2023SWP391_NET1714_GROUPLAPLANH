@@ -53,7 +53,8 @@ function MusicCardItem({
             src={
               image
                 ? image
-                : 'https://photo-resize-zmp3.zmdcdn.me/w320_r1x1_jpeg/cover/8/3/e/8/83e83c4a068f0b994a99735e440b76df.jpg'
+                : require("../../assets/images/Other/channels4_profile.jpg")
+
             }
             alt='Card image'
             objectFit='cover'
@@ -66,7 +67,7 @@ function MusicCardItem({
             src={
               image
                 ? image
-                : 'https://photo-resize-zmp3.zmdcdn.me/w320_r1x1_jpeg/cover/8/3/e/8/83e83c4a068f0b994a99735e440b76df.jpg'
+                : require("../../assets/images/Other/channels4_profile.jpg")
             }
             alt='Card image'
             objectFit='cover'

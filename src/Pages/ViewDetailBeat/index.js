@@ -60,12 +60,18 @@ function ViewDetailBeat() {
         loadCheckLike()
     }, [beatId])
 
-    // useEffect(() => {
-    //     const loadRating = async() => {
-
-    //     }
-    //     loadRating()
-    // },[])
+    useEffect(() => {
+        const loadRating = async () => {
+            await axiosInstance.get(`http://localhost:8080/api/v1/beat/rate/user/${userId}/${beatId}`)
+                .then((res) => {
+                    setRating(res.data.star)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
+        loadRating()
+    },[beatId])
 
     const loadCheckLike = async () => {
         if (!token) {
@@ -146,6 +152,8 @@ function ViewDetailBeat() {
                     setMessageSuccess("Rating Successfully")
                 })
                 .catch((error) => {
+                    setOpenFailedSnackBar(true)
+                    setMessageFailed("Rating Failed!")
                     console.log(error)
                 })
         }
@@ -178,7 +186,7 @@ function ViewDetailBeat() {
                                         {token ?
                                             <div className={cx("container-like")}>
                                                 <Stack className={cx("rating-form")} spacing={1}>
-                                                    <Rating className={cx("start-icon")} name="size-large" defaultValue={0} size="large" onChange={(e) => [handleRating(e), setRating(e.target.value)]} />
+                                                    <Rating className={cx("start-icon")} name="size-large" defaultValue={rating} size="large" onChange={(e) => [handleRating(e), setRating(e.target.value)]} />
                                                 </Stack>
                                                 <div style={{ marginTop: 50, fontWeight: "bold", fontSize: 20, marginLeft: 10 }}>{rating}</div>
                                                 <button className={cx("button")} onClick={() => handleLikeClick(beatDetail.id)}>
@@ -190,7 +198,7 @@ function ViewDetailBeat() {
                                             :
                                             <div className={cx("container-like")}>
                                                 <Stack className={cx("rating-form")} spacing={1}>
-                                                    <Rating className={cx("start-icon")} name="size-large" defaultValue={0} size="large" onChange={(e) => [handleRating(e), setRating(e.target.value)]} />
+                                                    <Rating className={cx("start-icon")} name="size-large" defaultValue={rating} size="large" onChange={(e) => [handleRating(e), setRating(e.target.value)]} />
                                                 </Stack>
                                                 <button style={{marginRight:180}} className={cx("button")} onClick={() => handleLikeClick(beatDetail.id)}>
                                                     {console.log(checkLike)}
@@ -248,7 +256,7 @@ function ViewDetailBeat() {
                                                 </div>
                                             }
                                         </div>
-                                        : <h3 style={{ color: "#e81f00", marginTop: 100, marginLeft: 100 }}>Beat is sold out!</h3>}
+                                        : <h2 style={{ color: "#e81f00", marginTop: 100, marginLeft: 50 }}>Beat is sold out!</h2>}
                                 </div>
                             </div>
                         </div>

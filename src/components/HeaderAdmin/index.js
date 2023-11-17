@@ -41,9 +41,6 @@ function HeaderAdmin() {
         <Link to="/" className={cx("header-link")}>
           <span className={cx("logo")}>YourChords</span>
         </Link>
-        <div className={cx("search")}>
-          <Search />
-        </div>
       </div>
       <img className={cx("img-header")} src={require("../../assets/images/Other/Logo.png")} />
       <div className={cx("header-right")}>
