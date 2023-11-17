@@ -30,6 +30,7 @@ public class BeatRatingService {
         BeatRating foundRating = beatRatingRepository.findBeatRatingByBeatRatingAndUserRatingBeat(beat.get(), user.get());
 
         if (foundRating != null) {
+            beatRatingRepository.delete(foundRating);
             foundRating.setRating(dto.getRate());
              beat.get().setTotalRating(beat.get().getTotalRating() - 1);
             beatRepository.save(beat.get());

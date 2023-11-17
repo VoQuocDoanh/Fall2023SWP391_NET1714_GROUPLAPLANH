@@ -260,13 +260,11 @@ public class UserService {
     }
 
     // Get All User
-    public PaginationResponseDTO getAllUsers(int page) {
+    public List<UserResponeDTO> getAllUsers() {
         List<UserResponeDTO> userResponeDTOList = new ArrayList<>();
-        Pageable pageable = PageRequest.of(page - 1, 10);
-        Page<User> userList = userRepository.findAllByOrderByStatusDesc(pageable);
         List<User> u = userRepository.findAllByOrderByStatusDesc();
         UserResponeDTO dto;
-        for (User user : userList.getContent()) {
+        for (User user : u) {
             dto = new UserResponeDTO(
                     user.getId(),
                     user.getUsername(),
@@ -286,14 +284,7 @@ public class UserService {
             }
             userResponeDTOList.add(dto);
         }
-        int pageCount = pageable.getPageNumber();
-        int max = 0;
-        if (u.size() % 10 != 0) {
-            max = u.size() / 10 + 1;
-        } else {
-            max = u.size() / 10;
-        }
-        return new PaginationResponseDTO(userResponeDTOList, pageCount, max);
+       return userResponeDTOList;
     }
 
     // View all name of musician
