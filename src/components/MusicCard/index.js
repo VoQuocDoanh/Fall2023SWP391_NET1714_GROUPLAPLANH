@@ -34,6 +34,7 @@ function MusicCardItem({
       alignItems={'center'}
       justifyContent={'center'}
       p={'16px'}
+      filter={'drop-shadow(0 0 0.3rem rgb(146, 143, 144))'} 
       onMouseEnter={() => setRemoveStatus(true)}
       onMouseLeave={() => setRemoveStatus(false)}
       {...props}
@@ -53,7 +54,7 @@ function MusicCardItem({
             src={
               image
                 ? image
-                : require("../../assets/images/Other/channels4_profile.jpg")
+                : require ("../../assets/images/Other/chordddd).jpg")
 
             }
             alt='Card image'
@@ -67,7 +68,7 @@ function MusicCardItem({
             src={
               image
                 ? image
-                : require("../../assets/images/Other/channels4_profile.jpg")
+                : require("../../assets/images/Other/chordddd).jpg")
             }
             alt='Card image'
             objectFit='cover'
