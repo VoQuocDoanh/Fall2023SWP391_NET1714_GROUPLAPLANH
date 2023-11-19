@@ -81,6 +81,16 @@ public class User implements UserDetails {
     @JsonInclude(Include.NON_NULL)
     private List<Beat> beats = new ArrayList();
 
+    @OneToMany(mappedBy = "msRequest")
+    @JsonIgnore
+    @JsonInclude(Include.NON_NULL)
+    private List<MusicianRequest> musicianRequest = new ArrayList();
+
+    @OneToMany(mappedBy = "userRequest")
+    @JsonIgnore
+    @JsonInclude(Include.NON_NULL)
+    private List<BeatRequest> beatRequest = new ArrayList();
+
     @OneToMany(mappedBy = "userOrder")
     @JsonIgnore
     @JsonInclude(Include.NON_NULL)
