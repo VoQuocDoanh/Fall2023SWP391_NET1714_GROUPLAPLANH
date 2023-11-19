@@ -7,6 +7,8 @@ export const ShopContext = createContext(null);
 function ShopContextProvider({ children }) {
     const [search, setSearch] = useState("")
     const [cart, setCart] = useLocalStorage("Cart", [])
+    const [addToCartMessage, setAddToCartMessage] = useState("")
+    const [checkAddToCart, setCheckAddToCart] = useState(0)
     // let count = 0
     const [cartItems, setCartItems] = useState({});
 
@@ -62,14 +64,20 @@ function ShopContextProvider({ children }) {
 
 
     const addToCart = (itemId) => {
-        // Check if itemId is already in the cart
+        console.log(itemId)
+        // Check if itemId is already in the cart\
+        if(typeof itemId === "string"){
+            itemId = parseInt(itemId, 10)
+        }
         if (!cart.includes(itemId)) {
             // If not in cart, add it
             setCart([...cart, itemId]);
-            console.log("Item added to cart:", itemId);
+            setAddToCartMessage("Add to cart successfully")
+            setCheckAddToCart(1)
         } else {
+            setAddToCartMessage("You have already added this item to cart!")
+            setCheckAddToCart(2)
             // If already in cart, you might want to handle this case
-            console.log("Item is already in the cart:", itemId);
         }
     };
     
@@ -91,6 +99,10 @@ function ShopContextProvider({ children }) {
         cart,
         search,
         setSearch,
+        addToCartMessage,
+        checkAddToCart,
+        setAddToCartMessage,
+        setCheckAddToCart,
     };
     return (
         <ShopContext.Provider value={contextValue}>

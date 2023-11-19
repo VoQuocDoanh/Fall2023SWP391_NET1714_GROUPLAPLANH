@@ -30,7 +30,7 @@ function Home() {
       {/* Intro */}
       <div className={cx("intro")}>
         <div className={cx("title-slogan")}>
-          <h1 className={cx("title")}>PRATICE YOUR CHORDS</h1>
+          <h1 className={cx("title")}>PRACTICE YOUR CHORDS</h1>
           <span className={cx("slogan")}>
             Take your chord practice to the next level with our structured chord
             exercises.

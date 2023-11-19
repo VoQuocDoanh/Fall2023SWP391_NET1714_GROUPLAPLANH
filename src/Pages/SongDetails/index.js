@@ -21,6 +21,8 @@ import {
   FormLabel,
   useToast,
 } from "@chakra-ui/react";
+import classNames from "classnames";
+import styles from "./SongDetails.module.scss"
 import { useContext, useEffect, useState, createContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
@@ -41,6 +43,7 @@ import AddSongAndPlaylist from "@/components/SongDetail/AddForm";
 import useToken from "@/authorization/useToken";
 import jwtDecode from "jwt-decode";
 import axiosInstance from "@/authorization/axiosInstance";
+import NotFound from "../NotFound";
 
 export const SongContext = createContext();
 
@@ -350,7 +353,7 @@ function SongDetail() {
   }, [reload]);
 
 
-
+if(songData){
   return (
     <SongContext.Provider value={{ information, setReload, reload }}>
       <div >
@@ -649,7 +652,12 @@ function SongDetail() {
       </Modal>
 
     </SongContext.Provider>
-  );
+  );}
+  else{
+    return (
+      <NotFound/>
+    )
+  }
 }
 
 export default SongDetail;

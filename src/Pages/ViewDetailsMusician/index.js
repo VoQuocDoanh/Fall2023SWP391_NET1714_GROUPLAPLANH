@@ -225,29 +225,6 @@ function ViewDetailsMusician() {
                                             </div>
                                         </td>
                                     </div>
-                                    <div className={cx("part2")}>
-                                        <td>
-                                            <div className={cx("email-text")}>
-                                                Email*:
-                                            </div>
-                                            <div className={cx("email-change")}>
-                                                {mail}
-                                            </div>
-                                        </td>
-
-                                    </div>
-                                    <div className={cx("part3")}>
-                                        <td>
-                                            <div className={cx("text-username0")}>
-                                                <td>
-                                                    <label className={cx("login-text")}>Phone number*</label>
-                                                </td>
-                                                <div >
-                                                    <input className={cx("input-username0")} type="text" placeholder value={phone} onChange={(e) => setPhone(e.target.value)} />
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </div>
                                     <div className={cx("part3")}>
                                         <td>
                                             <div className={cx("text-username0")}>

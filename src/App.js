@@ -3,6 +3,7 @@ import { notificationRoutes, publicRoutes } from "./routes";
 import DefaultLayout from "./components/DefaultLayout/DefaultLayout";
 import CustomLayout from "./components/CustomLayout";
 import ShopContextProvider from "./context/shop-context";
+import NotFound from "./Pages/NotFound";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
                 />
               );
             })}
+            <Route path="*" element={<NotFound/>} />
           </Routes>
           <Routes>
           {notificationRoutes.map((route,index) => {

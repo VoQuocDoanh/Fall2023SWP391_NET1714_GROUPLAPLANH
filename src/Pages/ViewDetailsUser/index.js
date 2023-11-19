@@ -118,29 +118,6 @@ function ViewDetailsUser() {
                                         </div>
                                     </td>
                                 </div>
-                                <div className={cx("part2")}>
-                                    <td>
-                                        <div className={cx("email-text")}>
-                                            Email*
-                                        </div>
-                                        <div className={cx("email-change")}>
-                                            {user.mail}
-                                        </div>
-                                    </td>
-
-                                </div>
-                                <div className={cx("part3")}>
-                                    <td>
-                                        <div className={cx("text-username0")}>
-                                            <td >
-                                                <label style={{ fontWeight: 500 }} className={cx("login-text")}>Phone Number*</label>
-                                            </td>
-                                            <div>
-                                                <input className={cx("input-username0")} type="text" value={user.phoneNumber} placeholder readOnly />
-                                            </div>
-                                        </div>
-                                    </td>
-                                </div>
                                 {!(userId == user.id) ?
                                     <div className={cx("part5")}>
                                         {token ?

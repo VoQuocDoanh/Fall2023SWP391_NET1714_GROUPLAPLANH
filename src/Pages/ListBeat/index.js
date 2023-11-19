@@ -34,7 +34,8 @@ function ListBeat() {
     const [messageFailed, setMessageFailed] = useState("")
     const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
     const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
-        
+    const { addToCart, checkAddToCart, addToCartMessage, setCheckAddToCart } = useContext(ShopContext);
+
     useEffect(() => {
         loadBeats()
     }, [checkLike, page])
@@ -169,34 +170,46 @@ function ListBeat() {
 
             </div>
             {list.length !== 0 ?
-                <div style={{height:900}}>
+                <div style={{ height: 900 }}>
                     <div className={cx("listbeat")}>
                         {list.map((item) => {
-                            return <ListBeatBox id={item.id} name={item.beatName} genre={item.genre} price={item.price} view={(item.view / 2).toFixed()} like={item.totalLike} handleLike={() => handleLike(item.id)} rating={item.rating} vocalRange={item.vocalRange} fullName={item.user.fullName} setOpenFailedSnackBar={setOpenFailedSnackBar} setMessageFailed={setMessageFailed} setOpenSuccessSnackBar={setOpenSuccessSnackBar} setMessageSuccess={setMessageSuccess} />
+                            return <ListBeatBox id={item.id} name={item.beatName} genre={item.genre} price={item.price} view={(item.view / 2).toFixed()} like={item.totalLike} handleLike={() => handleLike(item.id)} rating={item.rating} vocalRange={item.vocalRange} fullName={item.user.fullName} addToCart={addToCart} addToCartMessage={addToCartMessage} checkAddToCart={checkAddToCart} setCheckAddToCart={setCheckAddToCart} setOpenFailedSnackBar={setOpenFailedSnackBar} setMessageFailed={setMessageFailed} />
                         })}
 
                     </div>
-                    
+
                 </div>
-                
+
 
                 : <div className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 800 }}> All Beat are sold out!<div> Thank you for your visiting on our website </div> </div>}
-                {pages !== 1 ?
-                        <div className={cx("pagination")}>
-                            <Pagination pages={pages} page={page} setPage={setPage} />
-                        </div>
-                        : <div></div>}
+            {pages !== 1 ?
+                <div className={cx("pagination")}>
+                    <Pagination pages={pages} page={page} setPage={setPage} />
+                </div>
+                : <div></div>}
 
-            <Snackbar open={openSuccessSnackBar} autoHideDuration={500} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
+            <Snackbar open={openSuccessSnackBar} autoHideDuration={500} onClose={() => setOpenSuccessSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
                 <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                     {messageSuccess}
                 </Alert>
             </Snackbar>
-            <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
+            <Snackbar open={openFailedSnackBar} autoHideDuration={500} onClose={() => setOpenFailedSnackBar(true)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
                 <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                     {messageFailed}
                 </Alert>
             </Snackbar>
+            <Snackbar open={checkAddToCart === 1} autoHideDuration={500} onClose={() => setCheckAddToCart(0)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
+                <Alert variant="filled" onClose={() => setCheckAddToCart(0)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {addToCartMessage}
+                </Alert>
+            </Snackbar>
+            <Snackbar open={checkAddToCart === 2} autoHideDuration={500} onClose={() => setCheckAddToCart(0)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
+                <Alert variant="filled" onClose={() => setCheckAddToCart(0)} severity="warning" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                    {addToCartMessage}
+                </Alert>
+            </Snackbar>
+
+
         </div>
     );
 }

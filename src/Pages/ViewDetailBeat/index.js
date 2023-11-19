@@ -14,7 +14,7 @@ import Pagination from "@/components/Pagination";
 const cx = classNames.bind(styles);
 
 function ViewDetailBeat() {
-    const { addToCart } = useContext(ShopContext)
+    const { addToCart, checkAddToCart, addToCartMessage, setCheckAddToCart } = useContext(ShopContext)
     const { beatId } = useParams();
     const [beatDetail, setBeatDetail] = useState(null)
     const [listMusicianBeat, setListMusicianBeat] = useState(null)
@@ -245,7 +245,8 @@ function ViewDetailBeat() {
                                     {beatDetail.status === 1 ?
                                         <div>
                                             {token ? <div className={cx('mid-button')}>
-                                                <Button variant="contained" className={cx('button-1')} style={{ borderRadius: 15, outline: '3px solid white', marginTop: 40 }} onClick={() => [addToCart(beatId), setOpenSuccessSnackBar(true), setMessageSuccess("Add to cart successfully")]}>
+                                                {console.log(beatId)}
+                                                <Button variant="contained" className={cx('button-1')} style={{ borderRadius: 15, outline: '3px solid white', marginTop: 40 }} onClick={() => [addToCart(beatId)]}>
                                                     <div style={{ fontSize: '1.4rem', textWrap: 'nowrap' }} >Add to cart</div>
                                                 </Button>
                                             </div>
@@ -318,6 +319,17 @@ function ViewDetailBeat() {
                 <Snackbar open={openFailedSnackBar} autoHideDuration={2000} onClose={() => setOpenFailedSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
                     <Alert variant="filled" onClose={() => setOpenFailedSnackBar(false)} severity="error" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                         {messageFailed}
+                    </Alert>
+                </Snackbar>
+
+                <Snackbar open={checkAddToCart === 1} autoHideDuration={500} onClose={() => setCheckAddToCart(0)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
+                    <Alert variant="filled" onClose={() => setCheckAddToCart(0)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                        {addToCartMessage}
+                    </Alert>
+                </Snackbar>
+                <Snackbar open={checkAddToCart === 2} autoHideDuration={500} onClose={() => setCheckAddToCart(0)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }}>
+                    <Alert variant="filled" onClose={() => setCheckAddToCart(0)} severity="warning" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
+                        {addToCartMessage}
                     </Alert>
                 </Snackbar>
             </div>
