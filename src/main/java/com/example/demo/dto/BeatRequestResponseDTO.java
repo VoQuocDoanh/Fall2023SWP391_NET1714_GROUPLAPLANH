@@ -8,4 +8,5 @@ public class BeatRequestResponseDTO {
         private String description;
     private Long userRequest;
         private Long msId;
+        private Double price;
 }

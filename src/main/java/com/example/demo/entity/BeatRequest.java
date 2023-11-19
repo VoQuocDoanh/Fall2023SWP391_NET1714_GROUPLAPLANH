@@ -33,6 +33,13 @@ public class BeatRequest {
     @Column(length = Integer.MAX_VALUE)
     private String beatSoundFull;
 
+
+    @Column(length = Integer.MAX_VALUE)
+    private String objectName;
+
+    @Column(length = Integer.MAX_VALUE)
+    private String objectNameDemo;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "userRequest")
