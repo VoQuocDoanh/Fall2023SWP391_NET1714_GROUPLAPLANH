@@ -253,26 +253,29 @@ public class SongService {
         Optional<Song> foundSong = this.songRepository.findById(id);
         if (foundSong.isPresent()) {
             Song s = foundSong.get();
-            s.setView(s.getView() + 1);
-            SongResponseDTO dto = new SongResponseDTO();
-            dto.setId(s.getId());
-            dto.setSongName(s.getSongname());
-            dto.setSinger(s.getSinger());
-            dto.setTone(s.getTone());
-            dto.setDescription(s.getDescription());
-            dto.setVocalRange(s.getVocalRange());
-            dto.setSongUrl(s.getSongUrl());
-            dto.setUserid(s.getUserUploadSong().getId());
-            dto.setUserfullname(s.getUserUploadSong().getFullName());
-            dto.setCreateAt(s.getCreatedAt());
-            dto.setGenres(getGenres(s.getId()));
-            dto.setChords(getChords(s.getId()));
-            dto.setView(s.getView());
-            dto.setTotalLike(s.getTotalLike());
-            dto.setRating(s.getRating());
-            dto.setStatus(s.getStatus());
-
-            return dto;
+            if(s.getStatus() == 1) {
+                s.setView(s.getView() + 1);
+                SongResponseDTO dto = new SongResponseDTO();
+                dto.setId(s.getId());
+                dto.setSongName(s.getSongname());
+                dto.setSinger(s.getSinger());
+                dto.setTone(s.getTone());
+                dto.setDescription(s.getDescription());
+                dto.setVocalRange(s.getVocalRange());
+                dto.setSongUrl(s.getSongUrl());
+                dto.setUserid(s.getUserUploadSong().getId());
+                dto.setUserfullname(s.getUserUploadSong().getFullName());
+                dto.setCreateAt(s.getCreatedAt());
+                dto.setGenres(getGenres(s.getId()));
+                dto.setChords(getChords(s.getId()));
+                dto.setView(s.getView());
+                dto.setTotalLike(s.getTotalLike());
+                dto.setRating(s.getRating());
+                dto.setStatus(s.getStatus());
+                return dto;
+            }else{
+                return null;
+            }
         }
         return null;
     }

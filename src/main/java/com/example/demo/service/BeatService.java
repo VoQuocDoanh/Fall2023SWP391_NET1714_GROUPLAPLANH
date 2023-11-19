@@ -363,6 +363,7 @@ public class BeatService {
             BeatResponseDTO responseDTO = new BeatResponseDTO();
             responseDTO.setId(beat.getId());
             responseDTO.setBeatName(beat.getBeatName());
+            responseDTO.setDescription(beat.getDescription());
             MusicianInformation information = beat.getUserName().getInformation();
             responseDTO.setYear(information.getYear());
             responseDTO.setProfessional(information.getProfessional());

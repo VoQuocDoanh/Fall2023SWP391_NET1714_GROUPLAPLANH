@@ -29,6 +29,7 @@ public class JwtService {
                 .withClaim("fullName",user.getFullName())
                 .withClaim("phoneNumber",user.getPhoneNumber())
                 .withClaim("mail",user.getMail())
+                .withClaim("avatar",user.getAvatar())
 
                 .sign(algorithm);
     }

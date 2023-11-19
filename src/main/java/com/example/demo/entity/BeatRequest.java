@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,6 +28,9 @@ public class BeatRequest {
 
     @Column
     private Double price;
+
+    @Column(name = "Date")
+    private LocalDateTime createdAt;
 
     @Column(length = Integer.MAX_VALUE)
     private String beatSoundDemo;
@@ -53,8 +58,14 @@ public class BeatRequest {
     @Column
     private int status;
 
-    public BeatRequest(String description, User userRequest) {
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public BeatRequest(String description, User userRequest, String beatName) {
         this.description = description;
         this.userRequest = userRequest;
+        this.beatName = beatName;
     }
 }
