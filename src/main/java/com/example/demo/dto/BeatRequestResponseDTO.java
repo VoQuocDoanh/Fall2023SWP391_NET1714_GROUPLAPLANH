@@ -11,15 +11,43 @@ public class BeatRequestResponseDTO {
     UserResponeDTO musician;
     String beatName;
     private LocalDateTime creatAt;
+    private int status;
 
-    public BeatRequestResponseDTO(Long id, UserResponeDTO userRequest, String beatName, UserResponeDTO musician, LocalDateTime creatAt) {
+    private String description;
+    private Long msId;
+    private Double price;
+    private String beatDemo;
+    private String beatFull;
+
+    public BeatRequestResponseDTO(Long id, UserResponeDTO userRequest, String beatName, UserResponeDTO musician, LocalDateTime creatAt, int status) {
         this.id = id;
         this.userRequest = userRequest;
         this.beatName = beatName;
         this.musician = musician;
         this.creatAt = creatAt;
+        this.status = status;
+
+
     }
-        private String description;
-        private Long msId;
-        private Double price;
+    public BeatRequestResponseDTO(Long id, UserResponeDTO userRequest, String beatName, UserResponeDTO musician, LocalDateTime creatAt, int status, String beatDemo) {
+        this.id = id;
+        this.userRequest = userRequest;
+        this.beatName = beatName;
+        this.musician = musician;
+        this.creatAt = creatAt;
+        this.status = status;
+        this.beatDemo = beatDemo;
+
+    }
+    public BeatRequestResponseDTO(Long id, UserResponeDTO userRequest, String beatFull, String beatName, UserResponeDTO musician, LocalDateTime creatAt, int status) {
+        this.id = id;
+        this.userRequest = userRequest;
+        this.beatName = beatName;
+        this.musician = musician;
+        this.creatAt = creatAt;
+        this.status = status;
+        this.beatFull = beatFull;
+
+    }
+
 }

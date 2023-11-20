@@ -1,9 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.BeatRequestRequestDTO;
-import com.example.demo.dto.BeatRequestResponseDTO;
-import com.example.demo.dto.BeatResponseDTO;
-import com.example.demo.dto.UserResponeDTO;
+import com.example.demo.dto.*;
 import com.example.demo.entity.BeatRequest;
 import com.example.demo.entity.MusicianRequest;
 import com.example.demo.entity.User;
@@ -153,9 +150,42 @@ public class BeatRequestService {
                 getUser(beat.getUserRequest()),
                 beat.getBeatName(),
                 getUser(foundUser.get()),
-                beat.getCreatedAt()
+                beat.getCreatedAt(),
+                beat.getStatus()
         );
         return dto;
+    }
+
+    private BeatRequestResponseDTO getBeatDTOWithStatus(BeatRequest beat){
+        Optional<MusicianRequest> ms = musicianRequestRepository.findById(beat.getRequestId().getId());
+        Optional<User> foundUser = userRepository.findById(ms.get().getId());
+        if (beat.getStatus() == 3){
+            BeatRequestResponseDTO dto = new BeatRequestResponseDTO(
+                    beat.getId(),
+                    getUser(beat.getUserRequest()),
+                    beat.getBeatName(),
+                    getUser(foundUser.get()),
+                    beat.getCreatedAt(),
+                    beat.getStatus(),
+                    beat.getBeatSoundDemo()
+            );
+            return dto;
+
+        } else if (beat.getStatus() == -1) {
+            BeatRequestResponseDTO dto = new BeatRequestResponseDTO(
+                    beat.getId(),
+                    getUser(beat.getUserRequest()),
+                    beat.getBeatSoundFull()
+                    ,
+                    beat.getBeatName(),
+                    getUser(foundUser.get()),
+                    beat.getCreatedAt(),
+                    beat.getStatus()
+            );
+            return dto;
+
+        }
+        return null;
     }
 
     public ResponseEntity<List<BeatRequestResponseDTO>> viewAllInCus(Long id){
@@ -185,4 +215,87 @@ public class BeatRequestService {
         }
         return null;
     }
+
+    public ResponseEntity<BeatRequestResponseDTO> viewDetail(Long id){
+        Optional<BeatRequest> foundOrder = beatRequestRepository.findById(id);
+        if(foundOrder.isPresent()){
+            if (foundOrder.get().getStatus() == 3){
+                BeatRequestResponseDTO b = getBeatDTOWithStatus(foundOrder.get());
+                return new ResponseEntity<>(b,HttpStatus.OK);
+            }
+            BeatRequestResponseDTO b = getBeatDTO(foundOrder.get());
+            return new ResponseEntity<>(b,HttpStatus.OK);
+        }
+        return null;
+    }
+
+    public ResponseEntity<List<BeatRequestResponseDTO>> viewAllBeatRequestPurchased(Long id){
+        Optional<User> foundUser = userRepository.findById(id);
+        if (foundUser.isPresent()){
+            List<BeatRequestResponseDTO> list = new ArrayList<>();
+            List<BeatRequest> beat = beatRequestRepository.findByUserRequestAndStatus(foundUser.get(),-1);
+            for (BeatRequest i : beat){
+                list.add(getBeatDTOWithStatus(i));
+            }
+            return new ResponseEntity<>(list,HttpStatus.OK);
+        }
+        return null;
+    }
+
+    public ResponseEntity<IncomeResponseDTO> totalIncome(Long id){
+        Optional<User> foundUser = userRepository.findById(id);
+        Double price = 0.0;
+        int beatReject=0;
+        int beatAccept=0;
+        if (foundUser.isPresent()){
+            List<MusicianRequest> beat = musicianRequestRepository.findAllByMsRequest(foundUser.get());
+            for (MusicianRequest i : beat){
+                BeatRequest b = new BeatRequest();
+                b = beatRequestRepository.findByRequestId(i);
+                if (b.getStatus() == -1 && b!= null){
+                    price += b.getPrice();
+                    beatAccept++;
+                } else if (b.getStatus() == -2 && b!= null ) {
+                    price += b.getPrice()*0.3;
+                    beatReject++;
+                }
+            }
+            IncomeResponseDTO response = new IncomeResponseDTO(
+                    price,
+                    beatReject,
+                    beatAccept
+            );
+            return new ResponseEntity<>(response,HttpStatus.OK);
+        }
+        return null;
+    }
+
+    public ResponseEntity<List<IncomeResponseDTO>> viewIncomeDetail(Long id){
+        Optional<User> foundUser = userRepository.findById(id);
+        if (foundUser.isPresent()){
+            List<IncomeResponseDTO> dtoList = new ArrayList<>();
+            Double price = 0.0;
+            List<MusicianRequest> beatEntity = musicianRequestRepository.findAllByMsRequest(foundUser.get());
+            for (MusicianRequest i : beatEntity) {
+                BeatRequest b = new BeatRequest();
+                b = beatRequestRepository.findByRequestId(i);
+                if (b.getStatus() == -1){
+                    price = b.getPrice();
+                }
+                if (b.getStatus() == -2){
+                    price = b.getPrice()*0.3;
+                }
+                IncomeResponseDTO beat = new IncomeResponseDTO(
+                        price,
+                        b.getBeatName(),
+                        getUser(b.getUserRequest())
+                );
+                dtoList.add(beat);
+
+            }
+            return new ResponseEntity<>(dtoList,HttpStatus.OK);
+        }
+        return null;
+    }
+
 }

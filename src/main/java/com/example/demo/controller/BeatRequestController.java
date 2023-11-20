@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.BeatRequestRequestDTO;
 import com.example.demo.dto.BeatRequestResponseDTO;
+import com.example.demo.dto.IncomeResponseDTO;
 import com.example.demo.entity.BeatRequest;
 import com.example.demo.service.BeatRequestService;
 import com.example.demo.validationgroups.BeatValidation;
@@ -62,4 +63,26 @@ public class BeatRequestController {
         return this.service.viewAllInMs(id);
     }
 
+
+    @GetMapping({"/detail/{id}"})
+    public ResponseEntity<BeatRequestResponseDTO> viewDetail(@PathVariable Long id){
+        return this.service.viewDetail(id);
+    }
+
+    @GetMapping({"/all/{id}"})
+    public ResponseEntity<List<BeatRequestResponseDTO>> viewAllBeatRequestPurchased(@PathVariable Long id){
+        return this.service.viewAllBeatRequestPurchased(id);
+    }
+
+
+
+    @GetMapping({"/income/{id}"})
+    public ResponseEntity<IncomeResponseDTO> totalIncome(@PathVariable Long id){
+        return this.service.totalIncome(id);
+    }
+
+    @GetMapping({"/income/detail/{id}"})
+    public ResponseEntity<List<IncomeResponseDTO>> viewIncomeDetail(@PathVariable Long id){
+        return this.service.viewIncomeDetail(id);
+    }
 }

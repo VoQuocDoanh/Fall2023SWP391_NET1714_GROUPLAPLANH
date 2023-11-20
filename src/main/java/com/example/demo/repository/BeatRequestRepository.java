@@ -10,4 +10,6 @@ import java.util.List;
 public interface BeatRequestRepository extends JpaRepository<BeatRequest,Long> {
     List<BeatRequest> findAllByUserRequest(User user);
     BeatRequest findByRequestId(MusicianRequest id);
+
+    List<BeatRequest> findByUserRequestAndStatus(User user, int status);
 }
