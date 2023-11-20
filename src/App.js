@@ -26,7 +26,7 @@ function App() {
                 />
               );
             })}
-            <Route path="*" element={<NotFound/>} />
+            <Route element={<NotFound/>} />
           </Routes>
           <Routes>
           {notificationRoutes.map((route,index) => {

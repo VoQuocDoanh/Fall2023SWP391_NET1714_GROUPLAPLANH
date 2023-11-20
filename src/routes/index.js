@@ -42,6 +42,8 @@ import BannedSong from "@/Pages/BannedSong";
 import ListBeatAll from "@/Pages/listBeatAll";
 import ListSongAll from "@/Pages/ListSongAll";
 import UpdateSong from "@/Pages/UpdateSong";
+import ViewIncome from "@/Pages/ViewIncome";
+import MyBeats from "@/Pages/MyBeats";
 const publicRoutes = [
   {
     path: "/",
@@ -229,6 +231,14 @@ const notificationRoutes = [
   {
     path: "/payment/cancel",
     component: PaymentCancel,
+  },
+  {
+    path: "viewincome",
+    component: ViewIncome,
+  },
+  {
+    path: "mybeats",
+    component: MyBeats,
   },
 ]
 
