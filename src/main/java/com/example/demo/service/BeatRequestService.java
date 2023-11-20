@@ -146,10 +146,14 @@ public class BeatRequestService {
     }
 
     private BeatRequestResponseDTO getBeatDTO(BeatRequest beat){
+        Optional<MusicianRequest> ms = musicianRequestRepository.findById(beat.getRequestId().getId());
+        Optional<User> foundUser = userRepository.findById(ms.get().getId());
         BeatRequestResponseDTO dto = new BeatRequestResponseDTO(
                 beat.getId(),
                 getUser(beat.getUserRequest()),
-                beat.getBeatName()
+                beat.getBeatName(),
+                getUser(foundUser.get()),
+                beat.getCreatedAt()
         );
         return dto;
     }
