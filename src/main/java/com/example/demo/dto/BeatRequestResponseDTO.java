@@ -1,6 +1,5 @@
 package com.example.demo.dto;
 
-import com.example.demo.entity.User;
 import lombok.Data;
 
 @Data
@@ -15,4 +14,7 @@ public class BeatRequestResponseDTO {
         this.userRequest = userRequest;
         this.beatName = beatName;
     }
+        private String description;
+        private Long msId;
+        private Double price;
 }

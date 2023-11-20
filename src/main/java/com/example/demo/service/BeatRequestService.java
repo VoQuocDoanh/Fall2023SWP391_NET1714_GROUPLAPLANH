@@ -41,7 +41,8 @@ public class BeatRequestService {
 
         BeatRequest beat = new BeatRequest(
                 dto.getDescription(),
-                foundUser.get()
+                foundUser.get(),
+                dto.getBeatName()
         );
         beatRequestRepository.save(beat);
         List<BeatRequest> list = new ArrayList<>();
@@ -82,7 +83,7 @@ public class BeatRequestService {
         if (found.isPresent()) {
             found.get().setStatus(-1);
             beatRequestRepository.save(found.get());
-            return new ResponseEntity<>("Accept price!", HttpStatus.OK);
+            return new ResponseEntity<>("Accept beat!", HttpStatus.OK);
         }
         return null;
     }
@@ -92,7 +93,7 @@ public class BeatRequestService {
         if (found.isPresent()) {
             found.get().setStatus(-3);
             beatRequestRepository.save(found.get());
-            return new ResponseEntity<>("Accept price!", HttpStatus.OK);
+            return new ResponseEntity<>("Reject request!", HttpStatus.OK);
         }
         return null;
     }
@@ -102,7 +103,7 @@ public class BeatRequestService {
         if (found.isPresent()) {
             found.get().setStatus(-2);
             beatRequestRepository.save(found.get());
-            return new ResponseEntity<>("Accept price!", HttpStatus.OK);
+            return new ResponseEntity<>("Reject beat!", HttpStatus.OK);
         }
         return null;
     }
