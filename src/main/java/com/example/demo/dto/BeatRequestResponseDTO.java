@@ -1,12 +1,18 @@
 package com.example.demo.dto;
 
+import com.example.demo.entity.User;
 import lombok.Data;
 
 @Data
 public class BeatRequestResponseDTO {
-    private Long id;
-        private String description;
-    private Long userRequest;
-        private Long msId;
-        private Double price;
+    Long id;
+    UserResponeDTO userRequest;
+    UserResponeDTO musician;
+    String beatName;
+
+    public BeatRequestResponseDTO(Long id, UserResponeDTO userRequest, String beatName) {
+        this.id = id;
+        this.userRequest = userRequest;
+        this.beatName = beatName;
+    }
 }

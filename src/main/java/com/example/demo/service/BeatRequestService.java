@@ -1,16 +1,15 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.BeatDTO;
+import com.example.demo.dto.BeatRequestRequestDTO;
 import com.example.demo.dto.BeatRequestResponseDTO;
 import com.example.demo.dto.BeatResponseDTO;
+import com.example.demo.dto.UserResponeDTO;
 import com.example.demo.entity.BeatRequest;
 import com.example.demo.entity.MusicianRequest;
-import com.example.demo.entity.SongReport;
 import com.example.demo.entity.User;
 import com.example.demo.repository.BeatRequestRepository;
 import com.example.demo.repository.MusicianRequestRepository;
 import com.example.demo.repository.UserRepository;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +35,7 @@ public class BeatRequestService {
     @Autowired
     private MusicianRequestRepository musicianRequestRepository;
 
-    public ResponseEntity<String> addNew(BeatRequestResponseDTO dto) {
+    public ResponseEntity<String> addNew(BeatRequestRequestDTO dto) {
         Optional<User> foundUser = userRepository.findById(dto.getUserRequest());
         Optional<User> foundMs = userRepository.findById(dto.getMsId());
 
@@ -57,7 +56,7 @@ public class BeatRequestService {
         return new ResponseEntity<>("Created!", HttpStatus.OK);
     }
 
-    public ResponseEntity<String> acceptRequest(BeatRequestResponseDTO dto) {
+    public ResponseEntity<String> acceptRequest(BeatRequestRequestDTO dto) {
         Optional<BeatRequest> found = beatRequestRepository.findById(dto.getId());
         if (found.isPresent()) {
             found.get().setPrice(dto.getPrice());
@@ -68,7 +67,7 @@ public class BeatRequestService {
         return null;
     }
 
-    public ResponseEntity<String> acceptPrice(BeatRequestResponseDTO dto) {
+    public ResponseEntity<String> acceptPrice(BeatRequestRequestDTO dto) {
         Optional<BeatRequest> found = beatRequestRepository.findById(dto.getId());
         if (found.isPresent()) {
             found.get().setStatus(2);
@@ -78,7 +77,7 @@ public class BeatRequestService {
         return null;
     }
 
-    public ResponseEntity<String> acceptBeat(BeatRequestResponseDTO dto) {
+    public ResponseEntity<String> acceptBeat(BeatRequestRequestDTO dto) {
         Optional<BeatRequest> found = beatRequestRepository.findById(dto.getId());
         if (found.isPresent()) {
             found.get().setStatus(-1);
@@ -88,7 +87,7 @@ public class BeatRequestService {
         return null;
     }
 
-    public ResponseEntity<String> rejectRequest(BeatRequestResponseDTO dto) {
+    public ResponseEntity<String> rejectRequest(BeatRequestRequestDTO dto) {
         Optional<BeatRequest> found = beatRequestRepository.findById(dto.getId());
         if (found.isPresent()) {
             found.get().setStatus(-3);
@@ -98,7 +97,7 @@ public class BeatRequestService {
         return null;
     }
 
-    public ResponseEntity<String> rejectBeat(BeatRequestResponseDTO dto) {
+    public ResponseEntity<String> rejectBeat(BeatRequestRequestDTO dto) {
         Optional<BeatRequest> found = beatRequestRepository.findById(dto.getId());
         if (found.isPresent()) {
             found.get().setStatus(-2);
@@ -115,7 +114,7 @@ public class BeatRequestService {
         }
         return null;
     }
-    public ResponseEntity<String> sendBeat(MultipartFile sound, MultipartFile sound2, BeatRequestResponseDTO dto) {
+    public ResponseEntity<String> sendBeat(MultipartFile sound, MultipartFile sound2, BeatRequestRequestDTO dto) {
         Optional<BeatRequest> found = beatRequestRepository.findById(dto.getId());
         Optional<User> foundUser = userRepository.findById(dto.getMsId());
         if (found.isPresent()){
@@ -137,6 +136,47 @@ public class BeatRequestService {
             found.get().setStatus(3);
             beatRequestRepository.save(found.get());
             return new ResponseEntity<>("Send!",HttpStatus.OK);
+        }
+        return null;
+    }
+
+    private UserResponeDTO getUser(User user){
+        return new UserResponeDTO(user.getId(), user.getFullName());
+    }
+
+    private BeatRequestResponseDTO getBeatDTO(BeatRequest beat){
+        BeatRequestResponseDTO dto = new BeatRequestResponseDTO(
+                beat.getId(),
+                getUser(beat.getUserRequest()),
+                beat.getBeatName()
+        );
+        return dto;
+    }
+
+    public ResponseEntity<List<BeatRequestResponseDTO>> viewAllInCus(Long id){
+        Optional<User> foundUser=userRepository.findById(id);
+        if (foundUser.isPresent()){
+            List<BeatRequest> list = beatRequestRepository.findAllByUserRequest(foundUser.get());
+            List<BeatRequestResponseDTO> response = new ArrayList<>();
+            for (BeatRequest i : list){
+                response.add(getBeatDTO(i));
+            }
+            return new ResponseEntity<>(response,HttpStatus.OK);
+        }
+        return null;
+    }
+
+    public ResponseEntity<List<BeatRequestResponseDTO>> viewAllInMs(Long id){
+        Optional<User> foundUser  = userRepository.findById(id);
+        if (foundUser.isPresent()){
+            List<MusicianRequest> listOrder  = musicianRequestRepository.findAllByMsRequest(foundUser.get());
+            List<BeatRequestResponseDTO> list  =new ArrayList<>();
+            for (MusicianRequest i :listOrder){
+                BeatRequest b  = new BeatRequest();
+                b = beatRequestRepository.findByRequestId(i);
+                list.add(getBeatDTO(b));
+            }
+            return new ResponseEntity<>(list,HttpStatus.OK);
         }
         return null;
     }
