@@ -229,6 +229,42 @@ public class BeatRequestService {
         return null;
     }
 
+    public ResponseEntity<BeatRequestResponseDTO> viewDetailByCus(Long id, Long userId){
+        Optional<BeatRequest> foundOrder = beatRequestRepository.findById(id);
+        Optional<User> foundUser = userRepository.findById(userId);
+        if(foundOrder.isPresent() && foundUser.isPresent()){
+            if (foundOrder.get().getUserRequest().equals(foundUser.get())){
+                if (foundOrder.get().getStatus() == 3){
+                    BeatRequestResponseDTO b = getBeatDTOWithStatus(foundOrder.get());
+                    return new ResponseEntity<>(b,HttpStatus.OK);
+                }
+                BeatRequestResponseDTO b = getBeatDTO(foundOrder.get());
+                return new ResponseEntity<>(b,HttpStatus.OK);
+            }
+            else return null;
+        }
+        return null;
+    }
+
+
+    public ResponseEntity<BeatRequestResponseDTO> viewDetailByMS(Long id, Long userId){
+        Optional<BeatRequest> foundOrder = beatRequestRepository.findById(id);
+        Optional<User> foundUser = userRepository.findById(userId);
+        Optional<MusicianRequest> foundMS = Optional.ofNullable(musicianRequestRepository.findByMsRequest(foundUser.get()));
+        if(foundOrder.isPresent() && foundUser.isPresent()){
+            if (foundOrder.get().getRequestId().equals(foundMS)){
+                if (foundOrder.get().getStatus() == 3){
+                    BeatRequestResponseDTO b = getBeatDTOWithStatus(foundOrder.get());
+                    return new ResponseEntity<>(b,HttpStatus.OK);
+                }
+                BeatRequestResponseDTO b = getBeatDTO(foundOrder.get());
+                return new ResponseEntity<>(b,HttpStatus.OK);
+            }
+            else return null;
+        }
+        return null;
+    }
+
     public ResponseEntity<List<BeatRequestResponseDTO>> viewAllBeatRequestPurchased(Long id){
         Optional<User> foundUser = userRepository.findById(id);
         if (foundUser.isPresent()){

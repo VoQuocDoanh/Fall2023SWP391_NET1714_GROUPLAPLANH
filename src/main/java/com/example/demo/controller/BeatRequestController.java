@@ -69,6 +69,18 @@ public class BeatRequestController {
         return this.service.viewDetail(id);
     }
 
+
+
+    @GetMapping({"/musician/detail/{id}/{user}"})
+    public ResponseEntity<BeatRequestResponseDTO> viewDetailByMS(@PathVariable Long id,@PathVariable Long user){
+        return this.service.viewDetailByMS(id,user);
+    }
+
+
+    @GetMapping({"/customer/detail/{id}/{user}"})
+    public ResponseEntity<BeatRequestResponseDTO> viewDetailByCus(@PathVariable Long id,@PathVariable Long user){
+        return this.service.viewDetailByCus(id,user);
+    }
     @GetMapping({"/all/{id}"})
     public ResponseEntity<List<BeatRequestResponseDTO>> viewAllBeatRequestPurchased(@PathVariable Long id){
         return this.service.viewAllBeatRequestPurchased(id);

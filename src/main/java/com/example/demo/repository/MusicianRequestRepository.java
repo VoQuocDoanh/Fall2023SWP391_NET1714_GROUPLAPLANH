@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface MusicianRequestRepository extends JpaRepository<MusicianRequest, Long> {
     List<MusicianRequest> findAllByMsRequest(User user);
+
+    MusicianRequest findByMsRequest(User user);
 }
