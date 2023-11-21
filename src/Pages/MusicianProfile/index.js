@@ -221,7 +221,7 @@ function MyProfile() {
                                         <td>
                                             <div className={cx("text-username0")}>
                                                 <td >
-                                                    <label style={{ fontWeight: 500 }} className={cx("login-text")}>Full Name*</label>
+                                                    <label style={{ fontWeight: 500 }} className={cx("login-text")}>Full Name</label>
                                                 </td>
                                                 <div>
                                                     <input className={cx("input-username0")} type="text" placeholder value={fullName} onChange={(e) => setFullname(e.target.value)} />
@@ -233,7 +233,7 @@ function MyProfile() {
                                         <td>
                                             <div className={cx("text-username0")}>
                                                 <td>
-                                                    <label className={cx("login-text")}>Address*</label>
+                                                    <label className={cx("login-text")}>Address</label>
                                                 </td>
                                                 <div >
                                                     <input className={cx("input-username0")} type="text" placeholder value={address} onChange={(e) => setAddress(e.target.value)} />
@@ -244,7 +244,7 @@ function MyProfile() {
                                     <div className={cx("part2")}>
                                         <td>
                                             <div style={{ fontWeight: 500 }} className={cx("email-text")}>
-                                                Email*
+                                                Email
                                             </div>
                                             <div className={cx("email-change")}>
                                                 {mail}
@@ -256,7 +256,7 @@ function MyProfile() {
                                         <td>
                                             <div className={cx("text-username0")}>
                                                 <td>
-                                                    <label className={cx("login-text")}>Phone number*</label>
+                                                    <label className={cx("login-text")}>Phone number</label>
                                                 </td>
                                                 <div >
                                                     <input className={cx("input-username0")} type="text" placeholder value={phone} onChange={(e) => setPhone(e.target.value)} />
@@ -266,7 +266,7 @@ function MyProfile() {
                                     </div>
                                     <div className={cx("part4")} style={{ marginLeft: 65 }}>
                                         <td style={{ fontWeight: 500 }} className={cx("sex")}>
-                                            Gender*
+                                            Gender
                                         </td>
                                         <td>
                                             <div className={cx("sex-button")}>
@@ -319,7 +319,7 @@ function MyProfile() {
                                         <td>
                                             <div className={cx("text-username0")}>
                                                 <td>
-                                                    <label className={cx("login-text")}>Prize*</label>
+                                                    <label className={cx("login-text")}>Prize</label>
                                                 </td>
                                                 <div >
                                                     <input className={cx("input-username0")} type="text" placeholder value={prize} onChange={(e) => setPrize(e.target.value)} />
@@ -331,7 +331,7 @@ function MyProfile() {
                                         <td>
                                             <div className={cx("text-username0")}>
                                                 <td>
-                                                    <label className={cx("login-text")}>Professional*</label>
+                                                    <label className={cx("login-text")}>Professional</label>
                                                 </td>
                                                 <div >
                                                     <input className={cx("input-username0")} type="text" placeholder value={professional} onChange={(e) => setProfessional(e.target.value)} />
@@ -343,7 +343,7 @@ function MyProfile() {
                                         <td>
                                             <div className={cx("text-username0")}>
                                                 <td>
-                                                    <label className={cx("login-text")}>Year of Operation*</label>
+                                                    <label className={cx("login-text")}>Year of Operation</label>
                                                 </td>
                                                 <div >
                                                     <input className={cx("input-username0")} type="number" placeholder value={year} onChange={(e) => setYear(e.target.value)} />

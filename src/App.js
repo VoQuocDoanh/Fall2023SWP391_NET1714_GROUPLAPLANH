@@ -26,19 +26,16 @@ function App() {
                 />
               );
             })}
-            <Route path="*" element={<NotFound/>} />
-          </Routes>
-          <Routes>
-          {notificationRoutes.map((route,index) => {
+            {notificationRoutes.map((route, index) => {
               const Page = route.component;
-              return(
-                <Route 
+              return (
+                <Route
                   key={index}
                   path={route.path}
                   element={
-                    <Page/>
+                    <Page />
                   }
-                  />
+                />
               );
             })}
           </Routes>

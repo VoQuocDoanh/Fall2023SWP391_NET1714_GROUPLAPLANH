@@ -114,6 +114,7 @@ function UploadBeat() {
   }
 
   const handleUpdate = async () => {
+    setOpen(true)
     if (!token) {
       navigate("/login")
     }
@@ -205,7 +206,7 @@ function UploadBeat() {
         <div className={cx("form")}>
           {/* BeatName */}
           <div>
-            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Beat Name*</td>
+            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Beat Name</td>
             <div className={cx("input")}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -238,7 +239,7 @@ function UploadBeat() {
         )} */}
           {/*Price */}
           <div>
-            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price*</td>
+            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price</td>
             <div className={cx("input")}>
               <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                 <g clipPath="url(#clip0_928_135)">
@@ -313,7 +314,7 @@ function UploadBeat() {
         </div> */}
           {/* {Genre} */}
           <div>
-            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Genres*</td>
+            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Genres</td>
             <div className={cx("input")}>
 
               <svg
@@ -380,7 +381,7 @@ function UploadBeat() {
 
           {/*Tone*/}
           <div>
-            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Tone*</td>
+            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Tone</td>
             <div className={cx("input")}>
               <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                 <g clipPath="url(#clip0_928_135)">
@@ -406,7 +407,7 @@ function UploadBeat() {
 
           {/* BeatSoundDemo*/}
           <div className={cx('choosefile')}>
-            <td style={{ fontSize: '1.5rem', fontWeight: 'bold', marginLeft: '30px', fontFamily: 'fredoka one' }}>ChooseFileDemo*</td>
+            <td style={{ fontSize: '1.5rem', fontWeight: 'bold', marginLeft: '30px', fontFamily: 'fredoka one' }}>ChooseFileDemo</td>
             <div className={cx("input")}>
               <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                 <path d="M1.25 17.6999H6.725C6.95553 17.6972 7.18121 17.6333 7.3789 17.5147C7.57659 17.3961 7.73918 17.227 7.85 17.0249L12.35 8.02488C12.4609 7.8008 12.6377 7.61602 12.8567 7.49536C13.0757 7.3747 13.3263 7.32393 13.575 7.34988C13.8227 7.36662 14.0591 7.45976 14.2516 7.61647C14.4441 7.77318 14.5833 7.98575 14.65 8.22488L20.225 26.7749C20.2982 27.0265 20.4485 27.2488 20.6549 27.4103C20.8613 27.5718 21.1132 27.6643 21.375 27.6749C21.6204 27.6667 21.8579 27.5865 22.0579 27.4443C22.258 27.302 22.4118 27.104 22.5 26.8749L25.925 18.4999C26.0193 18.2649 26.1814 18.0634 26.3907 17.9209C26.5999 17.7785 26.8469 17.7015 27.1 17.6999H33.75" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
@@ -428,7 +429,7 @@ function UploadBeat() {
 
           {/* BeatSoundFull*/}
           <div className={cx('choosefile')}>
-            <td style={{ fontSize: '1.5rem', fontWeight: 'bold', marginLeft: '30px', fontFamily: 'fredoka one' }}>ChooseFileFullBeat*</td>
+            <td style={{ fontSize: '1.5rem', fontWeight: 'bold', marginLeft: '30px', fontFamily: 'fredoka one' }}>ChooseFileFullBeat</td>
             <div className={cx("input")}>
               <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                 <path d="M1.25 17.6999H6.725C6.95553 17.6972 7.18121 17.6333 7.3789 17.5147C7.57659 17.3961 7.73918 17.227 7.85 17.0249L12.35 8.02488C12.4609 7.8008 12.6377 7.61602 12.8567 7.49536C13.0757 7.3747 13.3263 7.32393 13.575 7.34988C13.8227 7.36662 14.0591 7.45976 14.2516 7.61647C14.4441 7.77318 14.5833 7.98575 14.65 8.22488L20.225 26.7749C20.2982 27.0265 20.4485 27.2488 20.6549 27.4103C20.8613 27.5718 21.1132 27.6643 21.375 27.6749C21.6204 27.6667 21.8579 27.5865 22.0579 27.4443C22.258 27.302 22.4118 27.104 22.5 26.8749L25.925 18.4999C26.0193 18.2649 26.1814 18.0634 26.3907 17.9209C26.5999 17.7785 26.8469 17.7015 27.1 17.6999H33.75" stroke="black" stroke-linecap="round" stroke-linejoin="round" />

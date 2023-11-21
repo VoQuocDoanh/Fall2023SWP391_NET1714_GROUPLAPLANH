@@ -18,6 +18,7 @@ import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import NotFound from "../NotFound";
 
 function MyPLayListDetail() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -104,7 +105,7 @@ function MyPLayListDetail() {
       fetchData();
     }
   }, [reload]);
-
+if(playListDetail){
   return (
     <Box style={{marginTop:-100, marginBottom:500}}>
       <Box style={{marginTop:100}} w={"60%"} m={"3% auto"} p={"0"}>
@@ -137,7 +138,12 @@ function MyPLayListDetail() {
       </Box>
       <div style={{marginBottom:500, color:"white"}}>...</div>
     </Box>
-  );
+  );}
+  else{
+    return (
+      <NotFound/>
+    )
+  }
 }
 
 export default MyPLayListDetail;

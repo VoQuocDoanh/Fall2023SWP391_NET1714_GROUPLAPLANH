@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styles from "./NotFound.module.scss"
+import styles from "./NotFoundNew.module.scss"
 import classNames from 'classnames';
 
 const cx = classNames.bind(styles)
 
-function NotFound() {
+function NotFoundNew() {
   return (
 <div style={{marginBottom:600}} className={cx("wrapper")}>
     <div className={cx("landing-page")}>
@@ -19,10 +19,10 @@ function NotFound() {
       
       <h1 style={{textAlign:"center", fontSize:48, margin:0}}> 404 Error.</h1>
       <p style={{fontSize:16, textAlign:"center"}}> We can't find the page you're looking for.</p>
-      <Link to={"/"}><button style={{borderRadius: 50, fontSize: 16, cursor:"pointer", background: "#62AD9B", color:"#fff", border:"none", boxShadow:"0 4px 8px 0 #ccc", marginLeft:1341 }}>Back to home</button></Link>              
+      <Link to={"/"}><button style={{borderRadius: 50, fontSize: 16, cursor:"pointer", background: "#62AD9B", color:"#fff", border:"none", boxShadow:"0 4px 8px 0 #ccc", marginLeft:875 }}>Back to home</button></Link>              
     </div>
   </div>  
   )
 }
 
-export default NotFound
+export default NotFoundNew

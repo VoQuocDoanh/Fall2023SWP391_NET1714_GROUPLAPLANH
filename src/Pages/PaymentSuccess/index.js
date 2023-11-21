@@ -10,7 +10,7 @@ import axiosInstance from '@/authorization/axiosInstance';
 import { Alert, Snackbar } from '@mui/material';
 const cx = classNames.bind(styles);
 
-function Invoice() {
+function PaymentSuccess() {
     const { clearCart, cart } = useContext(ShopContext)
     const token = useToken()
     const [user, setUser] = useState({})
@@ -160,4 +160,4 @@ function Invoice() {
     );
 }
 
-export default Invoice
+export default PaymentSuccess

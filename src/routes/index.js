@@ -42,6 +42,13 @@ import BannedSong from "@/Pages/BannedSong";
 import ListBeatAll from "@/Pages/listBeatAll";
 import ListSongAll from "@/Pages/ListSongAll";
 import UpdateSong from "@/Pages/UpdateSong";
+import OrderTimeline from "@/Pages/OrderTimeline";
+import NotFound from "@/Pages/NotFound";
+import OrderBeatDetails from "@/Pages/OrderBeatDetails";
+import CreateOrderBeat from "@/Pages/CreateOrderBeat";
+import UpdateOrderBeat from "@/Pages/UpdateOrderBeat";
+import PaymentSuccessOrder from "@/Pages/PaymentSuccessOrder";
+import PaymentCancelOrder from "@/Pages/PaymentCancelOrder";
 const publicRoutes = [
   {
     path: "/",
@@ -194,6 +201,23 @@ const publicRoutes = [
     path: "/listsongall",
     component: ListSongAll,
   },
+  {
+    path: "/ordertimeline",
+    component: OrderTimeline,
+  },
+  {
+    path: "/orderbeatdetails/:id",
+    component: OrderBeatDetails,
+  },
+  {
+    path: "/createorderbeat",
+    component: CreateOrderBeat,
+  },
+  {
+    path: "/updateorderbeat/:id",
+    component: UpdateOrderBeat,
+  },
+
   //////////////////////
   {
     path: "/MyCollection",
@@ -215,6 +239,7 @@ const publicRoutes = [
     component: SongDetail,
     customLayout: true,
   },
+  
 ];
 
 const notificationRoutes = [
@@ -230,6 +255,19 @@ const notificationRoutes = [
     path: "/payment/cancel",
     component: PaymentCancel,
   },
+  {
+    path: "/paymentorder/success",
+    component: PaymentSuccessOrder,
+  },
+  {
+    path: "/paymentorder/cancel",
+    component: PaymentCancelOrder,
+  },
+  {
+    path: "*",
+    component: NotFound,
+  },
+  
 ]
 
 const privateRoute = [];

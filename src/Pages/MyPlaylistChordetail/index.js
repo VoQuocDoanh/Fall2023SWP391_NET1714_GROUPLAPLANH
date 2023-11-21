@@ -19,6 +19,7 @@ import { useParams } from "react-router-dom";
 import MusicCardItem from "@/components/MusicCard";
 import { ChordsComponent } from "@/components/SongDetail";
 import TabChordList from "@/components/ChorDetail";
+import NotFound from "../NotFound";
 
 function MyPlayListChordDetail() {
   const { id } = useParams();
@@ -157,6 +158,8 @@ function MyPlayListChordDetail() {
 
   
 
+if(playListDetail){
+
 
   return (
     <>
@@ -191,7 +194,12 @@ function MyPlayListChordDetail() {
       </Box>
     </Box>
     </>
-  );
+  );}
+  else {
+    return(
+      <NotFound/>
+    )
+  }
 }
 
 export default MyPlayListChordDetail;

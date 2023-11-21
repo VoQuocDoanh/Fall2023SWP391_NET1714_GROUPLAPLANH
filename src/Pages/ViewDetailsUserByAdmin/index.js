@@ -158,7 +158,7 @@ function ViewDetailsUserByAdmin() {
                                             <td>
                                                 <div className={cx("text-username0")}>
                                                     <td >
-                                                        <label style={{ fontWeight: 500 }} className={cx("login-text")}>Full Name*</label>
+                                                        <label style={{ fontWeight: 500 }} className={cx("login-text")}>Full Name</label>
                                                     </td>
                                                     <div>
                                                         <input className={cx("input-username0")} type="text" value={user.fullName} placeholder readOnly />
@@ -170,7 +170,7 @@ function ViewDetailsUserByAdmin() {
                                             <td>
                                                 <div className={cx("text-username0")}>
                                                     <td >
-                                                        <label style={{ fontWeight: 500 }} className={cx("login-text")}>Address*</label>
+                                                        <label style={{ fontWeight: 500 }} className={cx("login-text")}>Address</label>
                                                     </td>
                                                     <div>
                                                         <input className={cx("input-username0")} type="text" value={user.adress} placeholder readOnly />
@@ -181,7 +181,7 @@ function ViewDetailsUserByAdmin() {
                                         <div className={cx("part2")}>
                                             <td>
                                                 <div style={{ fontWeight: 500 }} className={cx("email-text")}>
-                                                    Email*
+                                                    Email
                                                 </div>
                                                 <div className={cx("email-change")}>
                                                     {user.mail}
@@ -193,7 +193,7 @@ function ViewDetailsUserByAdmin() {
                                             <td>
                                                 <div className={cx("text-username0")}>
                                                     <td >
-                                                        <label style={{ fontWeight: 500 }} className={cx("login-text")}>Phone Number*</label>
+                                                        <label style={{ fontWeight: 500 }} className={cx("login-text")}>Phone Number</label>
                                                     </td>
                                                     <div>
                                                         <input className={cx("input-username0")} type="text" value={user.phoneNumber} placeholder readOnly />

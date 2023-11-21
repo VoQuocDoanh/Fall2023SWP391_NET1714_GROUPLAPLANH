@@ -63,6 +63,7 @@ function HeaderMusician() {
               <Link to="/viewbeat"><div className={cx("link-text")}>View Beat</div></Link>
               <Link to={"/uploadbeat"}><div className={cx("link-text")}> Upload Beat</div></Link>
               <Link to={"/listbeatsoldout"}><div className={cx("link-text")}> Beat Sold Out</div></Link>
+              <Link to="/ordertimeline"><div className={cx("link-text")}> Order Timeline</div></Link>
               <Link to="/"><div className={cx("link-text")} onClick={handleLogout}> Logout</div></Link>
             </div>
           </Popup>

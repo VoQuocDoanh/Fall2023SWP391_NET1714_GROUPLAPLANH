@@ -180,7 +180,7 @@ function UploadBeat() {
         <div className={cx("form")}>
           {/* BeatName */}
           <div>
-            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Beat Name*</td>
+            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Beat Name</td>
             <div className={cx("input")}>
               <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                 <path d="M17.4999 5.83325C19.047 5.83325 20.5307 6.44783 21.6247 7.5418C22.7187 8.63576 23.3333 10.1195 23.3333 11.6666C23.3333 13.2137 22.7187 14.6974 21.6247 15.7914C20.5307 16.8853 19.047 17.4999 17.4999 17.4999C15.9528 17.4999 14.4691 16.8853 13.3751 15.7914C12.2812 14.6974 11.6666 13.2137 11.6666 11.6666C11.6666 10.1195 12.2812 8.63576 13.3751 7.5418C14.4691 6.44783 15.9528 5.83325 17.4999 5.83325ZM17.4999 20.4166C23.9458 20.4166 29.1666 23.027 29.1666 26.2499V29.1666H5.83325V26.2499C5.83325 23.027 11.0541 20.4166 17.4999 20.4166Z" fill="black" />
@@ -196,7 +196,7 @@ function UploadBeat() {
           </div>
           {/*Price */}
           <div>
-            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price*</td>
+            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price</td>
             <div className={cx("input")}>
               <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                 <g clipPath="url(#clip0_928_135)">
@@ -222,7 +222,7 @@ function UploadBeat() {
           </div>
           {/* {Genre} */}
           <div>
-            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Genres*</td>
+            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Genres</td>
 
             <div className={cx("input")}>
 
@@ -291,7 +291,7 @@ function UploadBeat() {
 
           {/*Description*/}
           <div>
-            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Description*</td>
+            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Description</td>
             <div className={cx("input")}>
               <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                 <path d="M11.6663 26.2498H23.333V23.3332H11.6663V26.2498ZM11.6663 20.4165H23.333V17.4998H11.6663V20.4165ZM8.74968 32.0832C7.94759 32.0832 7.26072 31.7973 6.68905 31.2257C6.11739 30.654 5.83204 29.9676 5.83301 29.1665V5.83317C5.83301 5.03109 6.11884 4.34421 6.69051 3.77255C7.26218 3.20088 7.94857 2.91553 8.74968 2.91651H20.4163L29.1663 11.6665V29.1665C29.1663 29.9686 28.8805 30.6555 28.3088 31.2271C27.7372 31.7988 27.0508 32.0841 26.2497 32.0832H8.74968ZM18.958 13.1248H26.2497L18.958 5.83317V13.1248Z" fill="black" />
@@ -334,7 +334,7 @@ function UploadBeat() {
 
           {/* BeatSoundDemo*/}
           <div className={cx('choosefile')}>
-            <td style={{ fontSize: '1.5rem', fontWeight: 'bold', marginLeft: '30px', fontFamily: 'fredoka one' }}>ChooseFileDemo*</td>
+            <td style={{ fontSize: '1.5rem', fontWeight: 'bold', marginLeft: '30px', fontFamily: 'fredoka one' }}>ChooseFileDemo</td>
             <div className={cx("input")}>
               <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                 <path d="M1.25 17.6999H6.725C6.95553 17.6972 7.18121 17.6333 7.3789 17.5147C7.57659 17.3961 7.73918 17.227 7.85 17.0249L12.35 8.02488C12.4609 7.8008 12.6377 7.61602 12.8567 7.49536C13.0757 7.3747 13.3263 7.32393 13.575 7.34988C13.8227 7.36662 14.0591 7.45976 14.2516 7.61647C14.4441 7.77318 14.5833 7.98575 14.65 8.22488L20.225 26.7749C20.2982 27.0265 20.4485 27.2488 20.6549 27.4103C20.8613 27.5718 21.1132 27.6643 21.375 27.6749C21.6204 27.6667 21.8579 27.5865 22.0579 27.4443C22.258 27.302 22.4118 27.104 22.5 26.8749L25.925 18.4999C26.0193 18.2649 26.1814 18.0634 26.3907 17.9209C26.5999 17.7785 26.8469 17.7015 27.1 17.6999H33.75" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
@@ -356,7 +356,7 @@ function UploadBeat() {
 
           {/* BeatSoundFull*/}
           <div className={cx('choosefile')}>
-            <td style={{ fontSize: '1.5rem', fontWeight: 'bold', marginLeft: '30px', fontFamily: 'fredoka one' }}>ChooseFileFullBeat*</td>
+            <td style={{ fontSize: '1.5rem', fontWeight: 'bold', marginLeft: '30px', fontFamily: 'fredoka one' }}>ChooseFileFullBeat</td>
             <div className={cx("input")}>
               <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                 <path d="M1.25 17.6999H6.725C6.95553 17.6972 7.18121 17.6333 7.3789 17.5147C7.57659 17.3961 7.73918 17.227 7.85 17.0249L12.35 8.02488C12.4609 7.8008 12.6377 7.61602 12.8567 7.49536C13.0757 7.3747 13.3263 7.32393 13.575 7.34988C13.8227 7.36662 14.0591 7.45976 14.2516 7.61647C14.4441 7.77318 14.5833 7.98575 14.65 8.22488L20.225 26.7749C20.2982 27.0265 20.4485 27.2488 20.6549 27.4103C20.8613 27.5718 21.1132 27.6643 21.375 27.6749C21.6204 27.6667 21.8579 27.5865 22.0579 27.4443C22.258 27.302 22.4118 27.104 22.5 26.8749L25.925 18.4999C26.0193 18.2649 26.1814 18.0634 26.3907 17.9209C26.5999 17.7785 26.8469 17.7015 27.1 17.6999H33.75" stroke="black" stroke-linecap="round" stroke-linejoin="round" />

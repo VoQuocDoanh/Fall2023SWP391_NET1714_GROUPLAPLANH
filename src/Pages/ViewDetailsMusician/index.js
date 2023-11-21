@@ -205,7 +205,7 @@ function ViewDetailsMusician() {
                                         <td>
                                             <div className={cx("text-username0")}>
                                                 <td >
-                                                    <label className={cx("login-text")}>Full Name*</label>
+                                                    <label className={cx("login-text")}>Full Name</label>
                                                 </td>
                                                 <div>
                                                     <input className={cx("input-username0")} type="text" placeholder value={fullName} readOnly />
@@ -217,7 +217,7 @@ function ViewDetailsMusician() {
                                         <td>
                                             <div className={cx("text-username0")}>
                                                 <td>
-                                                    <label style={{ marginLeft: 6 }} className={cx("login-text")}>Address*</label>
+                                                    <label style={{ marginLeft: 6 }} className={cx("login-text")}>Address</label>
                                                 </td>
                                                 <div >
                                                     <input className={cx("input-username0")} type="text" placeholder value={address} onChange={(e) => setAddress(e.target.value)} />
@@ -229,7 +229,7 @@ function ViewDetailsMusician() {
                                         <td>
                                             <div className={cx("text-username0")}>
                                                 <td>
-                                                    <label className={cx("login-text")}>Sex*</label>
+                                                    <label className={cx("login-text")}>Sex</label>
                                                 </td>
                                                 <div >
                                                     <input className={cx("input-username0")} type="text" placeholder value={gender} onChange={(e) => setPhone(e.target.value)} />

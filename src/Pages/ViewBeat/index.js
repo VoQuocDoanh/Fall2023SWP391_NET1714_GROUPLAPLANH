@@ -27,7 +27,6 @@ function ListBeatPurchased() {
     const [search, setSearch] = useState("");
     const [list, setList] = useState([]);
     const [listGenres, setListGenres] = useState(null);
-    const [listMusicianName, setListMusicianName] = useState(null);
     // const [play, setPlay] = useState(false);
     // const [srcMusic, setSrcMusic] = useState("");
     // const audioRef = useRef();
@@ -75,12 +74,6 @@ function ListBeatPurchased() {
         loadGenres()
     }, [])
 
-    useEffect(() => {
-        loadMusicianName()
-    }, [])
-
-
-
     const loadBeats = async () => {
         if(!token){
             navigate("/login")
@@ -115,17 +108,6 @@ function ListBeatPurchased() {
         await axiosInstance.get("http://localhost:8080/api/v1/genre")
             .then((res) => {
                 setListGenres(res.data)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }
-
-    const loadMusicianName = async () => {
-        await axiosInstance.get("http://localhost:8080/api/v1/beat/musician/full")
-            .then((res) => {
-                setListMusicianName(res.data)
-                console.log(res.data)
             })
             .catch((error) => {
                 console.log(error)
