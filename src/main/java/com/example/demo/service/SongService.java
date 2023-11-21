@@ -187,7 +187,8 @@ public class SongService {
 
                 song.setGenresofsong(genreSet(songDTO));
                 song.setChordsofsong(chordBasicSet(songDTO));
-
+                song.setSongname(songDTO.getSongName());
+                song.setSongUrl(songDTO.getSongUrl());
                 this.songRepository.save(song);
                 return new ResponseEntity<>("Update Successfully", HttpStatus.OK);
             }

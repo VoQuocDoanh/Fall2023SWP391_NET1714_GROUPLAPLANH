@@ -257,11 +257,7 @@ public class BeatRequestService {
         Optional<User> foundUser = userRepository.findById(userId);
         if(foundOrder.isPresent() && foundUser.isPresent()){
             if (foundOrder.get().getUserRequest().equals(foundUser.get())){
-                if (foundOrder.get().getStatus() == 3){
-                    BeatRequestResponseDTO b = getBeatDTOWithStatus(foundOrder.get());
-                    return new ResponseEntity<>(b,HttpStatus.OK);
-                }
-                BeatRequestResponseDTO b = getBeatDTO(foundOrder.get());
+                BeatRequestResponseDTO b = getBeatResponseDTO(foundOrder.get());
                 return new ResponseEntity<>(b,HttpStatus.OK);
             }
             else return null;
@@ -274,13 +270,9 @@ public class BeatRequestService {
         Optional<BeatRequest> foundOrder = beatRequestRepository.findById(id);
         Optional<User> foundUser = userRepository.findById(userId);
         Optional<MusicianRequest> foundMS = Optional.ofNullable(musicianRequestRepository.findByMsRequest(foundUser.get()));
-        if(foundOrder.isPresent() && foundUser.isPresent()){
-            if (foundOrder.get().getRequestId().equals(foundMS)){
-                if (foundOrder.get().getStatus() == 3){
-                    BeatRequestResponseDTO b = getBeatDTOWithStatus(foundOrder.get());
-                    return new ResponseEntity<>(b,HttpStatus.OK);
-                }
-                BeatRequestResponseDTO b = getBeatDTO(foundOrder.get());
+        if(foundOrder.isPresent() && foundUser.isPresent() && foundMS.isPresent()){
+            if (foundOrder.get().getRequestId().equals(foundMS.get())){
+                BeatRequestResponseDTO b = getBeatResponseDTO(foundOrder.get());
                 return new ResponseEntity<>(b,HttpStatus.OK);
             }
             else return null;
