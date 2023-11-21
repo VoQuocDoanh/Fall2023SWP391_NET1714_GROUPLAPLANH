@@ -146,7 +146,7 @@ public class BeatController {
     }
 
     @GetMapping("musician/full")
-    public List<String> getName(){
+    public List<UserDTO> getName(){
         return beatService.listAllMusician();
     }
 }

@@ -54,6 +54,17 @@ public class BeatRequestService {
         return new ResponseEntity<>("Created!", HttpStatus.OK);
     }
 
+    public ResponseEntity<String> updateOrder (BeatRequestRequestDTO dto){
+        Optional<BeatRequest> foundOrder = beatRequestRepository.findById(dto.getId());
+        if(foundOrder.isPresent()){
+            foundOrder.get().setBeatName(dto.getBeatName());
+            foundOrder.get().setDescription(dto.getDescription());
+            beatRequestRepository.save(foundOrder.get());
+            return new ResponseEntity<>("Updated!", HttpStatus.OK);
+        }
+        return null;
+    }
+
     public ResponseEntity<String> acceptRequest(BeatRequestRequestDTO dto) {
         Optional<BeatRequest> found = beatRequestRepository.findById(dto.getId());
         if (found.isPresent()) {
@@ -121,7 +132,7 @@ public class BeatRequestService {
 
                 String pathfull = service.uploadFile(sound, foundUser.get().getId(), "audio", "full", found.get().getObjectName());
                 String objectfull = extractObjectNameFromUrl(pathfull);
-                found.get().setBeatSoundFull(objectfull);
+                found.get().setBeatSoundFull(pathfull);
                 found.get().setObjectName(objectfull);
             }
             if (sound2 != null) {
@@ -144,7 +155,7 @@ public class BeatRequestService {
 
     private BeatRequestResponseDTO getBeatDTO(BeatRequest beat){
         Optional<MusicianRequest> ms = musicianRequestRepository.findById(beat.getRequestId().getId());
-        Optional<User> foundUser = userRepository.findById(ms.get().getId());
+        Optional<User> foundUser = userRepository.findById(ms.get().getMsRequest().getId());
         BeatRequestResponseDTO dto = new BeatRequestResponseDTO(
                 beat.getId(),
                 getUser(beat.getUserRequest()),
@@ -152,6 +163,22 @@ public class BeatRequestService {
                 getUser(foundUser.get()),
                 beat.getCreatedAt(),
                 beat.getStatus()
+        );
+        return dto;
+    }
+
+    private BeatRequestResponseDTO getBeatResponseDTO(BeatRequest beat){
+        Optional<MusicianRequest> ms = musicianRequestRepository.findById(beat.getRequestId().getId());
+        Optional<User> foundUser = userRepository.findById(ms.get().getMsRequest().getId());
+        BeatRequestResponseDTO dto = new BeatRequestResponseDTO(
+                beat.getId(),
+                beat.getDescription(),
+                beat.getBeatName(),
+                beat.getPrice(),
+                beat.getBeatSoundFull(),
+                beat.getBeatSoundDemo(),
+                beat.getStatus(),
+                beat.getCreatedAt()
         );
         return dto;
     }
@@ -219,11 +246,7 @@ public class BeatRequestService {
     public ResponseEntity<BeatRequestResponseDTO> viewDetail(Long id){
         Optional<BeatRequest> foundOrder = beatRequestRepository.findById(id);
         if(foundOrder.isPresent()){
-            if (foundOrder.get().getStatus() == 3){
-                BeatRequestResponseDTO b = getBeatDTOWithStatus(foundOrder.get());
-                return new ResponseEntity<>(b,HttpStatus.OK);
-            }
-            BeatRequestResponseDTO b = getBeatDTO(foundOrder.get());
+            BeatRequestResponseDTO b = getBeatResponseDTO(foundOrder.get());
             return new ResponseEntity<>(b,HttpStatus.OK);
         }
         return null;
@@ -269,9 +292,11 @@ public class BeatRequestService {
         Optional<User> foundUser = userRepository.findById(id);
         if (foundUser.isPresent()){
             List<BeatRequestResponseDTO> list = new ArrayList<>();
-            List<BeatRequest> beat = beatRequestRepository.findByUserRequestAndStatus(foundUser.get(),-1);
+            List<BeatRequest> beat = beatRequestRepository.findAllByUserRequest(foundUser.get());
             for (BeatRequest i : beat){
-                list.add(getBeatDTOWithStatus(i));
+                if(i.getStatus() == -1) {
+                    list.add(getBeatResponseDTO(i));
+                }
             }
             return new ResponseEntity<>(list,HttpStatus.OK);
         }
@@ -324,9 +349,13 @@ public class BeatRequestService {
                 IncomeResponseDTO beat = new IncomeResponseDTO(
                         price,
                         b.getBeatName(),
-                        getUser(b.getUserRequest())
+                        getUser(b.getUserRequest()),
+                        b.getCreatedAt(),
+                        b.getStatus()
                 );
-                dtoList.add(beat);
+                if(b.getStatus() == -1 || b.getStatus() == -2) {
+                    dtoList.add(beat);
+                }
 
             }
             return new ResponseEntity<>(dtoList,HttpStatus.OK);

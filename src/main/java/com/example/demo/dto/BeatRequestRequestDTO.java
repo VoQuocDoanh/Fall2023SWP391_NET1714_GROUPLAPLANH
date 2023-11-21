@@ -10,4 +10,7 @@ public class BeatRequestRequestDTO {
     private Long msId;
     private Double price;
     private String beatName;
+    private String paymentId;
+    private String payerID;
+    private String flag;
 }

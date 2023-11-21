@@ -24,6 +24,10 @@ public class BeatRequestController {
     public ResponseEntity<String> addNewRequest(@RequestBody BeatRequestRequestDTO dto){
         return service.addNew(dto);
     }
+    @PutMapping()
+    public ResponseEntity<String> updateARequest(@RequestBody BeatRequestRequestDTO dto){
+        return service.updateOrder(dto);
+    }
     @PutMapping("/request")
     public ResponseEntity<String> acceptRequest(@RequestBody BeatRequestRequestDTO dto){
         return service.acceptRequest(dto);
@@ -49,7 +53,7 @@ public class BeatRequestController {
         return service.rejectBeat(dto);
     }
 
-    @PatchMapping({"/{id}"})
+    @PatchMapping({})
     public ResponseEntity<String> updateBeat(@RequestPart(value = "file1", required = false) MultipartFile sound, @RequestPart(value = "file2", required = false)MultipartFile sound2, @Validated(BeatValidation.UpdateBeat.class) @RequestPart("json") BeatRequestRequestDTO dto) {
         return this.service.sendBeat(sound, sound2, dto);
     }

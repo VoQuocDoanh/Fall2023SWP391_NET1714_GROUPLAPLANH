@@ -400,15 +400,18 @@ public class BeatService {
         return getBeatResponseDTOS(beats);
     }
 
-    public List<String> listAllMusician(){
-        List<User> beat = beatRepository.findAllUser();
-        List<String> list=new ArrayList<>();
-        String name;
-        for (User i : beat){
-            name = String.valueOf(userRepository.findUserName(i.getId()));
-            list.add(name);
+    public List<UserDTO> listAllMusician(){
+        List<User> user = userRepository.findAll();
+        List<UserDTO> dto = new ArrayList<>();
+        for (User i : user){
+            UserDTO userDTO = new UserDTO();
+            if(i.getRole().equals("MS") && i.getStatus() == 1){
+                userDTO.setId(i.getId());
+                userDTO.setFullName(i.getFullName());
+                dto.add(userDTO);
+            }
         }
-        return  list;
+        return dto;
     }
 
     public PaginationResponseDTO listBeatSoldOut(Long id, int page) {
