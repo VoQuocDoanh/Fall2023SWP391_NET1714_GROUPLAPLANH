@@ -51,7 +51,7 @@ function PaymentCancelOrder() {
         Cancel Payment Successfully
       </div>
       <div className={cx("text")}>
-        Redirect to Order Timeline Page...
+        Redirect to Order Timeline's Page...
       </div>
       <div className={cx("countdown")}>
         <Countdown date={Date.now() + 3000} renderer={renderer} />

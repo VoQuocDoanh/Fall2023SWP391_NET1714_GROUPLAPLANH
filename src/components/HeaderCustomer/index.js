@@ -93,6 +93,7 @@ function HeaderCustomer() {
                 <Link to="/usersong"><div className={cx("link-text")}> My Chords of Songs</div></Link>
                 <Link to="/createorderbeat"><div className={cx("link-text")}> Order new Beat</div></Link>
                 <Link to="/ordertimeline"><div className={cx("link-text")}> Order Timeline</div></Link>
+                <Link to="/mybeats"><div className={cx("link-text")}> My Beats</div></Link>
                 <Link to="/"><div className={cx("link-text")} onClick={handleLogout}> Log out</div></Link>
               </div>
             </Popup>

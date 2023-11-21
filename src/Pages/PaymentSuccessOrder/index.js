@@ -78,10 +78,10 @@ function PaymentSuccessOrder() {
                 </svg>
             </div>
             <div className={cx("text")}>
-                Cancel Payment Successfully
+                Payment Successfully
             </div>
             <div className={cx("text")}>
-                Redirect to Beat Page...
+                Redirect to Order Timeline's Page...
             </div>
             <div className={cx("countdown")}>
                 <Countdown date={Date.now() + 3000} renderer={renderer} />

@@ -30,7 +30,7 @@ function CreateOrderBeat() {
     let userId = ""
     let role = ""
 
-    let messagePolicy = "*Customer\n- Customer can update the order if only the order is on processing\n- Customer must pay 30% of the price of the order before approving the order\n- If customer rejects the beat, customer will lose 30% the money that customer have paid when approving the beat\n\n*Musician\n- Musician can reject the order if only the order is on processing"
+    let messagePolicy = "*Customer\n- Customer can update the order if only the order is on processing\n- Customer must prepay 30% of the price of the order before approving the musician to create the beat\n- If customer rejects the beat, customer will lose 30% the money that customer have paid before\n\n*Musician\n- Musician can reject the order if only the order is on processing"
 
     if (token) {
         userId = jwtDecode(token).sub

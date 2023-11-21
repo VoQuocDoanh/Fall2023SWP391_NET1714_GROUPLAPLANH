@@ -327,7 +327,7 @@ export default function OrderTimeline() {
                                 <Tab style={{ fontSize: 20, marginRight: 80 }} label="Processing" {...a11yProps(0)} />
                                 <Tab style={{ fontSize: 20, marginRight: 80 }} label="Waiting for payment" {...a11yProps(1)} />
                                 <Tab style={{ fontSize: 20, marginRight: 80 }} label="Waiting to make the beat" {...a11yProps(2)} />
-                                <Tab style={{ fontSize: 20, marginRight: 80 }} label="Waiting for customer approval" {...a11yProps(3)} />
+                                <Tab style={{ fontSize: 20, marginRight: 80 }} label="Waiting for customer's approval" {...a11yProps(3)} />
                                 <Tab style={{ fontSize: 20, marginRight: 80 }} label="Completed" {...a11yProps(4)} />
                                 <Tab style={{ fontSize: 20, marginRight: 80 }} label="Canceled" {...a11yProps(5)} />
                             </Tabs>

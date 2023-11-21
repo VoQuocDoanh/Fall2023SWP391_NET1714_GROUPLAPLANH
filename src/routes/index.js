@@ -49,6 +49,8 @@ import CreateOrderBeat from "@/Pages/CreateOrderBeat";
 import UpdateOrderBeat from "@/Pages/UpdateOrderBeat";
 import PaymentSuccessOrder from "@/Pages/PaymentSuccessOrder";
 import PaymentCancelOrder from "@/Pages/PaymentCancelOrder";
+import ViewIncome from "@/Pages/ViewIncome";
+import MyBeats from "@/Pages/MyBeats";
 const publicRoutes = [
   {
     path: "/",
@@ -217,6 +219,14 @@ const publicRoutes = [
     path: "/updateorderbeat/:id",
     component: UpdateOrderBeat,
   },
+  {
+    path: "viewincome",
+    component: ViewIncome,
+  },
+  {
+    path: "mybeats",
+    component: MyBeats,
+  },
 
   //////////////////////
   {
@@ -267,7 +277,6 @@ const notificationRoutes = [
     path: "*",
     component: NotFound,
   },
-  
 ]
 
 const privateRoute = [];

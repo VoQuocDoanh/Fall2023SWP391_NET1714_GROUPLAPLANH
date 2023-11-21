@@ -119,7 +119,7 @@ function OrderProcess({ id, status, role, description, beatName, setBeatName, se
                         </div>
                         {/* Price */}
                         <div>
-                            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Beat Name</td>
+                            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price</td>
                             <div className={cx("input")}>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
