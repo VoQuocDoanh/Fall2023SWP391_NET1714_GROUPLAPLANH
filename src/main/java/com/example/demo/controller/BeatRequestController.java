@@ -101,4 +101,6 @@ public class BeatRequestController {
     public ResponseEntity<List<IncomeResponseDTO>> viewIncomeDetail(@PathVariable Long id){
         return this.service.viewIncomeDetail(id);
     }
+
+
 }

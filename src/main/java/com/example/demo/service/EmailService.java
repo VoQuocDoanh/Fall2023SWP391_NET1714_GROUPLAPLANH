@@ -48,6 +48,23 @@ public class EmailService {
         }
     }
 
+    public void sendEmailForWarn(String to, String subject, String text) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            String htmlContent =
+                    "<h1>Warning message!</h1></br>" +
+                            "<p>Message:" + text + "</p></br>" +
+                            "<h2>Thanks for joining my website</h2>";
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(htmlContent, true);
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void sendEmailForUnBan(String to, String subject) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();

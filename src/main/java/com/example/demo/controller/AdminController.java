@@ -61,6 +61,12 @@ public class AdminController {
         return this.userService.banUser(userDTO);
     }
 
+    //Warn user
+    @PostMapping("/user/warn")
+    public ResponseEntity<String> warnUser(@RequestBody UserDTO userDTO) {
+        return this.userService.warnUser(userDTO);
+    }
+
     //Unban user
     @PostMapping("/user/unban")
     public ResponseEntity<String> unbanUser(@RequestBody UserDTO userDTO) {
@@ -99,5 +105,15 @@ public class AdminController {
     @GetMapping("/user/ban")
     public ResponseEntity<List<UserResponeDTO>> getAllBannedUser(){
         return ResponseEntity.ok(this.userService.listUserBanned());
+    }
+
+    @GetMapping("/musician/policy")
+    public ResponseEntity<List<UserResponeDTO>> getAllMusicianBreaksPolicy(){
+        return ResponseEntity.ok(this.userService.listMusicianBreaksPolicy());
+    }
+
+    @PostMapping("/musician/policy/{id}")
+    public ResponseEntity<Integer> countRejectMusicianBeat(@PathVariable Long id){
+        return ResponseEntity.ok(this.userService.countBeatRequestRejected(id));
     }
 }

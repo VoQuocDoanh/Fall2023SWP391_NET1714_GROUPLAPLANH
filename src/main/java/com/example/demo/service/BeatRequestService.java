@@ -269,9 +269,9 @@ public class BeatRequestService {
     public ResponseEntity<BeatRequestResponseDTO> viewDetailByMS(Long id, Long userId){
         Optional<BeatRequest> foundOrder = beatRequestRepository.findById(id);
         Optional<User> foundUser = userRepository.findById(userId);
-        Optional<MusicianRequest> foundMS = Optional.ofNullable(musicianRequestRepository.findByMsRequest(foundUser.get()));
+        Optional<MusicianRequest> foundMS = Optional.ofNullable(foundOrder.get().getRequestId());
         if(foundOrder.isPresent() && foundUser.isPresent() && foundMS.isPresent()){
-            if (foundOrder.get().getRequestId().equals(foundMS.get())){
+            if (foundMS.get().getMsRequest().equals(foundUser.get())){
                 BeatRequestResponseDTO b = getBeatResponseDTO(foundOrder.get());
                 return new ResponseEntity<>(b,HttpStatus.OK);
             }
@@ -309,7 +309,7 @@ public class BeatRequestService {
                     price += b.getPrice();
                     beatAccept++;
                 } else if (b.getStatus() == -2 && b!= null ) {
-                    price += b.getPrice()*0.3;
+                    price += b.getPrice()*0.15;
                     beatReject++;
                 }
             }
@@ -336,7 +336,7 @@ public class BeatRequestService {
                     price = b.getPrice();
                 }
                 if (b.getStatus() == -2){
-                    price = b.getPrice()*0.3;
+                    price = b.getPrice()*0.15;
                 }
                 IncomeResponseDTO beat = new IncomeResponseDTO(
                         price,

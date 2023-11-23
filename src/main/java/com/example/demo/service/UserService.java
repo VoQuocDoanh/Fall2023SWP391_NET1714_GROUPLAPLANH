@@ -5,12 +5,13 @@
 
 package com.example.demo.service;
 
+import com.example.demo.dto.BeatRequestResponseDTO;
 import com.example.demo.dto.RegisterDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserResponeDTO;
-import com.example.demo.entity.ActivationToken;
-import com.example.demo.entity.MusicianInformation;
-import com.example.demo.entity.User;
+import com.example.demo.entity.*;
+import com.example.demo.repository.BeatRequestRepository;
+import com.example.demo.repository.MusicianRequestRepository;
 import com.example.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,12 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private BeatRequestRepository beatRequestRepository;
+
+    @Autowired
+    private MusicianRequestRepository musicianRequestRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -47,6 +54,23 @@ public class UserService {
     @Autowired
     private GoogleCloudService service;
 
+    public int countBeatRequestRejected(Long id){
+        int count = 0;
+        Optional<User> foundUser  = userRepository.findById(id);
+        if (foundUser.isPresent()){
+            List<MusicianRequest> listOrder  = musicianRequestRepository.findAllByMsRequest(foundUser.get());
+            List<BeatRequestResponseDTO> list  =new ArrayList<>();
+            for (MusicianRequest i :listOrder){
+                BeatRequest b  = new BeatRequest();
+                b = beatRequestRepository.findByRequestId(i);
+                if(b.getStatus() == -2){
+                    count ++;
+                }
+            }
+            return count;
+        }
+        return count;
+    }
 
     private ResponseEntity<String> getStringResponseEntity(MultipartFile image, User user) {
         if (image != null && !image.isEmpty()) {
@@ -184,6 +208,17 @@ public class UserService {
         return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
+    // Banned User
+    public ResponseEntity<String> warnUser(UserDTO userDTO) {
+        Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userDTO.getId(), 1);
+        if (foundUser.isPresent()) {
+            User user = foundUser.get();
+            this.emailService.sendEmailForWarn(user.getMail(), "WARNING!", userDTO.getContent());
+            return new ResponseEntity<>("Warn Successfully", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+    }
+
     public ResponseEntity<String> unbanUser(UserDTO userDTO) {
         Optional<User> foundUser = this.userRepository.findUserByIdAndStatus(userDTO.getId(), 0);
         if (foundUser.isPresent()) {
@@ -309,4 +344,26 @@ public class UserService {
         }
         return dtos;
     }
+
+    public List<UserResponeDTO> listMusicianBreaksPolicy(){
+        List<User> users = userRepository.findAll();
+        List<UserResponeDTO> dtos = new ArrayList<>();
+        for(User us : users){
+            if(countBeatRequestRejected(us.getId()) >= 3){
+                UserResponeDTO dto = new UserResponeDTO(
+                        us.getId(),
+                        us.getUsername(),
+                        us.getFullName(),
+                        us.getRole(),
+                        us.getMail(),
+                        us.getStatus(),
+                        us.getAvatar(),
+                        us.getCreatedAt()
+                );
+                dtos.add(dto);
+            }
+        }
+        return dtos;
+    }
+
 }
