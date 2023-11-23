@@ -312,6 +312,10 @@ public class BeatRequestService {
                     price += b.getPrice()*0.15;
                     beatReject++;
                 }
+                else if (b.getStatus() == 3 && b!= null ) {
+                    price += b.getPrice()*0.15;
+                    beatReject++;
+                }
             }
             IncomeResponseDTO response = new IncomeResponseDTO(
                     price,
@@ -338,6 +342,9 @@ public class BeatRequestService {
                 if (b.getStatus() == -2){
                     price = b.getPrice()*0.15;
                 }
+                if (b.getStatus() == 3){
+                    price = b.getPrice()*0.15;
+                }
                 IncomeResponseDTO beat = new IncomeResponseDTO(
                         price,
                         b.getBeatName(),
@@ -345,7 +352,7 @@ public class BeatRequestService {
                         b.getCreatedAt(),
                         b.getStatus()
                 );
-                if(b.getStatus() == -1 || b.getStatus() == -2) {
+                if(b.getStatus() == -1 || b.getStatus() == -2 || b.getStatus() == 3) {
                     dtoList.add(beat);
                 }
 
