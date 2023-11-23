@@ -89,6 +89,7 @@ function ViewIncome() {
 
             <table className={cx("table-frame")}>
               <tr className={cx("table-header")} >
+                <th className={cx("th-frame")}>IMAGE</th>
                 <th className={cx("th-frame")}>STT</th>
                 <th className={cx("th-frame")}>BEATNAME</th>
                 <th className={cx("th-frame")}>CREATED AT</th>
@@ -111,6 +112,10 @@ function ViewIncome() {
 
                     <td style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                       <img src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} className={cx("card-img")} alt="anh dep" />
+                      
+                    </td>
+
+                    <td>
                       <div>{index + 1}.</div>
                     </td>
 

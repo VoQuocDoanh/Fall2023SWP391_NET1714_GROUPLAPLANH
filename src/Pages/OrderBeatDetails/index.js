@@ -30,7 +30,7 @@ function CreateOrderBeat() {
     let userId = ""
     let role = ""
 
-    let messagePolicy = "*Musician\n- Musician can reject the order if only the order is in processing\n- Musician guarantees the confidentiality of all content created for the customer, with exclusive rights granted for its use, posting on websites or resale to others is strictly prohibited.\n- Musician can get the money of the order if only musician send the beat to the system"
+    let messagePolicy = "*Musician\n- The musician can reject the order only if it is in the processing stage.\n- The musician guarantees the confidentiality of all content created for the customer, with exclusive rights granted for its use. Posting on websites or resale to others is strictly prohibited.\n- The musician can receive payment for the order only after sending the beat to the system."
     if (token) {
         userId = jwtDecode(token).sub
         role = jwtDecode(token).role
@@ -363,7 +363,7 @@ function CreateOrderBeat() {
                 >
                     <div className={cx("text-all")} style={{ padding: 10, marginTop: 300, marginLeft: 750, background: "white", width: 450 }}>
                         <div style={{ display: 'grid' }}>
-                            <td style={{ fontWeight: 'bold', fontSize: "3rem", marginLeft: 120, color: 'red' }}>Description</td>
+                            <td style={{ fontWeight: 'bold', fontSize: "3rem", marginLeft: 120, color: 'red', marginBottom: '20px'}}>Description</td>
                         </div>
                         {(role === "CUS" && orderBeatDetails.status === 0) ?
                             <div>

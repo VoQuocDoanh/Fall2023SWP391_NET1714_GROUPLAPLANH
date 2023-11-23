@@ -48,7 +48,7 @@ function OrderProcess({ id, status, role, description, beatName, setBeatName, se
                         {/* Description */}
                         <div style={{ marginRight: 200 }}>
                             <td style={{ fontSize: '1.6rem', fontWeight: 'bold', fontFamily: 'fredoka one' }}>Description</td>
-                            <Button style={{ width: 100, height: 50, fontSize: 10 }} variant="outlined" onClick={() => setOpenModal(true)} >View</Button>
+                            <Button style={{ width: 100, height: 50, fontSize: 10, marginTop: '15px' }} variant="outlined" onClick={() => setOpenModal(true)} >View</Button>
                         </div>
                         {/* {error.beatname && (
           <p style={{ color: "red", marginTop: 10, paddingLeft: 5 }}>
