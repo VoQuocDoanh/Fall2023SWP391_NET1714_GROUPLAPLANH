@@ -7,7 +7,7 @@ import { useRef } from "react";
 import NotFound from "@/Pages/NotFound";
 
 const cx = classNames.bind(styles);
-function OrderApproved({ id, status, role, beatName, setOpenModal, price, beatSoundDemo, setOpenCheckPaymentFull, rejectTheBeat, checkPolicy, setCheckPolicy, setOpenPolicyModal }) {
+function OrderApproved({ id, status, role, beatName, setOpenModal, price, beatSoundDemo, setOpenCheckPaymentFull, setOpenCheckReject, setMessageReject }) {
     const audioRef = useRef()
     localStorage.setItem("method", JSON.stringify("full"))
     localStorage.setItem("id", JSON.stringify(id))
@@ -18,7 +18,7 @@ function OrderApproved({ id, status, role, beatName, setOpenModal, price, beatSo
         return (
             <div>
                 <h1 className={cx("form-heading")}>Order Details</h1>
-                <h3 style={{ color: "green" }}>Wating for customer approval...</h3>
+                <h3 style={{ color: "green" }}>Musician has provided the beat for you</h3>
                 {/* Form */}
                 <div className={cx("form")}>
                     {/* BeatName */}
@@ -56,7 +56,7 @@ function OrderApproved({ id, status, role, beatName, setOpenModal, price, beatSo
                     </div>
                     {/* Price */}
                     <div>
-                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price</td>
+                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price Prepaid by Customer ($)</td>
                         <div className={cx("input")}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +74,7 @@ function OrderApproved({ id, status, role, beatName, setOpenModal, price, beatSo
                                 type="number"
                                 placeholder="Price"
                                 className={cx("input-text")}
-                                value={price}
+                                value={price * 15 / 100}
                                 readOnly
                             />
                         </div>
@@ -87,21 +87,13 @@ function OrderApproved({ id, status, role, beatName, setOpenModal, price, beatSo
                     </div>
                     <div style={{ marginTop: 50 }}>
                         <Button onClick={() => setOpenCheckPaymentFull(true)} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50 }} variant="contained">Accept</Button>
-                        <Button onClick={() => rejectTheBeat()} style={{ backgroundColor: "red", width: 100, height: 50 }} variant="contained">Reject</Button>
+                        <Button onClick={() => [setOpenCheckReject(true), setMessageReject("Are you sure you want to cancel this order? \n (You will lose 15% of your prepaid for this order")]} style={{ backgroundColor: "red", width: 100, height: 50 }} variant="contained">Reject</Button>
                     </div>
                     {/* {error.beatname && (
           <p style={{ color: "red", marginTop: 10, paddingLeft: 5 }}>
             {error.beatname}
           </p>
         )} */}
-                </div>
-                <div style={{ display: "flex", marginTop: 100 }}>
-                    <Checkbox
-                        checked={checkPolicy}
-                        onChange={() => setCheckPolicy(!checkPolicy)}
-                        inputProps={{ 'aria-label': 'controlled' }}
-                    />
-                    <h3 style={{ marginTop: 5 }}>I agree to <a onClick={() => setOpenPolicyModal(true)} style={{ cursor: "pointer", color: "blue" }}> the website's policies </a></h3>
                 </div>
             </div >
         );
@@ -111,7 +103,7 @@ function OrderApproved({ id, status, role, beatName, setOpenModal, price, beatSo
         return (
             <div>
                 <h1 className={cx("form-heading")}>Order Details</h1>
-                <h3 style={{ color: "green" }}>Wating for customer approval...</h3>
+                <h3 style={{ color: "green" }}>Waiting for Customer's approval...</h3>
                 {/* Form */}
                 <div className={cx("form")}>
                     {/* BeatName */}
@@ -149,7 +141,7 @@ function OrderApproved({ id, status, role, beatName, setOpenModal, price, beatSo
                     </div>
                     {/* Price */}
                     <div>
-                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price</td>
+                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price Prepaid by Customer ($)</td>
                         <div className={cx("input")}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -167,7 +159,7 @@ function OrderApproved({ id, status, role, beatName, setOpenModal, price, beatSo
                                 type="number"
                                 placeholder="Price"
                                 className={cx("input-text")}
-                                value={price}
+                                value={price * 15 / 100}
                                 readOnly
                             />
                         </div>

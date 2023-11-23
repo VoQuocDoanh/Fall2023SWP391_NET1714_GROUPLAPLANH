@@ -20,6 +20,7 @@ import MusicCardItem from "@/components/MusicCard";
 import { ChordsComponent } from "@/components/SongDetail";
 import TabChordList from "@/components/ChorDetail";
 import NotFound from "../NotFound";
+import NotFoundChakraUI from "@/components/NotFoundChakraUI";
 
 function MyPlayListChordDetail() {
   const { id } = useParams();
@@ -197,7 +198,7 @@ if(playListDetail){
   );}
   else {
     return(
-      <NotFound/>
+      <NotFoundChakraUI/>
     )
   }
 }

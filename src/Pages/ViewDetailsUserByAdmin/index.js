@@ -12,6 +12,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import axiosInstance from "../../authorization/axiosInstance";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { Alert, Modal, Snackbar } from "@mui/material";
+import useToken from "@/authorization/useToken";
+import jwtDecode from "jwt-decode";
 const cx = classNames.bind(styles);
 const DATA = [
     {
@@ -32,6 +34,7 @@ function ViewDetailsUserByAdmin() {
     const { id } = useParams()
     const [user, setUser] = useState();
     const [contentBan, setContentBan] = useState("")
+    const [contentWarn, setContentWarn] = useState("")
     const [checkBan, setCheckBan] = useState("")
     const [listReport, setListReport] = useState()
     const [messageSuccess, setMessageSuccess] = useState("")
@@ -40,6 +43,8 @@ function ViewDetailsUserByAdmin() {
     const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
     const [openBanModal, setOpenBanModal] = useState(false);
     const [openUnbanModal, setOpenUnbanModal] = useState(false);
+    const [openWarnModal, setOpenWarnModal] = useState(false);
+    const [beatRejected, setBeatRejected] = useState(0);
     const contentStyle = { background: 'white', width: 460, height: 370, borderRadius: 20 };
 
     useEffect(() => {
@@ -48,6 +53,19 @@ function ViewDetailsUserByAdmin() {
 
     useEffect(() => {
         loadReport()
+    }, [])
+
+    useEffect(() => {
+        const loadRejectMusicianBeat = async () => {
+            await axiosInstance.post(`http://localhost:8080/api/v1/admin/musician/policy/${id}`)
+            .then((res) => {
+                setBeatRejected(res.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        }
+        loadRejectMusicianBeat()
     }, [])
     const loadDetailsUser = async () => {
         await axiosInstance.get(`http://localhost:8080/api/v1/admin/${id}`)
@@ -60,14 +78,14 @@ function ViewDetailsUserByAdmin() {
     }
 
     const handleBanUser = async () => {
-        if(contentBan === ""){
+        if (contentBan === "") {
             setOpenFailedSnackBar(true)
             setMessageFailed("Ban's content must not be null!")
             return;
         }
         setOpen(true)
         setOpenBanModal(false)
-        await axiosInstance.post("http://localhost:8080/api/v1/admin/user/ban", { id, content: contentBan })
+        await axiosInstance.post("http://localhost:8080/api/v1/admin/user/ban", { id: id, content: contentBan })
             .then((res) => {
                 setOpenSuccessSnackBar(true)
                 setMessageSuccess("Ban User Successfully")
@@ -82,10 +100,32 @@ function ViewDetailsUserByAdmin() {
             })
     }
 
+    const handleWarnUser = async () => {
+        if (contentWarn === "") {
+            setOpenFailedSnackBar(true)
+            setMessageFailed("Warn's content must not be null!")
+            return;
+        }
+        setOpen(true)
+        setOpenWarnModal(false)
+        await axiosInstance.post("http://localhost:8080/api/v1/admin/user/warn", { id: id, content: contentWarn })
+            .then((res) => {
+                setOpenSuccessSnackBar(true)
+                setMessageSuccess("Warn User Successfully")
+                setOpen(false)
+            })
+            .catch((error) => {
+                setOpenFailedSnackBar(true)
+                setMessageFailed("Warn Failed!")
+                setOpen(false)
+                console.log(error)
+            })
+    }
+
     const handleUnbanUser = async () => {
         setOpen(true)
         setOpenUnbanModal(false)
-        await axiosInstance.post("http://localhost:8080/api/v1/admin/user/unban", { id })
+        await axiosInstance.post("http://localhost:8080/api/v1/admin/user/unban", { id: id })
             .then((res) => {
                 setOpenSuccessSnackBar(true)
                 setMessageSuccess("Unban User Successfully")
@@ -201,13 +241,30 @@ function ViewDetailsUserByAdmin() {
                                                 </div>
                                             </td>
                                         </div>
+                                        {beatRejected != 0 ?
+                                        <div style={{marginRight:100}} className={cx("part2")}>
+                                            <td>
+                                                <div style={{ fontWeight: 500 }} className={cx("email-text")}>
+                                                    Number of beats rejected:
+                                                </div>
+                                                <div style={{fontSize:20,marginLeft:10}}>
+                                                    {beatRejected}
+                                                </div>
+                                            </td>
+
+                                        </div>
+                                        : <div></div>}
                                         <div className={cx("part5")}>
                                             {user.status === 1 ?
                                                 <button type="button" className={cx("button-save-details")} aria-disabled="false" onClick={() => setOpenBanModal(true)} >Ban</button>
                                                 :
-                                                <button type="button" className={cx("button-save-details2")} aria-disabled="false" onClick={() => setOpenUnbanModal(true)} >Unban</button>      
+                                                <button type="button" className={cx("button-save-details2")} aria-disabled="false" onClick={() => setOpenUnbanModal(true)} >Unban</button>
                                             }
+                                            {beatRejected != 0 ?
+                                            <button type="button" className={cx("button-save-details3")} aria-disabled="false" onClick={() => setOpenWarnModal(true)} >Warn</button>
+                                            : <div></div>}
                                         </div>
+
 
                                     </table>
                                 </form>
@@ -288,6 +345,25 @@ function ViewDetailsUserByAdmin() {
                             </div>
                             <td className={cx("button-type")}>
                                 <button type="button" className={cx("button-send-2")} aria-disabled="false" onClick={() => { handleUnbanUser() }} >Accept</button>
+                            </td>
+
+                        </div>
+                    </Modal>
+                    <Modal
+                        open={openWarnModal}
+                        onClose={() => setOpenWarnModal(false)}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <div className={cx("text-all")} style={{ padding: 10, marginTop: 300, marginLeft: 750, background: "white", width: 450 }}>
+                            <div style={{ display: 'grid' }}>
+                                <td style={{ fontWeight: 'bold', fontSize: "2.2rem", marginLeft: 120, color: 'red' }}>Reason For Warn</td>
+                                <td style={{ paddingTop: 15, paddingLeft: 30 }}>
+                                </td>
+                            </div>
+                            <textarea className={cx("text-des")} style={{ resize: 'none', width: '385px', border: 1, height: 150, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12 }} onChange={(e) => setContentWarn(e.target.value)} />
+                            <td className={cx("button-type")}>
+                                <button type="button" className={cx("button-send")} aria-disabled="false" onClick={() => { handleWarnUser() }} >Send</button>
                             </td>
 
                         </div>

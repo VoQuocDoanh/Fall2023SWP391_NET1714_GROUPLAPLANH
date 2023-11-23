@@ -15,6 +15,7 @@ import useToken from '@/authorization/useToken';
 import jwtDecode from 'jwt-decode';
 import { useEffect } from 'react';
 import axiosInstance from '@/authorization/axiosInstance';
+import ListSplitter from '@/components/ListSplitter';
 const cx = classNames.bind(styles);
 
 
@@ -52,6 +53,7 @@ function a11yProps(index) {
 }
 
 export default function OrderTimeline() {
+    const [listOrderBeatAll, setListOrderBeatAll] = useState([])
     const [listOrderBeatProcess, setListOrderBeatProcess] = useState([])
     const [listOrderBeatPayment, setListOrderBeatPayment] = useState([])
     const [listOrderBeatMakeABeat, setListOrderBeatMakeABeat] = useState([])
@@ -65,6 +67,8 @@ export default function OrderTimeline() {
         userId = jwtDecode(token).sub
         role = jwtDecode(token).role
     }
+    const [pageAll, setPageAll] = useState(1)
+    const [pagesAll, setPagesAll] = useState(1)
     const [pageProcess, setPageProcess] = useState(1)
     const [pagesProcess, setPagesProcess] = useState(1)
     const [pagePayment, setPagePayment] = useState(1)
@@ -189,48 +193,132 @@ export default function OrderTimeline() {
         const loadListCusOrderBeat = async () => {
             await axiosInstance.get(`http://localhost:8080/api/v1/request/beat/customer/${userId}`)
                 .then((res) => {
+                    if (res.data === 0) {
+                        setListOrderBeatAll(res.data)
+                    }
+                    else {
+                        const newGroup = ListSplitter({ data: res.data, groupSize: 8 })
+                        for (let i = 0; i < newGroup.length; i++) {
+                            if (pageAll === i + 1) {
+                                setListOrderBeatAll(newGroup[i])
+                            }
+                        }
+                        setPagesAll(newGroup.length)
+                    }
                     let listProcess = []
                     let listPayment = []
                     let listMakeABeat = []
                     let listApproved = []
                     let listCompleted = []
                     let listCanceled = []
+                    //Process
                     for (let i = 0; i < res.data.length; i++) {
                         if (res.data[i].status === 0) {
                             listProcess.push(res.data[i])
                         }
                     }
-                    setListOrderBeatProcess(listProcess)
+                    if (listProcess === 0) {
+                        setListOrderBeatProcess(listProcess)
+                    }
+                    else {
+                        const newGroup = ListSplitter({ data: listProcess, groupSize: 8 })
+                        for (let i = 0; i < newGroup.length; i++) {
+                            if (pageProcess === i + 1) {
+                                setListOrderBeatProcess(newGroup[i])
+                            }
+                        }
+                        setPagesProcess(newGroup.length)
+                    }
+                    //Payment
                     for (let i = 0; i < res.data.length; i++) {
                         if (res.data[i].status === 1) {
                             listPayment.push(res.data[i])
                         }
                     }
-                    setListOrderBeatPayment(listPayment)
+                    if (listPayment === 0) {
+                        setListOrderBeatPayment(listPayment)
+                    }
+                    else {
+                        const newGroup = ListSplitter({ data: listPayment, groupSize: 8 })
+                        for (let i = 0; i < newGroup.length; i++) {
+                            if (pagePayment === i + 1) {
+                                setListOrderBeatPayment(newGroup[i])
+                            }
+                        }
+                        setPagesPayment(newGroup.length)
+                    }
+                    //MakeABeat
                     for (let i = 0; i < res.data.length; i++) {
                         if (res.data[i].status === 2) {
                             listMakeABeat.push(res.data[i])
                         }
                     }
-                    setListOrderBeatMakeABeat(listMakeABeat)
+                    if (listMakeABeat === 0) {
+                        setListOrderBeatMakeABeat(listMakeABeat)
+                    }
+                    else {
+                        const newGroup = ListSplitter({ data: listMakeABeat, groupSize: 8 })
+                        for (let i = 0; i < newGroup.length; i++) {
+                            if (pageMakeABeat === i + 1) {
+                                setListOrderBeatMakeABeat(newGroup[i])
+                            }
+                        }
+                        setPagesMakeABeat(newGroup.length)
+                    }
+                    //Approved
                     for (let i = 0; i < res.data.length; i++) {
                         if (res.data[i].status === 3) {
                             listApproved.push(res.data[i])
                         }
                     }
-                    setListOrderBeatApproved(listApproved)
+                    if (listApproved === 0) {
+                        setListOrderBeatApproved(listApproved)
+                    }
+                    else {
+                        const newGroup = ListSplitter({ data: listApproved, groupSize: 8 })
+                        for (let i = 0; i < newGroup.length; i++) {
+                            if (pageApproved === i + 1) {
+                                setListOrderBeatApproved(newGroup[i])
+                            }
+                        }
+                        setPagesApproved(newGroup.length)
+                    }
+                    //Completed
                     for (let i = 0; i < res.data.length; i++) {
                         if (res.data[i].status === -1) {
                             listCompleted.push(res.data[i])
                         }
                     }
-                    setListOrderBeatCompleted(listCompleted)
+                    if (listCompleted === 0) {
+                        setListOrderBeatCompleted(listCompleted)
+                    }
+                    else {
+                        const newGroup = ListSplitter({ data: listCompleted, groupSize: 8 })
+                        for (let i = 0; i < newGroup.length; i++) {
+                            if (pageCompleted === i + 1) {
+                                setListOrderBeatCompleted(newGroup[i])
+                            }
+                        }
+                        setPagesCompleted(newGroup.length)
+                    }
+                    //Canceled
                     for (let i = 0; i < res.data.length; i++) {
                         if (res.data[i].status === -2 || res.data[i].status === -3) {
                             listCanceled.push(res.data[i])
                         }
                     }
-                    setListOrderBeatCanceled(listCanceled)
+                    if (listCanceled === 0) {
+                        setListOrderBeatCanceled(listCanceled)
+                    }
+                    else {
+                        const newGroup = ListSplitter({ data: listCanceled, groupSize: 8 })
+                        for (let i = 0; i < newGroup.length; i++) {
+                            if (pageCanceled === i + 1) {
+                                setListOrderBeatCanceled(newGroup[i])
+                            }
+                        }
+                        setPagesCanceled(newGroup.length)
+                    }
                 })
                 .catch((error) => {
                     console.log(error)
@@ -240,48 +328,132 @@ export default function OrderTimeline() {
         const loadListMSOrderBeat = async () => {
             await axiosInstance.get(`http://localhost:8080/api/v1/request/beat/musician/${userId}`)
                 .then((res) => {
+                    if (res.data === 0) {
+                        setListOrderBeatAll(res.data)
+                    }
+                    else {
+                        const newGroup = ListSplitter({ data: res.data, groupSize: 8 })
+                        for (let i = 0; i < newGroup.length; i++) {
+                            if (pageAll === i + 1) {
+                                setListOrderBeatAll(newGroup[i])
+                            }
+                        }
+                        setPagesAll(newGroup.length)
+                    }
                     let listProcess = []
                     let listPayment = []
                     let listMakeABeat = []
                     let listApproved = []
                     let listCompleted = []
                     let listCanceled = []
+                    //Process
                     for (let i = 0; i < res.data.length; i++) {
                         if (res.data[i].status === 0) {
                             listProcess.push(res.data[i])
                         }
                     }
-                    setListOrderBeatProcess(listProcess)
+                    if (listProcess === 0) {
+                        setListOrderBeatProcess(listProcess)
+                    }
+                    else {
+                        const newGroup = ListSplitter({ data: listProcess, groupSize: 8 })
+                        for (let i = 0; i < newGroup.length; i++) {
+                            if (pageProcess === i + 1) {
+                                setListOrderBeatProcess(newGroup[i])
+                            }
+                        }
+                        setPagesProcess(newGroup.length)
+                    }
+                    //Payment
                     for (let i = 0; i < res.data.length; i++) {
                         if (res.data[i].status === 1) {
                             listPayment.push(res.data[i])
                         }
                     }
-                    setListOrderBeatPayment(listPayment)
+                    if (listPayment === 0) {
+                        setListOrderBeatPayment(listPayment)
+                    }
+                    else {
+                        const newGroup = ListSplitter({ data: listPayment, groupSize: 8 })
+                        for (let i = 0; i < newGroup.length; i++) {
+                            if (pagePayment === i + 1) {
+                                setListOrderBeatPayment(newGroup[i])
+                            }
+                        }
+                        setPagesPayment(newGroup.length)
+                    }
+                    //MakeABeat
                     for (let i = 0; i < res.data.length; i++) {
                         if (res.data[i].status === 2) {
                             listMakeABeat.push(res.data[i])
                         }
                     }
-                    setListOrderBeatMakeABeat(listMakeABeat)
+                    if (listMakeABeat === 0) {
+                        setListOrderBeatMakeABeat(listMakeABeat)
+                    }
+                    else {
+                        const newGroup = ListSplitter({ data: listMakeABeat, groupSize: 8 })
+                        for (let i = 0; i < newGroup.length; i++) {
+                            if (pageMakeABeat === i + 1) {
+                                setListOrderBeatMakeABeat(newGroup[i])
+                            }
+                        }
+                        setPagesMakeABeat(newGroup.length)
+                    }
+                    //Approved
                     for (let i = 0; i < res.data.length; i++) {
                         if (res.data[i].status === 3) {
                             listApproved.push(res.data[i])
                         }
                     }
-                    setListOrderBeatApproved(listApproved)
+                    if (listApproved === 0) {
+                        setListOrderBeatApproved(listApproved)
+                    }
+                    else {
+                        const newGroup = ListSplitter({ data: listApproved, groupSize: 8 })
+                        for (let i = 0; i < newGroup.length; i++) {
+                            if (pageApproved === i + 1) {
+                                setListOrderBeatApproved(newGroup[i])
+                            }
+                        }
+                        setPagesApproved(newGroup.length)
+                    }
+                    //Completed
                     for (let i = 0; i < res.data.length; i++) {
                         if (res.data[i].status === -1) {
                             listCompleted.push(res.data[i])
                         }
                     }
-                    setListOrderBeatCompleted(listCompleted)
+                    if (listCompleted === 0) {
+                        setListOrderBeatCompleted(listCompleted)
+                    }
+                    else {
+                        const newGroup = ListSplitter({ data: listCompleted, groupSize: 8 })
+                        for (let i = 0; i < newGroup.length; i++) {
+                            if (pageCompleted === i + 1) {
+                                setListOrderBeatCompleted(newGroup[i])
+                            }
+                        }
+                        setPagesCompleted(newGroup.length)
+                    }
+                    //Canceled
                     for (let i = 0; i < res.data.length; i++) {
                         if (res.data[i].status === -2 || res.data[i].status === -3) {
                             listCanceled.push(res.data[i])
                         }
                     }
-                    setListOrderBeatCanceled(listCanceled)
+                    if (listCanceled === 0) {
+                        setListOrderBeatCanceled(listCanceled)
+                    }
+                    else {
+                        const newGroup = ListSplitter({ data: listCanceled, groupSize: 8 })
+                        for (let i = 0; i < newGroup.length; i++) {
+                            if (pageCanceled === i + 1) {
+                                setListOrderBeatCanceled(newGroup[i])
+                            }
+                        }
+                        setPagesCanceled(newGroup.length)
+                    }
                 })
                 .catch((error) => {
                     console.log(error)
@@ -289,14 +461,14 @@ export default function OrderTimeline() {
 
         }
         console.log(role)
-        if(role == "CUS"){
+        if (role == "CUS") {
             loadListCusOrderBeat()
         }
-        else{
+        else {
             loadListMSOrderBeat()
         }
-        
-    }, [])
+
+    }, [pageProcess, pagePayment, pageMakeABeat, pageApproved, pageCompleted, pageCanceled])
     console.log(listOrderBeatProcess)
     const [value, setValue] = React.useState(0);
 
@@ -324,41 +496,67 @@ export default function OrderTimeline() {
                     <Box sx={{ width: '100%' }}>
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                                <Tab style={{ fontSize: 20, marginRight: 80 }} label="Processing" {...a11yProps(0)} />
-                                <Tab style={{ fontSize: 20, marginRight: 80 }} label="Waiting for payment" {...a11yProps(1)} />
-                                <Tab style={{ fontSize: 20, marginRight: 80 }} label="Waiting to make the beat" {...a11yProps(2)} />
-                                <Tab style={{ fontSize: 20, marginRight: 80 }} label="Waiting for customer's approval" {...a11yProps(3)} />
-                                <Tab style={{ fontSize: 20, marginRight: 80 }} label="Completed" {...a11yProps(4)} />
-                                <Tab style={{ fontSize: 20, marginRight: 80 }} label="Canceled" {...a11yProps(5)} />
+                            <Tab style={{ fontSize: 15, marginRight: 80, marginLeft:70 }} label="All" {...a11yProps(0)} />
+                                <Tab style={{ fontSize: 15, marginRight: 80 }} label="Processing" {...a11yProps(1)} />
+                                <Tab style={{ fontSize: 15, marginRight: 80 }} label="Waiting for payment" {...a11yProps(2)} />
+                                <Tab style={{ fontSize: 15, marginRight: 80 }} label="Waiting to make the beat" {...a11yProps(3)} />
+                                <Tab style={{ fontSize: 15, marginRight: 80 }} label="Waiting for customer's approval" {...a11yProps(4)} />
+                                <Tab style={{ fontSize: 15, marginRight: 80 }} label="Completed" {...a11yProps(5)} />
+                                <Tab style={{ fontSize: 15, marginRight: 80 }} label="Canceled" {...a11yProps(6)} />
                             </Tabs>
                         </Box>
-                        {/* Process */}
+                        {/* All */}
                         <CustomTabPanel value={value} index={0}>
-                            {listOrderBeatProcess.length !== 0 ?
-                                <div style={{ height: 900 }}>
+                            {listOrderBeatAll.length !== 0 ?
+                                <div style={{ height: 1350 }}>
                                     <div className={cx("listbeat")}>
-                                        {listOrderBeatProcess.map((item) => {
+                                        {listOrderBeatAll.map((item) => {
                                             return (
-                                                <ListOrderBox id={item.id} beatName={item.beatName} cusName={item.userRequest.fullName} msName={item.musician.fullName} date={item.creatAt} />
+                                                <ListOrderBox id={item.id} status={item.status} beatName={item.beatName} cusName={item.userRequest.fullName} msName={item.musician.fullName} date={item.creatAt} />
                                             )
                                         })}
                                     </div>
+                                    {pagesAll !== 1 ?
+                                        <div className={cx("pagination")}>
+                                            <Pagination pages={pagesAll} page={pageAll} setPage={setPageAll} />
+                                        </div>
+                                        : <div></div>}
                                 </div>
                                 : <div>
-                                    <img style={{ width: 300, height: 300, marginLeft: 900 }} src={require("../../assets/images/Other/DVD.png")} />
-                                    <h1 className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 500 }}>There are no beats</h1>
+                                    <img style={{ width: 300, height: 300, marginLeft: 790 }} src={require("../../assets/images/Other/DVD.png")} />
+                                    <h1 className={cx("sold-out")} style={{ zindex: '1', marginLeft: 700, height: 500 }}>There are no beats</h1>
                                 </div>
                             }
-                            {pagesProcess !== 1 ?
-                                <div className={cx("pagination")}>
-                                    <Pagination pages={pagesProcess} page={pageProcess} setPage={setPageProcess} />
+
+                        </CustomTabPanel>
+                        {/* Process */}
+                        <CustomTabPanel value={value} index={1}>
+                            {listOrderBeatProcess.length !== 0 ?
+                                <div style={{ height: 1350 }}>
+                                    <div className={cx("listbeat")}>
+                                        {listOrderBeatProcess.map((item) => {
+                                            return (
+                                                <ListOrderBox id={item.id} status={item.status} beatName={item.beatName} cusName={item.userRequest.fullName} msName={item.musician.fullName} date={item.creatAt} />
+                                            )
+                                        })}
+                                    </div>
+                                    {pagesProcess !== 1 ?
+                                        <div className={cx("pagination")}>
+                                            <Pagination pages={pagesProcess} page={pageProcess} setPage={setPageProcess} />
+                                        </div>
+                                        : <div></div>}
                                 </div>
-                                : <div></div>}
+                                : <div>
+                                    <img style={{ width: 300, height: 300, marginLeft: 790 }} src={require("../../assets/images/Other/DVD.png")} />
+                                    <h1 className={cx("sold-out")} style={{ zindex: '1', marginLeft: 700, height: 500 }}>There are no beats</h1>
+                                </div>
+                            }
+
                         </CustomTabPanel>
                         {/* Payment */}
-                        <CustomTabPanel value={value} index={1}>
+                        <CustomTabPanel value={value} index={2}>
                             {listOrderBeatPayment.length !== 0 ?
-                                <div style={{ height: 900 }}>
+                                <div style={{ height: 1350 }}>
                                     <div className={cx("listbeat")}>
                                         {listOrderBeatPayment.map((item) => {
                                             return (
@@ -366,22 +564,23 @@ export default function OrderTimeline() {
                                             )
                                         })}
                                     </div>
+                                    {pagesPayment !== 1 ?
+                                        <div className={cx("pagination")}>
+                                            <Pagination pages={pagesPayment} page={pagePayment} setPage={setPagePayment} />
+                                        </div>
+                                        : <div></div>}
                                 </div>
                                 : <div>
-                                <img style={{ width: 300, height: 300, marginLeft: 900 }} src={require("../../assets/images/Other/DVD.png")} />
-                                <h1 className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 500 }}>There are no beats</h1>
-                            </div>
-                            }
-                            {pagesPayment !== 1 ?
-                                <div className={cx("pagination")}>
-                                    <Pagination pages={pagesPayment} page={pagePayment} setPage={setPagePayment} />
+                                    <img style={{ width: 300, height: 300, marginLeft: 790 }} src={require("../../assets/images/Other/DVD.png")} />
+                                    <h1 className={cx("sold-out")} style={{ zindex: '1', marginLeft: 700, height: 500 }}>There are no beats</h1>
                                 </div>
-                                : <div></div>}
+                            }
+
                         </CustomTabPanel>
                         {/* MakeABeat */}
-                        <CustomTabPanel value={value} index={2}>
+                        <CustomTabPanel value={value} index={3}>
                             {listOrderBeatMakeABeat.length !== 0 ?
-                                <div style={{ height: 900 }}>
+                                <div style={{ height: 1350 }}>
                                     <div className={cx("listbeat")}>
                                         {listOrderBeatMakeABeat.map((item) => {
                                             return (
@@ -389,22 +588,23 @@ export default function OrderTimeline() {
                                             )
                                         })}
                                     </div>
+                                    {pagesMakeABeat !== 1 ?
+                                        <div className={cx("pagination")}>
+                                            <Pagination pages={pagesMakeABeat} page={pageMakeABeat} setPage={setPageMakeABeat} />
+                                        </div>
+                                        : <div></div>}
                                 </div>
                                 : <div>
-                                <img style={{ width: 300, height: 300, marginLeft: 900 }} src={require("../../assets/images/Other/DVD.png")} />
-                                <h1 className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 500 }}>There are no beats</h1>
-                            </div>
-                            }
-                            {pagesMakeABeat !== 1 ?
-                                <div className={cx("pagination")}>
-                                    <Pagination pages={pagesMakeABeat} page={pageMakeABeat} setPage={setPageMakeABeat} />
+                                    <img style={{ width: 300, height: 300, marginLeft: 790 }} src={require("../../assets/images/Other/DVD.png")} />
+                                    <h1 className={cx("sold-out")} style={{ zindex: '1', marginLeft: 700, height: 500 }}>There are no beats</h1>
                                 </div>
-                                : <div></div>}
+                            }
+
                         </CustomTabPanel>
                         {/* Approved */}
-                        <CustomTabPanel value={value} index={3}>
+                        <CustomTabPanel value={value} index={4}>
                             {listOrderBeatApproved.length !== 0 ?
-                                <div style={{ height: 900 }}>
+                                <div style={{ height: 1350 }}>
                                     <div className={cx("listbeat")}>
                                         {listOrderBeatApproved.map((item) => {
                                             return (
@@ -412,22 +612,23 @@ export default function OrderTimeline() {
                                             )
                                         })}
                                     </div>
+                                    {pagesApproved !== 1 ?
+                                        <div className={cx("pagination")}>
+                                            <Pagination pages={pagesApproved} page={pageApproved} setPage={setPageApproved} />
+                                        </div>
+                                        : <div></div>}
                                 </div>
                                 : <div>
-                                <img style={{ width: 300, height: 300, marginLeft: 900 }} src={require("../../assets/images/Other/DVD.png")} />
-                                <h1 className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 500 }}>There are no beats</h1>
-                            </div>
-                            }
-                            {pagesApproved !== 1 ?
-                                <div className={cx("pagination")}>
-                                    <Pagination pages={pagesApproved} page={pageApproved} setPage={setPageApproved} />
+                                    <img style={{ width: 300, height: 300, marginLeft: 790 }} src={require("../../assets/images/Other/DVD.png")} />
+                                    <h1 className={cx("sold-out")} style={{ zindex: '1', marginLeft: 700, height: 500 }}>There are no beats</h1>
                                 </div>
-                                : <div></div>}
+                            }
+
                         </CustomTabPanel>
                         {/* Completed */}
-                        <CustomTabPanel value={value} index={4}>
+                        <CustomTabPanel value={value} index={5}>
                             {listOrderBeatCompleted.length !== 0 ?
-                                <div style={{ height: 900 }}>
+                                <div style={{ height: 1350 }}>
                                     <div className={cx("listbeat")}>
                                         {listOrderBeatCompleted.map((item) => {
                                             return (
@@ -435,22 +636,23 @@ export default function OrderTimeline() {
                                             )
                                         })}
                                     </div>
+                                    {pagesCompleted !== 1 ?
+                                        <div className={cx("pagination")}>
+                                            <Pagination pages={pagesCompleted} page={pageCompleted} setPage={setPageCompleted} />
+                                        </div>
+                                        : <div></div>}
                                 </div>
                                 : <div>
-                                <img style={{ width: 300, height: 300, marginLeft: 900 }} src={require("../../assets/images/Other/DVD.png")} />
-                                <h1 className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 500 }}>There are no beats</h1>
-                            </div>
-                            }
-                            {pagesCompleted !== 1 ?
-                                <div className={cx("pagination")}>
-                                    <Pagination pages={pagesCompleted} page={pageCompleted} setPage={setPageCompleted} />
+                                    <img style={{ width: 300, height: 300, marginLeft: 790 }} src={require("../../assets/images/Other/DVD.png")} />
+                                    <h1 className={cx("sold-out")} style={{ zindex: '1', marginLeft: 700, height: 500 }}>There are no beats</h1>
                                 </div>
-                                : <div></div>}
+                            }
+
                         </CustomTabPanel>
                         {/* Canceled */}
-                        <CustomTabPanel value={value} index={5}>
+                        <CustomTabPanel value={value} index={6}>
                             {listOrderBeatCanceled.length !== 0 ?
-                                <div style={{ height: 900 }}>
+                                <div style={{ height: 1350 }}>
                                     <div className={cx("listbeat")}>
                                         {listOrderBeatCanceled.map((item) => {
                                             return (
@@ -458,17 +660,18 @@ export default function OrderTimeline() {
                                             )
                                         })}
                                     </div>
+                                    {pagesCanceled !== 1 ?
+                                        <div className={cx("pagination")}>
+                                            <Pagination pages={pagesCanceled} page={pageCanceled} setPage={setPageCanceled} />
+                                        </div>
+                                        : <div></div>}
                                 </div>
                                 : <div>
-                                <img style={{ width: 300, height: 300, marginLeft: 900 }} src={require("../../assets/images/Other/DVD.png")} />
-                                <h1 className={cx("sold-out")} style={{ zindex: '1', marginLeft: 800, height: 500 }}>There are no beats</h1>
-                            </div>
-                            }
-                            {pagesCanceled !== 1 ?
-                                <div className={cx("pagination")}>
-                                    <Pagination pages={pagesCanceled} page={pageCanceled} setPage={setPageCanceled} />
+                                    <img style={{ width: 300, height: 300, marginLeft: 790 }} src={require("../../assets/images/Other/DVD.png")} />
+                                    <h1 className={cx("sold-out")} style={{ zindex: '1', marginLeft: 700, height: 500 }}>There are no beats</h1>
                                 </div>
-                                : <div></div>}
+                            }
+
                         </CustomTabPanel>
                     </Box>
                 </div>

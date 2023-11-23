@@ -7,7 +7,7 @@ import { useRef } from "react";
 import NotFound from "@/Pages/NotFound";
 
 const cx = classNames.bind(styles);
-function OrderCompleted({id, status, role, beatName, setOpenModal, price, beatSoundFull}) {
+function OrderCompleted({id, status, role, beatName, setOpenModal, price, beatSoundDemo, beatSoundFull}) {
     const audioRef = useRef()
     //CUS
     {console.log(role)}
@@ -54,7 +54,7 @@ function OrderCompleted({id, status, role, beatName, setOpenModal, price, beatSo
                     </div>
                     {/* Price */}
                     <div>
-                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price</td>
+                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price ($)</td>
                         <div className={cx("input")}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -77,9 +77,15 @@ function OrderCompleted({id, status, role, beatName, setOpenModal, price, beatSo
                             />
                         </div>
                     </div>
-                    {/* Beat Sound Full */}
+                    {/* Beat Sound Demo */}
                     <div>
                         <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Beat Sound Demo</td>
+                        <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundDemo}>
+                        </audio>
+                    </div>
+                    {/* Beat Sound Full */}
+                    <div>
+                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Beat Sound Full</td>
                         <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundFull}>
                         </audio>
                     </div>
@@ -135,7 +141,7 @@ function OrderCompleted({id, status, role, beatName, setOpenModal, price, beatSo
                     </div>
                     {/* Price */}
                     <div>
-                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price</td>
+                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price ($)</td>
                         <div className={cx("input")}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -158,9 +164,15 @@ function OrderCompleted({id, status, role, beatName, setOpenModal, price, beatSo
                             />
                         </div>
                     </div>
-                    {/* Beat Sound Full */}
+                    {/* Beat Sound Demo */}
                     <div>
                         <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Beat Sound Demo</td>
+                        <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundDemo}>
+                        </audio>
+                    </div>
+                    {/* Beat Sound Full */}
+                    <div>
+                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Beat Sound Full</td>
                         <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundFull}>
                         </audio>
                     </div>

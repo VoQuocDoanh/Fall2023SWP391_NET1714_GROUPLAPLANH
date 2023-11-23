@@ -19,6 +19,7 @@ import jwtDecode from "jwt-decode";
 import { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import NotFound from "../NotFound";
+import NotFoundChakraUI from "@/components/NotFoundChakraUI";
 
 function MyPLayListDetail() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -141,7 +142,7 @@ if(playListDetail){
   );}
   else{
     return (
-      <NotFound/>
+      <NotFoundChakraUI/>
     )
   }
 }

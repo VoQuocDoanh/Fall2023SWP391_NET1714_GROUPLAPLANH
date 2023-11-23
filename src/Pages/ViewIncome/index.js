@@ -93,7 +93,7 @@ function ViewIncome() {
                 <th className={cx("th-frame")}>BEATNAME</th>
                 <th className={cx("th-frame")}>CREATED AT</th>
                 <th className={cx("th-frame")}>USERNAME</th>
-                <th className={cx("th-frame")}>PRICE</th>
+                <th className={cx("th-frame")}>PRICE ($)</th>
                 <th className={cx("th-frame")}>STATUS</th>
               </tr>
               {/* </div> */}
@@ -109,7 +109,7 @@ function ViewIncome() {
 
                   return (<tr >
 
-                    <td style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+                    <td style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                       <img src={require("../../assets/images/Other/beat-trong-am-nhac-la-gi1.jpg")} className={cx("card-img")} alt="anh dep" />
                       <div>{index + 1}.</div>
                     </td>
@@ -121,9 +121,11 @@ function ViewIncome() {
                     <td>{`${day}/${month}/${year}`}</td>
                     <td>{item.userName.fullName}</td>
                     <td>{item.price}$</td>
-                    {item.status === -2 ? 
-                    <td style={{color:"red"}}>Canceled</td>
-                    : <td style={{color:"green"}}>Completed</td>}
+                    {item.status === -2 ?
+                      <td style={{ color: "red" }}>Canceled</td>
+                      : item.status === 3 ?
+                        <td style={{ color: "orange" }}>Prepaid</td>
+                        : <td style={{ color: "green" }}>Completed</td>}
                   </tr>
                     // <CardBeatItem
                     //   id={item.id}

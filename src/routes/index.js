@@ -51,6 +51,7 @@ import PaymentSuccessOrder from "@/Pages/PaymentSuccessOrder";
 import PaymentCancelOrder from "@/Pages/PaymentCancelOrder";
 import ViewIncome from "@/Pages/ViewIncome";
 import MyBeats from "@/Pages/MyBeats";
+import ListUserBreaksPolicy from "@/Pages/ListUserBreaksPolicy";
 const publicRoutes = [
   {
     path: "/",
@@ -85,6 +86,10 @@ const publicRoutes = [
   {
     path: "/listuserreport",
     component: ListUserReport,
+  },
+  {
+    path: "/listuserbreakspolicy",
+    component: ListUserBreaksPolicy,
   },
   {
     path: "/listAllUserBan",

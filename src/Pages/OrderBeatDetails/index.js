@@ -30,8 +30,7 @@ function CreateOrderBeat() {
     let userId = ""
     let role = ""
 
-    let messagePolicy = "*Customer\n- Customer can update the order if only the order is on processing\n- Customer must prepay 30% of the price of the order before approving the musician to create the beat\n- If customer rejects the beat, customer will lose 30% the money that customer have paid before\n\n*Musician\n- Musician can reject the order if only the order is on processing"
-
+    let messagePolicy = "*Musician\n- Musician can reject the order if only the order is in processing\n- Musician guarantees the confidentiality of all content created for the customer, with exclusive rights granted for its use, posting on websites or resale to others is strictly prohibited.\n- Musician can get the money of the order if only musician send the beat to the system"
     if (token) {
         userId = jwtDecode(token).sub
         role = jwtDecode(token).role
@@ -52,13 +51,17 @@ function CreateOrderBeat() {
     const [openPolicyModal, setOpenPolicyModal] = useState(false)
     const [openCheckPaymentDemo, setOpenCheckPaymentDemo] = useState(false)
     const [openCheckPaymentFull, setOpenCheckPaymentFull] = useState(false)
+    const [openCheckConfirm, setOpenCheckConfirm] = useState(false)
+    const [messageConfirm, setMessageConfirm] = useState("")
+    const [openCheckReject, setOpenCheckReject] = useState(false)
+    const [messageReject, setMessageReject] = useState("")
     const [checkPolicy, setCheckPolicy] = useState(false);
     const [open, setOpen] = useState(false);
 
 
     useEffect(() => {
-        const loadOrderDetail = async () => {
-            await axiosInstance.get(`http://localhost:8080/api/v1/request/beat/detail/${id}`)
+        const loadOrderDetailByCus = async () => {
+            await axiosInstance.get(`http://localhost:8080/api/v1/request/beat/customer/detail/${id}/${userId}`)
                 .then((res) => {
                     setOrderBeatDetails(res.data)
                     if (res.data.description) {
@@ -77,19 +80,45 @@ function CreateOrderBeat() {
                         setPrice(res.data.price)
                     }
                 })
+                .catch((error) => {
+                    console.log(error)
+                })
         }
-        loadOrderDetail()
+        const loadOrderDetailByMS = async () => {
+            await axiosInstance.get(`http://localhost:8080/api/v1/request/beat/musician/detail/${id}/${userId}`)
+                .then((res) => {
+                    setOrderBeatDetails(res.data)
+                    if (res.data.description) {
+                        setDescription(res.data.description)
+                    }
+                    if (res.data.beatName) {
+                        setBeatName(res.data.beatName)
+                    }
+                    if (res.data.beatFull) {
+                        setBeatSoundFull(res.data.beatFull)
+                    }
+                    if (res.data.beatDemo) {
+                        setBeatSoundDemo(res.data.beatDemo)
+                    }
+                    if (res.data.price) {
+                        setPrice(res.data.price)
+                    }
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
+        if (role == "CUS") {
+            loadOrderDetailByCus()
+        } else {
+            loadOrderDetailByMS()
+        }
     }, [id])
 
     const handleUpdate = async () => {
         if (!beatName || !description) {
             setOpenFailedSnackBar(true)
             setMessageFailed("All fields must not be null!")
-            return
-        }
-        if (!checkPolicy) {
-            setOpenFailedSnackBar(true)
-            setMessageFailed("You must agree with our policy before using this function!")
             return
         }
         await axiosInstance.put("http://localhost:8080/api/v1/request/beat", { id: id, beatName: beatName, description: description })
@@ -108,6 +137,7 @@ function CreateOrderBeat() {
     }
 
     const acceptAnOrder = async () => {
+        setOpenCheckConfirm(false)
         if (!checkPolicy) {
             setOpenFailedSnackBar(true)
             setMessageFailed("You must agree with our policy before using this function!")
@@ -180,14 +210,9 @@ function CreateOrderBeat() {
 
     const sendBeatToCus = async () => {
         setOpen(true)
+        setOpenCheckConfirm(false)
         const formData = new FormData();
-        if (!checkPolicy) {
-            setOpenFailedSnackBar(true)
-            setMessageFailed("You must agree with our policy before using this function!")
-            setOpen(false)
-            return
-        }
-        else if(!beatSoundDemo || !beatSoundFull){
+        if (!beatSoundDemo || !beatSoundFull) {
             setOpenFailedSnackBar(true)
             setMessageFailed("All beatSound fields must not be null!")
             setOpen(false)
@@ -218,6 +243,7 @@ function CreateOrderBeat() {
     }
 
     const rejectAnOrder = async () => {
+        setOpenCheckReject(false)
         await axiosInstance.put("http://localhost:8080/api/v1/request/beat/reject/request", { id: id })
             .then((res) => {
                 setOpenSuccessSnackBar(true)
@@ -245,6 +271,7 @@ function CreateOrderBeat() {
             .catch((error) => {
                 setOpenFailedSnackBar(true)
                 setMessageFailed("Reject beat failed!")
+                setOpenCheckReject(false)
                 console.log(error)
             })
     }
@@ -252,13 +279,7 @@ function CreateOrderBeat() {
     const paymentDemo = async () => {
         setOpenCheckPaymentDemo(false)
         setOpen(true)
-        if (!checkPolicy) {
-            setOpenFailedSnackBar(true)
-            setMessageFailed("You must agree with our policy before using this function!")
-            setOpen(false)
-            return
-        }
-        await axiosInstance.post(`http://localhost:8080/api/v1/paypal/order`, { totalprice: (price * 30 / 100), description: "Payment Success" })
+        await axiosInstance.post(`http://localhost:8080/api/v1/paypal/order`, { totalprice: (price * 15 / 100), description: "Payment Success" })
             .then((res) => {
                 setOpen(false)
                 window.location.href = res.data
@@ -274,13 +295,7 @@ function CreateOrderBeat() {
     const paymentFull = async () => {
         setOpenCheckPaymentFull(false)
         setOpen(true)
-        if (!checkPolicy) {
-            setOpenFailedSnackBar(true)
-            setMessageFailed("You must agree with our policy before using this function!")
-            setOpen(false)
-            return
-        }
-        await axiosInstance.post(`http://localhost:8080/api/v1/paypal/order`, { totalprice: (price * 70 / 100), description: "Payment Success" })
+        await axiosInstance.post(`http://localhost:8080/api/v1/paypal/order`, { totalprice: (price * 85 / 100), description: "Payment Success" })
             .then((res) => {
                 setOpen(false)
                 window.location.href = res.data
@@ -299,15 +314,15 @@ function CreateOrderBeat() {
                 {orderBeatDetails ?
                     <div>
                         {orderBeatDetails.status === 0 ?
-                            <OrderProcess id={id} status={orderBeatDetails.status} role={role} description={description} beatName={beatName} setBeatName={setBeatName} setOpenModal={setOpenModal} price={price} setPrice={setPrice} handleUpdate={handleUpdate} acceptAnOrder={acceptAnOrder} rejectAnOrder={rejectAnOrder} checkPolicy={checkPolicy} setCheckPolicy={setCheckPolicy} setOpenPolicyModal={setOpenPolicyModal} />
+                            <OrderProcess id={id} status={orderBeatDetails.status} role={role} description={description} beatName={beatName} setBeatName={setBeatName} setOpenModal={setOpenModal} price={price} setPrice={setPrice} handleUpdate={handleUpdate} setOpenCheckConfirm={setOpenCheckConfirm} setMessageConfirm={setMessageConfirm} setOpenCheckReject={setOpenCheckReject} setMessageReject={setMessageReject} checkPolicy={checkPolicy} setCheckPolicy={setCheckPolicy} setOpenPolicyModal={setOpenPolicyModal} />
                             : orderBeatDetails.status === 1 ?
-                                <OrderPayment id={id} status={orderBeatDetails.status} role={role} beatName={beatName} setOpenModal={setOpenModal} price={price} setOpenCheckPaymentDemo={setOpenCheckPaymentDemo} rejectAnOrder={rejectAnOrder} checkPolicy={checkPolicy} setCheckPolicy={setCheckPolicy} setOpenPolicyModal={setOpenPolicyModal} />
+                                <OrderPayment id={id} status={orderBeatDetails.status} role={role} beatName={beatName} setOpenModal={setOpenModal} price={price} setOpenCheckPaymentDemo={setOpenCheckPaymentDemo} setOpenCheckReject={setOpenCheckReject} setMessageReject={setMessageReject} />
                                 : orderBeatDetails.status === 2 ?
-                                    <OrderMakeAbeat id={id} status={orderBeatDetails.status} role={role} beatName={beatName} setOpenModal={setOpenModal} price={price} beatSoundDemoUrl={beatSoundDemoUrl} beatSoundFullUrl={beatSoundFullUrl} handleBeatSoundFullChange={handleBeatSoundFullChange} handleBeatSoundDemoChange={handleBeatSoundDemoChange} sendBeatToCus={sendBeatToCus} checkPolicy={checkPolicy} setCheckPolicy={setCheckPolicy} setOpenPolicyModal={setOpenPolicyModal} />
+                                    <OrderMakeAbeat id={id} status={orderBeatDetails.status} role={role} beatName={beatName} setOpenModal={setOpenModal} price={price} beatSoundDemoUrl={beatSoundDemoUrl} beatSoundFullUrl={beatSoundFullUrl} handleBeatSoundFullChange={handleBeatSoundFullChange} handleBeatSoundDemoChange={handleBeatSoundDemoChange} setOpenCheckConfirm={setOpenCheckConfirm} setMessageConfirm={setMessageConfirm} />
                                     : orderBeatDetails.status === 3 ?
-                                        <OrderApproved id={id} status={orderBeatDetails.status} role={role} beatName={beatName} setOpenModal={setOpenModal} price={price} beatSoundDemo={beatSoundDemo} setOpenCheckPaymentFull={setOpenCheckPaymentFull} rejectTheBeat={rejectTheBeat} checkPolicy={checkPolicy} setCheckPolicy={setCheckPolicy} setOpenPolicyModal={setOpenPolicyModal} />
+                                        <OrderApproved id={id} status={orderBeatDetails.status} role={role} beatName={beatName} setOpenModal={setOpenModal} price={price} beatSoundDemo={beatSoundDemo} setOpenCheckPaymentFull={setOpenCheckPaymentFull} setOpenCheckReject={setOpenCheckReject} setMessageReject={setMessageReject} />
                                         : orderBeatDetails.status === -1 ?
-                                            <OrderCompleted id={id} status={orderBeatDetails.status} role={role} beatName={beatName} setOpenModal={setOpenModal} price={price} beatSoundFull={beatSoundFull} />
+                                            <OrderCompleted id={id} status={orderBeatDetails.status} role={role} beatName={beatName} setOpenModal={setOpenModal} price={price} beatSoundDemo={beatSoundDemo} beatSoundFull={beatSoundFull} />
                                             : (orderBeatDetails.status === -2 || orderBeatDetails.status === -3) ?
                                                 <OrderCanceled id={id} status={orderBeatDetails.status} role={role} beatName={beatName} setOpenModal={setOpenModal} price={price} />
                                                 : <div></div>
@@ -329,7 +344,7 @@ function CreateOrderBeat() {
 
 
 
-                    : <div></div>}
+                    : <NotFound />}
                 <Snackbar open={openSuccessSnackBar} autoHideDuration={2000} onClose={() => setOpenSuccessSnackBar(false)} anchorOrigin={{ vertical: "top", horizontal: "right" }} style={{ marginTop: '100px' }} >
                     <Alert variant="filled" onClose={() => setOpenSuccessSnackBar(false)} severity="success" sx={{ width: '100%' }} style={{ fontSize: 20 }}>
                         {messageSuccess}
@@ -371,17 +386,19 @@ function CreateOrderBeat() {
                 >
                     <div className={cx("text-all")} style={{ padding: 10, marginTop: 300, marginLeft: 750, background: "white", width: 500 }}>
                         <div style={{ display: 'grid' }}>
-                            <td style={{ fontWeight: 'bold', fontSize: "3rem", marginLeft: 120, color: 'red' }}>Description</td>
+                            <td style={{ fontWeight: 'bold', fontSize: "3rem", marginLeft: 120, color: 'red' }}>Notification</td>
                         </div>
-                        <div style={{ display: 'grid' }}>
-                            <td style={{ fontWeight: 'bold', fontSize: "2rem", color: 'black' }}>You need to pay 30% for the price of the order to approve the order</td>
-                        </div>
-                        <div style={{color:"white"}}>123</div>
+                        {orderBeatDetails ?
+                            <div style={{ display: 'grid' }}>
+                                <td style={{ fontWeight: 'bold', fontSize: "2rem", color: 'black' }}>You need to pay 15% ({orderBeatDetails.price * 15 / 100}$) for the price of the order to approve the order</td>
+                            </div>
+                            : <div></div>}
+                        <div style={{ color: "white" }}>123</div>
                         <div style={{ display: 'grid' }}>
                             <td style={{ fontWeight: 'bold', fontSize: "2rem", color: 'black' }}>Do you want to continue for paying?</td>
                         </div>
                         <div style={{ marginTop: 50 }}>
-                            <Button onClick={() => paymentDemo()} style={{ backgroundColor: "green", width: 100, height: 50, marginRight:50, marginLeft:100 }} variant="contained">Continue paying</Button>
+                            <Button onClick={() => paymentDemo()} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50, marginLeft: 100 }} variant="contained">Continue paying</Button>
                             <Button onClick={() => setOpenCheckPaymentDemo(false)} style={{ backgroundColor: "red", width: 100, height: 50 }} variant="contained">Reject paying</Button>
                         </div>
 
@@ -396,18 +413,71 @@ function CreateOrderBeat() {
                 >
                     <div className={cx("text-all")} style={{ padding: 10, marginTop: 300, marginLeft: 750, background: "white", width: 500 }}>
                         <div style={{ display: 'grid' }}>
-                            <td style={{ fontWeight: 'bold', fontSize: "3rem", marginLeft: 120, color: 'red' }}>Description</td>
+                            <td style={{ fontWeight: 'bold', fontSize: "3rem", marginLeft: 120, color: 'red' }}>Notification</td>
                         </div>
-                        <div style={{ display: 'grid' }}>
-                            <td style={{ fontWeight: 'bold', fontSize: "2rem", color: 'black' }}>You need to pay 70% for the remaining of the price of the order to complete the order and get your beat</td>
-                        </div>
-                        <div style={{color:"white"}}>123</div>
+                        {orderBeatDetails ?
+                            <div style={{ display: 'grid' }}>
+                                <td style={{ fontWeight: 'bold', fontSize: "2rem", color: 'black' }}>You need to pay 85% ({orderBeatDetails.price * 85 / 100}$) for the remaining of the price of the order to complete the order and get your beat</td>
+                            </div>
+                            : <div></div>}
+                        <div style={{ color: "white" }}>123</div>
                         <div style={{ display: 'grid' }}>
                             <td style={{ fontWeight: 'bold', fontSize: "2rem", color: 'black' }}>Do you want to continue for paying?</td>
                         </div>
                         <div style={{ marginTop: 50 }}>
-                            <Button onClick={() => paymentFull()} style={{ backgroundColor: "green", width: 100, height: 50, marginRight:50, marginLeft:100 }} variant="contained">Continue paying</Button>
+                            <Button onClick={() => paymentFull()} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50, marginLeft: 100 }} variant="contained">Continue paying</Button>
                             <Button onClick={() => setOpenCheckPaymentFull(false)} style={{ backgroundColor: "red", width: 100, height: 50 }} variant="contained">Reject paying</Button>
+                        </div>
+
+
+                    </div>
+                </Modal>
+                <Modal
+                    open={openCheckConfirm}
+                    onClose={() => setOpenCheckConfirm(false)}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <div className={cx("text-all")} style={{ padding: 10, marginTop: 300, marginLeft: 750, background: "white", width: 500 }}>
+                        <div style={{ display: 'grid' }}>
+                            <td style={{ fontWeight: 'bold', fontSize: "3rem", marginLeft: 120, color: 'red' }}>Notification</td>
+                        </div>
+                        <div style={{ display: 'grid' }}>
+                            <td style={{ fontWeight: 'bold', fontSize: "2rem", color: 'black' }}>{messageConfirm}</td>
+                        </div>
+                        <div style={{ color: "white" }}>123</div>
+                        <div style={{ marginTop: 50 }}>
+                            {orderBeatDetails.status === 0 ?
+                                <Button onClick={() => acceptAnOrder()} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50, marginLeft: 100 }} variant="contained">Yes</Button>
+                                : orderBeatDetails.status === 2 ? <Button onClick={() => sendBeatToCus()} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50, marginLeft: 100 }} variant="contained">Yes</Button>
+                                    : <div></div>}
+                            <Button onClick={() => setOpenCheckConfirm(false)} style={{ backgroundColor: "red", width: 100, height: 50 }} variant="contained">No</Button>
+                        </div>
+
+
+                    </div>
+                </Modal>
+                <Modal
+                    open={openCheckReject}
+                    onClose={() => setOpenCheckReject(false)}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <div className={cx("text-all")} style={{ padding: 10, marginTop: 300, marginLeft: 750, background: "white", width: 500 }}>
+                        <div style={{ display: 'grid' }}>
+                            <td style={{ fontWeight: 'bold', fontSize: "3rem", marginLeft: 120, color: 'red' }}>Notification</td>
+                        </div>
+                        <div style={{ display: 'grid' }}>
+                            <td style={{ fontWeight: 'bold', fontSize: "2rem", color: 'black' }}>{messageReject}</td>
+                        </div>
+                        <div style={{ color: "white" }}>123</div>
+                        <div style={{ marginTop: 50 }}>
+                            {orderBeatDetails.status === 0 ?
+                                <Button onClick={() => rejectAnOrder()} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50, marginLeft: 100 }} variant="contained">Yes</Button>
+                                : orderBeatDetails.status === 1 ? <Button onClick={() => rejectAnOrder()} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50, marginLeft: 100 }} variant="contained">Yes</Button>
+                                    : orderBeatDetails.status === 3 ? <Button onClick={() => rejectTheBeat()} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50, marginLeft: 100 }} variant="contained">Yes</Button>
+                                        : <div></div>}
+                            <Button onClick={() => setOpenCheckReject(false)} style={{ backgroundColor: "red", width: 100, height: 50 }} variant="contained">No</Button>
                         </div>
 
 
@@ -421,9 +491,11 @@ function CreateOrderBeat() {
                 >
                     <div className={cx("text-all")} style={{ padding: 10, marginTop: 300, marginLeft: 750, background: "white", width: 450 }}>
                         <div style={{ display: 'grid' }}>
-                            <td style={{ fontWeight: 'bold', fontSize: "3rem", marginLeft: 120, color: 'red' }}>Description</td>
+                            <td style={{ fontWeight: 'bold', fontSize: "3rem", marginLeft: 120, color: 'red' }}>Notification</td>
                         </div>
                         <textarea className={cx("text-des")} style={{ resize: 'none', width: '385px', border: 1, height: 500, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12, fontSize: 20 }} value={messagePolicy} onChange={(e) => setDescription(e.target.value)} readOnly />
+
+
                     </div>
                 </Modal>
                 <Backdrop

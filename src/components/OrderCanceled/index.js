@@ -57,7 +57,7 @@ function OrderCanceled({id, status, role, beatName, setOpenModal, price}) {
                     {/* Price */}
                     {status === -2 ? 
                     <div>
-                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price</td>
+                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price Prepaid by Customer ($)</td>
                         <div className={cx("input")}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +75,7 @@ function OrderCanceled({id, status, role, beatName, setOpenModal, price}) {
                                 type="number"
                                 placeholder="Price"
                                 className={cx("input-text")}
-                                value={price}
+                                value={price * 15 / 100}
                                 readOnly
                             />
                         </div>
@@ -138,7 +138,7 @@ function OrderCanceled({id, status, role, beatName, setOpenModal, price}) {
                     {/* Price */}
                     {status === -2 ? 
                     <div>
-                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price</td>
+                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price Prepaid by Customer ($)</td>
                         <div className={cx("input")}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -156,7 +156,7 @@ function OrderCanceled({id, status, role, beatName, setOpenModal, price}) {
                                 type="number"
                                 placeholder="Price"
                                 className={cx("input-text")}
-                                value={price}
+                                value={price * 15 / 100}
                                 readOnly
                             />
                         </div>

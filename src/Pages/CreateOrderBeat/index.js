@@ -15,7 +15,7 @@ import NotFound from "../NotFound";
 const cx = classNames.bind(styles);
 function CreateOrderBeat() {
     const navigate = useNavigate()
-    let messagePolicy = "*Customer\n- Customer can update the order if only the order is on processing\n- Customer must prepay 30% of the price of the order before approving the musician to create the beat\n- If customer rejects the beat, customer will lose 30% the money that customer have paid before\n\n*Musician\n- Musician can reject the order if only the order is on processing"
+    let messagePolicy = "*Customer\n- Customer can update the order if only the order is in processing\n- Customer must prepay 15% of the price of the order before approving the musician to create the beat\n- If customer rejects the beat, customer will lose 15% the money that customer have paid before\n- Customer can hear the demo version of the beat before deciding to pay for full version\n- If the musician provides wrong beat or breaks any rules of the order, customer can report the musician"
     // const [orderID, setOrderID] = useState("");
     // const [username, setUserName] = useState("");
     const token = useToken();
@@ -32,8 +32,9 @@ function CreateOrderBeat() {
     const [openSuccessSnackBar, setOpenSuccessSnackBar] = useState(false);
     const [openFailedSnackBar, setOpenFailedSnackBar] = useState(false);
     const [openModal, setOpenModal] = useState(false);
-    const [openPolicyModal, setOpenPolicyModal] = useState(false)
+    const [openPolicyModal, setOpenPolicyModal] = useState(false);
     const [checkPolicy, setCheckPolicy] = useState(false);
+    const [openCheckCreate, setOpenCheckCreate] = useState(false);
     console.log(msId)
 
 
@@ -53,17 +54,20 @@ function CreateOrderBeat() {
     const handleCreate = async () => {
         if(!beatName || !description || !msId){
             setOpenFailedSnackBar(true)
+            setOpenCheckCreate(false)
             setMessageFailed("All fields must not be null!")
             return
         }
         if(!checkPolicy){
             setOpenFailedSnackBar(true)
+            setOpenCheckCreate(false)
             setMessageFailed("You must agree with our policy before using this function!")
             return
         }
         await axiosInstance.post("http://localhost:8080/api/v1/request/beat/new",{userRequest:userId, msId: msId, beatName: beatName, description: description})
         .then((res) => {
             setOpenSuccessSnackBar(true)
+            setOpenCheckCreate(false)
             setMessageSuccess("Create successfully")
             setTimeout(() => {
                 navigate("/ordertimeline")
@@ -71,6 +75,7 @@ function CreateOrderBeat() {
         })
         .catch((error) => {
             setOpenFailedSnackBar(true)
+            setOpenCheckCreate(false)
             setMessageFailed("Create failed!")
             console.log(error)
         })
@@ -151,7 +156,7 @@ function CreateOrderBeat() {
           </p>
         )} */}
 
-                        <Button variant="contained" className={cx("input-update", "submit")} onClick={handleCreate} >
+                        <Button variant="contained" className={cx("input-update", "submit")} onClick={() => setOpenCheckCreate(true)} >
                             <input style={{ borderRadius: 30 }}
                                 type="submit"
                                 value="Create"
@@ -186,6 +191,28 @@ function CreateOrderBeat() {
 
                         </div>
                     </Modal>
+                    <Modal
+                    open={openCheckCreate}
+                    onClose={() => setOpenCheckCreate(false)}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <div className={cx("text-all")} style={{ padding: 10, marginTop: 300, marginLeft: 750, background: "white", width: 500 }}>
+                        <div style={{ display: 'grid' }}>
+                            <td style={{ fontWeight: 'bold', fontSize: "3rem", marginLeft: 120, color: 'red' }}>Notification</td>
+                        </div>  
+                            <div style={{ display: 'grid' }}>
+                                <td style={{ fontWeight: 'bold', fontSize: "2rem", color: 'black' }}>Are you sure you want to create this order?</td>
+                            </div>    
+                        <div style={{ color: "white" }}>123</div>
+                        <div style={{ marginTop: 50 }}>
+                            <Button onClick={() => handleCreate()} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50, marginLeft: 100 }} variant="contained">Yes</Button>
+                            <Button onClick={() => setOpenCheckCreate(false)} style={{ backgroundColor: "red", width: 100, height: 50 }} variant="contained">No</Button>
+                        </div>
+
+
+                    </div>
+                </Modal>
                     <Modal
                     open={openPolicyModal}
                     onClose={() => setOpenPolicyModal(false)}

@@ -226,7 +226,7 @@
 .part2>td {
     display: flex;
     justify-content: center;
-    margin-left: -400px;
+    margin-left: -370px;
     margin-top: 45px;
     display: flex;
 }
@@ -266,6 +266,19 @@
         height: 60px;
         border: none;
         background-color: rgb(39, 214, 39);
+        color: white;
+        font-family: inter;
+        border-radius: 5px;
+        cursor: pointer;
+        .button-save-details2:hover{
+            background-color: red;
+        }
+    }
+    .button-save-details3 {
+        width: 120px;
+        height: 60px;
+        border: none;
+        background-color: rgb(214, 144, 39);
         color: white;
         font-family: inter;
         border-radius: 5px;

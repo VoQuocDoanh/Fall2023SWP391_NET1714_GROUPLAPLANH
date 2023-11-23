@@ -6,7 +6,7 @@ import { Button, Checkbox } from "@mui/material";
 import NotFound from "@/Pages/NotFound";
 
 const cx = classNames.bind(styles);
-function OrderProcess({ id, status, role, description, beatName, setBeatName, setOpenModal, price, setPrice, handleUpdate, acceptAnOrder, rejectAnOrder, checkPolicy, setCheckPolicy, setOpenPolicyModal }) {
+function OrderProcess({ id, status, role, description, beatName, setBeatName, setOpenModal, price, setPrice, handleUpdate, checkPolicy, setCheckPolicy, setOpenPolicyModal, setOpenCheckConfirm, setMessageConfirm, setOpenCheckReject, setMessageReject }) {
     //CUS
     { console.log(role) }
     if (status === 0) {
@@ -64,14 +64,7 @@ function OrderProcess({ id, status, role, description, beatName, setBeatName, se
                             />
                         </Button>
                     </div>
-                    <div style={{ display: "flex", marginTop: 100 }}>
-                        <Checkbox
-                            checked={checkPolicy}
-                            onChange={() => setCheckPolicy(!checkPolicy)}
-                            inputProps={{ 'aria-label': 'controlled' }}
-                        />
-                        <h3 style={{ marginTop: 5 }}>I agree to <a onClick={() => setOpenPolicyModal(true)} style={{ cursor: "pointer", color: "blue" }}> the website's policies </a></h3>
-                    </div>
+
                 </div >
             );
         }
@@ -80,7 +73,7 @@ function OrderProcess({ id, status, role, description, beatName, setBeatName, se
             return (
                 <div>
                     <h1 className={cx("form-heading")}>Order Details</h1>
-                    <h3 style={{ color: "green" }}>Processing...</h3>
+                    <h3 style={{ color: "green" }}>Provide the price for this order if you want to accept this order</h3>
                     {/* Form */}
                     <div className={cx("form")}>
                         {/* BeatName */}
@@ -119,7 +112,7 @@ function OrderProcess({ id, status, role, description, beatName, setBeatName, se
                         </div>
                         {/* Price */}
                         <div>
-                            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price</td>
+                            <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price ($)</td>
                             <div className={cx("input")}>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -142,6 +135,7 @@ function OrderProcess({ id, status, role, description, beatName, setBeatName, se
                                     className={cx("input-text")}
                                     value={price}
                                     onChange={(e) => setPrice(e.target.value)}
+                                    min={0}
                                 />
                             </div>
                         </div>
@@ -150,25 +144,27 @@ function OrderProcess({ id, status, role, description, beatName, setBeatName, se
             {error.beatname}
           </p>
         )} */}
+
+                        <div style={{ display: "flex", marginTop: 100 }}>
+                            <Checkbox
+                                checked={checkPolicy}
+                                onChange={() => setCheckPolicy(!checkPolicy)}
+                                inputProps={{ 'aria-label': 'controlled' }}
+                            />
+                            <h3 style={{ marginTop: 5 }}>I agree to <a onClick={() => setOpenPolicyModal(true)} style={{ cursor: "pointer", color: "blue" }}> the website's policies </a></h3>
+                        </div>
                         <div style={{ marginTop: 50 }}>
-                            <Button onClick={() => acceptAnOrder()} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50 }} variant="contained">Accept</Button>
-                            <Button onClick={() => rejectAnOrder()} style={{ backgroundColor: "red", width: 100, height: 50 }} variant="contained">Reject</Button>
+                            <Button onClick={() => [setOpenCheckConfirm(true), setMessageConfirm("Are you sure you want to accept this order?")]} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50 }} variant="contained">Accept</Button>
+                            <Button onClick={() => [setOpenCheckReject(true), setMessageReject("Are you sure you want to reject this order?")]} style={{ backgroundColor: "red", width: 100, height: 50 }} variant="contained">Reject</Button>
                         </div>
                     </div>
-                    <div style={{ display: "flex", marginTop: 100 }}>
-                        <Checkbox
-                            checked={checkPolicy}
-                            onChange={() => setCheckPolicy(!checkPolicy)}
-                            inputProps={{ 'aria-label': 'controlled' }}
-                        />
-                        <h3 style={{ marginTop: 5 }}>I agree to <a onClick={() => setOpenPolicyModal(true)} style={{ cursor: "pointer", color: "blue" }}> the website's policies </a></h3>
-                    </div>
+
                 </div >
             )
         }
     } else {
         return (
-        <NotFound />
+            <NotFound />
         )
     }
 }

@@ -6,7 +6,7 @@ import { Button, Checkbox } from "@mui/material";
 import NotFound from "@/Pages/NotFound";
 
 const cx = classNames.bind(styles);
-function OrderPayment({ id, status, role, beatName, setOpenModal, setOpenCheckPaymentDemo, price, rejectAnOrder, checkPolicy, setCheckPolicy, setOpenPolicyModal }) {
+function OrderPayment({ id, status, role, beatName, setOpenModal, setOpenCheckPaymentDemo, price, setOpenCheckReject, setMessageReject }) {
     localStorage.setItem("method", JSON.stringify("demo"))
     localStorage.setItem("id", JSON.stringify(id))
     //CUS
@@ -16,7 +16,7 @@ function OrderPayment({ id, status, role, beatName, setOpenModal, setOpenCheckPa
         return (
             <div>
                 <h1 className={cx("form-heading")}>Order Details</h1>
-                <h3 style={{ color: "green" }}>Wating for payment...</h3>
+                <h3 style={{ color: "green" }}>Musician has accepted your order and has provided the price for this order</h3>
                 {/* Form */}
                 <div className={cx("form")}>
                     {/* BeatName */}
@@ -54,7 +54,7 @@ function OrderPayment({ id, status, role, beatName, setOpenModal, setOpenCheckPa
                     </div>
                     {/* Price */}
                     <div>
-                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price</td>
+                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price ($)</td>
                         <div className={cx("input")}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -79,18 +79,10 @@ function OrderPayment({ id, status, role, beatName, setOpenModal, setOpenCheckPa
                     </div>
                     <div style={{ marginTop: 50 }}>
                         <Button onClick={() => setOpenCheckPaymentDemo(true)} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50 }} variant="contained">Accept</Button>
-                        <Button onClick={() => rejectAnOrder()} style={{ backgroundColor: "red", width: 100, height: 50 }} variant="contained">Reject</Button>
+                        <Button onClick={() => [setOpenCheckReject(true), setMessageReject("Are you sure you want to reject this order?")]} style={{ backgroundColor: "red", width: 100, height: 50 }} variant="contained">Reject</Button>
                     </div>
 
                 </div >
-                <div style={{ display: "flex", marginTop: 100 }}>
-                    <Checkbox
-                        checked={checkPolicy}
-                        onChange={() => setCheckPolicy(!checkPolicy)}
-                        inputProps={{ 'aria-label': 'controlled' }}
-                    />
-                    <h3 style={{ marginTop: 5 }}>I agree to <a onClick={() => setOpenPolicyModal(true)} style={{ cursor: "pointer", color: "blue" }}> the website's policies </a></h3>
-                </div>
             </div>
         );
     }
@@ -99,7 +91,7 @@ function OrderPayment({ id, status, role, beatName, setOpenModal, setOpenCheckPa
         return (
             <div>
                 <h1 className={cx("form-heading")}>Order Details</h1>
-                <h3 style={{ color: "green" }}>Wating for payment...</h3>
+                <h3 style={{ color: "green" }}>Waiting for Customer's payment...</h3>
                 {/* Form */}
                 <div className={cx("form")}>
                     {/* BeatName */}
@@ -137,7 +129,7 @@ function OrderPayment({ id, status, role, beatName, setOpenModal, setOpenCheckPa
                     </div>
                     {/* Price */}
                     <div>
-                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price</td>
+                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price ($)</td>
                         <div className={cx("input")}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

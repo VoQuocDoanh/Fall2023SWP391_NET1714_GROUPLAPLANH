@@ -44,6 +44,7 @@ import useToken from "@/authorization/useToken";
 import jwtDecode from "jwt-decode";
 import axiosInstance from "@/authorization/axiosInstance";
 import NotFound from "../NotFound";
+import NotFoundChakraUI from "@/components/NotFoundChakraUI";
 
 export const SongContext = createContext();
 
@@ -255,7 +256,8 @@ function SongDetail() {
     await axiosInstance.post(`http://localhost:8080/api/v1/admin/ban/song/${songData.id}`)
       .then((res) => {
         showSuccessToast("Ban Successfully")
-        setReload(true)
+        setReload(true)    
+        navigate("/bannedsong")
       })
       .catch((error) => {
         showFailedToast("Ban Failed!")
@@ -655,7 +657,7 @@ if(songData){
   );}
   else{
     return (
-      <NotFound/>
+      <NotFoundChakraUI/>
     )
   }
 }

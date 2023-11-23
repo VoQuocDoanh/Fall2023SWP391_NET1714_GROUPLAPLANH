@@ -6,7 +6,7 @@ import { Button, Checkbox } from "@mui/material";
 import NotFound from "@/Pages/NotFound";
 
 const cx = classNames.bind(styles);
-function OrderMakeAbeat({ id, status, role, beatName, setOpenModal, price, beatSoundDemoUrl, beatSoundFullUrl, handleBeatSoundFullChange, handleBeatSoundDemoChange, sendBeatToCus, checkPolicy, setCheckPolicy, setOpenPolicyModal }) {
+function OrderMakeAbeat({ id, status, role, beatName, setOpenModal, price, beatSoundDemoUrl, beatSoundFullUrl, handleBeatSoundFullChange, handleBeatSoundDemoChange, sendBeatToCus, setOpenCheckConfirm, setMessageConfirm }) {
     //CUS
     { console.log(role) }
     if(status === 2){
@@ -14,7 +14,7 @@ function OrderMakeAbeat({ id, status, role, beatName, setOpenModal, price, beatS
         return (
             <div>
                 <h1 className={cx("form-heading")}>Order Details</h1>
-                <h3 style={{ color: "green" }}>Waiting to make the beat...</h3>
+                <h3 style={{ color: "green" }}>Waiting for musician to make the beat...</h3>
                 {/* Form */}
                 <div className={cx("form")}>
                     {/* BeatName */}
@@ -52,7 +52,7 @@ function OrderMakeAbeat({ id, status, role, beatName, setOpenModal, price, beatS
                     </div>
                     {/* Price */}
                     <div>
-                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price</td>
+                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price Prepaid by Customer ($)</td>
                         <div className={cx("input")}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +70,7 @@ function OrderMakeAbeat({ id, status, role, beatName, setOpenModal, price, beatS
                                 type="number"
                                 placeholder="Price"
                                 className={cx("input-text")}
-                                value={price}
+                                value={price * 15 / 100}
                                 readOnly
                             />
                         </div>
@@ -89,7 +89,7 @@ function OrderMakeAbeat({ id, status, role, beatName, setOpenModal, price, beatS
         return (
             <div>
                 <h1 className={cx("form-heading")}>Order Details</h1>
-                <h3 style={{ color: "green" }}>Waiting to make the beat...</h3>
+                <h3 style={{ color: "green" }}>Provide your beat to Customer...</h3>
                 {/* Form */}
                 <div className={cx("form")}>
                     {/* BeatName */}
@@ -127,7 +127,7 @@ function OrderMakeAbeat({ id, status, role, beatName, setOpenModal, price, beatS
                     </div>
                     {/* Price */}
                     <div>
-                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price</td>
+                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price Prepaid by Customer ($)</td>
                         <div className={cx("input")}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -145,7 +145,7 @@ function OrderMakeAbeat({ id, status, role, beatName, setOpenModal, price, beatS
                                 type="number"
                                 placeholder="Price"
                                 className={cx("input-text")}
-                                value={price}
+                                value={price * 15 / 100}
                                 readOnly
                             />
                         </div>
@@ -166,7 +166,7 @@ function OrderMakeAbeat({ id, status, role, beatName, setOpenModal, price, beatS
                                         className={cx("input-text", "img-click")}
                                         onChange={(e) => handleBeatSoundDemoChange(e)}
                                     />
-                                    <span className={cx("file-custom")}>{beatSoundDemoUrl}</span>
+                                    <span style={{fontSize:15}} className={cx("file-custom")}>{beatSoundDemoUrl}</span>
                                 </label>
                             </div>
                         </div>
@@ -188,7 +188,7 @@ function OrderMakeAbeat({ id, status, role, beatName, setOpenModal, price, beatS
                                         className={cx("input-text", "img-click")}
                                         onChange={(e) => handleBeatSoundFullChange(e)}
                                     />
-                                    <span className={cx("file-custom")}>{beatSoundFullUrl}</span>
+                                    <span style={{fontSize:15}} className={cx("file-custom")}>{beatSoundFullUrl}</span>
                                 </label>
                             </div>
                         </div>
@@ -199,21 +199,13 @@ function OrderMakeAbeat({ id, status, role, beatName, setOpenModal, price, beatS
           </p>
         )} */}
 
-                    <Button variant="contained" className={cx("input-update", "submit")} onClick={() => sendBeatToCus()} >
+                    <Button variant="contained" className={cx("input-update", "submit")} onClick={() => [setOpenCheckConfirm(true), setMessageConfirm("Are you sure you want to send this beat to Customer?")]} >
                         <input style={{ borderRadius: 30 }}
                             type="submit"
                             value="Send"
                             className={cx("input-text-update", "input-submit")}
                         />
                     </Button>
-                </div>
-                <div style={{ display: "flex", marginTop: 100 }}>
-                    <Checkbox
-                        checked={checkPolicy}
-                        onChange={() => setCheckPolicy(!checkPolicy)}
-                        inputProps={{ 'aria-label': 'controlled' }}
-                    />
-                    <h3 style={{ marginTop: 5 }}>I agree to <a onClick={() => setOpenPolicyModal(true)} style={{ cursor: "pointer", color: "blue" }}> the website's policies </a></h3>
                 </div>
             </div >
         )
