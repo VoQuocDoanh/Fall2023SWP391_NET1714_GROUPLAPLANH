@@ -15,7 +15,7 @@ import NotFound from "../NotFound";
 const cx = classNames.bind(styles);
 function CreateOrderBeat() {
     const navigate = useNavigate()
-    let messagePolicy = "*Customer\n- Customer can update the order if only the order is in processing\n- Customer must prepay 15% of the price of the order before approving the musician to create the beat\n- If customer rejects the beat, customer will lose 15% the money that customer have paid before\n- Customer can hear the demo version of the beat before deciding to pay for full version\n- If the musician provides wrong beat or breaks any rules of the order, customer can report the musician"
+    let messagePolicy = "*Customer\n- The customer can update the order only if it is in the processing stage.\n- The customer must prepay 15% of the order price before approving the musician to create the beat.\n- If the customer rejects the beat, they will lose 15% of the money paid in advance.\n- The customer can listen to the demo version of the beat before deciding to pay for the full version.\n- If the musician provides the wrong beat or violates any rules of the order, the customer can report the musician."
     // const [orderID, setOrderID] = useState("");
     // const [username, setUserName] = useState("");
     const token = useToken();
@@ -119,7 +119,7 @@ function CreateOrderBeat() {
                         {/* Choosing musician */}
                         <div>
                             <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Musician Name</td>
-                            <FormControl variant="filled" style={{ width: 295 }}>
+                            <FormControl variant="filled" style={{ width: 295, marginTop: '10px' }}>
                                 <InputLabel style={{ fontSize: 20 }} id="demo-simple-select-label">Musician Name</InputLabel>
                                 <Select
                                     style={{ fontSize: 20 }}
@@ -140,7 +140,7 @@ function CreateOrderBeat() {
                         {/* Description */}
                         <div style={{ marginRight: 200 }}>
                             <td style={{ fontSize: '1.6rem', fontWeight: 'bold', fontFamily: 'fredoka one' }}>Description</td>
-                            <Button style={{ width: 100, height: 50, fontSize: 10 }} variant="outlined" onClick={() => setOpenModal(true)} >View</Button>
+                            <Button style={{ width: 100, height: 50, fontSize: 10, marginTop: '10px'}} variant="outlined" onClick={() => setOpenModal(true)} >View</Button>
                         </div>
                         <div style={{display:"flex", marginTop:100}}>
                         <Checkbox
@@ -221,7 +221,7 @@ function CreateOrderBeat() {
                 >
                     <div className={cx("text-all")} style={{ padding: 10, marginTop: 300, marginLeft: 750, background: "white", width: 450 }}>
                         <div style={{ display: 'grid' }}>
-                            <td style={{ fontWeight: 'bold', fontSize: "3rem", marginLeft: 120, color: 'red' }}>Description</td>
+                            <td style={{ fontWeight: 'bold', fontSize: "3rem", marginLeft: 120, color: 'red' }}>Notification</td>
                         </div>              
                             <textarea className={cx("text-des")} style={{ resize: 'none', width: '385px', border: 1, height: 500, marginLeft: 24, marginTop: 20, marginBottom: 20, padding: 20, outline: '1px solid #E5E4E4', borderRadius: 12, fontSize:20 }} value={messagePolicy} onChange={(e) => setDescription(e.target.value)} readOnly />
                     </div>
