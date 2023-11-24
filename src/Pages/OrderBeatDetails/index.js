@@ -32,7 +32,7 @@ function CreateOrderBeat() {
     let userId = ""
     let role = ""
 
-    let messagePolicy = "*Musician\n- The musician can reject the order only if it is in the processing stage.\n- The musician guarantees the confidentiality of all content created for the customer, with exclusive rights granted for its use. Posting on websites or resale to others is strictly prohibited.\n- The musician can receive payment for the order only after sending the beat to the system."
+    let messagePolicy = "*Musician\n- The musician can reject the order only if it is in the processing stage.\n- The musician guarantees the confidentiality of all content created for the customer, with exclusive rights granted for its use\n- After solding the beat, posting on websites or resale to others is strictly prohibited.\n- The musician can receive payment for the order only after sending the beat to the system.\n- If musician's is rejected by Customer, musician can still upload this beat to the website to sell this beat to other customers"
     if (token) {
         userId = jwtDecode(token).sub
         role = jwtDecode(token).role
