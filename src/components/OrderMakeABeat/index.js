@@ -4,17 +4,20 @@ import classNames from "classnames/bind";
 import styles from "./OrderMakeABeat.module.scss";
 import { Button, Checkbox } from "@mui/material";
 import NotFound from "@/Pages/NotFound";
+import NotFoundMaterialUI from "../NotFoundMaterialUI";
+import { useRef } from "react";
 
 const cx = classNames.bind(styles);
-function OrderMakeAbeat({ id, status, role, beatName, setOpenModal, price, beatSoundDemoUrl, beatSoundFullUrl, handleBeatSoundFullChange, handleBeatSoundDemoChange, sendBeatToCus, setOpenCheckConfirm, setMessageConfirm }) {
+function OrderMakeAbeat({ id, status, role, beatName, setOpenModal, price, beatSoundDemo, beatSoundFullUrl, handleBeatSoundFullChange, setOpenCheckConfirm, setMessageConfirm }) {
     //CUS
+    const audioRef = useRef()
     { console.log(role) }
-    if(status === 2){
+    if(status === 4){
     if (role === "CUS") {
         return (
             <div>
                 <h1 className={cx("form-heading")}>Order Details</h1>
-                <h3 style={{ color: "green" }}>Waiting for musician to make the beat...</h3>
+                <h3 style={{ color: "green" }}>Waiting for musician to make the full version of the beat...</h3>
                 {/* Form */}
                 <div className={cx("form")}>
                     {/* BeatName */}
@@ -74,6 +77,12 @@ function OrderMakeAbeat({ id, status, role, beatName, setOpenModal, price, beatS
                                 readOnly
                             />
                         </div>
+                    </div>
+                    {/* Beat Sound Demo */}
+                    <div>
+                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Beat Sound Demo</td>
+                        <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundDemo}>
+                        </audio>
                     </div>
                     {/* {error.beatname && (
           <p style={{ color: "red", marginTop: 10, paddingLeft: 5 }}>
@@ -89,7 +98,7 @@ function OrderMakeAbeat({ id, status, role, beatName, setOpenModal, price, beatS
         return (
             <div>
                 <h1 className={cx("form-heading")}>Order Details</h1>
-                <h3 style={{ color: "green" }}>Provide your beat to Customer...</h3>
+                <h3 style={{ color: "green" }}>Provide the full version of your beat to customer...</h3>
                 {/* Form */}
                 <div className={cx("form")}>
                     {/* BeatName */}
@@ -150,7 +159,13 @@ function OrderMakeAbeat({ id, status, role, beatName, setOpenModal, price, beatS
                             />
                         </div>
                     </div>
-                    {/* BeatSoundDemo*/}
+                    {/* Beat Sound Demo */}
+                    <div>
+                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Beat Sound Demo</td>
+                        <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundDemo}>
+                        </audio>
+                    </div>
+                    {/* BeatSoundDemo
                     <div className={cx('choosefile')}>
                         <td style={{ fontSize: '1.5rem', fontWeight: 'bold', marginLeft: '30px', fontFamily: 'fredoka one' }}>ChooseFileDemo</td>
                         <div className={cx("input")}>
@@ -170,7 +185,7 @@ function OrderMakeAbeat({ id, status, role, beatName, setOpenModal, price, beatS
                                 </label>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
                     {/* BeatSoundFull*/}
                     <div className={cx('choosefile')}>
@@ -212,7 +227,7 @@ function OrderMakeAbeat({ id, status, role, beatName, setOpenModal, price, beatS
     }}
     else{
         return (
-            <NotFound/>
+            <NotFoundMaterialUI/>
         )
     }
 }

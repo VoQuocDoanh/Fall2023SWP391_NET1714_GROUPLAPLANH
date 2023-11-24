@@ -27,7 +27,7 @@ function MyBeatsBox({ id, beatName, price, creatAt, beatSoundDemo, beatSoundFull
         <div className={cx("content")}>
             {/* Content left */}
             <div className={cx("content-left")}>
-                <h2 style={{marginBottom:10, fontSize:30}} className={cx("name-beat")}> {beatName} </h2>
+                <h2 style={{marginBottom:10, fontSize:25}} className={cx("name-beat")}> {beatName} </h2>
                 <div style={{marginBottom:50}} className={cx("content-bottom")}>
                     <span style={{fontSize:20}} className={cx("type-beat")}>Ordered at: {day + "/" + month + "/" + year}</span> <br />
                 </div>

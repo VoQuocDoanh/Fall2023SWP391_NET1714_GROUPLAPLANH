@@ -4,6 +4,7 @@ import classNames from "classnames/bind";
 import styles from "./OrderPayment.module.scss";
 import { Button, Checkbox } from "@mui/material";
 import NotFound from "@/Pages/NotFound";
+import NotFoundMaterialUI from "../NotFoundMaterialUI";
 
 const cx = classNames.bind(styles);
 function OrderPayment({ id, status, role, beatName, setOpenModal, setOpenCheckPaymentDemo, price, setOpenCheckReject, setMessageReject }) {
@@ -167,7 +168,7 @@ function OrderPayment({ id, status, role, beatName, setOpenModal, setOpenCheckPa
     }}
     else{
         return (
-            <NotFound/>
+            <NotFoundMaterialUI/>
         )
     }
 }

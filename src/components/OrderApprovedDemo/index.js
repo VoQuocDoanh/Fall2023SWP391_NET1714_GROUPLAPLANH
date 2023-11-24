@@ -1,23 +1,25 @@
 
 import { Link, useNavigate, useParams } from "react-router-dom";
 import classNames from "classnames/bind";
-import styles from "./OrderCompleted.module.scss";
-import { Button } from "@mui/material";
+import styles from "./OrderApprovedDemo.module.scss";
+import { Button, Checkbox } from "@mui/material";
 import { useRef } from "react";
 import NotFound from "@/Pages/NotFound";
 import NotFoundMaterialUI from "../NotFoundMaterialUI";
 
 const cx = classNames.bind(styles);
-function OrderCompleted({id, status, role, beatName, setOpenModal, price, beatSoundDemo, beatSoundFull}) {
+function OrderApprovedDemo({ id, status, role, beatName, setOpenModal, price, beatSoundDemo, setOpenCheckConfirm, setMessageConfirm, setOpenCheckReject, setMessageReject }) {
     const audioRef = useRef()
+    localStorage.setItem("method", JSON.stringify("full"))
+    localStorage.setItem("id", JSON.stringify(id))
     //CUS
-    {console.log(role)}
-    if(status === -1){
+    { console.log(role) }
+    if(status === 3){
     if (role === "CUS") {
         return (
             <div>
                 <h1 className={cx("form-heading")}>Order Details</h1>
-                <h3 style={{color:"green"}}>Completed</h3>
+                <h3 style={{ color: "green" }}>Musician has provided the demo version of the beat for you</h3>
                 {/* Form */}
                 <div className={cx("form")}>
                     {/* BeatName */}
@@ -55,7 +57,7 @@ function OrderCompleted({id, status, role, beatName, setOpenModal, price, beatSo
                     </div>
                     {/* Price */}
                     <div>
-                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price ($)</td>
+                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price Prepaid by Customer ($)</td>
                         <div className={cx("input")}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +75,7 @@ function OrderCompleted({id, status, role, beatName, setOpenModal, price, beatSo
                                 type="number"
                                 placeholder="Price"
                                 className={cx("input-text")}
-                                value={price}
+                                value={price * 15 / 100}
                                 readOnly
                             />
                         </div>
@@ -84,11 +86,9 @@ function OrderCompleted({id, status, role, beatName, setOpenModal, price, beatSo
                         <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundDemo}>
                         </audio>
                     </div>
-                    {/* Beat Sound Full */}
-                    <div>
-                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Beat Sound Full</td>
-                        <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundFull}>
-                        </audio>
+                    <div style={{ marginTop: 50 }}>
+                        <Button onClick={() => [setOpenCheckConfirm(true), setMessageConfirm("Are you sure you want to accept the demo version of this beat?")]} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50 }} variant="contained">Accept</Button>
+                        <Button onClick={() => [setOpenCheckReject(true), setMessageReject("Are you sure you want to cancel this order? \n (You will lose 15% of your prepaid for this order")]} style={{ backgroundColor: "red", width: 100, height: 50 }} variant="contained">Reject</Button>
                     </div>
                     {/* {error.beatname && (
           <p style={{ color: "red", marginTop: 10, paddingLeft: 5 }}>
@@ -104,7 +104,7 @@ function OrderCompleted({id, status, role, beatName, setOpenModal, price, beatSo
         return (
             <div>
                 <h1 className={cx("form-heading")}>Order Details</h1>
-                <h3 style={{color:"green"}}>Completed</h3>
+                <h3 style={{ color: "green" }}>Waiting for Customer approve your BeatDemo...</h3>
                 {/* Form */}
                 <div className={cx("form")}>
                     {/* BeatName */}
@@ -142,7 +142,7 @@ function OrderCompleted({id, status, role, beatName, setOpenModal, price, beatSo
                     </div>
                     {/* Price */}
                     <div>
-                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price ($)</td>
+                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Price Prepaid by Customer ($)</td>
                         <div className={cx("input")}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -160,7 +160,7 @@ function OrderCompleted({id, status, role, beatName, setOpenModal, price, beatSo
                                 type="number"
                                 placeholder="Price"
                                 className={cx("input-text")}
-                                value={price}
+                                value={price * 15 / 100}
                                 readOnly
                             />
                         </div>
@@ -169,12 +169,6 @@ function OrderCompleted({id, status, role, beatName, setOpenModal, price, beatSo
                     <div>
                         <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Beat Sound Demo</td>
                         <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundDemo}>
-                        </audio>
-                    </div>
-                    {/* Beat Sound Full */}
-                    <div>
-                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Beat Sound Full</td>
-                        <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundFull}>
                         </audio>
                     </div>
                     {/* {error.beatname && (
@@ -194,4 +188,4 @@ function OrderCompleted({id, status, role, beatName, setOpenModal, price, beatSo
 }
 
 
-export default OrderCompleted;
+export default OrderApprovedDemo;

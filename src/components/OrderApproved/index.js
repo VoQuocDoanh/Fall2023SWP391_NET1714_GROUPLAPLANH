@@ -5,20 +5,23 @@ import styles from "./OrderApproved.module.scss";
 import { Button, Checkbox } from "@mui/material";
 import { useRef } from "react";
 import NotFound from "@/Pages/NotFound";
+import NotFoundMaterialUI from "../NotFoundMaterialUI";
 
 const cx = classNames.bind(styles);
-function OrderApproved({ id, status, role, beatName, setOpenModal, price, beatSoundDemo, setOpenCheckPaymentFull, setOpenCheckReject, setMessageReject }) {
+function OrderApproved({ id, status, role, beatName, setOpenModal, price, beatSoundDemo, beatSoundFull, setOpenCheckPaymentFull, setOpenCheckReject, setMessageReject }) {
     const audioRef = useRef()
     localStorage.setItem("method", JSON.stringify("full"))
     localStorage.setItem("id", JSON.stringify(id))
     //CUS
     { console.log(role) }
-    if(status === 3){
+    if(status === 5){
     if (role === "CUS") {
         return (
             <div>
                 <h1 className={cx("form-heading")}>Order Details</h1>
-                <h3 style={{ color: "green" }}>Musician has provided the beat for you</h3>
+                <h3 style={{ color: "green" }}>Musician has provided the full version of the beat.</h3>
+                <h3 style={{ color: "green" }}>You need to pay the remaining price of the order to get the full version of the beat.</h3>
+
                 {/* Form */}
                 <div className={cx("form")}>
                     {/* BeatName */}
@@ -103,7 +106,7 @@ function OrderApproved({ id, status, role, beatName, setOpenModal, price, beatSo
         return (
             <div>
                 <h1 className={cx("form-heading")}>Order Details</h1>
-                <h3 style={{ color: "green" }}>Waiting for Customer's approval...</h3>
+                <h3 style={{ color: "green" }}>Waiting for Customer's payment</h3>
                 {/* Form */}
                 <div className={cx("form")}>
                     {/* BeatName */}
@@ -170,6 +173,12 @@ function OrderApproved({ id, status, role, beatName, setOpenModal, price, beatSo
                         <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundDemo}>
                         </audio>
                     </div>
+                    {/* Beat Sound Full */}
+                    <div>
+                        <td style={{ fontSize: '1.6rem', fontWeight: 'bold', marginLeft: '28px', fontFamily: 'fredoka one' }}>Beat Sound Full</td>
+                        <audio className={cx("audio")} id="audio" ref={audioRef} controls src={beatSoundFull}>
+                        </audio>
+                    </div>
                     {/* {error.beatname && (
           <p style={{ color: "red", marginTop: 10, paddingLeft: 5 }}>
             {error.beatname}
@@ -181,7 +190,7 @@ function OrderApproved({ id, status, role, beatName, setOpenModal, price, beatSo
     }}
     else{
         return (
-            <NotFound/>
+            <NotFoundMaterialUI/>
         )
     }
 }

@@ -20,6 +20,8 @@ import OrderCompleted from "@/components/OrderCompleted";
 import OrderCanceled from "@/components/OrderCanceled";
 import { CheckBox } from "@mui/icons-material";
 import { StepStatus } from "@chakra-ui/react";
+import OrderMakeAbeatDemo from "@/components/OrderMakeABeatDemo";
+import OrderApprovedDemo from "@/components/OrderApprovedDemo";
 const cx = classNames.bind(styles);
 function CreateOrderBeat() {
     const { id } = useParams()
@@ -163,6 +165,23 @@ function CreateOrderBeat() {
             })
     }
 
+    const approvedDemoBeat = async () => {
+        setOpenCheckConfirm(false)
+        await axiosInstance.put("http://localhost:8080/api/v1/request/beat/beat/demo", { id: id })
+            .then((res) => {
+                setOpenSuccessSnackBar(true)
+                setMessageSuccess("Approve successfully")
+                setTimeout(() => {
+                    navigate("/ordertimeline")
+                }, 500)
+            })
+            .catch((error) => {
+                setOpenFailedSnackBar(true)
+                setMessageFailed("Approve failed!")
+                console.log(error)
+            })
+    }
+
     const handleBeatSoundDemoChange = (e) => {
         const MIN_FILE_SIZE = 102400
         const MAX_FILE_SIZE = 1048576
@@ -208,20 +227,52 @@ function CreateOrderBeat() {
         setBeatSoundFullUrl(selectedFile?.name)
     }
 
-    const sendBeatToCus = async () => {
+    const sendBeatToCusDemo = async () => {
         setOpen(true)
         setOpenCheckConfirm(false)
         const formData = new FormData();
-        if (!beatSoundDemo || !beatSoundFull) {
+        if (!beatSoundDemo) {
             setOpenFailedSnackBar(true)
-            setMessageFailed("All beatSound fields must not be null!")
+            setMessageFailed("BeatSoundDemo field must not be null!")
             setOpen(false)
             return
         }
         formData.append('json', new Blob([JSON.stringify({ id: id, msId: userId })], { type: 'application/json' }));
-        formData.append('file1', beatSoundFull);
-        formData.append('file2', beatSoundDemo)
-        await axiosInstance.patch("http://localhost:8080/api/v1/request/beat", formData, {
+        formData.append('file', beatSoundDemo);
+        await axiosInstance.patch("http://localhost:8080/api/v1/request/beat/demo", formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
+            .then((res) => {
+                setOpenSuccessSnackBar(true)
+                setMessageSuccess("Send beat successfully")
+                setOpen(false)
+                setTimeout(() => {
+                    navigate("/ordertimeline")
+                }, 500)
+            })
+            .catch((error) => {
+                setOpenFailedSnackBar(true)
+                setMessageFailed("Send beat failed!")
+                setOpen(false)
+                console.log(error)
+            })
+    }
+
+    const sendBeatToCusFull = async () => {
+        setOpen(true)
+        setOpenCheckConfirm(false)
+        const formData = new FormData();
+        if (!beatSoundFull) {
+            setOpenFailedSnackBar(true)
+            setMessageFailed("BeatSoundFull field must not be null!")
+            setOpen(false)
+            return
+        }
+        formData.append('json', new Blob([JSON.stringify({ id: id, msId: userId })], { type: 'application/json' }));
+        formData.append('file', beatSoundFull);
+        await axiosInstance.patch("http://localhost:8080/api/v1/request/beat/full", formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
@@ -318,14 +369,18 @@ function CreateOrderBeat() {
                             : orderBeatDetails.status === 1 ?
                                 <OrderPayment id={id} status={orderBeatDetails.status} role={role} beatName={beatName} setOpenModal={setOpenModal} price={price} setOpenCheckPaymentDemo={setOpenCheckPaymentDemo} setOpenCheckReject={setOpenCheckReject} setMessageReject={setMessageReject} />
                                 : orderBeatDetails.status === 2 ?
-                                    <OrderMakeAbeat id={id} status={orderBeatDetails.status} role={role} beatName={beatName} setOpenModal={setOpenModal} price={price} beatSoundDemoUrl={beatSoundDemoUrl} beatSoundFullUrl={beatSoundFullUrl} handleBeatSoundFullChange={handleBeatSoundFullChange} handleBeatSoundDemoChange={handleBeatSoundDemoChange} setOpenCheckConfirm={setOpenCheckConfirm} setMessageConfirm={setMessageConfirm} />
+                                    <OrderMakeAbeatDemo id={id} status={orderBeatDetails.status} role={role} beatName={beatName} setOpenModal={setOpenModal} price={price} beatSoundDemoUrl={beatSoundDemoUrl} handleBeatSoundDemoChange={handleBeatSoundDemoChange} setOpenCheckConfirm={setOpenCheckConfirm} setMessageConfirm={setMessageConfirm} />
                                     : orderBeatDetails.status === 3 ?
-                                        <OrderApproved id={id} status={orderBeatDetails.status} role={role} beatName={beatName} setOpenModal={setOpenModal} price={price} beatSoundDemo={beatSoundDemo} setOpenCheckPaymentFull={setOpenCheckPaymentFull} setOpenCheckReject={setOpenCheckReject} setMessageReject={setMessageReject} />
-                                        : orderBeatDetails.status === -1 ?
-                                            <OrderCompleted id={id} status={orderBeatDetails.status} role={role} beatName={beatName} setOpenModal={setOpenModal} price={price} beatSoundDemo={beatSoundDemo} beatSoundFull={beatSoundFull} />
-                                            : (orderBeatDetails.status === -2 || orderBeatDetails.status === -3) ?
-                                                <OrderCanceled id={id} status={orderBeatDetails.status} role={role} beatName={beatName} setOpenModal={setOpenModal} price={price} />
-                                                : <div></div>
+                                        <OrderApprovedDemo id={id} status={orderBeatDetails.status} role={role} beatName={beatName} setOpenModal={setOpenModal} price={price} beatSoundDemo={beatSoundDemo} setOpenCheckConfirm={setOpenCheckConfirm} setMessageConfirm={setMessageConfirm}  setOpenCheckReject={setOpenCheckReject} setMessageReject={setMessageReject} />
+                                        : orderBeatDetails.status === 4 ?
+                                            <OrderMakeAbeat id={id} status={orderBeatDetails.status} role={role} beatName={beatName} setOpenModal={setOpenModal} price={price} beatSoundDemo={beatSoundDemo} beatSoundFullUrl={beatSoundFullUrl} handleBeatSoundFullChange={handleBeatSoundFullChange} setOpenCheckConfirm={setOpenCheckConfirm} setMessageConfirm={setMessageConfirm} />
+                                            : orderBeatDetails.status === 5 ?
+                                                <OrderApproved id={id} status={orderBeatDetails.status} role={role} beatName={beatName} setOpenModal={setOpenModal} price={price} beatSoundDemo={beatSoundDemo} beatSoundFull={beatSoundFull} setOpenCheckPaymentFull={setOpenCheckPaymentFull} setOpenCheckReject={setOpenCheckReject} setMessageReject={setMessageReject} />
+                                                : orderBeatDetails.status === -1 ?
+                                                    <OrderCompleted id={id} status={orderBeatDetails.status} role={role} beatName={beatName} setOpenModal={setOpenModal} price={price} beatSoundDemo={beatSoundDemo} beatSoundFull={beatSoundFull} />
+                                                    : (orderBeatDetails.status === -2 || orderBeatDetails.status === -3) ?
+                                                        <OrderCanceled id={id} status={orderBeatDetails.status} role={role} beatName={beatName} setOpenModal={setOpenModal} price={price} />
+                                                        : <div></div>
                         }
                     </div>
 
@@ -449,8 +504,10 @@ function CreateOrderBeat() {
                         <div style={{ marginTop: 50 }}>
                             {orderBeatDetails.status === 0 ?
                                 <Button onClick={() => acceptAnOrder()} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50, marginLeft: 100 }} variant="contained">Yes</Button>
-                                : orderBeatDetails.status === 2 ? <Button onClick={() => sendBeatToCus()} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50, marginLeft: 100 }} variant="contained">Yes</Button>
-                                    : <div></div>}
+                                : orderBeatDetails.status === 2 ? <Button onClick={() => sendBeatToCusDemo()} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50, marginLeft: 100 }} variant="contained">Yes</Button>
+                                    : orderBeatDetails.status === 3 ? <Button onClick={() => approvedDemoBeat()} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50, marginLeft: 100 }} variant="contained">Yes</Button>
+                                        : orderBeatDetails.status === 4 ? <Button onClick={() => sendBeatToCusFull()} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50, marginLeft: 100 }} variant="contained">Yes</Button>
+                                            : <div></div>}
                             <Button onClick={() => setOpenCheckConfirm(false)} style={{ backgroundColor: "red", width: 100, height: 50 }} variant="contained">No</Button>
                         </div>
 
@@ -475,7 +532,7 @@ function CreateOrderBeat() {
                             {orderBeatDetails.status === 0 ?
                                 <Button onClick={() => rejectAnOrder()} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50, marginLeft: 100 }} variant="contained">Yes</Button>
                                 : orderBeatDetails.status === 1 ? <Button onClick={() => rejectAnOrder()} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50, marginLeft: 100 }} variant="contained">Yes</Button>
-                                    : orderBeatDetails.status === 3 ? <Button onClick={() => rejectTheBeat()} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50, marginLeft: 100 }} variant="contained">Yes</Button>
+                                    : (orderBeatDetails.status === 3 || orderBeatDetails.status === 5) ? <Button onClick={() => rejectTheBeat()} style={{ backgroundColor: "green", width: 100, height: 50, marginRight: 50, marginLeft: 100 }} variant="contained">Yes</Button>
                                         : <div></div>}
                             <Button onClick={() => setOpenCheckReject(false)} style={{ backgroundColor: "red", width: 100, height: 50 }} variant="contained">No</Button>
                         </div>

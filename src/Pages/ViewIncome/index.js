@@ -123,9 +123,9 @@ function ViewIncome() {
                     <td>{item.price}$</td>
                     {item.status === -2 ?
                       <td style={{ color: "red" }}>Canceled</td>
-                      : item.status === 3 ?
-                        <td style={{ color: "orange" }}>Prepaid</td>
-                        : <td style={{ color: "green" }}>Completed</td>}
+                      : item.status === -1 ?
+                      <td style={{ color: "green" }}>Completed</td>
+                        : <td style={{ color: "orange" }}>Prepaid</td>}
                   </tr>
                     // <CardBeatItem
                     //   id={item.id}

@@ -1,12 +1,14 @@
 .list-box {
     width: 270px;
     color: white;
+    min-height: 530px;
 }
 
 
 .card-item {
     position: relative;
     width: 100%;
+    
 
     .play-btn {
         display: none;
@@ -63,6 +65,7 @@
     width: 300px;
     border-radius: 0 0 10px 10px;
     padding-top: 15px;
+    min-height: 300px;
 
 }
 

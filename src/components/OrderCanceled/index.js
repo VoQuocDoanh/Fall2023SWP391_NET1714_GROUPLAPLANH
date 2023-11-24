@@ -4,6 +4,7 @@ import classNames from "classnames/bind";
 import styles from "./OrderCanceled.module.scss";
 import { Button } from "@mui/material";
 import NotFound from "@/Pages/NotFound";
+import NotFoundMaterialUI from "../NotFoundMaterialUI";
 
 const cx = classNames.bind(styles);
 function OrderCanceled({id, status, role, beatName, setOpenModal, price}) {
@@ -173,7 +174,7 @@ function OrderCanceled({id, status, role, beatName, setOpenModal, price}) {
     }}
     else{
         return (
-            <NotFound/>
+            <NotFoundMaterialUI/>
         )
     }
 }
