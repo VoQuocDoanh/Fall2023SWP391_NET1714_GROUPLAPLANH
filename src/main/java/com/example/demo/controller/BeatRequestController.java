@@ -38,9 +38,14 @@ public class BeatRequestController {
         return service.acceptPrice(dto);
     }
 
-    @PutMapping({"/beat"})
-    public ResponseEntity<String> acceptBeat(@RequestBody BeatRequestRequestDTO dto){
-        return service.acceptBeat(dto);
+    @PutMapping({"/beat/full"})
+    public ResponseEntity<String> acceptBeatFull(@RequestBody BeatRequestRequestDTO dto){
+        return service.acceptBeatFull(dto);
+    }
+
+    @PutMapping({"/beat/demo"})
+    public ResponseEntity<String> acceptBeatDemo(@RequestBody BeatRequestRequestDTO dto){
+        return service.acceptBeatDemo(dto);
     }
 
     @PutMapping({"/reject/request"})
@@ -53,9 +58,14 @@ public class BeatRequestController {
         return service.rejectBeat(dto);
     }
 
-    @PatchMapping({})
-    public ResponseEntity<String> updateBeat(@RequestPart(value = "file1", required = false) MultipartFile sound, @RequestPart(value = "file2", required = false)MultipartFile sound2, @Validated(BeatValidation.UpdateBeat.class) @RequestPart("json") BeatRequestRequestDTO dto) {
-        return this.service.sendBeat(sound, sound2, dto);
+    @PatchMapping({"/demo"})
+    public ResponseEntity<String> updateBeatDemo(@RequestPart(value = "file", required = false) MultipartFile sound, @Validated(BeatValidation.UpdateBeat.class) @RequestPart("json") BeatRequestRequestDTO dto) {
+        return this.service.sendBeatDemo(sound, dto);
+    }
+
+    @PatchMapping({"/full"})
+    public ResponseEntity<String> updateBeatFull(@RequestPart(value = "file", required = false) MultipartFile sound, @Validated(BeatValidation.UpdateBeat.class) @RequestPart("json") BeatRequestRequestDTO dto) {
+        return this.service.sendBeatFull(sound, dto);
     }
 
     @GetMapping({"/customer/{id}"})

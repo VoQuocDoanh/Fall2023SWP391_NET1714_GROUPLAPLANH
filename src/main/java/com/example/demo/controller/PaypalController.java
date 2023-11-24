@@ -105,7 +105,7 @@ public class PaypalController {
                 if(beatRequestRequestDTO.getFlag().equals("demo")){
                     return this.beatRequestService.acceptPrice(beatRequestRequestDTO);
                 }
-                return this.beatRequestService.acceptBeat(beatRequestRequestDTO);
+                return this.beatRequestService.acceptBeatFull(beatRequestRequestDTO);
             }
         } catch (PayPalRESTException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Payment execution failed");

@@ -86,10 +86,20 @@ public class BeatRequestService {
         return null;
     }
 
-    public ResponseEntity<String> acceptBeat(BeatRequestRequestDTO dto) {
+    public ResponseEntity<String> acceptBeatFull(BeatRequestRequestDTO dto) {
         Optional<BeatRequest> found = beatRequestRepository.findById(dto.getId());
         if (found.isPresent()) {
             found.get().setStatus(-1);
+            beatRequestRepository.save(found.get());
+            return new ResponseEntity<>("Accept beat!", HttpStatus.OK);
+        }
+        return null;
+    }
+
+    public ResponseEntity<String> acceptBeatDemo(BeatRequestRequestDTO dto) {
+        Optional<BeatRequest> found = beatRequestRepository.findById(dto.getId());
+        if (found.isPresent()) {
+            found.get().setStatus(4);
             beatRequestRepository.save(found.get());
             return new ResponseEntity<>("Accept beat!", HttpStatus.OK);
         }
@@ -123,7 +133,33 @@ public class BeatRequestService {
         }
         return null;
     }
-    public ResponseEntity<String> sendBeat(MultipartFile sound, MultipartFile sound2, BeatRequestRequestDTO dto) {
+    public ResponseEntity<String> sendBeatDemo(MultipartFile sound, BeatRequestRequestDTO dto) {
+        Optional<BeatRequest> found = beatRequestRepository.findById(dto.getId());
+        Optional<User> foundUser = userRepository.findById(dto.getMsId());
+        if (found.isPresent()){
+
+//            if (sound != null) {
+//
+//                String pathfull = service.uploadFile(sound, foundUser.get().getId(), "audio", "full", found.get().getObjectName());
+//                String objectfull = extractObjectNameFromUrl(pathfull);
+//                found.get().setBeatSoundFull(pathfull);
+//                found.get().setObjectName(objectfull);
+//            }
+            if (sound != null) {
+                String pathdemo = service.uploadFile(sound, foundUser.get().getId(), "audio", "demo", found.get().getObjectNameDemo());
+                String objectdemo = extractObjectNameFromUrl(pathdemo);
+                found.get().setBeatSoundDemo(pathdemo);
+                found.get().setObjectNameDemo(objectdemo);
+
+            }
+            found.get().setStatus(3);
+            beatRequestRepository.save(found.get());
+            return new ResponseEntity<>("Send!",HttpStatus.OK);
+        }
+        return null;
+    }
+
+    public ResponseEntity<String> sendBeatFull(MultipartFile sound, BeatRequestRequestDTO dto) {
         Optional<BeatRequest> found = beatRequestRepository.findById(dto.getId());
         Optional<User> foundUser = userRepository.findById(dto.getMsId());
         if (found.isPresent()){
@@ -135,14 +171,14 @@ public class BeatRequestService {
                 found.get().setBeatSoundFull(pathfull);
                 found.get().setObjectName(objectfull);
             }
-            if (sound2 != null) {
-                String pathdemo = service.uploadFile(sound2, foundUser.get().getId(), "audio", "demo", found.get().getObjectNameDemo());
-                String objectdemo = extractObjectNameFromUrl(pathdemo);
-                found.get().setBeatSoundDemo(pathdemo);
-                found.get().setObjectNameDemo(objectdemo);
-
-            }
-            found.get().setStatus(3);
+//            if (sound != null) {
+//                String pathdemo = service.uploadFile(sound, foundUser.get().getId(), "audio", "demo", found.get().getObjectNameDemo());
+//                String objectdemo = extractObjectNameFromUrl(pathdemo);
+//                found.get().setBeatSoundDemo(pathdemo);
+//                found.get().setObjectNameDemo(objectdemo);
+//
+//            }
+            found.get().setStatus(5);
             beatRequestRepository.save(found.get());
             return new ResponseEntity<>("Send!",HttpStatus.OK);
         }
@@ -316,6 +352,14 @@ public class BeatRequestService {
                     price += b.getPrice()*0.15;
                     beatReject++;
                 }
+                else if (b.getStatus() == 4 && b!= null ) {
+                    price += b.getPrice()*0.15;
+                    beatReject++;
+                }
+                else if (b.getStatus() == 5 && b!= null ) {
+                    price += b.getPrice()*0.15;
+                    beatReject++;
+                }
             }
             IncomeResponseDTO response = new IncomeResponseDTO(
                     price,
@@ -345,6 +389,12 @@ public class BeatRequestService {
                 if (b.getStatus() == 3){
                     price = b.getPrice()*0.15;
                 }
+                if(b.getStatus() == 4){
+                    price = b.getPrice()*0.15;
+                }
+                if(b.getStatus() == 5){
+                    price = b.getPrice()*0.15;
+                }
                 IncomeResponseDTO beat = new IncomeResponseDTO(
                         price,
                         b.getBeatName(),
@@ -352,7 +402,7 @@ public class BeatRequestService {
                         b.getCreatedAt(),
                         b.getStatus()
                 );
-                if(b.getStatus() == -1 || b.getStatus() == -2 || b.getStatus() == 3) {
+                if(b.getStatus() == -1 || b.getStatus() == -2 || b.getStatus() == 3 || b.getStatus() == 4 || b.getStatus() == 5) {
                     dtoList.add(beat);
                 }
 
