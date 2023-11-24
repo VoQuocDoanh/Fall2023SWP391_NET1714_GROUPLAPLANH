@@ -50,7 +50,7 @@ function ListUserBreaksPolicy() {
     return (
 
         <div className={cx("container")}>
-            <h1 className={cx("login-wrapper")}>List Users Break Policy</h1>
+            <h1 className={cx("login-wrapper")}>List Musician</h1>
             <div className={cx("line")}>
             </div>
             {listUser.length !== 0 ? <div className={cx("listuser-header")}>
