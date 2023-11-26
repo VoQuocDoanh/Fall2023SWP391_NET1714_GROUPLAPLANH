@@ -43,7 +43,7 @@ function MyBeats() {
                 navigate("/login")
                 return
             }
-            await axiosInstance.get(`http://localhost:8080/api/v1/request/beat/all/${jwtDecode(token).sub}`)
+            await axiosInstance.get(`http://localhost:8080/api/v1/request/beat/all/${userId}`)
                 .then(res => {
                     if (res.data.length === 0) {
                         setListOrders(res.data)

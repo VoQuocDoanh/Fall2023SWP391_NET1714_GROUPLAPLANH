@@ -427,7 +427,7 @@ export default function OrderTimeline() {
             loadListMSOrderBeat()
         }
 
-    }, [pageProcess, pageMakingDemoBeat, pageMakingFullBeat, pageCompleted, pageCanceled])
+    }, [pageProcess, pageMakingDemoBeat, pageMakingFullBeat, pageCompleted, pageCanceled, pageAll])
     console.log(listOrderBeatProcess)
     const [value, setValue] = React.useState(0);
 
@@ -466,7 +466,7 @@ export default function OrderTimeline() {
                         {/* All */}
                         <CustomTabPanel value={value} index={0}>
                             {listOrderBeatAll.length !== 0 ?
-                                <div style={{ height: 1350 }}>
+                                <div style={{ height: 1250 }}>
                                     <div className={cx("listbeat")}>
                                         {listOrderBeatAll.map((item) => {
                                             return (
@@ -474,17 +474,18 @@ export default function OrderTimeline() {
                                             )
                                         })}
                                     </div>
-                                    {pagesAll !== 1 ?
-                                        <div className={cx("pagination")}>
-                                            <Pagination pages={pagesAll} page={pageAll} setPage={setPageAll} />
-                                        </div>
-                                        : <div></div>}
+                                    
                                 </div>
                                 : <div>
                                     <img style={{ width: 300, height: 300, marginLeft: 790 }} src={require("../../assets/images/Other/DVD.png")} />
                                     <h1 className={cx("sold-out")} style={{ zindex: '1', marginLeft: 700, height: 500 }}>There are no beats</h1>
                                 </div>
                             }
+                            {pagesAll !== 1 ?
+                                        <div className={cx("pagination")}>
+                                            <Pagination pages={pagesAll} page={pageAll} setPage={setPageAll} />
+                                        </div>
+                                        : <div></div>}
 
                         </CustomTabPanel>
                         {/* Process */}
